@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+    <title>3D Hill Wind Loads - Topographic Factor Kzt | ASCE 7</title>
+    <meta name="description" content="Learn about wind effects on isolated hills. Interactive animation shows 3D axisymmetric hill wind patterns and Kzt calculations.">
+
+    <style>
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .header-container .logo-hamburger-row {
+            width: 100%;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        .main-header.scrolled .header-right {
+            display: flex;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #0018ff, #181E57);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 50px;
+        }
+
+        /* Sub-menu styles */
+        .nav-item-with-submenu {
+            position: relative;
+        }
+
+        .nav-item-with-submenu > a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-item-with-submenu .submenu-toggle {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item-with-submenu.open .submenu-toggle {
+            transform: rotate(180deg);
+        }
+
+        .sub-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 1rem;
+        }
+
+        .nav-item-with-submenu.open .sub-menu {
+            max-height: 500px;
+        }
+
+        .sub-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            padding: 0.75rem 0 0.75rem 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: #4b5563;
+        }
+
+        .sub-menu a i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sub-menu a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+            background: rgba(0, 24, 255, 0.03);
+        }
+
+        /* Color-code submenu items */
+        .sub-menu a:nth-child(1) i { color: #06b6d4; }
+        .sub-menu a:nth-child(2) i { color: #f97316; }
+        .sub-menu a:nth-child(3) i { color: #a855f7; }
+        .sub-menu a:nth-child(4) i { color: #10b981; }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            padding-top: 120px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 24, 255, 0) 0%, rgba(24, 30, 87, 0) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-scale-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .electric-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 215, 0, 0.75);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+            color: #000;
+            font-weight: 700;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .electric-text {
+            background: linear-gradient(90deg, #0018ff, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlight-text {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .hero-btn.primary {
+            background: white;
+            color: #0018ff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .hero-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .hero-btn.secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+            color: #fbbf24;
+        }
+
+        .stat-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Responsive font sizing for stat cards */
+        @media (max-width: 1200px) {
+            .stat-number {
+                font-size: 2rem;
+            }
+            .stat-label {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            .stat-label {
+                font-size: 0.85rem;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: -8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .scroll-mouse {
+            width: 30px;
+            height: 50px;
+            border: 2px solid white;
+            border-radius: 15px;
+            margin: 0 auto 10px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 10px;
+            background: white;
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .content-section.alt {
+            background: #f8fafc;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(0, 24, 255, 0.1);
+            color: #0018ff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Resource Cards Grid */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 2px solid transparent;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,24,255,0.15);
+            border-color: #0018ff;
+        }
+
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0018ff, #181E57);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Individual resource icon colors */
+        .resource-card:nth-child(1) .resource-icon {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+
+        .resource-card:nth-child(2) .resource-icon {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+
+        .resource-card:nth-child(3) .resource-icon {
+            background: linear-gradient(135deg, #a855f7, #9333ea);
+        }
+
+        .resource-card:nth-child(4) .resource-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .resource-card:nth-child(5) .resource-icon {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+
+        .resource-card:nth-child(6) .resource-icon {
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+        }
+
+        .resource-card h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .resource-card p {
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-cta {
+            color: #0018ff;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .resource-cta i {
+            transition: transform 0.3s ease;
+        }
+
+        .resource-card:hover .resource-cta i {
+            transform: translateX(5px);
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,24,255,0.15);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #0018ff, #181E57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .article-content {
+            padding: 2rem;
+        }
+
+        .article-category {
+            color: #0018ff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-card h3 {
+            font-size: 1.4rem;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .article-excerpt {
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        /* State Requirements Section */
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .state-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border: 2px solid transparent;
+        }
+
+        .state-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,24,255,0.15);
+            border-color: #0018ff;
+        }
+
+        .state-flag {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .state-info h3 {
+            font-size: 1.3rem;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+
+        .state-info p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* Who We Serve Section */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .audience-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .audience-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,24,255,0.15);
+        }
+
+        .audience-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, #0018ff, #181E57);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        /* Individual icon colors - matching stat card electric colors */
+        .audience-card:nth-child(1) .audience-icon {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+        }
+
+        .audience-card:nth-child(2) .audience-icon {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+        }
+
+        .audience-card:nth-child(3) .audience-icon {
+            background: linear-gradient(135deg, #a855f7, #9333ea);
+        }
+
+        .audience-card:nth-child(4) .audience-icon {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .audience-card:nth-child(5) .audience-icon {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+
+        .audience-card h3 {
+            font-size: 1.3rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .audience-card p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* WindLoadCalc Callout */
+        .windloadcalc-callout {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .callout-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .callout-badge {
+            display: inline-block;
+            background: #0018ff;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .callout-content h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .callout-content p {
+            font-size: 1.15rem;
+            color: #6b7280;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .callout-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #0018ff;
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,24,255,0.3);
+        }
+
+        .callout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,24,255,0.4);
+            background: #0012cc;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .resource-cards,
+            .articles-grid,
+            .states-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .audience-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Font Awesome Icons */
+        .fas {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+        /* Contrasting Electric Stat Card Colors */
+        .stat-card:nth-child(1) { background: linear-gradient(135deg, rgba(6, 182, 212, 0.45) 0%, rgba(8, 145, 178, 0.45) 100%); border-color: rgba(6, 182, 212, 0.55); }
+        .stat-card:nth-child(2) { background: linear-gradient(135deg, rgba(249, 115, 22, 0.45) 0%, rgba(234, 88, 12, 0.45) 100%); border-color: rgba(249, 115, 22, 0.55); }
+        .stat-card:nth-child(3) { background: linear-gradient(135deg, rgba(168, 85, 247, 0.45) 0%, rgba(147, 51, 234, 0.45) 100%); border-color: rgba(168, 85, 247, 0.55); }
+        .stat-card:nth-child(4) { background: linear-gradient(135deg, rgba(16, 185, 129, 0.45) 0%, rgba(5, 150, 105, 0.45) 100%); border-color: rgba(16, 185, 129, 0.55); }
+    
+
+        /* Animation iframe styling */
+        .animation-container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 3rem auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 3px solid #10b981;
+        }
+
+        .animation-iframe {
+            width: 100%;
+            height: 900px;
+            border: none;
+            display: block;
+        }
+
+        .content-section {
+            padding: 5rem 0;
+        }
+
+        .content-section:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .content-section h2 {
+            font-size: clamp(2rem, 5vw, 2.75rem);
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 2rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #10b981;
+            margin: 2.5rem 0 1.25rem;
+        }
+
+        .content-section p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .animation-iframe {
+                height: 700px;
+            }
+        }
+
+        
+    
+        /* Topographic Navigation Toggles with Glassmorphism */
+        .topo-nav {
+            position: sticky;
+            top: 90px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 24, 255, 0.1);
+            padding: 1.5rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .topo-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .topo-nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topo-nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .topo-nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .topo-nav-btn:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .topo-nav-btn.active {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: currentColor;
+            box-shadow: 0 10px 40px rgba(0,24,255,0.25);
+            backdrop-filter: blur(25px);
+        }
+
+        .topo-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        /* Color-coded icons for each terrain type */
+        .topo-nav-btn:nth-child(1) { color: #6b7280; }
+        .topo-nav-btn:nth-child(1) .topo-icon { background: linear-gradient(135deg, #6b7280, #4b5563); }
+
+        .topo-nav-btn:nth-child(2) { color: #06b6d4; }
+        .topo-nav-btn:nth-child(2) .topo-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+
+        .topo-nav-btn:nth-child(3) { color: #f97316; }
+        .topo-nav-btn:nth-child(3) .topo-icon { background: linear-gradient(135deg, #f97316, #ea580c); }
+
+        .topo-nav-btn:nth-child(4) { color: #a855f7; }
+        .topo-nav-btn:nth-child(4) .topo-icon { background: linear-gradient(135deg, #a855f7, #9333ea); }
+
+        .topo-nav-btn:nth-child(5) { color: #10b981; }
+        .topo-nav-btn:nth-child(5) .topo-icon { background: linear-gradient(135deg, #10b981, #059669); }
+
+        @media (max-width: 768px) {
+            .topo-nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="state-requirements.html">State Requirements</a>
+        <a href="asce-7-standards.html">ASCE 7 Standards</a>
+        <a href="components-cladding.html">Components & Cladding</a>
+        <a href="mwfrs.html">MWFRS Guide</a>
+
+        <div class="nav-item-with-submenu">
+            <a href="topographic-effects-wind-loads.html">
+                Topography Overview
+                <i class="fas fa-chevron-down submenu-toggle"></i>
+            </a>
+            <div class="sub-menu">
+                <a href="topographic-flat-terrain.html"><i class="fas fa-minus"></i> Flat Terrain</a>
+                <a href="topographic-escarpment.html"><i class="fas fa-layer-group"></i> Escarpment</a>
+                <a href="topographic-2d-ridge.html"><i class="fas fa-mountain"></i> 2D Ridge</a>
+                <a href="topographic-3d-hill.html"><i class="fas fa-draw-polygon"></i> 3D Hill</a>
+            </div>
+        </div>
+
+        <a href="resources.html">Free Resources</a>
+        <a href="articles.html">Articles & Guides</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="background: linear-gradient(135deg, #10b981 0%, #181E57 100%);">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-scale-wrapper">
+                <h1 class="hero-title">3D Hill Topographic Effects</h1>
+                <p class="hero-subtitle">Interactive animation of wind flow around isolated hills</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Topographic Navigation Toggles -->
+    <div class="topo-nav">
+        <div class="container">
+            <div class="topo-nav-grid">
+                <a href="topographic-effects-wind-loads.html" class="topo-nav-btn ">
+                    <div class="topo-icon">📋</div>
+                    <span>Overview</span>
+                </a>
+                <a href="topographic-flat-terrain.html" class="topo-nav-btn ">
+                    <div class="topo-icon">🏜️</div>
+                    <span>Flat Terrain</span>
+                </a>
+                <a href="topographic-escarpment.html" class="topo-nav-btn ">
+                    <div class="topo-icon">⛰️</div>
+                    <span>Escarpment</span>
+                </a>
+                <a href="topographic-2d-ridge.html" class="topo-nav-btn ">
+                    <div class="topo-icon">🏔️</div>
+                    <span>2D Ridge</span>
+                </a>
+                <a href="topographic-3d-hill.html" class="topo-nav-btn active">
+                    <div class="topo-icon">🗻</div>
+                    <span>3D Hill</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Animation Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 style="text-align: center; color: #10b981;">Interactive Wind Load Animation</h2>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 1rem;">Use the controls to adjust wind speed, exposure category, and watch real-time wind particle flow</p>
+
+            <div class="animation-container">
+                <iframe src="topographic-3d-hill-animation.html" class="animation-iframe" title="3D Hill Topographic Effects Animation"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2>Understanding 3D Hill Wind Loads</h2>
+            <p>Three-dimensional axisymmetric hills are isolated topographic features that create wind speed-up effects from all horizontal directions. Unlike 2D ridges where wind direction matters significantly, 3D hills amplify wind loads regardless of wind approach angle, making them particularly important for structural design. These rounded, isolated hills are characterized by similar dimensions in all horizontal directions and include features like volcanic cones, drumlin hills, isolated mountain peaks, and man-made features like waste mounds and storage facilities.</p>
+
+            <h2>What is a 3D Axisymmetric Hill?</h2>
+            <p>In ASCE 7 terminology, a 3D (three-dimensional) axisymmetric hill is a topographic feature that is relatively uniform in all horizontal directions—essentially circular or oval in plan view. The term "axisymmetric" means the hill has rotational symmetry about a vertical axis through its peak. Wind approaching from any horizontal direction encounters similar slopes and experiences similar speed-up effects, distinguishing 3D hills from directionally-dependent 2D ridges.</p>
+
+            <h3>Defining Characteristics</h3>
+            <ul style="font-size: 1.1rem; line-height: 2; margin: 1.5rem 0 2rem 2rem;">
+                <li><strong>Isolated feature</strong> - Stands alone, not part of a ridge or mountain range</li>
+                <li><strong>Circular/oval plan</strong> - Similar dimensions in all horizontal directions (length ≈ width)</li>
+                <li><strong>Omnidirectional effects</strong> - Wind speed-up occurs from all approach angles</li>
+                <li><strong>Summit at center</strong> - Peak centrally located with slopes radiating outward</li>
+                <li><strong>Lower K1 values</strong> - Generally less speed-up than equivalent 2D ridges</li>
+            </ul>
+
+            <h2>ASCE 7 Requirements for 3D Hills</h2>
+            <p>ASCE 7 Section 26.8 addresses 3D axisymmetric hills with specific K1 values in Table 26.8-1 that are typically lower than those for 2D ridges and escarpments, reflecting the three-dimensional flow patterns.</p>
+
+            <div style="background: #f0fdf4; padding: 2rem; border-radius: 12px; border-left: 4px solid #10b981; margin: 2rem 0;">
+                <h4 style="color: #1f2937; margin-top: 0;"><strong style="color: #10b981;">✓</strong> ASCE 7 3D Hill Criteria</h4>
+                <p><strong>3D Hill topographic effects apply when ALL of the following are met:</strong></p>
+                <ol style="font-size: 1.05rem; line-height: 1.8;">
+                    <li>The hill is isolated and unobstructed for 100H or 2 miles</li>
+                    <li>The hill protrudes above upwind terrain by a factor of two or more</li>
+                    <li>The structure is in the speed-up region (typically 0 to 5H from summit)</li>
+                    <li>H/Lh ≥ 0.2 where H is hill height and Lh is distance to half-height</li>
+                    <li>Feature has approximately equal dimensions in plan (not elongated like a ridge)</li>
+                </ol>
+            </div>
+
+            <h2>Topographic Factor Calculation for 3D Hills</h2>
+            <p>The topographic factor for 3D axisymmetric hills uses the same formula structure but with 3D-specific K1 values:</p>
+
+            <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0;">
+                <p style="font-size: 1.2rem; font-weight: 600; margin: 0 0 1rem 0; opacity: 0.9; color: white !important;">Kzt Formula for 3D Hills</p>
+                <p style="font-size: 1.4rem; font-weight: 700; margin: 0; font-family: 'Courier New', monospace; color: white !important;">Kzt = (1 + K1 K2 K3)²</p>
+                <p style="margin: 1rem 0 0 0; opacity: 0.95; font-size: 1.05rem; color: white !important;">
+                    <strong>K1</strong> = shape factor for 3D axisymmetric hills (Table 26.8-1)<br>
+                    <strong>K2</strong> = horizontal distance factor (radial from summit)<br>
+                    <strong>K3</strong> = vertical height factor above ground
+                </p>
+            </div>
+
+            <h3>Calculation Procedure</h3>
+            <ol style="font-size: 1.1rem; line-height: 2; margin: 1.5rem 0 2rem 2rem;">
+                <li><strong>Measure H</strong> - Height of hill above surrounding terrain</li>
+                <li><strong>Determine Lh</strong> - Average radial distance from summit to half-height contour</li>
+                <li><strong>Calculate H/Lh</strong> - Confirm ≥ 0.2 for topographic effects to apply</li>
+                <li><strong>Select K1</strong> - Use 3D axisymmetric hill values from ASCE 7 Table 26.8-1</li>
+                <li><strong>Determine K2</strong> - Based on radial distance from summit (x/Lh)</li>
+                <li><strong>Calculate K3</strong> - Based on height above local ground (z/Lh)</li>
+                <li><strong>Compute Kzt</strong> - Apply formula for all wind directions</li>
+            </ol>
+
+            <h2>Wind Flow Patterns Around 3D Hills</h2>
+            <p>Understanding how wind behaves around isolated hills helps engineers appreciate why topographic factors matter:</p>
+            <ul style="font-size: 1.1rem; line-height: 2; margin: 1.5rem 0 2rem 2rem;">
+                <li><strong>Windward slope</strong> - Wind accelerates as it climbs toward summit</li>
+                <li><strong>Summit zone</strong> - Maximum speed-up typically at or just downwind of peak</li>
+                <li><strong>Leeward slope</strong> - Complex flow with separation, recirculation, and reattachment</li>
+                <li><strong>Wake region</strong> - Turbulent wake extends 5-10H downwind</li>
+                <li><strong>Lateral flow</strong> - Some wind diverts around sides rather than over top</li>
+            </ul>
+
+            <h2>Real-World 3D Hill Examples</h2>
+            <ul style="font-size: 1.1rem; line-height: 2; margin: 1.5rem 0 2rem 2rem;">
+                <li><strong>Volcanic cones</strong> - Mt. Fuji, Vesuvius, Hawaiian volcanoes</li>
+                <li><strong>Isolated peaks</strong> - Lone mountains rising from plains</li>
+                <li><strong>Drumlin hills</strong> - Glacially-formed rounded hills in northern regions</li>
+                <li><strong>Landfills and waste mounds</strong> - Man-made elevated storage facilities</li>
+                <li><strong>Mining spoil piles</strong> - Conical waste rock accumulations</li>
+                <li><strong>Radar domes and observatories</strong> - Facilities on isolated hill summits</li>
+                <li><strong>Communication towers</strong> - Structures on prominent isolated peaks</li>
+            </ul>
+
+            <h2>Engineering Best Practices</h2>
+            <p><strong>Key Considerations for 3D Hill Design:</strong></p>
+            <ul style="font-size: 1.1rem; line-height: 2; margin: 1.5rem 0 2rem 2rem;">
+                <li>Verify hill is truly axisymmetric—if elongated, treat as 2D ridge instead</li>
+                <li>Measure Lh in multiple directions to confirm approximately circular plan</li>
+                <li>3D hills generally have lower Kzt than equivalent 2D ridges (less severe)</li>
+                <li>Consider all wind directions since effects are omnidirectional</li>
+                <li>Document hill geometry with contour maps and cross-sections</li>
+                <li>Account for seasonal variations (snow, erosion) affecting H</li>
+                <li>Site visit critical to confirm isolated nature and freedom from upwind obstructions</li>
+            </ul>
+
+            <h2>3D vs 2D Classification</h2>
+            <p>Determining whether a topographic feature is 2D or 3D is critical for accurate Kzt calculation:</p>
+            <ul style="font-size: 1.1rem; line-height: 2; margin: 1.5rem 0 2rem 2rem;">
+                <li><strong>Use 3D approach when:</strong> Length/width ratio < 2:1, circular or oval plan view</li>
+                <li><strong>Use 2D approach when:</strong> Length/width ratio > 4:1, elongated crest, part of range</li>
+                <li><strong>Intermediate cases:</strong> Use engineering judgment or analyze as both and take worst case</li>
+            </ul>
+
+            <p><strong>Professional Solution:</strong> Our <a href="https://windloadcalc.com" style="color: #10b981; font-weight: 600; text-decoration: underline;">wind load calculator</a> automatically determines whether 2D or 3D topographic factors apply based on site geometry input, applies the correct K1 values from ASCE 7 tables, and calculates accurate Kzt for all applicable wind directions—eliminating guesswork and ensuring code compliance.</p>
+        </div>
+    </section>
+
+    <!-- Mid-Content CTA Section -->
+    <section class="content-section" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); text-align: center; color: white; padding: 3rem 0;">
+        <div class="container">
+            <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">Automate 3D Hill Wind Load Analysis</h2>
+            <p style="font-size: 1.15rem; margin-bottom: 2rem; opacity: 0.95;">Save time and eliminate errors. Our software handles complex 3D axisymmetric hill calculations automatically per ASCE 7-16 and ASCE 7-22.</p>
+            <a href="https://windloadcalc.com" class="hero-btn" style="background: white; color: #10b981; border: none;" target="_blank">Calculate Hill Wind Loads →</a>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="content-section" style="background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); text-align: center; color: white;">
+        <div class="container">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1.5rem;">Need Professional Wind Load Calculations?</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2.5rem; opacity: 0.95;">Our wind load calculator handles all terrain types and topographic factors automatically</p>
+            <a href="https://windloadcalc.com" class="hero-btn primary" target="_blank">Try Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="state-requirements.html">State Requirements</a></li>
+                        <li><a href="asce-7-standards.html">ASCE 7 Standards</a></li>
+                        <li><a href="components-cladding.html">Components & Cladding</a></li>
+                        <li><a href="mwfrs.html">MWFRS Guide</a></li>
+                        <li><a href="resources.html">Free Resources</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Learn More</h3>
+                    <ul class="footer-links">
+                        <li><a href="articles.html">Articles & Guides</a></li>
+                        <li><a href="case-studies.html">Case Studies</a></li>
+                        <li><a href="faq.html">Frequently Asked Questions</a></li>
+                        <li><a href="glossary.html">Wind Load Glossary</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="our-team.html">Our Team</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Sister Sites</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com</a></li>
+                        <li><a href="https://windloadcalc.com/free-wind-load-calculator" target="_blank" rel="noopener">Free Calculator</a></li>
+                        <li><a href="https://windloadcalc.com/software" target="_blank" rel="noopener">Professional Software</a></li>
+                        <li><a href="https://windloadcalc.com/services" target="_blank" rel="noopener">PE-Sealed Services</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved. Trusted authority in wind load engineering education since 2002.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Sub-menu toggle
+        document.querySelectorAll('.nav-item-with-submenu > a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parent = link.parentElement;
+                parent.classList.toggle('open');
+            });
+        });
+
+        // Close menu when clicking a sub-menu link (but not parent link)
+        document.querySelectorAll('.sub-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Close menu when clicking a regular link
+        document.querySelectorAll('.nav-links > a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    
+    </script>
+</body>
+</html>

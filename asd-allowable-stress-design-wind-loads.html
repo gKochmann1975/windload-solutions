@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASD Wind Loads - Allowable Stress Design Method for Wind Pressure | ASCE 7</title>
+    <meta name="description" content="Complete guide to Allowable Stress Design (ASD) wind loads. Learn the 0.6W load combination, design methodology, and how ASD differs from LRFD for wind load calculations.">
+    <link rel="canonical" href="https://windload.solutions/asd-allowable-stress-design-wind-loads">
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0018ff;
+            --dark-blue: #181E57;
+            --map-light: #93c5fd;
+            --map-dark: #60a5fa;
+            --map-deep: #3b82f6;
+            --cyan: #06b6d4;
+            --orange: #f97316;
+            --purple: #a855f7;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --pink: #ec4899;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        /* Hero Section - Light Blue Gradient */
+        .hero {
+            background: linear-gradient(135deg, var(--map-light) 0%, var(--map-dark) 100%);
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb {
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 5rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Info Cards Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--map-deep);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .info-card h4 {
+            font-size: 1.4rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-card i {
+            color: var(--map-deep);
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            margin: 3rem 0;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--map-deep), var(--map-dark));
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 5px solid var(--map-deep);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .highlight-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .highlight-box p {
+            color: #1e3a8a;
+            margin-bottom: 0;
+        }
+
+        /* Related Links Section */
+        .related-links {
+            background: #f9fafb;
+            padding: 5rem 0;
+        }
+
+        .related-links h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #1f2937;
+        }
+
+        .link-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .link-card-icon {
+            background: linear-gradient(135deg, var(--map-light), var(--map-dark));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .link-card-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .link-card-content h4 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-card-content p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* WindLoadCalc Promo */
+        .windloadcalc-promo {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .windloadcalc-promo h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .windloadcalc-promo p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta-button {
+            background: white;
+            color: #1e3a8a;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .link-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ASCE 7 Standards",
+                "item": "https://windload.solutions/asce-7-standards.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Design Methods",
+                "item": "https://windload.solutions/design-methods-asce-7-guide.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "ASD Method",
+                "item": "https://windload.solutions/asd-allowable-stress-design-wind-loads.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation with Hierarchical Structure -->
+<nav class="nav-links">
+    <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+
+    <!-- ASCE 7 Standards with click submenu -->
+    <div class="nav-section">
+        <a href="#" class="nav-section-header" onclick="event.preventDefault(); toggleNavSection(this);">
+            <i class="fas fa-book"></i> ASCE 7 Standards
+            <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+
+        <div class="nav-section-content">
+            <!-- Wind Speed & Maps submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-wind"></i> Wind Speed & Maps
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="3-second-gust-wind-speed.html" class="nav-subitem"><i class="fas fa-gauge-high"></i> 3-Second Gust</a>
+                    <a href="basic-wind-speed-explained.html" class="nav-subitem"><i class="fas fa-circle-info"></i> Basic Wind Speed</a>
+                    <a href="asce-7-16-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map"></i> ASCE 7-16 Maps</a>
+                    <a href="asce-7-22-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map-location-dot"></i> ASCE 7-22 Maps</a>
+                    <a href="wind-speed-by-location.html" class="nav-subitem"><i class="fas fa-location-dot"></i> Wind Speed by Location</a>
+                </div>
+            </div>
+
+            <!-- Exposure Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="exposure-category-selection-guide.html" class="nav-subitem"><i class="fas fa-compass"></i> Selection Guide</a>
+                    <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-subitem"><i class="fas fa-city"></i> Exposure B</a>
+                    <a href="exposure-c-open-terrain-wind-loads.html" class="nav-subitem"><i class="fas fa-seedling"></i> Exposure C</a>
+                    <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-subitem"><i class="fas fa-water"></i> Exposure D</a>
+                    <a href="exposure-transition-zones.html" class="nav-subitem"><i class="fas fa-arrows-left-right"></i> Transition Zones</a>
+                </div>
+            </div>
+
+            <!-- Risk Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="risk-category-selection-guide.html" class="nav-subitem"><i class="fas fa-list-check"></i> Selection Guide</a>
+                    <a href="risk-category-1-agricultural-buildings.html" class="nav-subitem"><i class="fas fa-warehouse"></i> Category I</a>
+                    <a href="risk-category-2-standard-occupancy.html" class="nav-subitem"><i class="fas fa-building"></i> Category II</a>
+                    <a href="risk-category-3-assembly-buildings.html" class="nav-subitem"><i class="fas fa-users"></i> Category III</a>
+                    <a href="risk-category-4-essential-facilities.html" class="nav-subitem"><i class="fas fa-hospital"></i> Category IV</a>
+                </div>
+            </div>
+
+            <!-- Design Methods submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-drafting-compass"></i> Design Methods
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="asd-allowable-stress-design-wind-loads.html" class="nav-subitem"><i class="fas fa-ruler-combined"></i> ASD Method</a>
+                    <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="nav-subitem"><i class="fas fa-weight-hanging"></i> LRFD Method</a>
+                    <a href="asd-lrfd-conversion-guide.html" class="nav-subitem"><i class="fas fa-arrows-rotate"></i> ASD ↔ LRFD</a>
+                    <a href="nominal-vs-ultimate-wind-loads.html" class="nav-subitem"><i class="fas fa-code-compare"></i> Nominal vs Ultimate</a>
+                    <a href="nominal-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-n"></i> Nominal Loads</a>
+                    <a href="ultimate-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-u"></i> Ultimate Loads</a>
+                    <a href="directional-vs-non-directional-wind-loads.html" class="nav-subitem"><i class="fas fa-compass-drafting"></i> Directional Method</a>
+                    <a href="wind-directionality-factor-guide.html" class="nav-subitem"><i class="fas fa-k"></i> Kd Factor</a>
+                </div>
+            </div>
+
+            <!-- HVHZ / Florida submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-hurricane"></i> HVHZ / Florida
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="hvhz-florida-requirements.html" class="nav-subitem"><i class="fas fa-file-contract"></i> Florida FBC</a>
+                    <a href="miami-dade-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-certificate"></i> Miami-Dade NOA</a>
+                    <a href="broward-county-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-stamp"></i> Broward County</a>
+                    <a href="hvhz-product-approvals.html" class="nav-subitem"><i class="fas fa-check-circle"></i> Product Approvals</a>
+                    <a href="hvhz-vs-standard-wind-zones.html" class="nav-subitem"><i class="fas fa-balance-scale"></i> HVHZ vs Standard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+    <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+    <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+    <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+    <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+    <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<style>
+/* Navigation styles with CLICK dropdowns */
+.nav-section {
+    position: relative;
+}
+
+.nav-section-header {
+    display: block !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    color: #0018ff !important;
+    background: rgba(0, 24, 255, 0.05) !important;
+    padding: 1rem !important;
+    border-left: 4px solid #0018ff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-section-header i:first-child {
+    margin-right: 0.75rem;
+}
+
+.nav-arrow {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-section.active .nav-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-section.active .nav-section-content {
+    max-height: 2000px;
+}
+
+.nav-subsection {
+    position: relative;
+}
+
+.nav-subsection-header {
+    display: block !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    color: #1f2937 !important;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
+    border-left: 3px solid #d1d5db !important;
+    background: transparent !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-subsection-header:hover {
+    background: rgba(0, 24, 255, 0.08) !important;
+    border-left-color: #0018ff !important;
+}
+
+.nav-subsection-header i:first-child {
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.nav-subarrow {
+    font-size: 0.7rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-subsection.active .nav-subarrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.nav-subsection-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-subsection.active .nav-subsection-content {
+    max-height: 1000px;
+}
+
+.nav-subitem {
+    font-size: 0.95rem !important;
+    color: #6b7280 !important;
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.nav-subitem i {
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.nav-subitem:hover {
+    background: rgba(0, 24, 255, 0.05) !important;
+    color: #0018ff !important;
+    padding-left: 3rem !important;
+}
+
+.nav-subitem::before {
+    display: none !important;
+}
+
+/* Override default nav-links a styles */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links > a > i {
+    margin-right: 0.75rem;
+    color: #0018ff;
+    width: 1.25rem;
+    text-align: center;
+}
+</style>
+
+
+
+
+
+
+
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> ›
+                    <a href="asce-7-standards.html">ASCE 7</a> › <a href="nominal-vs-ultimate-wind-loads.html">Design Methods</a> ›
+                    ASD Wind Loads
+                </div>
+                <div class="hero-icon">
+                    <i class="fas fa-drafting-compass"></i>
+                </div>
+                <h1>ASD Wind Loads</h1>
+                <p class="hero-subtitle">Understanding the Allowable Stress Design method for wind load calculations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+
+    <!-- Design Method Quick Navigation -->
+    <section class="content-section" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 2rem 0; border-top: 3px solid #1e40af; border-bottom: 3px solid #1e40af;">
+        <div class="container">
+            <h3 style="text-align: center; color: #1e40af; margin-bottom: 1.5rem;">
+                <i class="fas fa-drafting-compass" style="margin-right: 0.75rem;"></i>Quick Navigation: Design Methods
+            </h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.875rem; max-width: 1200px; margin: 0 auto;">
+                <a href="asd-allowable-stress-design-wind-loads.html" class="design-nav-button" style="class="design-nav-button design-nav-button-current"">
+                    <i class="fas fa-drafting-compass"></i><br>
+                    <strong>ASD</strong><br>
+                    <span style="font-size: 0.8rem;">Allowable Stress</span>
+                </a>
+                <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="design-nav-button" style="">
+                    <i class="fas fa-hard-hat"></i><br>
+                    <strong>LRFD</strong><br>
+                    <span style="font-size: 0.8rem;">Load & Resistance</span>
+                </a>
+                <a href="asd-lrfd-conversion-guide.html" class="design-nav-button" style="">
+                    <i class="fas fa-exchange-alt"></i><br>
+                    <strong>ASD/LRFD</strong><br>
+                    <span style="font-size: 0.8rem;">Conversion</span>
+                </a>
+                <a href="nominal-vs-ultimate-wind-loads.html" class="design-nav-button" style="">
+                    <i class="fas fa-balance-scale"></i><br>
+                    <strong>Nom vs Ult</strong><br>
+                    <span style="font-size: 0.8rem;">Comparison</span>
+                </a>
+                <a href="nominal-wind-loads-explained.html" class="design-nav-button" style="">
+                    <i class="fas fa-wind"></i><br>
+                    <strong>Nominal</strong><br>
+                    <span style="font-size: 0.8rem;">Explained</span>
+                </a>
+                <a href="ultimate-wind-loads-explained.html" class="design-nav-button" style="">
+                    <i class="fas fa-bolt"></i><br>
+                    <strong>Ultimate</strong><br>
+                    <span style="font-size: 0.8rem;">Explained</span>
+                </a>
+                <a href="directional-vs-non-directional-wind-loads.html" class="design-nav-button" style="">
+                    <i class="fas fa-compass"></i><br>
+                    <strong>Directional</strong><br>
+                    <span style="font-size: 0.8rem;">K<sub>d</sub> Factor</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .design-nav-button {
+            display: block;
+            padding: 1rem 0.75rem;
+            background: white;
+            border: 2px solid #1e40af;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: #1e40af;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+        }
+
+        .design-nav-button:hover {
+            background: #1e40af;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .design-nav-button i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .design-nav-button-current {
+            background: #1e40af;
+            color: white;
+            font-weight: bold;
+            border: 3px solid #1e3a8a;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        .design-nav-button-current:hover {
+            background: #1e3a8a;
+            transform: translateY(-2px);
+        }
+    </style>
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-book-open" style="color: var(--map-deep); margin-right: 1rem;"></i>What is ASD (Allowable Stress Design)?</h2>
+
+            <p><strong>Allowable Stress Design (ASD)</strong>, also called Working Stress Design (WSD), is a traditional structural design methodology where structural members are proportioned so that stresses (forces divided by area) remain below allowable limits under design loads. For wind loads, ASD uses a <strong>load factor of 0.6</strong> applied to the wind load (W) in governing load combinations per ASCE 7 Section 2.4.</p>
+
+            <p>In ASD, the design philosophy is straightforward: <strong>Actual Stress ≤ Allowable Stress</strong>. Wind loads calculated using ASD methodology are often called <strong>nominal wind loads</strong> because they represent service-level pressures without the strength reduction factors used in Load and Resistance Factor Design (LRFD).</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-balance-scale"></i> Design Philosophy</h4>
+                    <p>ASD compares actual stresses against allowable stresses based on material yield strength divided by a safety factor. Structural members must satisfy: σ<sub>actual</sub> ≤ σ<sub>allowable</sub></p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-calculator"></i> Wind Load Factor</h4>
+                    <p>Wind loads in ASD are factored by 0.6 in governing load combinations. The 0.6W factor represents the probability of maximum wind occurring simultaneously with other loads.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-ruler-combined"></i> Material Allowables</h4>
+                    <p>ASD uses allowable stresses defined as F<sub>y</sub>/FS where F<sub>y</sub> is yield strength and FS is factor of safety (typically 1.5-2.0 depending on material and application).</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-building"></i> Common Applications</h4>
+                    <p>ASD is widely used for metal building design, post-frame construction, residential structures, and component-level analysis including windows, doors, and cladding systems.</p>
+                </div>
+            </div>
+
+            <h3>ASD Load Combinations for Wind (ASCE 7 Section 2.4)</h3>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Load Combination</th>
+                        <th>Formula</th>
+                        <th>When It Governs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Combination 5</strong></td>
+                        <td>D + L + 0.6W</td>
+                        <td>Structures with significant dead and live loads where wind uplift is not critical</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Combination 6</strong></td>
+                        <td>D + 0.6W + 0.75(L + S)</td>
+                        <td>Structures with roof snow load in combination with wind pressure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Combination 7</strong></td>
+                        <td>D + 0.6W + 0.75(L + R)</td>
+                        <td>Structures where roof live load and wind act simultaneously</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Combination 8</strong></td>
+                        <td>0.6D + 0.6W</td>
+                        <td><strong>Wind uplift cases</strong> - governs for lightweight structures, canopies, overhangs, and roof components</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-calculator" style="color: var(--map-deep); margin-right: 1rem;"></i>Calculating ASD Wind Pressures</h2>
+
+            <p>Wind pressures for ASD are calculated using the same fundamental ASCE 7 equations as LRFD, but the resulting pressures are <strong>nominal</strong> (unfactored) values. These nominal pressures are then used with the 0.6W load factor in structural analysis.</p>
+
+            <h3>Components & Cladding (C&C) Wind Pressure Formula - ASD</h3>
+
+            <div class="info-card">
+                <h4><i class="fas fa-formula"></i> ASCE 7 Equation 30.4-1 (Simplified)</h4>
+                <p><strong>p = q<sub>h</sub> [(GC<sub>p</sub>) - (GC<sub>pi</sub>)]</strong></p>
+                <p style="margin-top: 1rem;">Where:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>p</strong> = Design wind pressure (psf) - <em>nominal value for ASD</em></li>
+                    <li><strong>q<sub>h</sub></strong> = Velocity pressure at mean roof height (psf)</li>
+                    <li><strong>GC<sub>p</sub></strong> = External pressure coefficient (from Figures 30.4-1 through 30.4-7)</li>
+                    <li><strong>GC<sub>pi</sub></strong> = Internal pressure coefficient (+0.18 or -0.18 for enclosed buildings)</li>
+                </ul>
+            </div>
+
+            <h3>Velocity Pressure Calculation</h3>
+
+            <div class="info-card">
+                <h4><i class="fas fa-wind"></i> ASCE 7 Equation 26.10-1</h4>
+                <p><strong>q<sub>h</sub> = 0.00256 K<sub>h</sub> K<sub>zt</sub> K<sub>d</sub> K<sub>e</sub> V²</strong></p>
+                <p style="margin-top: 1rem;">Where:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>K<sub>h</sub></strong> = Velocity pressure exposure coefficient (Table 26.10-1, varies by height and Exposure)</li>
+                    <li><strong>K<sub>zt</sub></strong> = Topographic factor (1.0 for flat terrain, >1.0 for hills/ridges)</li>
+                    <li><strong>K<sub>d</sub></strong> = Wind directionality factor (0.85 for buildings, see Table 26.6-1)</li>
+                    <li><strong>K<sub>e</sub></strong> = Ground elevation factor (Section 26.9, typically 1.0 below 3,000 ft elevation)</li>
+                    <li><strong>V</strong> = Basic wind speed (mph) from ASCE 7-22 maps (or ASCE 7-16 for older IBC editions)</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-lightbulb" style="color: #1e40af; margin-right: 0.75rem;"></i>ASD vs LRFD: Same Wind Pressure, Different Application</h3>
+                <p>The wind pressures calculated above are <strong>identical</strong> for both ASD and LRFD. The difference is in how they're used:</p>
+                <ul style="color: #1e3a8a; margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>ASD:</strong> These are "nominal" pressures used with 0.6W in load combinations</li>
+                    <li><strong>LRFD:</strong> These same pressures are called "ultimate" and used with 1.0W in load combinations</li>
+                </ul>
+                <p style="margin-top: 1rem;">To avoid confusion: Some references call ASD pressures "nominal" and LRFD pressures "ultimate," but they're calculated the same way. The load factor (0.6 vs 1.0) makes the difference.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-drafting-compass" style="color: var(--map-deep); margin-right: 1rem;"></i>Step-by-Step ASD Wind Load Example</h2>
+
+            <p>Let's walk through a complete example of calculating ASD wind loads for a typical building component.</p>
+
+            <h3>Example Project Parameters</h3>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-building"></i> Building Type</h4>
+                    <p><strong>Commercial retail building</strong><br>
+                    Risk Category II<br>
+                    Enclosed building<br>
+                    Mean roof height: 25 feet</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
+                    <p><strong>Charlotte, North Carolina</strong><br>
+                    Basic wind speed (V): 115 mph<br>
+                    Exposure Category: B (suburban)<br>
+                    Flat terrain (K<sub>zt</sub> = 1.0)</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-window-maximize"></i> Component</h4>
+                    <p><strong>Wall window</strong><br>
+                    Zone 4 (field of wall)<br>
+                    Effective wind area: 20 sq ft<br>
+                    Components & Cladding analysis</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-cogs"></i> Design Method</h4>
+                    <p><strong>Allowable Stress Design (ASD)</strong><br>
+                    Using 0.6W load factor<br>
+                    Directional procedure (K<sub>d</sub> = 0.85)</p>
+                </div>
+            </div>
+
+            <h3>Calculation Steps</h3>
+
+            <p><strong>Step 1: Calculate Velocity Pressure (q<sub>h</sub>)</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                q<sub>h</sub> = 0.00256 K<sub>h</sub> K<sub>zt</sub> K<sub>d</sub> K<sub>e</sub> V²<br><br>
+                <strong>Given:</strong><br>
+                K<sub>h</sub> = 0.70 (Table 26.10-1, Exposure B, h=25 ft)<br>
+                K<sub>zt</sub> = 1.0 (flat terrain)<br>
+                K<sub>d</sub> = 0.85 (Table 26.6-1, buildings)<br>
+                K<sub>e</sub> = 1.0 (elevation < 3,000 ft)<br>
+                V = 115 mph<br><br>
+                <strong>Calculation:</strong><br>
+                q<sub>h</sub> = 0.00256 × 0.70 × 1.0 × 0.85 × 1.0 × (115)²<br>
+                q<sub>h</sub> = 0.00256 × 0.595 × 13,225<br>
+                <strong>q<sub>h</sub> = 20.1 psf</strong>
+            </p>
+
+            <p><strong>Step 2: Determine Pressure Coefficients</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                From ASCE 7 Figure 30.4-1 (Components & Cladding, Wall, Zone 4):<br>
+                <strong>GC<sub>p</sub></strong> = +0.90 (positive pressure, wind toward wall)<br>
+                <strong>GC<sub>p</sub></strong> = -0.90 (negative pressure, wind away from wall)<br><br>
+                Internal pressure coefficient (enclosed building):<br>
+                <strong>GC<sub>pi</sub></strong> = ±0.18
+            </p>
+
+            <p><strong>Step 3: Calculate Design Pressures</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                p = q<sub>h</sub> [(GC<sub>p</sub>) - (GC<sub>pi</sub>)]<br><br>
+                <strong>Case 1 - Maximum Positive Pressure:</strong><br>
+                p<sub>pos</sub> = 20.1 × [(+0.90) - (-0.18)]<br>
+                p<sub>pos</sub> = 20.1 × 1.08<br>
+                <strong>p<sub>pos</sub> = +21.7 psf</strong> (wind pushing on window)<br><br>
+                <strong>Case 2 - Maximum Negative Pressure:</strong><br>
+                p<sub>neg</sub> = 20.1 × [(-0.90) - (+0.18)]<br>
+                p<sub>neg</sub> = 20.1 × (-1.08)<br>
+                <strong>p<sub>neg</sub> = -21.7 psf</strong> (suction pulling on window)
+            </p>
+
+            <p><strong>Step 4: Apply to ASD Load Combinations</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                These nominal pressures are used with <strong>0.6W</strong> in load combinations:<br><br>
+                <strong>Governing ASD combination:</strong> D + 0.6W<br><br>
+                Design pressure for window = 0.6 × 21.7 psf = <strong>13.0 psf</strong><br><br>
+                The window must be rated to withstand allowable stress under 13.0 psf design pressure (accounting for the 0.6 load factor already applied).
+            </p>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-info-circle" style="color: #1e40af; margin-right: 0.75rem;"></i>Important Design Note</h3>
+                <p>Both positive and negative pressures must be checked. For this window:</p>
+                <ul style="color: #1e3a8a; margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>Positive pressure (+21.7 psf):</strong> Tests the window's resistance to inward deflection and breakage</li>
+                    <li><strong>Negative pressure (-21.7 psf):</strong> Tests the window's anchorage and resistance to being pulled out of the wall</li>
+                    <li>Component manufacturers typically provide ratings like "DP-40" (Design Pressure 40 psf), which represents the nominal ASD pressure the component can withstand</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-code-compare" style="color: var(--map-deep); margin-right: 1rem;"></i>ASD vs LRFD Wind Loads - Key Differences</h2>
+
+            <p>While ASD and LRFD use the same fundamental wind pressure calculations, they differ significantly in how those pressures are applied in structural design. Understanding these differences is critical for proper component selection and structural analysis.</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Design Aspect</th>
+                        <th>ASD (Allowable Stress Design)</th>
+                        <th>LRFD (Load & Resistance Factor Design)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Wind Load Factor</strong></td>
+                        <td>0.6W in load combinations</td>
+                        <td>1.0W in load combinations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Design Philosophy</strong></td>
+                        <td>Actual Stress ≤ Allowable Stress</td>
+                        <td>Factored Load ≤ Factored Resistance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Material Strength</strong></td>
+                        <td>Allowable stress = F<sub>y</sub> / FS (FS = 1.5-2.0)</td>
+                        <td>Design strength = φ × F<sub>y</sub> (φ = 0.75-0.90)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Terminology</strong></td>
+                        <td>"Nominal" wind loads or "ASD" pressures</td>
+                        <td>"Ultimate" wind loads or "LRFD" pressures</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Typical Use Cases</strong></td>
+                        <td>Metal buildings, post-frame, residential, components & cladding</td>
+                        <td>Commercial steel/concrete, high-rise, main structural systems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Component Ratings</strong></td>
+                        <td>Products rated in ASD pressures (DP-40, DP-50, etc.)</td>
+                        <td>Must convert component ASD ratings for use in LRFD analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Load Combination Comparison Example</h3>
+
+            <p><strong>Given:</strong> Wind pressure p = 25 psf, Dead load D = 15 psf downward</p>
+
+            <p><strong>ASD Uplift Check (Combination 8):</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                Load = 0.6D + 0.6W<br>
+                Load = 0.6(-15) + 0.6(-25)<br>
+                <strong>Load = -24.0 psf net uplift</strong><br><br>
+                Component must resist 24.0 psf using allowable stress design
+            </p>
+
+            <p><strong>LRFD Uplift Check (Combination 4):</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                Load = 0.9D + 1.0W<br>
+                Load = 0.9(-15) + 1.0(-25)<br>
+                <strong>Load = -38.5 psf net uplift</strong><br><br>
+                Component must resist 38.5 psf using factored resistance (φR<sub>n</sub>)
+            </p>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-lightbulb" style="color: #1e40af; margin-right: 0.75rem;"></i>Why ASD Uses 0.6W</h3>
+                <p>The 0.6 factor reflects the low probability that maximum wind will occur simultaneously with other design loads (dead, live, snow). It's NOT a safety reduction - the safety is built into the allowable stresses (which include factors of safety of 1.5-2.0).</p>
+                <p style="margin-top: 1rem;">By contrast, LRFD uses 1.0W but compensates with resistance factors (φ) on the strength side. Both methods achieve similar overall reliability when properly applied.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-building-columns" style="color: var(--map-deep); margin-right: 1rem;"></i>When to Use ASD for Wind Loads</h2>
+
+            <p>ASD remains the preferred or required design method for several building types and industries, despite the increasing adoption of LRFD in commercial construction.</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-warehouse"></i> Metal Building Systems</h4>
+                    <p>Pre-engineered metal buildings (PEMBs) traditionally use ASD. The Metal Building Manufacturers Association (MBMA) design manuals are based on ASD methodology, and most metal building software uses nominal (ASD) pressures.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-home"></i> Post-Frame & Agricultural</h4>
+                    <p>Post-frame construction (pole barns, agricultural buildings) almost exclusively uses ASD. The National Frame Building Association (NFBA) standards are ASD-based, making it the industry standard.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-window-maximize"></i> Components & Cladding</h4>
+                    <p>Windows, doors, curtain walls, and cladding systems are rated using ASD pressures (Design Pressure or DP ratings). Product testing standards (ASTM E 1886, E1996) use ASD methodology.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-house"></i> Residential Construction</h4>
+                    <p>Single-family and low-rise residential construction commonly uses ASD, particularly for wood-framed structures. Prescriptive building codes often reference ASD values.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-screwdriver-wrench"></i> Retrofits & Additions</h4>
+                    <p>When analyzing existing structures designed with ASD, it's often simpler to continue using ASD for additions and modifications to maintain consistency.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-clipboard-check"></i> Jurisdictional Requirements</h4>
+                    <p>Some building departments, inspectors, and plan reviewers prefer ASD because of familiarity. Check local preferences before selecting design method.</p>
+                </div>
+            </div>
+
+            <h3>Component Design Pressure (DP) Ratings</h3>
+
+            <p>Most architectural components (windows, doors, skylights, curtain wall panels) are tested and rated using <strong>Design Pressure (DP)</strong> values, which are ASD nominal pressures. Understanding these ratings is critical for proper component selection.</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>DP Rating</th>
+                        <th>Nominal Pressure (psf)</th>
+                        <th>Typical Applications</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>DP-15</strong></td>
+                        <td>±15 psf</td>
+                        <td>Low-rise residential in low wind zones (90-100 mph areas)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP-25</strong></td>
+                        <td>±25 psf</td>
+                        <td>Standard residential, low-rise commercial (100-110 mph)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP-30</strong></td>
+                        <td>±30 psf</td>
+                        <td>Moderate wind zones, protected building locations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP-40</strong></td>
+                        <td>±40 psf</td>
+                        <td>Higher wind zones (115-130 mph), elevated locations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP-50</strong></td>
+                        <td>±50 psf</td>
+                        <td>Coastal areas, hurricane zones (130-150 mph)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DP-60 to DP-80</strong></td>
+                        <td>±60-80 psf</td>
+                        <td>High wind coastal, HVHZ (High Velocity Hurricane Zones)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-certificate" style="color: #1e40af; margin-right: 0.75rem;"></i>Component Selection Process</h3>
+                <p><strong>Step 1:</strong> Calculate ASD nominal wind pressure using ASCE 7 equations<br>
+                <strong>Step 2:</strong> Select component with DP rating ≥ calculated pressure<br>
+                <strong>Step 3:</strong> Verify component meets required load combinations (D + 0.6W)<br>
+                <strong>Step 4:</strong> Check installation requirements and fastening schedules</p>
+                <p style="margin-top: 1rem;"><strong>Example:</strong> If calculated pressure = 32.5 psf, select minimum DP-40 rated product (do NOT interpolate or use DP-30, which would be unsafe)</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-triangle-exclamation" style="color: var(--map-deep); margin-right: 1rem;"></i>Common ASD Wind Load Mistakes to Avoid</h2>
+
+            <p>Several common errors occur when applying ASD methodology to wind loads. Avoiding these mistakes ensures safe, code-compliant designs.</p>
+
+            <h3>1. Applying 0.6 Factor Twice</h3>
+            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <strong>WRONG:</strong> Calculating wind pressure p = 30 psf, then multiplying by 0.6 before comparing to component DP rating<br><br>
+                <strong>RIGHT:</strong> Comparing the full calculated pressure (30 psf) to the DP rating. The 0.6 factor is for structural load combinations, not component selection.
+            </p>
+
+            <h3>2. Mixing ASD and LRFD</h3>
+            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <strong>WRONG:</strong> Using ASD wind loads (0.6W) with LRFD resistance factors (φ)<br><br>
+                <strong>RIGHT:</strong> Stay consistent - use ASD loads with allowable stresses OR LRFD loads with factored resistances. Never mix methodologies.
+            </p>
+
+            <h3>3. Ignoring Negative (Uplift) Pressures</h3>
+            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <strong>WRONG:</strong> Only checking positive (inward) pressure on components<br><br>
+                <strong>RIGHT:</strong> Always check BOTH positive and negative pressures. Negative (suction) pressures often govern for roof components, overhangs, and edge/corner zones.
+            </p>
+
+            <h3>4. Using Wrong Exposure Category</h3>
+            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <strong>WRONG:</strong> Assuming Exposure C for all sites<br><br>
+                <strong>RIGHT:</strong> Properly determine Exposure B, C, or D based on upwind terrain for all wind directions. Exposure B is common in suburban/residential areas but produces lower pressures than Exposure C.
+            </p>
+
+            <h3>5. Neglecting Combination 8 (0.6D + 0.6W)</h3>
+            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <strong>WRONG:</strong> Only checking combinations with full dead load and live load<br><br>
+                <strong>RIGHT:</strong> Combination 8 (0.6D + 0.6W) often governs for lightweight structures, roof components, and uplift conditions. This is the critical check for many components.
+            </p>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-shield-halved" style="color: #1e40af; margin-right: 0.75rem;"></i>Code Compliance Checklist for ASD Wind Loads</h3>
+                <ul style="color: #1e3a8a; margin-left: 2rem; margin-top: 1rem;">
+                    <li>✓ Correct basic wind speed (V) from ASCE 7 maps for project location</li>
+                    <li>✓ Proper Exposure Category (B, C, or D) determination</li>
+                    <li>✓ Appropriate Risk Category and importance factor (if ASCE 7-16)</li>
+                    <li>✓ Correct pressure coefficients (GC<sub>p</sub>, GC<sub>pi</sub>) from ASCE 7 figures</li>
+                    <li>✓ Both positive AND negative pressures calculated</li>
+                    <li>✓ All ASD load combinations checked (particularly 0.6D + 0.6W for uplift)</li>
+                    <li>✓ Component DP ratings meet or exceed calculated pressures</li>
+                    <li>✓ Installation details match component manufacturer requirements</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Design Method Resources -->
+    <section class="related-links">
+        <div class="container">
+            <h2>Related Design Method Resources</h2>
+            <div class="link-cards">
+                <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-helmet-safety"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>LRFD Wind Loads</h4>
+                        <p>Load and Resistance Factor Design method with 1.0W factor</p>
+                    </div>
+                </a>
+
+                <a href="asd-lrfd-conversion-guide.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-arrow-right-arrow-left"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>ASD ↔ LRFD Conversion</h4>
+                        <p>Convert between ASD and LRFD wind loads and design methods</p>
+                    </div>
+                </a>
+
+                <a href="nominal-vs-ultimate-wind-loads.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-scale-balanced"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Nominal vs Ultimate Loads</h4>
+                        <p>Understanding the difference between nominal and ultimate wind pressures</p>
+                    </div>
+                </a>
+
+                <a href="nominal-wind-loads-explained.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-gauge"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Nominal Wind Loads</h4>
+                        <p>Complete guide to nominal (ASD) wind pressures</p>
+                    </div>
+                </a>
+
+                <a href="ultimate-wind-loads-explained.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Ultimate Wind Loads</h4>
+                        <p>Strength-based (LRFD) wind pressure calculations</p>
+                    </div>
+                </a>
+
+                <a href="asce-7-wind-load-calculator.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>ASCE 7 Wind Load Calculator</h4>
+                        <p>Professional ASD and LRFD wind pressure calculation software</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WindLoadCalc Promotional Section -->
+    <section class="windloadcalc-promo">
+        <div class="container">
+            <h2>Need Professional ASD Wind Load Calculators?</h2>
+            <p>Visit <strong>WindLoadCalc.com</strong> for automated ASD wind pressure calculations, Component & Cladding analysis with DP ratings, and professional ASCE 7-22/7-16 wind load software. Generate complete ASD calculation reports with PE seal integration.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate ASD Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="asce-7-standards.html">ASCE 7</a>
+                <a href="state-requirements.html">State Requirements</a>
+                <a href="risk-categories-wind-loads-guide.html">Risk Categories</a>
+                <a href="resources.html">Resources</a>
+                <a href="articles.html">Articles</a>
+                <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 Wind Load Solutions. All rights reserved.</p>
+            <p style="opacity: 0.7; font-size: 0.9rem;">Professional wind load engineering resources and calculators</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile navigation toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        // Close nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleNav();
+                }
+            });
+        });
+    </script>
+<script>
+// Navigation toggle functions for click-to-expand
+function toggleNavSection(element) {
+    const section = element.parentElement;
+    const wasActive = section.classList.contains('active');
+
+    // Close all other sections
+    document.querySelectorAll('.nav-section').forEach(s => {
+        if (s !== section) {
+            s.classList.remove('active');
+        }
+    });
+
+    // Toggle this section
+    section.classList.toggle('active');
+}
+
+function toggleNavSubsection(element) {
+    const subsection = element.parentElement;
+    subsection.classList.toggle('active');
+}
+</script>
+<!-- SEO-Enhanced Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>ASCE 7 Standards</h4>
+                <ul>
+                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
+                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
+                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
+                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
+                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
+                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Top States</h4>
+                <ul>
+                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
+                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
+                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
+                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
+                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
+                    <li><a href="state-requirements.html">All 50 States</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources & Tools</h4>
+                <ul>
+                    <li><a href="resources.html">Free Resources</a></li>
+                    <li><a href="articles.html">Articles & Guides</a></li>
+                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
+                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="https://windloadcalc.com" target="_blank" rel="noopener">Wind Load Calculator</a></li>
+                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background: #1a202c;
+    color: #e5e7eb;
+    padding: 4rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-column h4 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #0018ff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-column a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-column a:hover {
+    color: #60a5fa;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.footer-tagline {
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .site-footer {
+        padding: 3rem 1.5rem 1.5rem;
+    }
+}
+</style>
+
+</body>
+</html>

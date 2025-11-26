@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exposure B - Suburban & Residential Wind Loads | Urban Terrain | ASCE 7</title>
+    <meta name="description" content="Complete guide to Exposure B (Exposure Category B) for suburban and urban terrain. Learn surface roughness, velocity pressure coefficients, and when Exposure B applies per ASCE 7.">
+    <link rel="canonical" href="https://windload.solutions/exposure-b-suburban-residential-wind-loads">
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0018ff;
+            --dark-blue: #181E57;
+            --map-light: #86efac;
+            --map-dark: #4ade80;
+            --map-deep: #10b981;
+            --cyan: #06b6d4;
+            --orange: #f97316;
+            --purple: #a855f7;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --pink: #ec4899;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        /* Hero Section - Light Blue Gradient */
+        .hero {
+            background: linear-gradient(135deg, var(--map-light) 0%, var(--map-dark) 100%);
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb {
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 5rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Info Cards Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--map-deep);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .info-card h4 {
+            font-size: 1.4rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-card i {
+            color: var(--map-deep);
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            margin: 3rem 0;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--map-deep), var(--map-dark));
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 5px solid var(--map-deep);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .highlight-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .highlight-box p {
+            color: #1e3a8a;
+            margin-bottom: 0;
+        }
+
+        /* Related Links Section */
+        .related-links {
+            background: #f9fafb;
+            padding: 5rem 0;
+        }
+
+        .related-links h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #1f2937;
+        }
+
+        .link-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .link-card-icon {
+            background: linear-gradient(135deg, var(--map-light), var(--map-dark));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .link-card-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .link-card-content h4 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-card-content p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* WindLoadCalc Promo */
+        .windloadcalc-promo {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .windloadcalc-promo h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .windloadcalc-promo p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta-button {
+            background: white;
+            color: #1e3a8a;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .link-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ASCE 7 Standards",
+                "item": "https://windload.solutions/asce-7-standards.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Exposure Categories",
+                "item": "https://windload.solutions/wind-exposure-categories-guide.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Exposure B",
+                "item": "https://windload.solutions/exposure-b-suburban-residential-wind-loads.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation with Hierarchical Structure -->
+<nav class="nav-links">
+    <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+
+    <!-- ASCE 7 Standards with click submenu -->
+    <div class="nav-section">
+        <a href="#" class="nav-section-header" onclick="event.preventDefault(); toggleNavSection(this);">
+            <i class="fas fa-book"></i> ASCE 7 Standards
+            <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+
+        <div class="nav-section-content">
+            <!-- Wind Speed & Maps submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-wind"></i> Wind Speed & Maps
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="3-second-gust-wind-speed.html" class="nav-subitem"><i class="fas fa-gauge-high"></i> 3-Second Gust</a>
+                    <a href="basic-wind-speed-explained.html" class="nav-subitem"><i class="fas fa-circle-info"></i> Basic Wind Speed</a>
+                    <a href="asce-7-16-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map"></i> ASCE 7-16 Maps</a>
+                    <a href="asce-7-22-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map-location-dot"></i> ASCE 7-22 Maps</a>
+                    <a href="wind-speed-by-location.html" class="nav-subitem"><i class="fas fa-location-dot"></i> Wind Speed by Location</a>
+                </div>
+            </div>
+
+            <!-- Exposure Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="exposure-category-selection-guide.html" class="nav-subitem"><i class="fas fa-compass"></i> Selection Guide</a>
+                    <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-subitem"><i class="fas fa-city"></i> Exposure B</a>
+                    <a href="exposure-c-open-terrain-wind-loads.html" class="nav-subitem"><i class="fas fa-seedling"></i> Exposure C</a>
+                    <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-subitem"><i class="fas fa-water"></i> Exposure D</a>
+                    <a href="exposure-transition-zones.html" class="nav-subitem"><i class="fas fa-arrows-left-right"></i> Transition Zones</a>
+                </div>
+            </div>
+
+            <!-- Risk Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="risk-category-selection-guide.html" class="nav-subitem"><i class="fas fa-list-check"></i> Selection Guide</a>
+                    <a href="risk-category-1-agricultural-buildings.html" class="nav-subitem"><i class="fas fa-warehouse"></i> Category I</a>
+                    <a href="risk-category-2-standard-occupancy.html" class="nav-subitem"><i class="fas fa-building"></i> Category II</a>
+                    <a href="risk-category-3-assembly-buildings.html" class="nav-subitem"><i class="fas fa-users"></i> Category III</a>
+                    <a href="risk-category-4-essential-facilities.html" class="nav-subitem"><i class="fas fa-hospital"></i> Category IV</a>
+                </div>
+            </div>
+
+            <!-- Design Methods submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-drafting-compass"></i> Design Methods
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="asd-allowable-stress-design-wind-loads.html" class="nav-subitem"><i class="fas fa-ruler-combined"></i> ASD Method</a>
+                    <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="nav-subitem"><i class="fas fa-weight-hanging"></i> LRFD Method</a>
+                    <a href="asd-lrfd-conversion-guide.html" class="nav-subitem"><i class="fas fa-arrows-rotate"></i> ASD ↔ LRFD</a>
+                    <a href="nominal-vs-ultimate-wind-loads.html" class="nav-subitem"><i class="fas fa-code-compare"></i> Nominal vs Ultimate</a>
+                    <a href="nominal-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-n"></i> Nominal Loads</a>
+                    <a href="ultimate-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-u"></i> Ultimate Loads</a>
+                    <a href="directional-vs-non-directional-wind-loads.html" class="nav-subitem"><i class="fas fa-compass-drafting"></i> Directional Method</a>
+                    <a href="wind-directionality-factor-guide.html" class="nav-subitem"><i class="fas fa-k"></i> Kd Factor</a>
+                </div>
+            </div>
+
+            <!-- HVHZ / Florida submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-hurricane"></i> HVHZ / Florida
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="hvhz-florida-requirements.html" class="nav-subitem"><i class="fas fa-file-contract"></i> Florida FBC</a>
+                    <a href="miami-dade-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-certificate"></i> Miami-Dade NOA</a>
+                    <a href="broward-county-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-stamp"></i> Broward County</a>
+                    <a href="hvhz-product-approvals.html" class="nav-subitem"><i class="fas fa-check-circle"></i> Product Approvals</a>
+                    <a href="hvhz-vs-standard-wind-zones.html" class="nav-subitem"><i class="fas fa-balance-scale"></i> HVHZ vs Standard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+    <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+    <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+    <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+    <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+    <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<style>
+/* Navigation styles with CLICK dropdowns */
+.nav-section {
+    position: relative;
+}
+
+.nav-section-header {
+    display: block !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    color: #0018ff !important;
+    background: rgba(0, 24, 255, 0.05) !important;
+    padding: 1rem !important;
+    border-left: 4px solid #0018ff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-section-header i:first-child {
+    margin-right: 0.75rem;
+}
+
+.nav-arrow {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-section.active .nav-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-section.active .nav-section-content {
+    max-height: 2000px;
+}
+
+.nav-subsection {
+    position: relative;
+}
+
+.nav-subsection-header {
+    display: block !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    color: #1f2937 !important;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
+    border-left: 3px solid #d1d5db !important;
+    background: transparent !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-subsection-header:hover {
+    background: rgba(0, 24, 255, 0.08) !important;
+    border-left-color: #0018ff !important;
+}
+
+.nav-subsection-header i:first-child {
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.nav-subarrow {
+    font-size: 0.7rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-subsection.active .nav-subarrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.nav-subsection-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-subsection.active .nav-subsection-content {
+    max-height: 1000px;
+}
+
+.nav-subitem {
+    font-size: 0.95rem !important;
+    color: #6b7280 !important;
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.nav-subitem i {
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.nav-subitem:hover {
+    background: rgba(0, 24, 255, 0.05) !important;
+    color: #0018ff !important;
+    padding-left: 3rem !important;
+}
+
+.nav-subitem::before {
+    display: none !important;
+}
+
+/* Override default nav-links a styles */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links > a > i {
+    margin-right: 0.75rem;
+    color: #0018ff;
+    width: 1.25rem;
+    text-align: center;
+}
+</style>
+
+
+
+
+
+
+
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> ›
+                    <a href="asce-7-standards.html">ASCE 7</a> › <a href="wind-exposure-categories-guide.html">Exposure Categories</a> ›
+                    Exposure B
+                </div>
+                <div class="hero-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <h1>Exposure B</h1>
+                <p class="hero-subtitle">Urban and suburban residential areas with closely spaced obstructions</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+
+    <!-- Exposure Category Quick Navigation -->
+    <section class="content-section" style="background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%); padding: 2rem 0; border-top: 3px solid var(--map-deep); border-bottom: 3px solid var(--map-deep);">
+        <div class="container">
+            <h3 style="text-align: center; color: var(--map-deep); margin-bottom: 1.5rem;">
+                <i class="fas fa-compass" style="margin-right: 0.75rem;"></i>Quick Navigation: Exposure Categories
+            </h3>
+            <!-- 2-row grid: Overview/Selection/Transition on top, B/C/D on bottom -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 900px; margin: 0 auto;">
+                <a href="wind-exposure-categories-guide.html" class="nav-button" style="">
+                    <i class="fas fa-compass"></i><br>
+                    <strong>Overview</strong><br>
+                    <span style="font-size: 0.85rem;">Compare All</span>
+                </a>
+                <a href="exposure-category-selection-guide.html" class="nav-button" style="">
+                    <i class="fas fa-map-marked-alt"></i><br>
+                    <strong>Selection Guide</strong><br>
+                    <span style="font-size: 0.85rem;">How to Choose</span>
+                </a>
+                <a href="exposure-transition-zones.html" class="nav-button" style="">
+                    <i class="fas fa-exchange-alt"></i><br>
+                    <strong>Transition Zones</strong><br>
+                    <span style="font-size: 0.85rem;">Where Exposures Change</span>
+                </a>
+                <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-button nav-button-current" style="">
+                    <i class="fas fa-city"></i><br>
+                    <strong>Exposure B</strong><br>
+                    <span style="font-size: 0.85rem;">Suburban/Urban</span>
+                </a>
+                <a href="exposure-c-open-terrain-wind-loads.html" class="nav-button" style="">
+                    <i class="fas fa-seedling"></i><br>
+                    <strong>Exposure C</strong><br>
+                    <span style="font-size: 0.85rem;">Open Terrain</span>
+                </a>
+                <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-button" style="">
+                    <i class="fas fa-water"></i><br>
+                    <strong>Exposure D</strong><br>
+                    <span style="font-size: 0.85rem;">Coastal/Ocean</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .nav-button {
+            display: block;
+            padding: 1.25rem 1rem;
+            background: white;
+            border: 2px solid var(--map-deep);
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--map-deep);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav-button:hover {
+            background: var(--map-deep);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-button i {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .nav-button-current {
+            background: var(--map-deep);
+            color: white;
+            font-weight: bold;
+            border: 3px solid #1e40af;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        .nav-button-current:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+        }
+    </style>
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-book-open" style="color: var(--map-deep); margin-right: 1rem;"></i>Understanding Exposure B Terrain</h2>
+
+            <p><strong>Exposure B</strong> is one of four terrain roughness classifications defined in <strong>ASCE 7-22</strong> (and ASCE 7-16) Section 26.7. It represents urban and suburban areas with numerous closely-spaced obstructions, producing the <strong>lowest wind pressures</strong> of all exposure categories.</p>
+
+            <p>The exposure category determination is critical because it directly affects the velocity pressure exposure coefficient (K<sub>h</sub> or K<sub>z</sub>), which can change design wind pressures by <strong>30% or more</strong> compared to other exposures.</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-city"></i> Suburban/Urban</h4>
+                    <p>Numerous closely-spaced obstructions the size of single-family dwellings or larger characterize Exposure B terrain.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-ruler"></i> Distance Requirements</h4>
+                    <p>Exposure B terrain must extend ≥2,600 ft (or 20× building height) upwind, or ≥1,500 ft for buildings ≤30 ft tall.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-arrow-down"></i> Lowest Pressures</h4>
+                    <p>Produces 30-33% lower wind pressures than Exposure C due to terrain roughness reducing wind speeds.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-check-circle"></i> ASCE 7-22 / 7-16</h4>
+                    <p>Defined in Section 26.7 of both ASCE 7-22 (latest) and ASCE 7-16 with same requirements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-home" style="color: var(--map-deep); margin-right: 1rem;"></i>What is Exposure B?</h2>
+
+            <p><strong>Exposure B</strong> represents urban and suburban terrain with numerous closely-spaced obstructions having the size of single-family dwellings or larger. This is the most common exposure category for residential construction and urban commercial buildings.</p>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-info-circle" style="color: #1e40af; margin-right: 0.75rem;"></i>ASCE 7 Definition (Section 26.7)</h3>
+                <p><strong>Exposure B:</strong> Urban and suburban areas, wooded areas, or other terrain with numerous closely spaced obstructions having the size of single-family dwellings or larger.</p>
+                <p style="margin-top: 1rem;"><strong>Key Requirements:</strong></p>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Must prevail in upwind direction for ≥ <strong>2,600 feet</strong> (792 m) or 20× building height, whichever is greater</li>
+                    <li>Buildings with mean roof height ≤ <strong>30 ft (9.1 m)</strong> and meeting size requirements may use Exposure B</li>
+                    <li>Obstructions must be closely spaced (typical suburban density or denser)</li>
+                </ul>
+            </div>
+
+            <p>Exposure B produces the <strong>lowest design wind pressures</strong> of all exposure categories because terrain roughness (buildings, trees, structures) significantly reduces wind speeds near the ground.</p>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-city" style="color: var(--map-deep); margin-right: 1rem;"></i>Typical Exposure B Environments</h2>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-home"></i> Suburban Residential</h4>
+                    <p>Single-family neighborhoods, townhomes, subdivisions with mature trees, residential streets with houses on 1/4 - 1 acre lots.</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-building"></i> Urban Commercial</h4>
+                    <p>Downtown areas with multi-story buildings, strip malls surrounded by development, industrial parks with large structures.</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-tree"></i> Wooded Areas</h4>
+                    <p>Dense forests, mature tree groves, orchards with full canopy. Trees must be closely spaced (not isolated clumps).</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-warehouse"></i> Industrial Zones</h4>
+                    <p>Manufacturing facilities with large buildings, warehouses clustered together, commercial/industrial mixed use.</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-school"></i> Institutional Campuses</h4>
+                    <p>University campuses with multi-story buildings, hospital complexes, corporate office parks with mature landscaping.</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-store"></i> Town Centers</h4>
+                    <p>Main street commercial districts, village centers with 2-3 story buildings, mixed-use urban neighborhoods.</p>
+                </div>
+            </div>
+
+            <h3>Geographic Examples</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white;">
+                <thead>
+                    <tr style="background: var(--map-deep); color: white;">
+                        <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Location Type</th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">Exposure</th>
+                        <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Example Locations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #e0f2fe;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Suburban subdivision</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>B</strong></td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Cary NC, Naperville IL, Plano TX typical neighborhoods</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Urban downtown</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>B</strong></td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Charlotte uptown, Raleigh downtown, Atlanta midtown</td>
+                    </tr>
+                    <tr style="background: #e0f2fe;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Mature residential</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>B</strong></td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Established neighborhoods (30+ years old) with large trees</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Industrial park (developed)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>B</strong></td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Warehouses, manufacturing with surrounding development</td>
+                    </tr>
+                    <tr style="background: #fee;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Rural farmhouse</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>C</strong></td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Isolated home surrounded by crop fields - NOT Exposure B</td>
+                    </tr>
+                    <tr style="background: #fee;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">New subdivision (no trees)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>C</strong></td>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">Recently cleared land - use C until mature landscaping</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-ruler-combined" style="color: var(--map-deep); margin-right: 1rem;"></i>Exposure B Distance Requirements</h2>
+
+            <p>To qualify for Exposure B, the terrain must meet specific upwind distance requirements. This is one of the most commonly misapplied provisions in wind load analysis.</p>
+
+            <div class="highlight-box" style="background: white; border: 2px solid var(--map-deep);">
+                <h3 style="color: var(--map-deep);">ASCE 7 Upwind Distance Requirement</h3>
+                <p style="font-size: 1.25rem; margin: 1.5rem 0;">
+                    Exposure B terrain must exist for a distance of:
+                </p>
+                <p style="font-size: 1.5rem; text-align: center; margin: 1.5rem 0; color: var(--map-deep); font-weight: bold;">
+                    <strong>Greater of:</strong> 2,600 feet OR 20× building height
+                </p>
+                <p>Measured upwind from the building in the wind direction being considered.</p>
+            </div>
+
+            <h3>Distance Calculation Examples</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white;">
+                <thead>
+                    <tr style="background: var(--map-deep); color: white;">
+                        <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Building Height</th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">20× Height</th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft Minimum</th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">Required Distance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #e0f2fe;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">15 ft (residential)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">300 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>2,600 ft</strong> (governs)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">25 ft (2-story commercial)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">500 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>2,600 ft</strong> (governs)</td>
+                    </tr>
+                    <tr style="background: #e0f2fe;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">40 ft (3-story office)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">800 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>2,600 ft</strong> (governs)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">100 ft (8-story building)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,000 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>2,600 ft</strong> (governs)</td>
+                    </tr>
+                    <tr style="background: #e0f2fe;">
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">150 ft (12-story building)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">3,000 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>3,000 ft</strong> (20× governs)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #ddd;">200 ft (high-rise)</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">4,000 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">2,600 ft</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;"><strong>4,000 ft</strong> (20× governs)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="background: #dbeafe; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #1e40af; margin: 1.5rem 0;">
+                <strong><i class="fas fa-lightbulb"></i> Key Insight:</strong> For typical low-rise buildings (≤130 ft tall), the 2,600 ft minimum governs. That's nearly half a mile of suburban terrain required upwind!
+            </p>
+
+            <h3>Low-Rise Building Exception (ASCE 7-16 Section 26.7.3)</h3>
+
+            <div class="highlight-box" style="background: #d1fae5; border-left: 5px solid #10b981;">
+                <p><strong>Buildings ≤ 30 ft tall</strong> with specific characteristics may use Exposure B if:</p>
+                <ul style="margin: 0.5rem 0 0 1.5rem;">
+                    <li>Mean roof height h ≤ 30 ft (9.1 m)</li>
+                    <li>Building is located in suburban terrain with numerous closely-spaced obstructions</li>
+                    <li>Surface roughness B prevails in upwind direction for distance greater of:</li>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>1,500 ft (457 m)</strong>, OR</li>
+                        <li><strong>10× building height</strong></li>
+                    </ul>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>This exception is commonly applied to residential construction (houses ≤ 30 ft tall) in suburban neighborhoods.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-calculator" style="color: var(--map-deep); margin-right: 1rem;"></i>Wind Loads with Exposure B</h2>
+
+            <p>Exposure B uses the lowest velocity pressure exposure coefficient (K<sub>h</sub>) values, resulting in reduced design wind pressures compared to Exposures C and D.</p>
+
+            <h3>Velocity Pressure Exposure Coefficients (K<sub>h</sub> and K<sub>z</sub>)</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: white;">
+                <thead>
+                    <tr style="background: var(--map-deep); color: white;">
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">Height (ft)</th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">Exposure B K<sub>z</sub></th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">Exposure C K<sub>z</sub></th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">Exposure D K<sub>z</sub></th>
+                        <th style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">B vs C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">0-15</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; background: #e0f2fe;"><strong>0.57</strong></td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">0.85</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.03</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; color: #10b981;"><strong>-33%</strong></td>
+                    </tr>
+                    <tr style="background: #f9fafb;">
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">20</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; background: #e0f2fe;"><strong>0.62</strong></td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">0.90</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.08</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; color: #10b981;"><strong>-31%</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">25</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; background: #e0f2fe;"><strong>0.66</strong></td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">0.94</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.12</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; color: #10b981;"><strong>-30%</strong></td>
+                    </tr>
+                    <tr style="background: #f9fafb;">
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">30</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; background: #e0f2fe;"><strong>0.70</strong></td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">0.98</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.16</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; color: #10b981;"><strong>-29%</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">40</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; background: #e0f2fe;"><strong>0.76</strong></td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.04</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.22</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; color: #10b981;"><strong>-27%</strong></td>
+                    </tr>
+                    <tr style="background: #f9fafb;">
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">60</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; background: #e0f2fe;"><strong>0.86</strong></td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.13</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd;">1.31</td>
+                        <td style="padding: 0.75rem; text-align: center; border: 1px solid #ddd; color: #10b981;"><strong>-24%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="background: #fef3c7; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #f59e0b; margin: 1.5rem 0;">
+                <strong><i class="fas fa-exclamation-triangle"></i> Critical Impact:</strong> At 15 ft height, Exposure B produces <strong>33% lower</strong> wind pressures than Exposure C. This translates directly to component DP rating selection and structural member sizing.
+            </p>
+
+            <h3>Example: Residential Window - Raleigh, NC</h3>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-home"></i> Structure</h4>
+                    <p><strong>Single-family house</strong><br>
+                    Suburban neighborhood<br>
+                    Mean roof height: 20 ft<br>
+                    Risk Category II</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-wind"></i> Wind Parameters</h4>
+                    <p><strong>V = 115 mph</strong> (ASCE 7-22)<br>
+                    <strong>Exposure B</strong> (suburban)<br>
+                    K<sub>zt</sub> = 1.0, K<sub>d</sub> = 0.85</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-window-restore"></i> Component</h4>
+                    <p><strong>Window - Zone 5</strong><br>
+                    Effective area = 10 ft²<br>
+                    GC<sub>p</sub> = -1.00<br>
+                    Enclosed: GC<sub>pi</sub> = ±0.18</p>
+                </div>
+                <div class="info-card">
+                    <h4><i class="fas fa-check-circle"></i> Result</h4>
+                    <p><strong>p = -20.5 psf</strong><br>
+                    Required: <strong>DP-25</strong><br>
+                    (vs DP-30 for Exposure C)</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="background: white; border-left: 5px solid var(--map-deep);">
+                <h4>Calculation Steps:</h4>
+                <p><strong>1. K<sub>h</sub> for Exposure B, h=20 ft:</strong></p>
+                <p style="margin-left: 1.5rem; font-family: 'Courier New', monospace;">K<sub>h</sub> = 0.62 (from ASCE 7 Table 26.10-1)</p>
+
+                <p><strong>2. Velocity pressure q<sub>h</sub>:</strong></p>
+                <p style="margin-left: 1.5rem; font-family: 'Courier New', monospace;">
+                    q<sub>h</sub> = 0.00256 × 0.62 × 1.0 × 0.85 × 1.0 × 115²<br>
+                    q<sub>h</sub> = 17.4 psf
+                </p>
+
+                <p><strong>3. Wind pressure (governing case):</strong></p>
+                <p style="margin-left: 1.5rem; font-family: 'Courier New', monospace;">
+                    p = q<sub>h</sub>[(GC<sub>p</sub>) - (GC<sub>pi</sub>)]<br>
+                    p = 17.4[(-1.00) - (+0.18)] = <strong>-20.5 psf</strong>
+                </p>
+
+                <p><strong>4. Component selection (ASD with 0.6W):</strong></p>
+                <p style="margin-left: 1.5rem;">
+                    ASD pressure = 0.6 × 20.5 = 12.3 psf<br>
+                    <strong>Select DP-25</strong> (25/0.6 = 41.7 psf > 20.5 psf ✓)
+                </p>
+
+                <p style="margin-top: 1.5rem;"><strong>Comparison - Same building in Exposure C:</strong></p>
+                <p style="margin-left: 1.5rem; font-family: 'Courier New', monospace;">
+                    K<sub>h</sub> = 0.90 → q<sub>h</sub> = 25.3 psf → p = -29.8 psf<br>
+                    Would require <strong>DP-30</strong> (vs DP-25 for Exposure B)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-exclamation-triangle" style="color: #dc2626; margin-right: 1rem;"></i>Common Exposure B Mistakes</h2>
+
+            <div style="background: #fee; padding: 2rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <h3 style="color: #dc2626; margin-top: 0;"><i class="fas fa-times-circle"></i> Mistake #1: Insufficient Upwind Distance</h3>
+                <p><strong>WRONG:</strong> "This house is in a subdivision, so it's Exposure B" (only 800 ft of suburban terrain upwind)</p>
+                <p><strong>RIGHT:</strong> Must verify ≥2,600 ft (or 1,500 ft for h≤30 ft) of suburban terrain in ALL wind directions being considered.</p>
+                <p style="margin-bottom: 0;"><strong>Impact:</strong> Under-designed components, potential failures in windstorms</p>
+            </div>
+
+            <div style="background: #fee; padding: 2rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <h3 style="color: #dc2626; margin-top: 0;"><i class="fas fa-times-circle"></i> Mistake #2: Using Exposure B for Rural Buildings</h3>
+                <p><strong>WRONG:</strong> Farmhouse surrounded by crop fields or pastures classified as Exposure B</p>
+                <p><strong>RIGHT:</strong> Farmland is Exposure C. Isolated trees or farm structures do NOT create Exposure B.</p>
+                <p style="margin-bottom: 0;"><strong>Impact:</strong> Significant under-design (30%+ reduction in wind loads vs correct Exposure C)</p>
+            </div>
+
+            <div style="background: #fee; padding: 2rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <h3 style="color: #dc2626; margin-top: 0;"><i class="fas fa-times-circle"></i> Mistake #3: Assuming ALL Directions Qualify</h3>
+                <p><strong>WRONG:</strong> Site has 2,600 ft of suburban terrain to the west, so use Exposure B for all wind directions</p>
+                <p><strong>RIGHT:</strong> Must check EACH wind direction. If terrain is Exposure C to the east, use C for east winds (or use C for all directions conservatively).</p>
+                <p style="margin-bottom: 0;"><strong>Impact:</strong> Non-compliance with ASCE 7, potential under-design</p>
+            </div>
+
+            <div style="background: #fee; padding: 2rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
+                <h3 style="color: #dc2626; margin-top: 0;"><i class="fas fa-times-circle"></i> Mistake #4: New Subdivisions on Cleared Land</h3>
+                <p><strong>WRONG:</strong> New development with houses but no mature trees/landscaping → Exposure B</p>
+                <p><strong>RIGHT:</strong> Newly cleared land is Exposure C until sufficient mature vegetation and structures exist. Must have "numerous closely-spaced obstructions."</p>
+                <p style="margin-bottom: 0;"><strong>Impact:</strong> Under-designed structures in early phases of subdivision development</p>
+            </div>
+
+            <h3>Exposure B Qualification Checklist</h3>
+            <div class="highlight-box" style="background: #d1fae5; border-left: 5px solid #10b981;">
+                <p style="margin: 0.5rem 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> Verify terrain has numerous closely-spaced obstructions (house-sized or larger)</p>
+                <p style="margin: 0.5rem 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> Confirm upwind distance: ≥2,600 ft OR 20× building height (whichever is greater)</p>
+                <p style="margin: 0.5rem 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> For buildings ≤30 ft tall: verify ≥1,500 ft OR 10× height of Exposure B terrain</p>
+                <p style="margin: 0.5rem 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> Check ALL wind directions - each must meet Exposure B criteria (or use most critical exposure)</p>
+                <p style="margin: 0.5rem 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> Document exposure determination with aerial photos or site plans showing upwind terrain</p>
+                <p style="margin: 0.5rem 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> If ANY doubt exists, use Exposure C (conservative and most common default)</p>
+                <p style="margin: 0; padding: 0;"><i class="fas fa-check-square" style="color: #10b981;"></i> Re-evaluate exposure if site conditions change (new development, tree removal, etc.)</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section cta-section" style="background: linear-gradient(135deg, var(--map-deep) 0%, #1e3a8a 100%); color: white; padding: 4rem 0;">
+        <div class="container" style="text-align: center;">
+            <h2 style="color: white; font-size: 2.5rem; margin-bottom: 1rem;">
+                <i class="fas fa-calculator" style="margin-right: 1rem;"></i>Exposure B Wind Loads Made Simple
+            </h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
+                WindLoadCalc.com automatically applies correct K<sub>h</sub> coefficients for Exposure B suburban terrain
+            </p>
+            <a href="https://windloadcalc.com" class="cta-button" style="display: inline-block; background: white; color: var(--map-deep); padding: 1rem 3rem; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.25rem; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <i class="fas fa-wind" style="margin-right: 0.75rem;"></i>Calculate Exposure B Loads FREE
+            </a>
+            <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.9;">
+                ✓ ASCE 7-16 &amp; 7-22 compliant&nbsp;&nbsp;&nbsp;✓ All exposure categories&nbsp;&nbsp;&nbsp;✓ Component DP ratings&nbsp;&nbsp;&nbsp;✓ Instant results
+            </p>
+        </div>
+    </section>
+
+    <section class="related-links">
+        <div class="container">
+            <h2><i class="fas fa-link" style="color: var(--map-deep); margin-right: 1rem;"></i>Related Exposure Category Topics</h2>
+            <div class="link-grid">
+                <a href="exposure-c-open-terrain-wind-loads.html" class="link-card">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Exposure C (Open Terrain)</h3>
+                    <p>Open terrain, grassland, and most common default</p>
+                </a>
+                <a href="exposure-d-coastal-ocean-wind-loads.html" class="link-card">
+                    <i class="fas fa-water"></i>
+                    <h3>Exposure D (Coastal)</h3>
+                    <p>Coastal areas and highest wind pressures</p>
+                </a>
+                <a href="exposure-category-selection-guide.html" class="link-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Exposure Selection Guide</h3>
+                    <p>How to determine correct exposure category</p>
+                </a>
+                <a href="exposure-transition-zones.html" class="link-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Exposure Transition Zones</h3>
+                    <p>Where exposure categories change</p>
+                </a>
+                <a href="wind-exposure-categories-guide.html" class="link-card">
+                    <i class="fas fa-compass"></i>
+                    <h3>Exposure Categories Overview</h3>
+                    <p>Compare all ASCE 7 exposure categories</p>
+                </a>
+                <a href="asd-allowable-stress-design-wind-loads.html" class="link-card">
+                    <i class="fas fa-drafting-compass"></i>
+                    <h3>ASD Wind Loads</h3>
+                    <p>Allowable Stress Design methodology</p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="related-links">
+        <div class="container">
+            <h2>Related Wind Speed Resources</h2>
+            <div class="link-cards">
+                <a href="asce-7-22-wind-speed-maps.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>ASCE 7-22 Wind Speed Maps</h4>
+                        <p>Updated MRI-based wind speed maps and changes from ASCE 7-16</p>
+                    </div>
+                </a>
+
+                <a href="wind-speed-by-location.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Wind Speed by Location</h4>
+                        <p>Find design wind speeds for your specific project site</p>
+                    </div>
+                </a>
+
+                <a href="asce-7-wind-load-velocity-finder-wind-speed-by-zip-code.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Wind Speed by Zip Code</h4>
+                        <p>Quick wind speed lookup tool using zip code search</p>
+                    </div>
+                </a>
+
+                <a href="3-second-gust-wind-speed.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>3-Second Gust Wind Speed</h4>
+                        <p>Understanding the 3-second gust parameter in ASCE 7</p>
+                    </div>
+                </a>
+
+                <a href="basic-wind-speed-explained.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-gauge-high"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Basic Wind Speed Explained</h4>
+                        <p>Comprehensive guide to the basic wind speed parameter (V)</p>
+                    </div>
+                </a>
+
+                <a href="asce-7-wind-load-calculator.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>ASCE 7 Wind Load Calculator</h4>
+                        <p>Professional wind pressure calculation software</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WindLoadCalc Promotional Section -->
+    <section class="windloadcalc-promo">
+        <div class="container">
+            <h2>Need Professional Wind Load Calculators?</h2>
+            <p>Visit <strong>WindLoadCalc.com</strong> for automated ASCE 7-16 and 7-22 wind speed lookup, professional wind load calculator software, and the Building Intelligence Platform (BIP) for comprehensive structural analysis.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Visit WindLoadCalc.com →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="asce-7-standards.html">ASCE 7</a>
+                <a href="state-requirements.html">State Requirements</a>
+                <a href="risk-categories-wind-loads-guide.html">Risk Categories</a>
+                <a href="resources.html">Resources</a>
+                <a href="articles.html">Articles</a>
+                <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 Wind Load Solutions. All rights reserved.</p>
+            <p style="opacity: 0.7; font-size: 0.9rem;">Professional wind load engineering resources and calculators</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile navigation toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        // Close nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleNav();
+                }
+            });
+        });
+    </script>
+<script>
+// Navigation toggle functions for click-to-expand
+function toggleNavSection(element) {
+    const section = element.parentElement;
+    const wasActive = section.classList.contains('active');
+
+    // Close all other sections
+    document.querySelectorAll('.nav-section').forEach(s => {
+        if (s !== section) {
+            s.classList.remove('active');
+        }
+    });
+
+    // Toggle this section
+    section.classList.toggle('active');
+}
+
+function toggleNavSubsection(element) {
+    const subsection = element.parentElement;
+    subsection.classList.toggle('active');
+}
+</script>
+<!-- SEO-Enhanced Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>ASCE 7 Standards</h4>
+                <ul>
+                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
+                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
+                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
+                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
+                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
+                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Top States</h4>
+                <ul>
+                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
+                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
+                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
+                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
+                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
+                    <li><a href="state-requirements.html">All 50 States</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources & Tools</h4>
+                <ul>
+                    <li><a href="resources.html">Free Resources</a></li>
+                    <li><a href="articles.html">Articles & Guides</a></li>
+                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
+                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="https://windloadcalc.com" target="_blank" rel="noopener">Wind Load Calculator</a></li>
+                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background: #1a202c;
+    color: #e5e7eb;
+    padding: 4rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-column h4 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #0018ff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-column a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-column a:hover {
+    color: #60a5fa;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.footer-tagline {
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .site-footer {
+        padding: 3rem 1.5rem 1.5rem;
+    }
+}
+</style>
+
+</body>
+</html>

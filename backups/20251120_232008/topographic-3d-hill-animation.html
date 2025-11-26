@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-D AXISYMMETRICAL HILL</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            min-height: calc(100vh - 40px);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: bold;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #74b9ff, #0984e3, #2d3436);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleFlow 4s ease-in-out infinite;
+        }
+        
+        .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: #74b9ff;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes titleFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .control-button {
+            background: linear-gradient(45deg, #74b9ff 0%, #0984e3 100%);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            margin: 0 8px;
+            border-radius: 20px;
+            font-size: clamp(10px, 1.8vw, 14px);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .animation-area {
+            width: 100%;
+            height: 280px;
+            margin-bottom: 15px;
+        }
+        
+        svg {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(26,26,46,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            border-radius: 15px;
+        }
+        
+        .wind-particle {
+            r: 3;
+            fill: #ffeb3b;
+            filter: drop-shadow(0 0 6px #ffeb3b);
+        }
+        
+        .wind-particle.speedup {
+            fill: #ff9800;
+            filter: drop-shadow(0 0 8px #ff9800);
+        }
+        
+        .wind-particle.fast {
+            fill: #f44336;
+            filter: drop-shadow(0 0 10px #f44336);
+        }
+        
+        .wind-particle.turbo {
+            fill: #e91e63;
+            filter: drop-shadow(0 0 12px #e91e63);
+        }
+        
+        .terrain {
+            fill: none;
+            stroke: #74b9ff;
+            stroke-width: 4;
+            filter: drop-shadow(0 0 12px #74b9ff);
+        }
+        
+        .hill-fill {
+            fill: rgba(116, 185, 255, 0.15);
+            stroke: #74b9ff;
+            stroke-width: 2;
+        }
+        
+        .speedup-zone {
+            fill: rgba(255, 107, 107, 0.2);
+            stroke: rgba(255, 107, 107, 0.6);
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+            animation: speedupPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes speedupPulse {
+            0%, 100% { 
+                fill-opacity: 0.2;
+                stroke-opacity: 0.6;
+            }
+            50% { 
+                fill-opacity: 0.4;
+                stroke-opacity: 0.9;
+            }
+        }
+        
+        .label {
+            fill: #ffffff;
+            font-size: clamp(10px, 1.5vw, 14px);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        
+        .asce-label-text {
+            fill: #74b9ff;
+            font-size: clamp(8px, 1.2vw, 12px);
+            font-weight: bold;
+        }
+        
+        .info-panel {
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(116, 185, 255, 0.3);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .info-box {
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #74b9ff;
+        }
+        
+        .info-box p {
+            margin: 4px 0;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">3-D AXISYMMETRICAL HILL</h1>
+            <div class="subtitle" id="windSubtitle">wind speed: Normal</div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-button" onclick="toggleAnimation()">⏯️ PAUSE/PLAY</button>
+            <button class="control-button" onclick="changeWindSpeed()">💨 WIND SPEED</button>
+        </div>
+        
+        <div class="animation-area">
+            <svg id="hillSvg" viewBox="0 0 1000 400">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="6" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="white"/>
+                    </marker>
+                    <marker id="dimension-start" markerWidth="10" markerHeight="6" refX="1" refY="3" orient="auto">
+                        <polygon points="10 0, 0 3, 10 6" fill="#ffff00"/>
+                    </marker>
+                    <marker id="dimension-end" markerWidth="10" markerHeight="6" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#ffff00"/>
+                    </marker>
+                </defs>
+                
+                <path d="M0,300 L150,300 C200,300 250,295 300,280 C350,265 400,240 450,210 C475,195 500,180 525,195 C550,210 600,240 650,265 C700,280 750,295 800,300 L1000,300 L1000,400 L0,400 Z" class="hill-fill"/>
+                
+                <path d="M0,300 L150,300 C200,300 250,295 300,280 C350,265 400,240 450,210 C475,195 500,180 525,195 C550,210 600,240 650,265 C700,280 750,295 800,300 L1000,300" class="terrain"/>
+                
+                <path d="M400,220 C450,200 500,180 550,200 C600,220 620,240 610,180 C590,160 550,140 500,120 C450,140 410,160 390,180 C380,240 400,220 400,220 Z" class="speedup-zone"/>
+                
+                <text x="200" y="60" class="asce-label-text">Kzt = (1 + K₁K₂K₃)²</text>
+                <text x="520" y="140" class="asce-label-text">Speed-up Zone</text>
+                
+                <line x1="800" y1="80" x2="850" y2="80" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+                <text x="855" y="85" style="fill: white; font-size: 12px; font-weight: bold;">K₁ = 0.21</text>
+                
+                <text x="50" y="370" class="label">x (Upwind)</text>
+                <line x1="20" y1="350" x2="80" y2="350" stroke="white" stroke-width="2" marker-end="url(#arrowhead)"/>
+                
+                <text x="900" y="370" class="label">x (Downwind)</text>
+                <line x1="900" y1="350" x2="960" y2="350" stroke="white" stroke-width="2" marker-end="url(#arrowhead)"/>
+                
+                <line x1="700" y1="300" x2="700" y2="180" stroke="#ffff00" stroke-width="2" 
+                      marker-start="url(#dimension-start)" marker-end="url(#dimension-end)"/>
+                <line x1="690" y1="300" x2="710" y2="300" stroke="#ffff00" stroke-width="2"/>
+                <line x1="690" y1="180" x2="710" y2="180" stroke="#ffff00" stroke-width="2"/>
+                
+                <line x1="715" y1="240" x2="745" y2="240" stroke="rgba(255,255,0,0.5)" stroke-width="1" stroke-dasharray="2,2"/>
+                <text x="750" y="245" style="fill: #ffff00; font-size: 14px; font-weight: bold;">H</text>
+                
+                <line x1="150" y1="350" x2="800" y2="350" stroke="#ffff00" stroke-width="2"
+                      marker-start="url(#dimension-start)" marker-end="url(#dimension-end)"/>
+                <line x1="150" y1="340" x2="150" y2="360" stroke="#ffff00" stroke-width="2"/>
+                <line x1="800" y1="340" x2="800" y2="360" stroke="#ffff00" stroke-width="2"/>
+                
+                <line x1="470" y1="365" x2="500" y2="365" stroke="rgba(255,255,0,0.5)" stroke-width="1" stroke-dasharray="2,2"/>
+                <text x="505" y="370" style="fill: #ffff00; font-size: 14px; font-weight: bold;">L<tspan baseline-shift="sub">h</tspan></text>
+                
+                <line x1="150" y1="315" x2="200" y2="315" stroke="rgba(116,185,255,0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+                <text x="205" y="320" class="asce-label-text">H/L<tspan baseline-shift="sub">h</tspan> ≥ 0.2</text>
+                
+                <line x1="250" y1="300" x2="250" y2="262" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="250" y1="281" x2="280" y2="281" stroke="rgba(255,107,107,0.3)" stroke-width="1" stroke-dasharray="2,2"/>
+                <text x="285" y="286" class="asce-label-text" font-size="10">Upper 1/2</text>
+                
+                <!-- Side flow indicators -->
+                <path d="M450,200 Q480,185 500,180 Q520,185 550,200" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+                <text x="420" y="175" class="asce-label-text" font-size="10">Flow Around Sides</text>
+                
+                <text x="500" y="390" class="label" text-anchor="middle" font-size="18">3-D AXISYMMETRICAL HILL</text>
+            </svg>
+        </div>
+        
+        <div class="info-panel">
+            <div class="info-box">
+                <h3>3-D Hill Characteristics (K₁ = 0.21):</h3>
+                <p><strong>Dispersed Flow:</strong> Wind can flow around the sides as well as over the top</p>
+                <p><strong>Lower Speed-up Effects:</strong> Peak acceleration is reduced due to flow dispersion</p>
+                <p><strong>Side Flow Patterns:</strong> Multiple flow paths reduce concentrated acceleration</p>
+                <p><strong>Gradual Transitions:</strong> Smoother changes in wind speed and direction</p>
+            </div>
+            <div class="info-box">
+                <h3>Topographic Factor Requirements:</h3>
+                <p><strong>Structure:</strong> Must be in upper half of hill/ridge</p>
+                <p><strong>H/Lh ≥ 0.2:</strong> Height to length ratio requirement</p>
+                <p><strong>Height:</strong> H ≥ 15 ft (Exposure C,D) or 60 ft (Exposure B)</p>
+                <p><strong>Isolation:</strong> No similar upwind obstructions within 100H or 2 miles</p>
+                <p><strong>Formula:</strong> Kzt = (1 + K₁K₂K₃)² where K₁ = shape factor, K₂ = distance factor, K₃ = height factor</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let animationRunning = true;
+        let windSpeedIndex = 1;
+        let animationFrame;
+        
+        const windSpeeds = [
+            { label: "Low", multiplier: 0.5 },
+            { label: "Normal", multiplier: 1.0 },
+            { label: "High", multiplier: 1.5 },
+            { label: "Very High", multiplier: 2.2 },
+            { label: "Extreme", multiplier: 3.0 }
+        ];
+        
+        function updateWindSpeedDisplay() {
+            const currentSpeed = windSpeeds[windSpeedIndex];
+            const subtitle = document.getElementById('windSubtitle');
+            subtitle.textContent = `wind speed: ${currentSpeed.label}`;
+        }
+        
+        function createParticle(svg) {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            const y = 200 + Math.random() * 100;
+            
+            circle.setAttribute('cx', -10);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', 2 + Math.random() * 2);
+            circle.setAttribute('class', 'wind-particle');
+            circle.setAttribute('opacity', Math.random() * 0.6 + 0.4);
+            
+            circle.animData = {
+                x: -10,
+                y: y,
+                vx: 2 + Math.random() * 2,
+                vy: (Math.random() - 0.5) * 0.5,
+                life: 0
+            };
+            
+            svg.appendChild(circle);
+            return circle;
+        }
+        
+        function getTerrainHeight(x) {
+            if (x < 150) return 300;
+            if (x > 800) return 300;
+            
+            if (x <= 500) {
+                const t = (x - 150) / 350;
+                const curve = Math.sin(t * Math.PI);
+                return 300 - (120 * curve);
+            } else {
+                const t = (x - 500) / 300;
+                const curve = Math.sin((1 - t) * Math.PI);
+                return 300 - (120 * curve);
+            }
+        }
+        
+        function updateParticle(particle) {
+            const data = particle.animData;
+            const currentSpeedMultiplier = windSpeeds[windSpeedIndex].multiplier;
+            
+            data.x += data.vx * currentSpeedMultiplier;
+            data.y += data.vy;
+            data.life++;
+            
+            const terrainHeight = getTerrainHeight(data.x);
+            
+            if (data.x > 150 && data.x < 800) {
+                const distanceFromCrest = Math.abs(data.x - 500) / 350;
+                const heightAboveTerrain = terrainHeight - data.y;
+                
+                // 3D Hill K1 factor
+                const k1Factor = 0.21;
+                const k2Factor = Math.max(0, 1 - distanceFromCrest);
+                const k3Factor = Math.exp(-Math.abs(heightAboveTerrain) / 80);
+                
+                const speedupFactor = 1 + (k1Factor * k2Factor * k3Factor * 1.5);
+                data.vx *= speedupFactor;
+                
+                // 3D HILL: Dispersed flow - particles spread out widely
+                if (data.x > 350 && data.x < 650) {
+                    // Strong SIDEWAYS dispersion for 3D
+                    data.vy += (Math.random() - 0.5) * 6; // WIDE vertical spread
+                    data.vx *= 0.9; // Slightly slower due to dispersion
+                }
+                
+                // Conservative color changes for 3D - stays yellow longer
+                if (data.vx > 5) {
+                    particle.setAttribute('class', 'wind-particle speedup');
+                    particle.setAttribute('r', 3);
+                }
+                if (data.vx > 8) {
+                    particle.setAttribute('class', 'wind-particle fast');
+                    particle.setAttribute('r', 4);
+                }
+                if (data.vx > 12) {
+                    particle.setAttribute('class', 'wind-particle turbo');
+                    particle.setAttribute('r', 5);
+                }
+            }
+            
+            // Limit extreme vertical movements
+            if (Math.abs(data.vy) > 8) {
+                data.vy = data.vy > 0 ? 8 : -8;
+            }
+            
+            data.vy += 0.05;
+            data.vy += (Math.random() - 0.5) * 0.2;
+            
+            if (data.y < 50) {
+                data.y = 50;
+                data.vy = Math.abs(data.vy);
+            }
+            
+            if (data.y > terrainHeight - 10) {
+                data.y = terrainHeight - 10;
+                data.vy = -Math.abs(data.vy) * 0.5;
+            }
+            
+            particle.setAttribute('cx', data.x);
+            particle.setAttribute('cy', data.y);
+            
+            if (data.x > 1000 || data.life > 500 || data.y > 400) {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function animateFlow() {
+            if (!animationRunning) {
+                animationFrame = requestAnimationFrame(animateFlow);
+                return;
+            }
+            
+            const svg = document.getElementById('hillSvg');
+            
+            const particleFrequencies = [0.15, 0.3, 0.45, 0.6, 0.8];
+            const currentFrequency = particleFrequencies[windSpeedIndex];
+            
+            if (Math.random() < currentFrequency) {
+                createParticle(svg);
+            }
+            
+            const particles = svg.querySelectorAll('.wind-particle');
+            particles.forEach(particle => {
+                updateParticle(particle);
+            });
+            
+            animationFrame = requestAnimationFrame(animateFlow);
+        }
+        
+        function toggleAnimation() {
+            animationRunning = !animationRunning;
+            const button = event.target;
+            button.textContent = animationRunning ? '⏯️ PAUSE/PLAY' : '▶️ PLAY';
+        }
+        
+        function changeWindSpeed() {
+            windSpeedIndex = (windSpeedIndex + 1) % windSpeeds.length;
+            updateWindSpeedDisplay();
+        }
+        
+        updateWindSpeedDisplay();
+        animateFlow();
+    </script>
+</body>
+</html>

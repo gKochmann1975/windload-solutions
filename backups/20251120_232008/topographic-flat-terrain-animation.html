@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCE 7 WIND LOAD - FLAT TERRAIN</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #000428, #004e92);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: bold;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d, #096f5f);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleFlow 4s ease-in-out infinite;
+        }
+        
+        .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes titleFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .control-button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            margin: 0 8px;
+            border-radius: 20px;
+            font-size: clamp(10px, 1.8vw, 14px);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .animation-area {
+            width: 100%;
+            height: 350px;
+            margin-bottom: 15px;
+        }
+        
+        svg {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(26,26,46,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            border-radius: 15px;
+        }
+        
+        .ground {
+            fill: #2e7d32;
+            stroke: #4caf50;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px #4caf50);
+        }
+        
+        .building {
+            fill: rgba(220, 230, 245, 0.95);
+            stroke: #b8c9e8;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 10px rgba(184, 201, 232, 0.6));
+        }
+        
+        .building-detail {
+            fill: rgba(180, 200, 230, 0.8);
+            stroke: #90a8d0;
+            stroke-width: 1;
+        }
+        
+        .window {
+            fill: rgba(200, 220, 255, 0.7);
+            stroke: #d0d8f0;
+            stroke-width: 1;
+        }
+        
+        .door {
+            fill: rgba(160, 180, 200, 0.9);
+            stroke: #a0b0c8;
+            stroke-width: 1;
+        }
+        
+        .velocity-profile {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 4;
+            filter: drop-shadow(0 0 8px #ffffff);
+        }
+        
+        .small-arrow {
+            stroke: #ff4444;
+            stroke-width: 3;
+            fill: none;
+        }
+        
+        .boundary-layer {
+            fill: rgba(255, 255, 255, 0.15);
+            stroke: rgba(255, 255, 255, 0.6);
+            stroke-width: 3;
+            stroke-dasharray: 10,10;
+        }
+        
+        .label {
+            fill: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255,255,255,0.9);
+        }
+        
+        .small-label {
+            fill: #ffffff;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255,255,255,0.9);
+        }
+        
+        .info-panel {
+            background: rgba(0,0,0,0.6);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(116, 185, 255, 0.3);
+            height: 140px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .info-box {
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #4ecdc4;
+        }
+        
+        .info-box p {
+            margin: 4px 0;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">FLAT TERRAIN</h1>
+            <div class="subtitle" id="subtitle">Wind Speed: low</div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-button" onclick="toggleAnimation()">⏯️ PAUSE/PLAY</button>
+            <button class="control-button" onclick="changeExposure()">🏞️ EXPOSURE CATEGORY</button>
+            <button class="control-button" onclick="changeWindSpeed()">💨 WIND SPEED</button>
+        </div>
+        
+        <div class="animation-area">
+            <svg id="windLoadSvg" viewBox="0 0 1000 400">
+                <defs>
+                    <marker id="arrowhead" markerWidth="5" markerHeight="4" refX="4.5" refY="2" orient="auto">
+                        <polygon points="0 0, 5 2, 0 4" fill="white" stroke="white" stroke-width="1"/>
+                    </marker>
+                    <marker id="tiny-arrow" markerWidth="4" markerHeight="3" refX="3.5" refY="1.5" orient="auto">
+                        <polygon points="0 0, 4 1.5, 0 3" fill="#ff4444" stroke="#ff4444" stroke-width="1"/>
+                    </marker>
+                </defs>
+                
+                <!-- Ground -->
+                <rect x="0" y="320" width="1000" height="80" class="ground"/>
+                
+                <!-- Atmospheric Boundary Layer -->
+                <path id="boundary-layer" d="M0,320 Q200,280 400,240 Q600,200 800,160 Q900,140 1000,120 L1000,0 L0,0 Z" class="boundary-layer"/>
+                
+                <!-- Building - Improved house design -->
+                <!-- Main house body -->
+                <rect x="450" y="200" width="140" height="120" class="building"/>
+                
+                <!-- Roof -->
+                <polygon points="450,200 590,200 520,150" class="building"/>
+                
+                <!-- Chimney -->
+                <rect x="480" y="140" width="12" height="25" class="building-detail"/>
+                
+                <!-- Door -->
+                <rect x="505" y="270" width="20" height="50" class="door"/>
+                <circle cx="522" cy="295" r="1.5" fill="rgba(100,100,100,0.8)"/>
+                
+                <!-- Windows -->
+                <rect x="470" y="220" width="25" height="25" class="window"/>
+                <rect x="545" y="220" width="25" height="25" class="window"/>
+                <rect x="470" y="270" width="25" height="25" class="window"/>
+                <rect x="545" y="270" width="25" height="25" class="window"/>
+                
+                <!-- Window frames -->
+                <line x1="482.5" y1="220" x2="482.5" y2="245" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="470" y1="232.5" x2="495" y2="232.5" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="557.5" y1="220" x2="557.5" y2="245" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="545" y1="232.5" x2="570" y2="232.5" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="482.5" y1="270" x2="482.5" y2="295" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="470" y1="282.5" x2="495" y2="282.5" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="557.5" y1="270" x2="557.5" y2="295" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                <line x1="545" y1="282.5" x2="570" y2="282.5" stroke="rgba(150,150,150,0.6)" stroke-width="1"/>
+                
+                <!-- Velocity Profile (Power Law) -->
+                <path id="velocity-profile" d="M100,320 Q120,300 130,280 Q140,260 148,240 Q155,220 160,200 Q165,180 168,160 Q170,140 172,120 Q174,100 175,80" class="velocity-profile"/>
+                
+                <!-- Height markers and labels -->
+                <line x1="90" y1="320" x2="90" y2="80" stroke="white" stroke-width="3" marker-end="url(#arrowhead)"/>
+                <text x="65" y="70" class="small-label">z</text>
+                <text x="25" y="200" class="small-label" transform="rotate(-90 25 200)">V(z)</text>
+                
+                <!-- Gradient height line -->
+                <line x1="0" y1="120" x2="1000" y2="120" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-dasharray="10,10"/>
+                <text x="15" y="105" class="small-label">z<tspan baseline-shift="sub" font-size="14">g</tspan></text>
+                
+                <!-- Pressure arrows - MUCH LARGER -->
+                <g id="pressure-arrows">
+                    <!-- Windward face -->
+                    <line x1="420" y1="240" x2="450" y2="240" class="small-arrow" marker-end="url(#tiny-arrow)"/>
+                    <line x1="420" y1="270" x2="450" y2="270" class="small-arrow" marker-end="url(#tiny-arrow)"/>
+                    <line x1="420" y1="300" x2="450" y2="300" class="small-arrow" marker-end="url(#tiny-arrow)"/>
+                    
+                    <!-- Leeward face -->
+                    <line x1="590" y1="240" x2="620" y2="240" class="small-arrow" marker-end="url(#tiny-arrow)" opacity="0.8"/>
+                    <line x1="590" y1="270" x2="620" y2="270" class="small-arrow" marker-end="url(#tiny-arrow)" opacity="0.8"/>
+                    <line x1="590" y1="300" x2="620" y2="300" class="small-arrow" marker-end="url(#tiny-arrow)" opacity="0.8"/>
+                    
+                    <!-- Roof -->
+                    <line x1="480" y1="150" x2="480" y2="120" class="small-arrow" marker-end="url(#tiny-arrow)" opacity="0.9"/>
+                    <line x1="520" y1="150" x2="520" y2="120" class="small-arrow" marker-end="url(#tiny-arrow)" opacity="0.9"/>
+                    <line x1="560" y1="150" x2="560" y2="120" class="small-arrow" marker-end="url(#tiny-arrow)" opacity="0.9"/>
+                </g>
+                
+                <!-- Wind direction arrow - MUCH LARGER -->
+                <line x1="50" y1="360" x2="150" y2="360" stroke="white" stroke-width="4" marker-end="url(#arrowhead)"/>
+                <text x="100" y="385" class="small-label">Wind</text>
+                
+                <!-- Exposure category label -->
+                <text x="700" y="350" class="label" id="exposure-label">Exposure C</text>
+                
+                <!-- Velocity pressure formula - LARGER -->
+                <text x="550" y="30" class="small-label">q<tspan baseline-shift="sub" font-size="14">z</tspan> = 0.00256 K<tspan baseline-shift="sub" font-size="14">z</tspan> K<tspan baseline-shift="sub" font-size="14">zt</tspan> K<tspan baseline-shift="sub" font-size="14">d</tspan> V²</text>
+                
+                <!-- Pressure labels - LARGER -->
+                <text x="300" y="260" class="small-label">+P</text>
+                <text x="650" y="260" class="small-label">-P</text>
+                
+                <!-- Title -->
+                <text x="500" y="390" class="label" text-anchor="middle" font-size="20">ASCE 7 WIND PRESSURE ON FLAT TERRAIN</text>
+            </svg>
+        </div>
+        
+        <div class="info-panel">
+            <div class="info-box">
+                <h3>Current Parameters:</h3>
+                <div id="parameters">
+                    <p><strong>Exposure:</strong> <span id="current-exposure">C</span></p>
+                    <p><strong>Wind Speed:</strong> <span id="current-wind">low</span></p>
+                    <p><strong>α (Power Law):</strong> <span id="current-alpha">9.5</span></p>
+                    <p><strong>z<sub>g</sub> (Gradient Height):</strong> <span id="current-zg">900</span> ft</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <h3>ASCE 7 Factors:</h3>
+                <div>
+                    <p><strong>K<sub>z</sub>:</strong> Velocity pressure exposure coefficient</p>
+                    <p><strong>K<sub>zt</sub>:</strong> Topographic factor</p>
+                    <p><strong>K<sub>d</sub>:</strong> Wind directionality factor</p>
+                    <p><strong>q<sub>z</sub>:</strong> Velocity pressure at height z</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let animationRunning = true;
+        let exposureCategory = 'C';
+        let windSpeed = 85;
+        let particles = [];
+        
+        const exposureData = {
+            'B': { alpha: 7.0, zg: 1200, description: 'Urban/Suburban' },
+            'C': { alpha: 9.5, zg: 900, description: 'Open Terrain' },
+            'D': { alpha: 11.5, zg: 700, description: 'Flat/Open Coast' }
+        };
+        
+        const windSettings = {
+            85:  { label: 'low',       speed: 0.8,  rate: 0.06 },  // Reduced to 6%
+            100: { label: 'normal',    speed: 1.2,  rate: 0.12 },  // Reduced to 12%
+            115: { label: 'high',      speed: 2.0,  rate: 0.20 },  // Reduced to 20%
+            130: { label: 'very high', speed: 3.2,  rate: 0.32 },  // Reduced to 32%
+            150: { label: 'extreme',   speed: 5.0,  rate: 0.42 }   // Reduced to 42%
+        };
+        
+        function clearAllParticles() {
+            const svg = document.getElementById('windLoadSvg');
+            const existingParticles = svg.querySelectorAll('circle[data-particle="true"]');
+            existingParticles.forEach(p => p.remove());
+        }
+        
+        function updateParameters() {
+            const data = exposureData[exposureCategory];
+            const settings = windSettings[windSpeed];
+            
+            document.getElementById('subtitle').textContent = `Wind Speed: ${settings.label}`;
+            document.getElementById('current-exposure').textContent = exposureCategory;
+            document.getElementById('current-wind').textContent = settings.label;
+            document.getElementById('current-alpha').textContent = data.alpha;
+            document.getElementById('current-zg').textContent = data.zg;
+            document.getElementById('exposure-label').textContent = `Exposure ${exposureCategory} - ${data.description}`;
+            
+            updateVelocityProfile();
+            updateBoundaryLayer();
+        }
+        
+        function updateVelocityProfile() {
+            const data = exposureData[exposureCategory];
+            const alpha = data.alpha / 10;
+            
+            let path = "M100,320";
+            for (let z = 0; z <= 240; z += 10) {
+                const height = 320 - z;
+                const velocity = Math.pow(z / 240, alpha) * 80;
+                const x = 100 + velocity;
+                path += ` Q${x-5},${height+5} ${x},${height}`;
+            }
+            
+            document.getElementById('velocity-profile').setAttribute('d', path);
+        }
+        
+        function updateBoundaryLayer() {
+            const data = exposureData[exposureCategory];
+            const gradientHeight = 320 - (data.zg / 1200 * 200);
+            
+            let path = `M0,320 Q200,${gradientHeight + 40} 400,${gradientHeight} Q600,${gradientHeight - 20} 800,${gradientHeight - 40} Q900,${gradientHeight - 50} 1000,${gradientHeight - 60} L1000,0 L0,0 Z`;
+            document.getElementById('boundary-layer').setAttribute('d', path);
+        }
+        
+        function createAndAnimateParticle() {
+            if (!animationRunning) return;
+            
+            const svg = document.getElementById('windLoadSvg');
+            const settings = windSettings[windSpeed];
+            
+            if (Math.random() > settings.rate) return;
+            
+            const particle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            const startY = 100 + Math.random() * 220;
+            
+            particle.setAttribute('cx', -5);
+            particle.setAttribute('cy', startY);
+            particle.setAttribute('r', 1.5 + Math.random() * 2);
+            particle.setAttribute('data-particle', 'true');
+            
+            const heightRatio = (320 - startY) / 240;
+            if (heightRatio > 0.7) {
+                particle.setAttribute('fill', '#ff5722');
+                particle.setAttribute('opacity', '0.9');
+            } else if (heightRatio > 0.4) {
+                particle.setAttribute('fill', '#ff9800');
+                particle.setAttribute('opacity', '0.8');
+            } else {
+                particle.setAttribute('fill', '#ffeb3b');
+                particle.setAttribute('opacity', '0.7');
+            }
+            
+            svg.appendChild(particle);
+            
+            let x = -5;
+            let y = startY;
+            
+            function moveParticle() {
+                if (!animationRunning || !particle.parentNode) return;
+                
+                const heightFactor = Math.max(0.3, (320 - y) / 240);
+                const currentSpeed = settings.speed * (0.7 + heightFactor * 0.3);
+                
+                x += currentSpeed;
+                y += (Math.random() - 0.5) * 1.5;
+                
+                if (x > 400 && x < 650 && y > 140) {
+                    y += (Math.random() - 0.5) * 3;
+                    x += (Math.random() - 0.5) * 1;
+                }
+                
+                if (y < 80) y = 80;
+                if (y > 320) y = 320;
+                
+                particle.setAttribute('cx', x);
+                particle.setAttribute('cy', y);
+                
+                if (x < 1020) {
+                    requestAnimationFrame(moveParticle);
+                } else {
+                    particle.remove();
+                }
+            }
+            
+            moveParticle();
+        }
+        
+        function animate() {
+            createAndAnimateParticle();
+            requestAnimationFrame(animate);
+        }
+        
+        function toggleAnimation() {
+            animationRunning = !animationRunning;
+            if (animationRunning) {
+                animate();
+            }
+        }
+        
+        function changeExposure() {
+            const exposures = ['B', 'C', 'D'];
+            const currentIndex = exposures.indexOf(exposureCategory);
+            exposureCategory = exposures[(currentIndex + 1) % exposures.length];
+            updateParameters();
+        }
+        
+        function changeWindSpeed() {
+            const speeds = [85, 100, 115, 130, 150];
+            const currentIndex = speeds.indexOf(windSpeed);
+            windSpeed = speeds[(currentIndex + 1) % speeds.length];
+            
+            clearAllParticles();
+            updateParameters();
+        }
+        
+        // Initialize
+        updateParameters();
+        animate();
+    </script>
+</body>
+</html>

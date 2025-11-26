@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Load Requirements - 40 States Without C&C Certification | ASCE 7 Standards</title>
+    <meta name="description" content="Comprehensive wind load requirements for 40 US states that don't require C&C certification. Learn why wind load calculations are still critical for safety, code compliance, and protecting lives - even where not mandated.">
+    <link rel="canonical" href="https://windload.solutions/other-states-wind-load-requirements">
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0018ff;
+            --dark-blue: #181E57;
+            --emerald: #10b981;
+            --jade: #059669;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        /* Hero - Vibrant Emerald/Jade Green */
+        .hero {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3.5rem;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 3rem 2rem 2rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .search-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.5rem 4rem 1.5rem 4rem;
+            font-size: 1.2rem;
+            border: 3px solid #e5e7eb;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--emerald);
+        }
+
+        .search-count {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.95rem;
+            color: var(--emerald);
+            font-weight: 700;
+        }
+
+        /* Why It Matters Section */
+        .why-matters {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 3rem 2rem;
+            border-left: 5px solid #f59e0b;
+            margin: 3rem 0;
+        }
+
+        .why-matters h2 {
+            color: #92400e;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .why-matters p {
+            color: #78350f;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .why-matters ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+        }
+
+        .why-matters li {
+            color: #78350f;
+            padding: 0.75rem 0 0.75rem 2rem;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .why-matters li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #f59e0b;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        /* States Grid */
+        .states-grid-section {
+            padding: 4rem 2rem;
+            background: #f9fafb;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .state-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--emerald);
+        }
+
+        .state-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .state-card.hidden {
+            display: none;
+        }
+
+        .state-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .state-code {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .state-details {
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .detail-icon {
+            color: var(--emerald);
+            font-size: 1.1rem;
+            margin-top: 0.2rem;
+        }
+
+        .tornado-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        /* Regional Tabs */
+        .regional-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .region-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .region-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+        }
+
+        .region-btn.active {
+            background: var(--emerald);
+            color: white;
+            border-color: var(--emerald);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--emerald);
+        }
+
+        .windloadcalc-promo {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .windloadcalc-promo h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .windloadcalc-promo p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary-blue);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .states-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Other States Wind Loads",
+                "item": "https://windload.solutions/other-states-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation with Hierarchical Structure -->
+<nav class="nav-links">
+    <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+
+    <!-- ASCE 7 Standards with click submenu -->
+    <div class="nav-section">
+        <a href="#" class="nav-section-header" onclick="event.preventDefault(); toggleNavSection(this);">
+            <i class="fas fa-book"></i> ASCE 7 Standards
+            <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+
+        <div class="nav-section-content">
+            <!-- Wind Speed & Maps submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-wind"></i> Wind Speed & Maps
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="3-second-gust-wind-speed.html" class="nav-subitem"><i class="fas fa-gauge-high"></i> 3-Second Gust</a>
+                    <a href="basic-wind-speed-explained.html" class="nav-subitem"><i class="fas fa-circle-info"></i> Basic Wind Speed</a>
+                    <a href="asce-7-16-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map"></i> ASCE 7-16 Maps</a>
+                    <a href="asce-7-22-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map-location-dot"></i> ASCE 7-22 Maps</a>
+                    <a href="wind-speed-by-location.html" class="nav-subitem"><i class="fas fa-location-dot"></i> Wind Speed by Location</a>
+                </div>
+            </div>
+
+            <!-- Exposure Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="exposure-category-selection-guide.html" class="nav-subitem"><i class="fas fa-compass"></i> Selection Guide</a>
+                    <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-subitem"><i class="fas fa-city"></i> Exposure B</a>
+                    <a href="exposure-c-open-terrain-wind-loads.html" class="nav-subitem"><i class="fas fa-seedling"></i> Exposure C</a>
+                    <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-subitem"><i class="fas fa-water"></i> Exposure D</a>
+                    <a href="exposure-transition-zones.html" class="nav-subitem"><i class="fas fa-arrows-left-right"></i> Transition Zones</a>
+                </div>
+            </div>
+
+            <!-- Risk Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="risk-category-selection-guide.html" class="nav-subitem"><i class="fas fa-list-check"></i> Selection Guide</a>
+                    <a href="risk-category-1-agricultural-buildings.html" class="nav-subitem"><i class="fas fa-warehouse"></i> Category I</a>
+                    <a href="risk-category-2-standard-occupancy.html" class="nav-subitem"><i class="fas fa-building"></i> Category II</a>
+                    <a href="risk-category-3-assembly-buildings.html" class="nav-subitem"><i class="fas fa-users"></i> Category III</a>
+                    <a href="risk-category-4-essential-facilities.html" class="nav-subitem"><i class="fas fa-hospital"></i> Category IV</a>
+                </div>
+            </div>
+
+            <!-- Design Methods submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-drafting-compass"></i> Design Methods
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="asd-allowable-stress-design-wind-loads.html" class="nav-subitem"><i class="fas fa-ruler-combined"></i> ASD Method</a>
+                    <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="nav-subitem"><i class="fas fa-weight-hanging"></i> LRFD Method</a>
+                    <a href="asd-lrfd-conversion-guide.html" class="nav-subitem"><i class="fas fa-arrows-rotate"></i> ASD ↔ LRFD</a>
+                    <a href="nominal-vs-ultimate-wind-loads.html" class="nav-subitem"><i class="fas fa-code-compare"></i> Nominal vs Ultimate</a>
+                    <a href="nominal-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-n"></i> Nominal Loads</a>
+                    <a href="ultimate-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-u"></i> Ultimate Loads</a>
+                    <a href="directional-vs-non-directional-wind-loads.html" class="nav-subitem"><i class="fas fa-compass-drafting"></i> Directional Method</a>
+                    <a href="wind-directionality-factor-guide.html" class="nav-subitem"><i class="fas fa-k"></i> Kd Factor</a>
+                </div>
+            </div>
+
+            <!-- HVHZ / Florida submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-hurricane"></i> HVHZ / Florida
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="hvhz-florida-requirements.html" class="nav-subitem"><i class="fas fa-file-contract"></i> Florida FBC</a>
+                    <a href="miami-dade-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-certificate"></i> Miami-Dade NOA</a>
+                    <a href="broward-county-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-stamp"></i> Broward County</a>
+                    <a href="hvhz-product-approvals.html" class="nav-subitem"><i class="fas fa-check-circle"></i> Product Approvals</a>
+                    <a href="hvhz-vs-standard-wind-zones.html" class="nav-subitem"><i class="fas fa-balance-scale"></i> HVHZ vs Standard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+    <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+    <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+    <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+    <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+    <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<style>
+/* Navigation styles with CLICK dropdowns */
+.nav-section {
+    position: relative;
+}
+
+.nav-section-header {
+    display: block !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    color: #0018ff !important;
+    background: rgba(0, 24, 255, 0.05) !important;
+    padding: 1rem !important;
+    border-left: 4px solid #0018ff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-section-header i:first-child {
+    margin-right: 0.75rem;
+}
+
+.nav-arrow {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-section.active .nav-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-section.active .nav-section-content {
+    max-height: 2000px;
+}
+
+.nav-subsection {
+    position: relative;
+}
+
+.nav-subsection-header {
+    display: block !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    color: #1f2937 !important;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
+    border-left: 3px solid #d1d5db !important;
+    background: transparent !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-subsection-header:hover {
+    background: rgba(0, 24, 255, 0.08) !important;
+    border-left-color: #0018ff !important;
+}
+
+.nav-subsection-header i:first-child {
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.nav-subarrow {
+    font-size: 0.7rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-subsection.active .nav-subarrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.nav-subsection-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-subsection.active .nav-subsection-content {
+    max-height: 1000px;
+}
+
+.nav-subitem {
+    font-size: 0.95rem !important;
+    color: #6b7280 !important;
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.nav-subitem i {
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.nav-subitem:hover {
+    background: rgba(0, 24, 255, 0.05) !important;
+    color: #0018ff !important;
+    padding-left: 3rem !important;
+}
+
+.nav-subitem::before {
+    display: none !important;
+}
+
+/* Override default nav-links a styles */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links > a > i {
+    margin-right: 0.75rem;
+    color: #0018ff;
+    width: 1.25rem;
+    text-align: center;
+}
+</style>
+
+
+
+
+
+
+
+
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h1>40 States Without C&C Certification Requirements</h1>
+                <p class="hero-subtitle">Why wind load calculations remain critical for safety, code compliance, and liability protection - even where not mandated</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text"
+                   id="stateSearch"
+                   class="search-input"
+                   placeholder="Search for your state..."
+                   onkeyup="filterStates()">
+            <span id="searchCount" class="search-count"></span>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <div class="why-matters">
+                <h2><i class="fas fa-shield-alt"></i> Why Wind Load Calculations Matter - Even Without Certification Requirements</h2>
+                <p><strong>Just because your state doesn't require C&C certification doesn't mean wind loads should be ignored.</strong> Wind events are becoming more frequent and severe across the entire United States, not just coastal regions. Here's why proper wind load analysis is critical:</p>
+
+                <ul>
+                    <li><strong>Safety First:</strong> Wind damage causes injuries and fatalities nationwide. Proper calculations protect building occupants and passersby from flying debris, structural failure, and window breakage.</li>
+                    <li><strong>Code Compliance:</strong> Even without specific certification requirements, the International Building Code (IBC) and ASCE 7 standards apply. Building departments expect engineers to follow these standards.</li>
+                    <li><strong>Liability Protection:</strong> If a window, door, or roof component fails and causes injury or property damage, your professional liability is at stake. Documented calculations provide critical legal protection.</li>
+                    <li><strong>Insurance Requirements:</strong> Many commercial insurance policies require certified wind load calculations for coverage, especially for new construction or renovations.</li>
+                    <li><strong>Extreme Weather Trends:</strong> Climate patterns are shifting. States that historically had low wind risk are now experiencing stronger straight-line winds, severe thunderstorms, and even tornado activity.</li>
+                    <li><strong>Tornado Alley Expansion:</strong> Many central and midwestern states (marked below) fall within or near Tornado Alley, where sudden severe wind events are common.</li>
+                    <li><strong>Professional Standards:</strong> NCEES and state licensing boards expect engineers to perform due diligence. "Not required" doesn't mean "not necessary."</li>
+                    <li><strong>Building Owner Expectations:</strong> Owners expect their engineers to design safe structures. Cutting corners on wind analysis exposes you to disputes and potential malpractice claims.</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem; font-weight: 700; font-size: 1.15rem;"><i class="fas fa-exclamation-circle"></i> Bottom Line: Wind load calculations are a standard of care issue. Protect yourself, your clients, and building occupants by performing proper ASCE 7 analysis - regardless of whether your state explicitly requires it.</p>
+            </div>
+        </div>
+
+        <section class="states-grid-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>State-by-State Wind Load Requirements</h2>
+                    <p>Filter by region or search to find your state</p>
+                </div>
+
+                <div class="regional-tabs">
+                    <button class="region-btn active" onclick="filterByRegion('all')">All States (40)</button>
+                    <button class="region-btn" onclick="filterByRegion('northeast')">Northeast</button>
+                    <button class="region-btn" onclick="filterByRegion('midwest')">Midwest</button>
+                    <button class="region-btn" onclick="filterByRegion('south')">South</button>
+                    <button class="region-btn" onclick="filterByRegion('west')">West</button>
+                    <button class="region-btn" onclick="filterByRegion('tornado')"><i class="fas fa-tornado"></i> Tornado Alley</button>
+                </div>
+
+                <div class="states-grid" id="statesGrid">
+                    <!-- States will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="windloadcalc-promo">
+        <div class="container">
+            <h2>Need Professional Wind Load Calculators?</h2>
+            <p>Visit our sister site <strong>WindLoadCalc.com</strong> for professional ASCE 7 wind load calculator software and the Building Intelligence Platform (BIP).</p>
+            <a href="https://windloadcalc.com" class="cta-button">Visit WindLoadCalc.com →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="asce-7-standards.html">ASCE 7 Standards</a>
+                <a href="state-requirements.html">State Requirements</a>
+                <a href="resources.html">Resources</a>
+                <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p>&copy; 2025 Wind Load Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">24+ Years of Excellence in Wind Load Engineering</p>
+        </div>
+    </footer>
+
+    <script>
+        const states = [
+            { name: "Alabama", code: "ASCE 7-16", region: "south", tornado: false, windSpeed: "110-130 mph", details: "PE seal required for all structural calculations" },
+            { name: "Alaska", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-110 mph", details: "Extreme snow loads often govern, but wind critical for coastal areas" },
+            { name: "Arizona", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "90-105 mph", details: "Monsoon season brings severe thunderstorm winds" },
+            { name: "Arkansas", code: "ASCE 7-16", region: "south", tornado: true, windSpeed: "105-120 mph", details: "High tornado risk - proper wind analysis critical" },
+            { name: "Colorado", code: "ASCE 7-16", region: "west", tornado: true, windSpeed: "90-115 mph", details: "Eastern plains in Tornado Alley, mountain winds can be severe" },
+            { name: "Connecticut", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Coastal exposure, hurricane remnants" },
+            { name: "Delaware", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-125 mph", details: "Coastal state with hurricane exposure" },
+            { name: "Idaho", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-100 mph", details: "Mountain gap winds can exceed 100 mph" },
+            { name: "Illinois", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado Alley - high severe weather risk" },
+            { name: "Indiana", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado risk and severe thunderstorms common" },
+            { name: "Iowa", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Core Tornado Alley state - derecho risk" },
+            { name: "Kansas", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-120 mph", details: "Heart of Tornado Alley - highest tornado frequency" },
+            { name: "Kentucky", code: "ASCE 7-16", region: "south", tornado: true, windSpeed: "90-110 mph", details: "Significant tornado risk, especially western regions" },
+            { name: "Maine", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "100-130 mph", details: "Coastal winds and nor'easters" },
+            { name: "Maryland", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "105-120 mph", details: "Coastal exposure, Chesapeake Bay wind channeling" },
+            { name: "Massachusetts", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Hurricane exposure, coastal high winds" },
+            { name: "Michigan", code: "ASCE 7-16", region: "midwest", tornado: false, windSpeed: "90-110 mph", details: "Great Lakes wind effects, severe thunderstorms" },
+            { name: "Minnesota", code: "ASCE 7-16", region: "midwest", tornado: false, windSpeed: "90-110 mph", details: "Severe thunderstorms, occasional tornadoes" },
+            { name: "Mississippi", code: "ASCE 7-16", region: "south", tornado: false, windSpeed: "110-140 mph", details: "Gulf Coast hurricane exposure" },
+            { name: "Missouri", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado Alley - Joplin 2011 tornado devastating" },
+            { name: "Montana", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-110 mph", details: "High plains winds, mountain gap winds" },
+            { name: "Nebraska", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-120 mph", details: "Core Tornado Alley - severe weather frequent" },
+            { name: "Nevada", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-100 mph", details: "Desert winds, mountain exposure" },
+            { name: "New Hampshire", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "100-125 mph", details: "Coastal and mountain winds, winter storms" },
+            { name: "New Jersey", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Coastal exposure, hurricane risk" },
+            { name: "New Mexico", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "90-105 mph", details: "High plains winds, severe thunderstorms" },
+            { name: "North Dakota", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-110 mph", details: "Tornado risk, severe thunderstorm winds" },
+            { name: "Ohio", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-110 mph", details: "Tornado risk, especially southwest regions" },
+            { name: "Oklahoma", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-120 mph", details: "Heart of Tornado Alley - extreme tornado risk" },
+            { name: "Oregon", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-120 mph", details: "Coastal exposure, Columbia Gorge winds" },
+            { name: "Pennsylvania", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "90-110 mph", details: "Severe thunderstorms, occasional tornadoes" },
+            { name: "Rhode Island", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Full coastal exposure, hurricane risk" },
+            { name: "South Dakota", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado Alley, severe weather common" },
+            { name: "Tennessee", code: "ASCE 7-16", region: "south", tornado: true, windSpeed: "90-110 mph", details: "Significant tornado risk, especially Middle TN" },
+            { name: "Utah", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-105 mph", details: "Mountain canyon winds, severe thunderstorms" },
+            { name: "Vermont", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "90-110 mph", details: "Mountain winds, winter storms" },
+            { name: "Washington", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-110 mph", details: "Coastal exposure, Columbia Gorge extreme winds" },
+            { name: "West Virginia", code: "ASCE 7-16", region: "south", tornado: false, windSpeed: "90-105 mph", details: "Mountain ridge winds can be severe" },
+            { name: "Wisconsin", code: "ASCE 7-16", region: "midwest", tornado: false, windSpeed: "90-110 mph", details: "Severe thunderstorms, occasional tornadoes" },
+            { name: "Wyoming", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "90-120 mph", details: "High plains, mountain winds extremely severe" }
+        ];
+
+        // Populate states grid
+        function populateStates() {
+            const grid = document.getElementById('statesGrid');
+            grid.innerHTML = states.map(state => `
+                <div class="state-card" data-name="${state.name.toLowerCase()}" data-region="${state.region}" data-tornado="${state.tornado}">
+                    <div class="state-name">${state.name}</div>
+                    <div class="state-code">${state.code}</div>
+                    <div class="state-details">
+                        <div class="detail-item">
+                            <i class="fas fa-wind detail-icon"></i>
+                            <span><strong>Wind Speed:</strong> ${state.windSpeed}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-info-circle detail-icon"></i>
+                            <span>${state.details}</span>
+                        </div>
+                    </div>
+                    ${state.tornado ? '<span class="tornado-badge"><i class="fas fa-tornado"></i> Tornado Alley</span>' : ''}
+                </div>
+            `).join('');
+            updateCount();
+        }
+
+        // Filter states by search
+        function filterStates() {
+            const searchValue = document.getElementById('stateSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.state-card');
+
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                if (name.includes(searchValue)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            updateCount();
+        }
+
+        // Filter by region
+        function filterByRegion(region) {
+            const cards = document.querySelectorAll('.state-card');
+            const buttons = document.querySelectorAll('.region-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (region === 'all') {
+                    card.classList.remove('hidden');
+                } else if (region === 'tornado') {
+                    if (card.dataset.tornado === 'true') {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                } else {
+                    if (card.dataset.region === region) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+
+            updateCount();
+        }
+
+        // Update count
+        function updateCount() {
+            const visible = document.querySelectorAll('.state-card:not(.hidden)').length;
+            const total = states.length;
+            document.getElementById('searchCount').textContent = `${visible} of ${total}`;
+        }
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Initialize
+        populateStates();
+    </script>
+<script>
+// Navigation toggle functions for click-to-expand
+function toggleNavSection(element) {
+    const section = element.parentElement;
+    const wasActive = section.classList.contains('active');
+
+    // Close all other sections
+    document.querySelectorAll('.nav-section').forEach(s => {
+        if (s !== section) {
+            s.classList.remove('active');
+        }
+    });
+
+    // Toggle this section
+    section.classList.toggle('active');
+}
+
+function toggleNavSubsection(element) {
+    const subsection = element.parentElement;
+    subsection.classList.toggle('active');
+}
+</script>
+<!-- SEO-Enhanced Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>ASCE 7 Standards</h4>
+                <ul>
+                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
+                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
+                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
+                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
+                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
+                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Top States</h4>
+                <ul>
+                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
+                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
+                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
+                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
+                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
+                    <li><a href="state-requirements.html">All 50 States</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources & Tools</h4>
+                <ul>
+                    <li><a href="resources.html">Free Resources</a></li>
+                    <li><a href="articles.html">Articles & Guides</a></li>
+                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
+                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="https://windloadcalc.com" target="_blank" rel="noopener">Wind Load Calculator</a></li>
+                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background: #1a202c;
+    color: #e5e7eb;
+    padding: 4rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-column h4 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #0018ff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-column a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-column a:hover {
+    color: #60a5fa;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.footer-tagline {
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .site-footer {
+        padding: 3rem 1.5rem 1.5rem;
+    }
+}
+</style>
+
+</body>
+</html>

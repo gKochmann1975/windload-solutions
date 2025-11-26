@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCE 7-22 Wind Speed Maps - MRI-Based Design Wind Speeds | Updated 2022 Standard</title>
+    <meta name="description" content="Complete guide to ASCE 7-22 MRI-based wind speed maps. Learn about the new 300, 700, 1,700, and 3,000-year wind speeds for Risk Categories I-IV and how they differ from ASCE 7-16.">
+    <link rel="canonical" href="https://windload.solutions/asce-7-22-wind-speed-maps">
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0018ff;
+            --dark-blue: #181E57;
+            --map-light: #5eead4;
+            --map-dark: #2dd4bf;
+            --map-deep: #14b8a6;
+            --cyan: #06b6d4;
+            --orange: #f97316;
+            --purple: #a855f7;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --pink: #ec4899;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        /* Hero Section - Light Blue Gradient */
+        .hero {
+            background: linear-gradient(135deg, var(--map-light) 0%, var(--map-dark) 100%);
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb {
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 5rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin: 3rem 0 1.5rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Info Cards Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--map-deep);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .info-card h4 {
+            font-size: 1.4rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .info-card i {
+            color: var(--map-deep);
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            font-size: 1rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            margin: 3rem 0;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--map-deep), var(--map-dark));
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 1rem;
+            color: #4b5563;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 5px solid var(--map-deep);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+        }
+
+        .highlight-box h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .highlight-box p {
+            color: #1e3a8a;
+            margin-bottom: 0;
+        }
+
+        /* Related Links Section */
+        .related-links {
+            background: #f9fafb;
+            padding: 5rem 0;
+        }
+
+        .related-links h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #1f2937;
+        }
+
+        .link-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .link-card-icon {
+            background: linear-gradient(135deg, var(--map-light), var(--map-dark));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .link-card-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .link-card-content h4 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .link-card-content p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* WindLoadCalc Promo */
+        .windloadcalc-promo {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .windloadcalc-promo h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .windloadcalc-promo p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta-button {
+            background: white;
+            color: #1e3a8a;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .link-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ASCE 7 Standards",
+                "item": "https://windload.solutions/asce-7-standards.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Wind Speed & Maps",
+                "item": "https://windload.solutions/wind-speed-zones-asce-7-guide.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "ASCE 7-22 Maps",
+                "item": "https://windload.solutions/asce-7-22-wind-speed-maps.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation with Hierarchical Structure -->
+<nav class="nav-links">
+    <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+
+    <!-- ASCE 7 Standards with click submenu -->
+    <div class="nav-section">
+        <a href="#" class="nav-section-header" onclick="event.preventDefault(); toggleNavSection(this);">
+            <i class="fas fa-book"></i> ASCE 7 Standards
+            <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+
+        <div class="nav-section-content">
+            <!-- Wind Speed & Maps submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-wind"></i> Wind Speed & Maps
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="3-second-gust-wind-speed.html" class="nav-subitem"><i class="fas fa-gauge-high"></i> 3-Second Gust</a>
+                    <a href="basic-wind-speed-explained.html" class="nav-subitem"><i class="fas fa-circle-info"></i> Basic Wind Speed</a>
+                    <a href="asce-7-16-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map"></i> ASCE 7-16 Maps</a>
+                    <a href="asce-7-22-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map-location-dot"></i> ASCE 7-22 Maps</a>
+                    <a href="wind-speed-by-location.html" class="nav-subitem"><i class="fas fa-location-dot"></i> Wind Speed by Location</a>
+                </div>
+            </div>
+
+            <!-- Exposure Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="exposure-category-selection-guide.html" class="nav-subitem"><i class="fas fa-compass"></i> Selection Guide</a>
+                    <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-subitem"><i class="fas fa-city"></i> Exposure B</a>
+                    <a href="exposure-c-open-terrain-wind-loads.html" class="nav-subitem"><i class="fas fa-seedling"></i> Exposure C</a>
+                    <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-subitem"><i class="fas fa-water"></i> Exposure D</a>
+                    <a href="exposure-transition-zones.html" class="nav-subitem"><i class="fas fa-arrows-left-right"></i> Transition Zones</a>
+                </div>
+            </div>
+
+            <!-- Risk Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="risk-category-selection-guide.html" class="nav-subitem"><i class="fas fa-list-check"></i> Selection Guide</a>
+                    <a href="risk-category-1-agricultural-buildings.html" class="nav-subitem"><i class="fas fa-warehouse"></i> Category I</a>
+                    <a href="risk-category-2-standard-occupancy.html" class="nav-subitem"><i class="fas fa-building"></i> Category II</a>
+                    <a href="risk-category-3-assembly-buildings.html" class="nav-subitem"><i class="fas fa-users"></i> Category III</a>
+                    <a href="risk-category-4-essential-facilities.html" class="nav-subitem"><i class="fas fa-hospital"></i> Category IV</a>
+                </div>
+            </div>
+
+            <!-- Design Methods submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-drafting-compass"></i> Design Methods
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="asd-allowable-stress-design-wind-loads.html" class="nav-subitem"><i class="fas fa-ruler-combined"></i> ASD Method</a>
+                    <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="nav-subitem"><i class="fas fa-weight-hanging"></i> LRFD Method</a>
+                    <a href="asd-lrfd-conversion-guide.html" class="nav-subitem"><i class="fas fa-arrows-rotate"></i> ASD ↔ LRFD</a>
+                    <a href="nominal-vs-ultimate-wind-loads.html" class="nav-subitem"><i class="fas fa-code-compare"></i> Nominal vs Ultimate</a>
+                    <a href="nominal-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-n"></i> Nominal Loads</a>
+                    <a href="ultimate-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-u"></i> Ultimate Loads</a>
+                    <a href="directional-vs-non-directional-wind-loads.html" class="nav-subitem"><i class="fas fa-compass-drafting"></i> Directional Method</a>
+                    <a href="wind-directionality-factor-guide.html" class="nav-subitem"><i class="fas fa-k"></i> Kd Factor</a>
+                </div>
+            </div>
+
+            <!-- HVHZ / Florida submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-hurricane"></i> HVHZ / Florida
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="hvhz-florida-requirements.html" class="nav-subitem"><i class="fas fa-file-contract"></i> Florida FBC</a>
+                    <a href="miami-dade-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-certificate"></i> Miami-Dade NOA</a>
+                    <a href="broward-county-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-stamp"></i> Broward County</a>
+                    <a href="hvhz-product-approvals.html" class="nav-subitem"><i class="fas fa-check-circle"></i> Product Approvals</a>
+                    <a href="hvhz-vs-standard-wind-zones.html" class="nav-subitem"><i class="fas fa-balance-scale"></i> HVHZ vs Standard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+    <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+    <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+    <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+    <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+    <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<style>
+/* Navigation styles with CLICK dropdowns */
+.nav-section {
+    position: relative;
+}
+
+.nav-section-header {
+    display: block !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    color: #0018ff !important;
+    background: rgba(0, 24, 255, 0.05) !important;
+    padding: 1rem !important;
+    border-left: 4px solid #0018ff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-section-header i:first-child {
+    margin-right: 0.75rem;
+}
+
+.nav-arrow {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-section.active .nav-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-section.active .nav-section-content {
+    max-height: 2000px;
+}
+
+.nav-subsection {
+    position: relative;
+}
+
+.nav-subsection-header {
+    display: block !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    color: #1f2937 !important;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
+    border-left: 3px solid #d1d5db !important;
+    background: transparent !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-subsection-header:hover {
+    background: rgba(0, 24, 255, 0.08) !important;
+    border-left-color: #0018ff !important;
+}
+
+.nav-subsection-header i:first-child {
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.nav-subarrow {
+    font-size: 0.7rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-subsection.active .nav-subarrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.nav-subsection-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-subsection.active .nav-subsection-content {
+    max-height: 1000px;
+}
+
+.nav-subitem {
+    font-size: 0.95rem !important;
+    color: #6b7280 !important;
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.nav-subitem i {
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.nav-subitem:hover {
+    background: rgba(0, 24, 255, 0.05) !important;
+    color: #0018ff !important;
+    padding-left: 3rem !important;
+}
+
+.nav-subitem::before {
+    display: none !important;
+}
+
+/* Override default nav-links a styles */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links > a > i {
+    margin-right: 0.75rem;
+    color: #0018ff;
+    width: 1.25rem;
+    text-align: center;
+}
+</style>
+
+
+
+
+
+
+
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> ›
+                    <a href="asce-7-standards.html">ASCE 7</a> ›
+                    ASCE 7-22 Wind Speed Maps
+                </div>
+                <div class="hero-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h1>ASCE 7-22 Wind Speed Maps</h1>
+                <p class="hero-subtitle">Understanding the new MRI-based approach to design wind speeds and changes from ASCE 7-16</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-book-open" style="color: var(--map-deep); margin-right: 1rem;"></i>Overview of ASCE 7-22 Wind Speed Maps</h2>
+
+            <p>The ASCE 7-16 standard includes comprehensive wind speed maps (Figures 26.5-1A through 26.5-1C) that provide <strong>basic design wind speeds</strong> for use in structural calculations throughout the United States and its territories. These maps are fundamental to determining wind loads for buildings and structures per the 2018 and 2021 International Building Code (IBC).</p>
+
+            <p>The wind speeds shown on ASCE 7-16 maps are <strong>3-second gust speeds</strong> at 33 feet (10 meters) above ground in Exposure C (open terrain), based on Risk Category II buildings (standard occupancy). These values represent the basis for all wind load calculations and must be adjusted using the appropriate importance factors for Risk Categories I, III, and IV.</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-ruler-combined"></i> Reference Height</h4>
+                    <p>All wind speeds are referenced at 33 feet (10 meters) above ground level. Actual pressure calculations account for height effects using velocity pressure exposure coefficients (Kh or Kz).</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-clock"></i> 3-Second Gust</h4>
+                    <p>Wind speeds represent the fastest 3-second average wind speed, which corresponds to peak gust effects on structures. This differs from 1-minute or hourly average wind speeds.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-tree"></i> Exposure C Basis</h4>
+                    <p>Maps assume Exposure C terrain (open terrain with scattered obstructions). Sites with Exposure B, D, or transition zones require adjustments via velocity pressure coefficients.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-building"></i> Risk Category II</h4>
+                    <p>Basic wind speeds are for Risk Category II structures (standard occupancy). Use importance factors I<sub>w</sub> to adjust for Risk Categories I (0.87), III (1.15), or IV (1.15).</p>
+                </div>
+            </div>
+
+            <h3>Key Wind Speed Map Figures in ASCE 7-16</h3>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Figure Number</th>
+                        <th>Geographic Coverage</th>
+                        <th>Typical Wind Speed Range</th>
+                        <th>Key Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Figure 26.5-1A</strong></td>
+                        <td>Contiguous United States</td>
+                        <td>90-170 mph</td>
+                        <td>Covers 48 states, shows hurricane zones, special wind regions, topographic effects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Figure 26.5-1B</strong></td>
+                        <td>Alaska</td>
+                        <td>85-130 mph</td>
+                        <td>Accounts for extreme northern exposures, seasonal effects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Figure 26.5-1C</strong></td>
+                        <td>Hawaii & Territories</td>
+                        <td>105-170 mph</td>
+                        <td>Covers Hawaii, Puerto Rico, Guam, Virgin Islands, American Samoa</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Figure 26.5-1D</strong></td>
+                        <td>Puerto Rico (Detail)</td>
+                        <td>145-170 mph</td>
+                        <td>High-resolution map showing variation across Puerto Rico</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-search" style="color: var(--map-deep); margin-right: 1rem;"></i>How to Read the Wind Speed Maps</h2>
+
+            <p>Reading ASCE 7-16 wind speed maps correctly is critical for accurate wind load calculations. The maps use <strong>contour lines</strong> (isopleths) to show areas of equal wind speed, similar to elevation contours on a topographic map.</p>
+
+            <h3>Step-by-Step Map Reading Process</h3>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-map-marker-alt"></i> 1. Locate Your Site</h4>
+                    <p>Identify your project location on the appropriate map (Figure 26.5-1A for most US sites). Use latitude/longitude coordinates or city/county references for precision.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-arrows-alt-h"></i> 2. Identify Contour Lines</h4>
+                    <p>Find the nearest wind speed contour lines above and below your site. Contours are labeled with wind speeds in mph (e.g., 110, 115, 120, 130, 140, 150 mph).</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-calculator"></i> 3. Interpolate If Needed</h4>
+                    <p>If your site falls between contours, linearly interpolate based on distance. For example, halfway between 120 mph and 130 mph contours = 125 mph.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 4. Check Special Regions</h4>
+                    <p>Verify if your site is in a "Special Wind Region" (marked on maps). These areas require site-specific wind analysis by a qualified engineer.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-mountain"></i> 5. Consider Topography</h4>
+                    <p>Maps show general terrain. Local hills, ridges, escarpments, or gorges may require topographic factor (K<sub>zt</sub>) adjustments per Section 26.8.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-water"></i> 6. Coastal Considerations</h4>
+                    <p>Coastal sites may have higher wind speeds due to hurricane exposure. Ensure you're reading the correct contour in high-wind coastal zones.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-lightbulb" style="color: #1e40af; margin-right: 0.75rem;"></i>Pro Tip: Online Wind Speed Tools</h3>
+                <p>For precise wind speed determination without manual map reading, use <strong>WindLoadCalc.com</strong>'s automated wind speed lookup tool. It provides ASCE 7-16 and 7-22 wind speeds by zip code or GPS coordinates, eliminating interpolation errors and saving time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-layer-group" style="color: var(--map-deep); margin-right: 1rem;"></i>Wind Speed Zones and Regions</h2>
+
+            <p>ASCE 7-16 wind speed maps divide the United States into distinct zones based on historical wind data, hurricane exposure, and terrain characteristics. Understanding these zones is essential for proper design wind speed selection.</p>
+
+            <h3>Low Wind Speed Zones (90-110 mph)</h3>
+            <p>These areas experience primarily straight-line winds from thunderstorms and occasional severe weather. States include:</p>
+            <ul>
+                <li><strong>Interior Western States:</strong> Nevada, Utah, Idaho, Montana, Wyoming (90-100 mph typical)</li>
+                <li><strong>Pacific Northwest:</strong> Western Washington, Oregon (protected valleys: 90-100 mph)</li>
+                <li><strong>Upper Midwest:</strong> North Dakota, South Dakota, northern Minnesota (95-100 mph)</li>
+            </ul>
+
+            <h3>Moderate Wind Speed Zones (110-120 mph)</h3>
+            <p>Most of the continental United States falls into this category, with wind loads driven by severe thunderstorms, downslope winds, and occasional tropical systems. Includes:</p>
+            <ul>
+                <li><strong>Central Plains:</strong> Kansas, Nebraska, Iowa, Illinois, Missouri (110-115 mph)</li>
+                <li><strong>Mid-Atlantic:</strong> Pennsylvania, New Jersey, inland Maryland (110-115 mph)</li>
+                <li><strong>Southeast Interior:</strong> Tennessee, Kentucky, Arkansas, northern Alabama, northern Georgia (110-115 mph)</li>
+                <li><strong>Southwest:</strong> Arizona, New Mexico, western Texas (110-115 mph)</li>
+            </ul>
+
+            <h3>High Wind Speed Zones (120-140 mph)</h3>
+            <p>Coastal and hurricane-prone regions experience substantially higher design wind speeds. Key areas:</p>
+            <ul>
+                <li><strong>Atlantic Coast:</strong> North Carolina to Maine coast (120-140 mph)</li>
+                <li><strong>Gulf Coast:</strong> Texas to Florida panhandle (120-150 mph)</li>
+                <li><strong>Great Lakes:</strong> Immediate shoreline areas (115-120 mph)</li>
+                <li><strong>Mountain Regions:</strong> High-elevation exposed areas (120-130 mph)</li>
+            </ul>
+
+            <h3>Extreme Wind Speed Zones (140-170 mph)</h3>
+            <p>The highest design wind speeds occur in areas with maximum hurricane exposure:</p>
+            <ul>
+                <li><strong>South Florida:</strong> Miami-Dade, Broward, Palm Beach counties (150-170 mph)</li>
+                <li><strong>Florida Keys:</strong> 160-170 mph</li>
+                <li><strong>Gulf Coast Barrier Islands:</strong> Louisiana, Mississippi, Alabama (140-160 mph)</li>
+                <li><strong>Outer Banks, NC:</strong> 140-150 mph</li>
+                <li><strong>Hawaii:</strong> All islands (130-170 mph depending on exposure)</li>
+                <li><strong>Puerto Rico & Virgin Islands:</strong> 145-170 mph</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-hurricane" style="color: #1e40af; margin-right: 0.75rem;"></i>Special Wind Regions</h3>
+                <p>Certain locations are designated as "Special Wind Regions" due to unusual local wind phenomena (mountain gaps, gorges, coastal promontories). These areas require site-specific meteorological analysis and cannot rely solely on map values. Examples include:</p>
+                <ul style="color: #1e3a8a; margin-left: 2rem;">
+                    <li>Columbia River Gorge (Oregon/Washington)</li>
+                    <li>Wasatch Front mountain canyons (Utah)</li>
+                    <li>Aleutian Islands (Alaska)</li>
+                    <li>Specific coastal headlands and promontories</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-chart-line" style="color: var(--map-deep); margin-right: 1rem;"></i>Interpolation Between Contour Lines</h2>
+
+            <p>Most project sites fall between labeled wind speed contours. ASCE 7-16 Section C26.5.1 requires <strong>linear interpolation</strong> to determine the design wind speed for intermediate locations.</p>
+
+            <h3>Linear Interpolation Method</h3>
+
+            <div class="info-card">
+                <h4><i class="fas fa-ruler"></i> Interpolation Formula</h4>
+                <p><strong>V = V₁ + [(V₂ - V₁) × (D₁ / D<sub>total</sub>)]</strong></p>
+                <p style="margin-top: 1rem;">Where:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>V</strong> = Design wind speed at your site</li>
+                    <li><strong>V₁</strong> = Wind speed of lower contour line</li>
+                    <li><strong>V₂</strong> = Wind speed of upper contour line</li>
+                    <li><strong>D₁</strong> = Distance from site to lower contour</li>
+                    <li><strong>D<sub>total</sub></strong> = Total distance between contours</li>
+                </ul>
+            </div>
+
+            <h3>Example Interpolation Calculation</h3>
+
+            <p><strong>Project Site:</strong> A commercial building site in coastal Georgia falls between the 130 mph and 140 mph contour lines on Figure 26.5-1A.</p>
+
+            <p><strong>Measured Distances:</strong></p>
+            <ul>
+                <li>Distance from site to 130 mph contour: <strong>3 miles</strong></li>
+                <li>Distance from site to 140 mph contour: <strong>7 miles</strong></li>
+                <li>Total distance between contours: <strong>10 miles</strong></li>
+            </ul>
+
+            <p><strong>Calculation:</strong></p>
+            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
+                V = 130 + [(140 - 130) × (3 / 10)]<br>
+                V = 130 + [10 × 0.3]<br>
+                V = 130 + 3<br>
+                <strong>V = 133 mph</strong>
+            </p>
+
+            <p><strong>Result:</strong> The design basic wind speed for this site is <strong>133 mph</strong> (Risk Category II). This value would then be used with appropriate importance factors if the building is Risk Category I, III, or IV.</p>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-info-circle" style="color: #1e40af; margin-right: 0.75rem;"></i>Important Note on Rounding</h3>
+                <p>ASCE 7-16 Commentary C26.5.1 recommends rounding interpolated values to the nearest 5 mph increment for practical design purposes. However, many jurisdictions and software tools use exact interpolated values. Check your local building department requirements.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2><i class="fas fa-exclamation-triangle" style="color: var(--map-deep); margin-right: 1rem;"></i>Special Considerations and Limitations</h2>
+
+            <h3>When ASCE 7-16 Maps May Not Apply</h3>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-gavel"></i> Jurisdictional Requirements</h4>
+                    <p>Some states and municipalities have adopted ASCE 7-22 (which uses different wind speed maps) or maintain their own wind speed requirements. Always verify local code adoption before using ASCE 7-16 maps.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-map-marked-alt"></i> Special Wind Regions</h4>
+                    <p>Sites within designated Special Wind Regions (marked on maps) require site-specific meteorological analysis and cannot rely solely on map contours.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-mountain"></i> Complex Terrain</h4>
+                    <p>Locations with significant topographic features (ridges, escarpments, hills, gorges) may experience wind speed-up effects requiring topographic factor adjustments or wind tunnel studies.</p>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-building"></i> High-Rise Buildings</h4>
+                    <p>Tall buildings (over 400 feet) may require site-specific wind speed analysis accounting for gradient height effects and local meteorological conditions.</p>
+                </div>
+            </div>
+
+            <h3>Transition to ASCE 7-22</h3>
+
+            <p>The 2022 edition of ASCE 7 introduced <strong>fundamentally different wind speed maps</strong> that are based on mean recurrence interval (MRI) for each Risk Category, eliminating the importance factor from wind speed determination. Key changes include:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>ASCE 7-16 Approach</th>
+                        <th>ASCE 7-22 Approach</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Wind Speed Maps</strong></td>
+                        <td>Single set of maps (Risk Category II)</td>
+                        <td>Four separate maps (one per Risk Category)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Importance Factor</strong></td>
+                        <td>Applied to velocity pressure (I<sub>w</sub> = 0.87, 1.00, 1.15)</td>
+                        <td>Not used - incorporated into maps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mean Recurrence Interval</strong></td>
+                        <td>Not explicitly shown</td>
+                        <td>300, 700, 1,700, 3,000 years</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wind Speeds (typical coastal)</strong></td>
+                        <td>140-170 mph (Risk Cat II)</td>
+                        <td>120-185 mph (varies by Risk Category)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 2rem;">Many jurisdictions continue to require ASCE 7-16 because they have not yet adopted the 2021 or 2024 International Building Code. Always verify which edition applies to your project.</p>
+        </div>
+    </section>
+
+    <section class="content-section" style="background: #f9fafb;">
+        <div class="container">
+            <h2><i class="fas fa-globe-americas" style="color: var(--map-deep); margin-right: 1rem;"></i>Regional Wind Speed Variations</h2>
+
+            <p>Wind speeds vary dramatically across the United States due to geographic exposure, proximity to coastlines, elevation, and local terrain effects. Understanding regional patterns helps designers anticipate appropriate wind speed ranges.</p>
+
+            <h3>Atlantic and Gulf Coast Hurricane Zones</h3>
+            <p>The highest design wind speeds in the continental US occur along the Atlantic and Gulf coasts due to hurricane exposure. Wind speeds increase as you approach the coastline and are highest in areas with maximum historical hurricane impacts.</p>
+
+            <ul>
+                <li><strong>South Florida (Miami-Dade, Broward):</strong> 150-170 mph at immediate coast, decreasing to 140-150 mph inland</li>
+                <li><strong>Florida Panhandle:</strong> 140-150 mph at coast, 130-140 mph 10-20 miles inland</li>
+                <li><strong>Louisiana/Mississippi Coast:</strong> 140-160 mph barrier islands, 130-140 mph coastal mainland</li>
+                <li><strong>Texas Gulf Coast:</strong> 130-150 mph at coast (Houston-Galveston area)</li>
+                <li><strong>Carolinas Outer Banks:</strong> 140-150 mph barrier islands, 120-130 mph inland</li>
+                <li><strong>Georgia/South Carolina Coast:</strong> 130-140 mph coastal, 120-130 mph inland</li>
+            </ul>
+
+            <h3>Pacific Coast</h3>
+            <p>The Pacific coast generally experiences lower design wind speeds than the Atlantic/Gulf coasts due to different storm patterns and the Pacific Ocean's stabilizing influence.</p>
+
+            <ul>
+                <li><strong>California Coast:</strong> 85-110 mph (most areas), up to 120 mph at exposed headlands</li>
+                <li><strong>Oregon Coast:</strong> 100-120 mph (exposed areas), 90-100 mph (protected valleys)</li>
+                <li><strong>Washington Coast:</strong> 100-120 mph (coastal), 85-100 mph (Puget Sound area)</li>
+            </ul>
+
+            <h3>Interior Continental United States</h3>
+            <p>Interior regions experience moderate wind speeds from severe thunderstorms, downburst events, and occasional tornadic activity (note: ASCE 7 does not design for direct tornado strikes).</p>
+
+            <ul>
+                <li><strong>Great Plains:</strong> 110-120 mph (Kansas, Nebraska, Oklahoma, Texas panhandle)</li>
+                <li><strong>Midwest:</strong> 110-115 mph (Illinois, Indiana, Ohio, Michigan)</li>
+                <li><strong>Mid-Atlantic Interior:</strong> 110-115 mph (Pennsylvania, West Virginia, Virginia)</li>
+                <li><strong>Mountain West:</strong> 90-110 mph (valleys), 120-130 mph (high-elevation exposed sites)</li>
+            </ul>
+
+            <h3>Alaska, Hawaii, and US Territories</h3>
+            <p>These locations have unique wind exposure characteristics requiring careful map reading.</p>
+
+            <ul>
+                <li><strong>Alaska:</strong> 85-130 mph depending on location; Aleutian Islands and coastal areas highest</li>
+                <li><strong>Hawaii:</strong> 130-170 mph all islands due to tropical cyclone exposure; windward coasts highest</li>
+                <li><strong>Puerto Rico:</strong> 145-170 mph across island; eastern and northern coasts highest</li>
+                <li><strong>US Virgin Islands:</strong> 150-170 mph</li>
+                <li><strong>Guam:</strong> 170 mph (maximum typhoon exposure)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Related Wind Speed Resources -->
+    <section class="related-links">
+        <div class="container">
+            <h2>Related Wind Speed Resources</h2>
+            <div class="link-cards">
+                <a href="asce-7-22-wind-speed-maps.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>ASCE 7-22 Wind Speed Maps</h4>
+                        <p>Updated MRI-based wind speed maps and changes from ASCE 7-16</p>
+                    </div>
+                </a>
+
+                <a href="wind-speed-by-location.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Wind Speed by Location</h4>
+                        <p>Find design wind speeds for your specific project site</p>
+                    </div>
+                </a>
+
+                <a href="asce-7-wind-load-velocity-finder-wind-speed-by-zip-code.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Wind Speed by Zip Code</h4>
+                        <p>Quick wind speed lookup tool using zip code search</p>
+                    </div>
+                </a>
+
+                <a href="3-second-gust-wind-speed.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>3-Second Gust Wind Speed</h4>
+                        <p>Understanding the 3-second gust parameter in ASCE 7</p>
+                    </div>
+                </a>
+
+                <a href="basic-wind-speed-explained.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-gauge-high"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>Basic Wind Speed Explained</h4>
+                        <p>Comprehensive guide to the basic wind speed parameter (V)</p>
+                    </div>
+                </a>
+
+                <a href="asce-7-wind-load-calculator.html" class="link-card">
+                    <div class="link-card-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="link-card-content">
+                        <h4>ASCE 7 Wind Load Calculator</h4>
+                        <p>Professional wind pressure calculation software</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WindLoadCalc Promotional Section -->
+    <section class="windloadcalc-promo">
+        <div class="container">
+            <h2>Need Professional Wind Load Calculators?</h2>
+            <p>Visit <strong>WindLoadCalc.com</strong> for automated ASCE 7-16 and 7-22 wind speed lookup, professional wind load calculator software, and the Building Intelligence Platform (BIP) for comprehensive structural analysis.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Visit WindLoadCalc.com →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="asce-7-standards.html">ASCE 7</a>
+                <a href="state-requirements.html">State Requirements</a>
+                <a href="risk-categories-wind-loads-guide.html">Risk Categories</a>
+                <a href="resources.html">Resources</a>
+                <a href="articles.html">Articles</a>
+                <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 Wind Load Solutions. All rights reserved.</p>
+            <p style="opacity: 0.7; font-size: 0.9rem;">Professional wind load engineering resources and calculators</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile navigation toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleNav() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleNav);
+        navOverlay.addEventListener('click', toggleNav);
+
+        // Close nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleNav();
+                }
+            });
+        });
+    </script>
+<script>
+// Navigation toggle functions for click-to-expand
+function toggleNavSection(element) {
+    const section = element.parentElement;
+    const wasActive = section.classList.contains('active');
+
+    // Close all other sections
+    document.querySelectorAll('.nav-section').forEach(s => {
+        if (s !== section) {
+            s.classList.remove('active');
+        }
+    });
+
+    // Toggle this section
+    section.classList.toggle('active');
+}
+
+function toggleNavSubsection(element) {
+    const subsection = element.parentElement;
+    subsection.classList.toggle('active');
+}
+</script>
+<!-- SEO-Enhanced Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>ASCE 7 Standards</h4>
+                <ul>
+                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
+                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
+                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
+                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
+                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
+                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Top States</h4>
+                <ul>
+                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
+                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
+                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
+                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
+                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
+                    <li><a href="state-requirements.html">All 50 States</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources & Tools</h4>
+                <ul>
+                    <li><a href="resources.html">Free Resources</a></li>
+                    <li><a href="articles.html">Articles & Guides</a></li>
+                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
+                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="https://windloadcalc.com" target="_blank" rel="noopener">Wind Load Calculator</a></li>
+                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background: #1a202c;
+    color: #e5e7eb;
+    padding: 4rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-column h4 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #0018ff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-column a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-column a:hover {
+    color: #60a5fa;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.footer-tagline {
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .site-footer {
+        padding: 3rem 1.5rem 1.5rem;
+    }
+}
+</style>
+
+</body>
+</html>
