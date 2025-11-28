@@ -18,15 +18,15 @@
 - [x] 7. Orlando, FL ✅ (cities/orlando-wind-load-requirements.html)
 - [x] 8. Galveston, TX ✅ (cities/galveston-wind-load-requirements.html)
 - [x] 9. Corpus Christi, TX ✅ (cities/corpus-christi-wind-load-requirements.html)
-- [ ] 10. West Palm Beach, FL
-- [ ] 11. Naples, FL
-- [ ] 12. Pensacola, FL
-- [ ] 13. Mobile, AL
-- [ ] 14. Savannah, GA
-- [ ] 15. Charleston, SC
-- [ ] 16. Myrtle Beach, SC
-- [ ] 17. Wilmington, NC
-- [ ] 18. Virginia Beach, VA
+- [x] 10. West Palm Beach, FL ✅ (cities/west-palm-beach-wind-load-requirements.html)
+- [x] 11. Naples, FL ✅ (cities/naples-wind-load-requirements.html)
+- [x] 12. Pensacola, FL ✅ (cities/pensacola-wind-load-requirements.html)
+- [x] 13. Mobile, AL ✅ (cities/mobile-wind-load-requirements.html)
+- [x] 14. Savannah, GA ✅ (cities/savannah-wind-load-requirements.html)
+- [x] 15. Charleston, SC ✅ (cities/charleston-wind-load-requirements.html)
+- [x] 16. Myrtle Beach, SC ✅ (cities/myrtle-beach-wind-load-requirements.html)
+- [x] 17. Wilmington, NC ✅ (cities/wilmington-wind-load-requirements.html)
+- [x] 18. Virginia Beach, VA ✅ (cities/virginia-beach-wind-load-requirements.html)
 - [ ] 19. Norfolk, VA
 - [ ] 20. Atlantic City, NJ
 - [ ] 21. Long Island, NY
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 10
-- Remaining: 90
+- Completed: 19
+- Remaining: 81
 
 ---
 

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myrtle Beach Wind Load Requirements | 130-140 mph | Horry County SC | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Myrtle Beach wind load requirements. Horry County design wind speed 130-140 mph, Grand Strand resort construction, Exposure Category C coastal/B inland, and South Carolina Building Code compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/myrtle-beach-wind-load-requirements.html">
+    <meta name="keywords" content="Myrtle Beach wind load, Horry County wind speed, Myrtle Beach wind load calculator, Grand Strand construction, 130 mph wind speed, Myrtle Beach building permit, Myrtle Beach wind load requirements">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Myrtle Beach/Ocean specific colors */
+        .hero {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 25%, #38bdf8 50%, #fcd34d 75%, #d4a574 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏖️🌊';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #0ea5e9;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #0ea5e9;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #38bdf8;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #0ea5e9;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #0ea5e9;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Myrtle Beach Card */
+        .myrtle-beach-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .myrtle-beach-card h4 {
+            color: #0ea5e9;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .myrtle-beach-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "South Carolina",
+                "item": "https://windload.solutions/south-carolina-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Myrtle Beach",
+                "item": "https://windload.solutions/cities/myrtle-beach-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../south-carolina-wind-load-requirements.html"><i class="fas fa-flag"></i> South Carolina</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Myrtle Beach Wind Load Requirements</h1>
+            <p>Horry County South Carolina | 130-140 mph Design Wind Speed | Grand Strand Beach Resort | Exposure Category C Coastal/B Inland | IBC/ASCE 7-22</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Myrtle Beach Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">130-140</span>
+                    <span class="stat-label">Design Wind Speed (Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">C</span>
+                    <span class="stat-label">Exposure Category (Coastal)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">SC Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">HIGH</span>
+                    <span class="stat-label">Hurricane Risk Zone</span>
+                </div>
+            </div>
+
+            <h2>Myrtle Beach/Horry County: Grand Strand Beach Resort Wind Load Requirements</h2>
+            <p>Myrtle Beach, located in <strong>Horry County, South Carolina</strong>, is the heart of the 60-mile Grand Strand coastal resort area and requires substantial wind load design appropriate for its direct Atlantic Ocean exposure. Myrtle Beach requires a design wind speed of approximately <strong>130-140 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and the city's position as a major beachfront destination on the South Carolina coast.</p>
+
+            <p>As one of the most hurricane-vulnerable cities on the East Coast, Myrtle Beach faces significant tropical cyclone risk. The city has experienced major hurricane impacts including Hurricane Hugo (1989), Hurricane Florence (2018), and Hurricane Dorian (2019). These historic events, combined with the area's high-rise hotel and condominium construction, make proper wind load engineering critical for both structural safety and tourism infrastructure resilience.</p>
+
+            <div class="info-box">
+                <h4><strong>🏖️</strong> Myrtle Beach/Horry County Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 130-140 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~145-155 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~155-165 mph</p>
+                <p><strong>Exposure Category:</strong> C (coastal beachfront), B (inland areas)</p>
+                <p><strong>Building Code:</strong> South Carolina Building Codes Council (adopts IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Special Considerations:</strong> Major beach resort, Grand Strand tourism infrastructure, high-rise construction</p>
+            </div>
+
+            <h3>Why Myrtle Beach Has 130-140 mph Wind Speed Requirements</h3>
+            <p>Myrtle Beach's design wind speeds of 130-140 mph are derived from ASCE 7-22 wind speed maps for the South Carolina coast. This velocity range reflects the city's position as a major Atlantic coastal resort community with direct hurricane exposure. The Grand Strand area, which stretches from Georgetown County to North Myrtle Beach, faces consistent tropical cyclone risk during hurricane season (June through November).</p>
+
+            <p>The exact wind speed for a specific Myrtle Beach project depends on precise location. Oceanfront properties along Ocean Boulevard and beachfront hotels typically require the higher end of the range (135-140 mph) due to direct Atlantic exposure and Exposure Category C conditions. Inland areas west of Highway 17 Bypass may use the lower end (130-135 mph) with appropriate engineering justification. The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or street address.</p>
+
+            <h3>Myrtle Beach Hurricane History and Wind Risk</h3>
+            <p>Myrtle Beach's hurricane history demonstrates why these wind load requirements are necessary:</p>
+
+            <ul>
+                <li><strong>Hurricane Hugo (1989):</strong> Category 4 storm made landfall near Charleston, SC with devastating impacts extending to Myrtle Beach. Hugo caused catastrophic damage and remains one of the most destructive storms in South Carolina history</li>
+                <li><strong>Hurricane Florence (2018):</strong> Category 1 at landfall near Wrightsville Beach, NC, Florence caused massive flooding and wind damage across Myrtle Beach and Horry County. The storm produced historic rainfall and persistent coastal impacts</li>
+                <li><strong>Hurricane Dorian (2019):</strong> Category 2 storm passed offshore but caused significant beach erosion, coastal flooding, and wind damage. Dorian highlighted the vulnerability of Grand Strand high-rise structures</li>
+                <li><strong>Hurricane Matthew (2016):</strong> Offshore passage caused flooding and wind damage throughout Horry County</li>
+            </ul>
+
+            <p>These events validate the importance of proper wind load engineering for Myrtle Beach's unique combination of high-rise resort construction, coastal exposure, and tourism-dependent infrastructure.</p>
+
+            <h3>Myrtle Beach Geographic Considerations</h3>
+            <p>Myrtle Beach's geography significantly influences wind load requirements:</p>
+
+            <ul>
+                <li><strong>Atlantic Ocean Beachfront:</strong> The primary oceanfront hotel and condominium corridor along Ocean Boulevard requires Exposure Category C and the highest wind speeds due to direct Atlantic exposure with minimal obstructions</li>
+                <li><strong>Grand Strand Beaches:</strong> The 60-mile coastal stretch from Pawleys Island through North Myrtle Beach maintains consistent coastal wind load requirements</li>
+                <li><strong>Intracoastal Waterway:</strong> Properties along the Intracoastal Waterway may have different exposure considerations than oceanfront structures</li>
+                <li><strong>Inland Development:</strong> Areas west of Highway 17 Bypass and inland neighborhoods may qualify for Exposure Category B with appropriate engineering analysis</li>
+                <li><strong>High-Rise Construction:</strong> Myrtle Beach's numerous hotel and condominium towers require special consideration for height-dependent wind pressures and exposure factors</li>
+            </ul>
+
+            <h3>Myrtle Beach Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Myrtle Beach projects requires following ASCE 7-22 methodology with South Carolina Building Code requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #0ea5e9; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Myrtle Beach oceanfront project with V = 140 mph and Exposure C conditions, the resulting pressures are substantial and require careful structural engineering. A beachfront hotel project with:</p>
+            <ul>
+                <li><strong>V = 140 mph</strong> (oceanfront beachfront velocity)</li>
+                <li><strong>Kz = 0.85</strong> (15 ft height, Exposure C)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (sea level)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 45.7 psf</strong>—a significant load requiring robust structural systems appropriate for coastal high-rise construction.</p>
+
+            <h3>South Carolina Building Code and Product Requirements</h3>
+            <p>Myrtle Beach projects must comply with the South Carolina Building Code, which adopts the International Building Code (IBC) with state-specific amendments. Key requirements include:</p>
+
+            <ul>
+                <li><strong>ASCE 7-22 Compliance:</strong> All wind load calculations must follow ASCE 7-22 methodology</li>
+                <li><strong>Building Component Testing:</strong> Windows, doors, roof coverings, and wall cladding must be tested and rated for appropriate wind pressures</li>
+                <li><strong>Impact Resistance:</strong> Coastal areas may require impact-rated glazing or protective shutters for windborne debris protection</li>
+                <li><strong>Roof Covering Standards:</strong> Enhanced attachment requirements for coastal wind zones</li>
+                <li><strong>Professional Engineer Seal:</strong> All structural calculations must be sealed by a PE licensed in South Carolina</li>
+            </ul>
+
+            <p>Unlike Florida, South Carolina does not require statewide "Product Approval" but does mandate that all building components meet tested performance standards for the applicable wind zone.</p>
+
+            <div class="myrtle-beach-card">
+                <h4>Myrtle Beach High-Rise Considerations</h4>
+                <p><strong>Height Effects:</strong> Myrtle Beach's numerous high-rise hotels and condominiums require increased wind pressures at elevated heights due to the velocity pressure exposure coefficient (Kz) increasing with height</p>
+                <p><strong>Exposure Category C:</strong> Oceanfront high-rises typically require Exposure C throughout the entire building height due to sustained ocean exposure</p>
+                <p><strong>Cladding Design:</strong> Curtain wall systems, balcony railings, and exterior finishes must be engineered for substantially higher pressures than low-rise structures</p>
+                <p><strong>Tourism Infrastructure:</strong> Hotels must maintain operational integrity during and after storm events to support evacuation and recovery operations</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Myrtle Beach projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Myrtle Beach Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>130-140 mph</td>
+                        <td>Residential, commercial, hotels, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~145-155 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~155-165 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, police stations</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Categories: Oceanfront vs. Inland Myrtle Beach</h3>
+            <p>Myrtle Beach projects require careful exposure category determination based on location and surrounding terrain:</p>
+
+            <ul>
+                <li><strong>Exposure Category C (Oceanfront):</strong> Required for all properties with direct Atlantic Ocean exposure, including Ocean Boulevard hotels, beachfront condominiums, and coastal commercial structures. Open terrain with scattered obstructions less than 30 feet high</li>
+                <li><strong>Exposure Category B (Inland):</strong> May be used for inland areas west of Highway 17 with substantial urban/suburban development, wooded areas, and closely spaced buildings providing terrain roughness</li>
+                <li><strong>Exposure Category D (Special Cases):</strong> May apply to structures on elevated piers or platforms directly over water with unobstructed exposure extending significant distances offshore</li>
+            </ul>
+
+            <p>The distinction between Exposure C and B can significantly impact calculated wind pressures. Oceanfront high-rise projects must use Exposure C, which produces substantially higher design pressures than Exposure B.</p>
+
+            <h3>Myrtle Beach Zip Codes and Wind Speed Reference</h3>
+            <p>Myrtle Beach and Horry County use zip codes in the 29526-29588 range. Wind speeds vary by coastal proximity:</p>
+
+            <ul>
+                <li><strong>29572, 29577:</strong> Myrtle Beach oceanfront, Ocean Boulevard corridor - 135-140 mph, Exposure C required</li>
+                <li><strong>29575, 29579, 29588:</strong> North Myrtle Beach oceanfront - 135-140 mph, Exposure C coastal</li>
+                <li><strong>29526, 29568, 29576, 29578:</strong> Myrtle Beach inland areas, west of Highway 17 - 130-135 mph, Exposure B may apply</li>
+                <li><strong>29566:</strong> Pawleys Island area (southern Grand Strand) - 135-140 mph coastal</li>
+                <li><strong>29582:</strong> Surfside Beach - 135-140 mph coastal exposure</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed and provides exposure category recommendations when you enter any Myrtle Beach/Horry County zip code or street address, using ASCE 7-22 wind speed maps and local terrain analysis.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Myrtle Beach Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Myrtle Beach/Horry County requirements including location-specific wind velocities (130-140 mph range), appropriate Exposure Category recommendations, Risk Category adjustments, and component pressure coefficients. Simply enter your Myrtle Beach project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Myrtle Beach Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in South Carolina</h3>
+            <p>All wind load calculations for Myrtle Beach building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in South Carolina</strong>. The sealed calculations must include:</p>
+
+            <ul>
+                <li>Project address and zip code with wind speed determination</li>
+                <li>Design wind speed (130-140 mph range for Risk Category II)</li>
+                <li>Exposure Category determination with supporting justification</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures if applicable</li>
+                <li>Product specifications with tested performance ratings</li>
+                <li>Special considerations for high-rise structures if applicable</li>
+            </ul>
+
+            <h3>Official Horry County/Myrtle Beach Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Myrtle Beach wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.horrycounty.org/Departments/Building-Safety" target="_blank" rel="noopener" class="external-link">
+                    Horry County Building Safety
+                </a>
+                <a href="https://www.cityofmyrtlebeach.com/government/building_safety/index.php" target="_blank" rel="noopener" class="external-link">
+                    Myrtle Beach Building Safety
+                </a>
+                <a href="https://llr.sc.gov/bld/" target="_blank" rel="noopener" class="external-link">
+                    SC Building Codes Council
+                </a>
+                <a href="https://llr.sc.gov/POL/Engineers/" target="_blank" rel="noopener" class="external-link">
+                    SC PE Licensing Board
+                </a>
+            </div>
+
+            <h3>Common Myrtle Beach Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Using wrong wind speed:</strong> Myrtle Beach requires 130-140 mph depending on location and exposure, not generic "coastal" velocities</li>
+                <li><strong>Incorrect exposure category:</strong> Oceanfront projects require Exposure C; inland areas may use Exposure B only with proper engineering justification</li>
+                <li><strong>Ignoring high-rise effects:</strong> Hotels and condominiums require height-dependent wind pressure calculations with increasing Kz values</li>
+                <li><strong>Overlooking hurricane history:</strong> Hugo, Florence, and Dorian demonstrate the need for robust wind design in Grand Strand construction</li>
+                <li><strong>Incorrect Risk Category:</strong> Hotels, schools, and emergency facilities require higher risk categories with increased wind speeds</li>
+                <li><strong>Outdated calculations:</strong> Must use ASCE 7-22 per current South Carolina Building Code</li>
+                <li><strong>Inadequate tourism infrastructure design:</strong> Hotels and resort facilities must maintain integrity for evacuation and recovery operations</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Myrtle Beach Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Myrtle Beach-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any Myrtle Beach zip code or address and the system automatically applies the correct 130-140 mph velocity based on ASCE 7-22 maps and coastal proximity</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides appropriate exposure recommendations based on oceanfront vs. inland location</li>
+                <li><strong>High-Rise Calculations:</strong> Automatically adjusts Kz coefficients for elevated heights in hotel and condominium structures</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current South Carolina Building Code requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding, and all building components</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission and professional engineer review</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Myrtle Beach-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Myrtle Beach/Horry County projects. Our software automatically handles location-specific wind velocities (130-140 mph), appropriate Exposure Category recommendations, high-rise adjustments, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Myrtle Beach Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../south-carolina-wind-load-requirements.html" style="color: #60a5fa;">South Carolina Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
