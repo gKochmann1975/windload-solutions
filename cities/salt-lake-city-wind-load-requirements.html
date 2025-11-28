@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salt Lake City Wind Load Requirements | 90-105 mph | Salt Lake County UT | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Salt Lake City wind load requirements. Salt Lake County design wind speed 90-105 mph, Wasatch Mountain topographic effects, Exposure Category B urban, and IBC compliance with ASCE 7-22.">
+    <link rel="canonical" href="https://windload.solutions/cities/salt-lake-city-wind-load-requirements.html">
+    <meta name="keywords" content="Salt Lake City wind load, Salt Lake County wind speed, Salt Lake City wind load calculator, Wasatch Mountains, 90 mph wind speed, Salt Lake City building permit, Salt Lake City wind load requirements, Silicon Slopes">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Salt Lake City navy and gold colors */
+        .hero {
+            background: linear-gradient(135deg, #002B5C 0%, #003D7A 25%, #004B99 50%, #F9A01B 75%, #FFBB5C 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '⛷️🏔️';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #002B5C;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #002B5C;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #F9A01B;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #EBF4FF 0%, #DBEAFE 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #002B5C;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #002B5C;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #002B5C 0%, #F9A01B 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 43, 92, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #002B5C 0%, #F9A01B 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Salt Lake City Card */
+        .slc-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(0, 43, 92, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .slc-card h4 {
+            color: #002B5C;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .slc-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #F9A01B 0%, #FFBB5C 100%);
+            color: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Utah",
+                "item": "https://windload.solutions/utah-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Salt Lake City",
+                "item": "https://windload.solutions/cities/salt-lake-city-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../utah-wind-load-requirements.html"><i class="fas fa-mountain"></i> Utah</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Salt Lake City Wind Load Requirements</h1>
+            <p>Salt Lake County Utah | 90-105 mph Design Wind Speed | Wasatch Mountain Topographic Effects | Exposure Category B Urban | Utah State Construction Code with ASCE 7-22</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Salt Lake City Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">90-105</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B</span>
+                    <span class="stat-label">Exposure Category (Urban)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Utah State Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE 7-22</span>
+                    <span class="stat-label">Wind Load<br>Standard</span>
+                </div>
+            </div>
+
+            <h2>Salt Lake City/Salt Lake County: Wasatch Mountain Valley Wind Load Requirements</h2>
+            <p>Salt Lake City, located in <strong>Salt Lake County, Utah</strong>, sits in a valley between the Wasatch Mountains to the east and the Oquirrh Mountains to the west at approximately 4,200 feet elevation. Salt Lake City requires a design wind speed of approximately <strong>90-105 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and its mountain valley location.</p>
+
+            <p>Salt Lake City experiences unique wind load considerations due to its position in the Salt Lake Valley, with potential topographic effects from the Wasatch Range creating enhanced wind conditions in canyon mouths and elevated areas. The city has grown from its Mormon pioneer heritage into a major tech hub known as Silicon Slopes, hosting the 2002 Winter Olympics. The city operates under the <strong>Utah State Construction Code</strong> which adopts the International Building Code (IBC) with state-specific amendments.</p>
+
+            <div class="info-box">
+                <h4><strong>⛷️🏔️</strong> Salt Lake City/Salt Lake County Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 90-105 mph (3-second gust, varies by location and elevation)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~100-115 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~105-120 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban valley), potential Exposure C in exposed areas</p>
+                <p><strong>Topographic Factor (Kzt):</strong> May exceed 1.0 near canyon mouths and mountain slopes</p>
+                <p><strong>Building Code:</strong> Utah State Construction Code (adopts IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Elevation:</strong> ~4,200 feet above sea level</p>
+                <p><strong>Notable Features:</strong> Great Salt Lake, Wasatch Mountains, 2002 Winter Olympics, Silicon Slopes tech hub</p>
+            </div>
+
+            <h3>Why Salt Lake City Has 90-105 mph Wind Speed Requirements</h3>
+            <p>Salt Lake City's design wind speeds of 90-105 mph are derived from ASCE 7-22 wind speed maps for the northern Utah valley region. This velocity range reflects the city's interior mountain valley location, elevation at approximately 4,200 feet, and exposure to mountain wind phenomena including canyon winds and downslope wind events.</p>
+
+            <p>The exact wind speed for a specific Salt Lake City project depends on precise location and elevation. Areas near the mouths of mountain canyons (Big Cottonwood Canyon, Little Cottonwood Canyon, Parley's Canyon) may experience enhanced wind speeds due to canyon channeling effects. The Wasatch Front foothills and elevated areas typically require higher wind speeds than the valley floor. The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or address and applies appropriate topographic factors.</p>
+
+            <h3>Wasatch Mountain Topographic Effects</h3>
+            <p>Salt Lake City's position at the base of the Wasatch Range creates unique topographic wind considerations:</p>
+
+            <ul>
+                <li><strong>Canyon Winds:</strong> Mountain canyons (Big Cottonwood, Little Cottonwood, Parley's, Emigration) can channel and accelerate winds, requiring topographic factor Kzt greater than 1.0 for projects near canyon mouths</li>
+                <li><strong>Downslope Winds:</strong> Cold air drainage from the mountains can create strong downslope wind events during winter months</li>
+                <li><strong>Wasatch Front Development:</strong> Projects on the mountain bench areas face greater wind exposure than valley floor locations</li>
+                <li><strong>Lake Effect:</strong> Great Salt Lake to the west can influence local wind patterns, particularly in western valley areas</li>
+                <li><strong>Elevation Gradients:</strong> Wind speeds increase with elevation, requiring adjustment for projects at higher elevations along the Wasatch Front</li>
+            </ul>
+
+            <h3>Salt Lake City Development and Silicon Slopes</h3>
+            <p>Salt Lake City has evolved into a major economic and technology center:</p>
+
+            <ul>
+                <li><strong>Silicon Slopes:</strong> Major tech hub rivaling Silicon Valley, with companies like Adobe, Goldman Sachs, and numerous startups requiring modern commercial construction</li>
+                <li><strong>2002 Winter Olympics Legacy:</strong> Olympic venues and infrastructure continue to serve the city, built to modern wind load standards</li>
+                <li><strong>Mormon Heritage:</strong> Historic Temple Square and pioneer-era buildings coexist with modern high-rise development</li>
+                <li><strong>Rapid Growth:</strong> Salt Lake City metropolitan area experiencing significant population and development growth, requiring compliance with current codes</li>
+                <li><strong>Mixed Use Development:</strong> Urban redevelopment creating dense downtown core with high-rise residential and commercial projects</li>
+            </ul>
+
+            <h3>Salt Lake City Winter and Mountain Climate</h3>
+            <p>Salt Lake City's mountain valley climate creates specific engineering considerations:</p>
+
+            <ul>
+                <li><strong>Winter Inversion:</strong> Temperature inversions can trap cold air in the valley, creating unique atmospheric conditions</li>
+                <li><strong>Snow Loads:</strong> Significant snow loads must be considered in addition to wind loads, particularly at higher elevations</li>
+                <li><strong>Seasonal Wind Patterns:</strong> Winter and spring typically experience stronger wind events than summer months</li>
+                <li><strong>Lake Effect Weather:</strong> Great Salt Lake influences local weather patterns and wind conditions</li>
+                <li><strong>Mountain Storms:</strong> Spring and fall mountain storms can bring high winds to canyon areas and the Wasatch Front</li>
+            </ul>
+
+            <h3>Salt Lake City Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Salt Lake City projects requires following ASCE 7-22 methodology with Utah State Construction Code requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #002B5C; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Salt Lake City valley project with V = 95 mph and Exposure B conditions, a downtown project with:</p>
+            <ul>
+                <li><strong>V = 95 mph</strong> (Salt Lake City valley velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B)</li>
+                <li><strong>Kzt = 1.0</strong> (valley floor, no significant topographic effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (elevation adjustment typically incorporated into base wind speed)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 16.4 psf</strong>. However, a project near a canyon mouth or on the Wasatch Front may require Kzt = 1.2 or higher, significantly increasing pressures.</p>
+
+            <h3>Utah State Construction Code Requirements</h3>
+            <p>Salt Lake City operates under the Utah State Construction Code, which adopts the International Building Code (IBC) with state-specific amendments. All Salt Lake City projects must comply with:</p>
+
+            <ul>
+                <li><strong>IBC Adoption:</strong> Utah adopts the most recent edition of the International Building Code</li>
+                <li><strong>ASCE 7-22:</strong> Current wind load standard for all new construction</li>
+                <li><strong>State Amendments:</strong> Utah-specific modifications to the IBC for local conditions including snow loads</li>
+                <li><strong>Local Ordinances:</strong> Salt Lake City and Salt Lake County additional requirements</li>
+                <li><strong>Division of Occupational and Professional Licensing (DOPL):</strong> Oversees professional licensing for engineers and architects</li>
+            </ul>
+
+            <div class="slc-card">
+                <h4>Salt Lake City vs. Denver: Mountain City Comparison</h4>
+                <p><strong>Salt Lake City:</strong> Design wind speed 90-105 mph, 4,200 ft elevation, Wasatch Mountain topographic effects, urban valley Exposure B</p>
+                <p><strong>Denver:</strong> Design wind speed 90-105 mph, 5,280 ft elevation, Front Range effects, similar mountain valley considerations</p>
+                <p><strong>Key Takeaway:</strong> Both mountain cities have similar wind speed requirements but require careful topographic analysis due to mountain proximity and canyon effects</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Salt Lake City projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Salt Lake City Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~85-95 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>90-105 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~100-115 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~105-120 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Categories: Valley Floor vs. Mountain Slopes</h3>
+            <p>Salt Lake City projects require careful exposure category determination based on location and surrounding terrain:</p>
+
+            <ul>
+                <li><strong>Exposure Category B (Urban Valley):</strong> Most common for Salt Lake City proper with urban development, tree coverage, and building density. Downtown and established residential neighborhoods typically qualify for Exposure B</li>
+                <li><strong>Exposure Category C (Open Areas):</strong> May apply to areas near Great Salt Lake, open agricultural land in the valley, or exposed foothill locations with limited obstruction</li>
+                <li><strong>Exposure Category D (Rare):</strong> Generally not applicable in Salt Lake City unless project is in completely open terrain with extensive unobstructed exposure</li>
+                <li><strong>Transitional Zones:</strong> Projects on the urban-rural fringe or in developing areas may require careful exposure analysis</li>
+            </ul>
+
+            <h3>Salt Lake City Zip Codes and Wind Speed Reference</h3>
+            <p>Salt Lake City area uses zip codes in the 84101-84199 range. Wind speeds vary by location and elevation:</p>
+
+            <ul>
+                <li><strong>84101-84106:</strong> Downtown Salt Lake City, urban core - typically 90-95 mph, Exposure B, valley floor locations</li>
+                <li><strong>84108, 84109:</strong> East bench areas, foothills - 95-105 mph, higher due to elevation and proximity to Wasatch Range</li>
+                <li><strong>84111-84115:</strong> Central and south Salt Lake City - 90-95 mph, Exposure B urban</li>
+                <li><strong>84116-84119:</strong> West valley areas - 90-95 mph, closer to Great Salt Lake</li>
+                <li><strong>84120-84128:</strong> West Jordan, South Jordan areas - 90-95 mph, valley locations</li>
+                <li><strong>84092-84094:</strong> Sandy, Midvale, Draper - 95-100 mph, southern valley with foothill development</li>
+                <li><strong>Canyon Mouth Areas:</strong> Projects near Big Cottonwood, Little Cottonwood, or Parley's Canyon require topographic factor Kzt analysis</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed and exposure category recommendations when you enter any Salt Lake City/Salt Lake County zip code or address, using ASCE 7-22 wind speed maps and local terrain analysis with topographic factor considerations.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Salt Lake City Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Salt Lake City/Salt Lake County requirements including location-specific wind velocities (90-105 mph range), appropriate Exposure Category recommendations, topographic factor Kzt determination, Risk Category adjustments, and component pressure coefficients. Simply enter your Salt Lake City project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Salt Lake City Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Salt Lake City</h3>
+            <p>All wind load calculations for Salt Lake City building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in Utah</strong>. The sealed calculations must include:</p>
+
+            <ul>
+                <li>Project address and zip code with wind speed determination</li>
+                <li>Design wind speed (90-105 mph range for Risk Category II)</li>
+                <li>Exposure Category determination with supporting justification</li>
+                <li>Topographic factor (Kzt) analysis, especially for projects near canyon mouths or mountain slopes</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures if applicable</li>
+                <li>Combined wind and snow load analysis for roof design</li>
+            </ul>
+
+            <p>Utah requires professional engineers to be licensed through the <strong>Division of Occupational and Professional Licensing (DOPL)</strong>. Engineers must hold a valid Utah PE license to seal structural calculations for projects in Salt Lake City and throughout Utah.</p>
+
+            <h3>Official Salt Lake City/Salt Lake County Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Salt Lake City wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.slc.gov/building-services/" target="_blank" rel="noopener" class="external-link">
+                    Salt Lake City Building Services
+                </a>
+                <a href="https://slco.org/building-inspections/" target="_blank" rel="noopener" class="external-link">
+                    Salt Lake County Building Inspections
+                </a>
+                <a href="https://laborcommission.utah.gov/divisions/BOSC/" target="_blank" rel="noopener" class="external-link">
+                    Utah State Construction Code
+                </a>
+                <a href="https://dopl.utah.gov/" target="_blank" rel="noopener" class="external-link">
+                    UT Division of Occupational and Professional Licensing
+                </a>
+            </div>
+
+            <h3>Common Salt Lake City Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Ignoring topographic effects:</strong> Projects near canyon mouths or on mountain slopes require Kzt greater than 1.0, significantly increasing wind pressures</li>
+                <li><strong>Using wrong wind speed:</strong> Salt Lake City requires 90-105 mph depending on location and elevation, verify using ASCE 7-22 maps</li>
+                <li><strong>Incorrect exposure category:</strong> Most urban Salt Lake City qualifies for Exposure B, but exposed foothill areas may require Exposure C</li>
+                <li><strong>Neglecting elevation effects:</strong> Projects at higher elevations along the Wasatch Front require higher wind speeds than valley floor</li>
+                <li><strong>Forgetting canyon wind channeling:</strong> Big Cottonwood, Little Cottonwood, and Parley's Canyon create enhanced wind conditions at canyon mouths</li>
+                <li><strong>Not considering snow and wind combination:</strong> Both loads must be properly combined per ASCE 7-22 for roof design</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher categories and wind speeds</li>
+                <li><strong>Outdated calculations:</strong> Must use ASCE 7-22 per current Utah State Construction Code</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Salt Lake City Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Salt Lake City-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any Salt Lake City zip code and the system automatically applies the correct 90-105 mph velocity based on ASCE 7-22 maps and elevation</li>
+                <li><strong>Topographic Factor Analysis:</strong> Considers project location relative to Wasatch Range canyons and mountain slopes for appropriate Kzt determination</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides appropriate exposure recommendations based on urban valley vs. exposed foothill location</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Utah State Construction Code requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission</li>
+            </ul>
+
+            <h3>Salt Lake City's Mountain Valley Character and Engineering Challenges</h3>
+            <p>Salt Lake City stands as a unique American city, nestled in a mountain valley between the Wasatch and Oquirrh ranges with the Great Salt Lake to the northwest. From its founding by Mormon pioneers in 1847 to its transformation into the Silicon Slopes tech hub and host of the 2002 Winter Olympics, Salt Lake City combines historic heritage with modern growth.</p>
+
+            <p>The city's position in the Salt Lake Valley creates specific engineering challenges. The Wasatch Mountains provide a dramatic backdrop but also influence wind patterns through canyon channeling and downslope wind events. Projects near canyon mouths or on the foothill bench areas face enhanced wind loads requiring careful topographic analysis. The combination of mountain valley winds, significant snow loads, and seismic considerations makes proper engineering critical for both residential and commercial construction.</p>
+
+            <p>Whether you're working on a downtown high-rise in the growing Silicon Slopes district, a residential development on the east bench, or a commercial project near a canyon mouth, understanding and implementing Salt Lake City's wind load requirements ensures structural safety while accommodating the city's unique mountain valley environment and continued growth as a major western metropolitan area.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Salt Lake City-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Salt Lake City/Salt Lake County projects. Our software automatically handles location-specific wind velocities (90-105 mph), topographic factor analysis for mountain effects, appropriate Exposure Category recommendations, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Salt Lake City Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../utah-wind-load-requirements.html" style="color: #60a5fa;">Utah Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

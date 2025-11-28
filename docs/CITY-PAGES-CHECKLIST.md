@@ -96,16 +96,16 @@
 ## Tier 4: Remaining Strategic Markets (76-100)
 *Complete coverage, regional hubs*
 
-- [ ] 76. Sacramento, CA
-- [ ] 77. Fresno, CA
-- [ ] 78. Oakland, CA
-- [ ] 79. Long Beach, CA
-- [ ] 80. Anaheim, CA
-- [ ] 81. Santa Ana, CA
-- [ ] 82. Riverside, CA
-- [ ] 83. Stockton, CA
-- [ ] 84. Bakersfield, CA
-- [ ] 85. Salt Lake City, UT
+- [x] 76. Sacramento, CA ✅ (cities/sacramento-wind-load-requirements.html)
+- [x] 77. Fresno, CA ✅ (cities/fresno-wind-load-requirements.html)
+- [x] 78. Oakland, CA ✅ (cities/oakland-wind-load-requirements.html)
+- [x] 79. Long Beach, CA ✅ (cities/long-beach-wind-load-requirements.html)
+- [x] 80. Anaheim, CA ✅ (cities/anaheim-wind-load-requirements.html)
+- [x] 81. Santa Ana, CA ✅ (cities/santa-ana-wind-load-requirements.html)
+- [x] 82. Riverside, CA ✅ (cities/riverside-wind-load-requirements.html)
+- [x] 83. Stockton, CA ✅ (cities/stockton-wind-load-requirements.html)
+- [x] 84. Bakersfield, CA ✅ (cities/bakersfield-wind-load-requirements.html)
+- [x] 85. Salt Lake City, UT ✅ (cities/salt-lake-city-wind-load-requirements.html)
 - [ ] 86. Boise, ID
 - [ ] 87. Spokane, WA
 - [ ] 88. Tacoma, WA
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 75
-- Remaining: 25
+- Completed: 85
+- Remaining: 15
 
 ---
 
