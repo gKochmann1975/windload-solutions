@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicago Wind Load Requirements | 105-115 mph CBC | Cook County IL | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Chicago wind load requirements. Cook County design wind speed 105-115 mph, Exposure B/C, Chicago Building Code with IBC amendments, Windy City lakefront exposure, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/chicago-wind-load-requirements.html">
+    <meta name="keywords" content="Chicago wind load, Cook County wind speed, Chicago wind load calculator, Chicago building permit, Chicago wind load requirements, Chicago Building Code, Lake Michigan wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Chicago Navy/Red colors */
+        .hero {
+            background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 25%, #3b82f6 50%, #dc2626 75%, #b91c1c 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏙️💨';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #1e40af;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #1e40af;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #3b82f6;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #1e40af;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #1e40af;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(30, 64, 175, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Chicago Card */
+        .chicago-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(30, 64, 175, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .chicago-card h4 {
+            color: #1e40af;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .chicago-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Illinois",
+                "item": "https://windload.solutions/illinois-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Chicago",
+                "item": "https://windload.solutions/cities/chicago-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../illinois-wind-load-requirements.html"><i class="fas fa-landmark"></i> Illinois</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Chicago Wind Load Requirements</h1>
+            <p>Cook County, IL | 105-115 mph Design Wind Speed | Chicago Building Code | Windy City Lakefront Exposure | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Chicago Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">105-115</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">CBC</span>
+                    <span class="stat-label">Chicago Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Moderate Wind Risk</span>
+                </div>
+            </div>
+
+            <h2>Chicago, Illinois: The Windy City Wind Load Requirements</h2>
+            <p>Chicago, located in <strong>Cook County, Illinois</strong>, has unique wind load requirements driven by its lakefront location on Lake Michigan and its distinctive urban environment. Unlike most U.S. cities, Chicago maintains its own building code—the <strong>Chicago Building Code (CBC)</strong>—which includes amendments to the International Building Code (IBC) tailored to Chicago's specific conditions. Design wind speeds for Risk Category II structures typically range from <strong>105-115 mph</strong> (3-second gust) depending on location and proximity to the lakefront.</p>
+
+            <p>While Chicago's famous "Windy City" nickname actually refers to its political climate rather than meteorological conditions, the city does face real wind load considerations. The lakefront location creates unique exposure conditions, downtown high-rise buildings generate significant wind tunnel effects, and extreme cold temperatures can interact with wind loads to create challenging design scenarios.</p>
+
+            <div class="info-box">
+                <h4><strong>💨</strong> Chicago Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 105-115 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~120-130 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~130-140 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban inland) or C (lakefront areas)</p>
+                <p><strong>Building Code:</strong> Chicago Building Code (CBC) with IBC amendments</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Cook County</p>
+                <p><strong>Special Considerations:</strong> Lake Michigan exposure, high-rise wind tunnel effects, extreme cold</p>
+            </div>
+
+            <h3>Why Chicago Has 105-115 mph Wind Speed Requirements</h3>
+            <p>Chicago's design wind speed of 105-115 mph for Risk Category II structures reflects the city's location in the Midwest with moderate wind exposure. The range accounts for varying exposure conditions—inland areas with dense urban development typically use the lower end (105 mph), while lakefront properties exposed to Lake Michigan winds may require the higher end (115 mph).</p>
+
+            <p>Lake Michigan plays a crucial role in Chicago wind loads. The lake creates an open fetch allowing winds to accelerate across the water surface with minimal obstruction. Buildings along the lakefront, particularly in areas like Streeterville, Gold Coast, and South Loop, experience higher wind pressures due to this Exposure Category C condition. In contrast, buildings in inland neighborhoods like Lincoln Park, Wicker Park, or Hyde Park benefit from Exposure Category B conditions with surrounding structures providing wind breaks.</p>
+
+            <h3>Chicago Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Chicago projects requires following ASCE 7-22 methodology as adopted by the Chicago Building Code. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #1e40af; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Chicago with V = 110 mph (typical mid-range) and standard conditions, the resulting pressures are moderate. A Chicago project with:</p>
+            <ul>
+                <li><strong>V = 110 mph</strong> (Chicago typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (near sea level, 600 ft elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 22.3 psf</strong>—moderate compared to coastal hurricane regions but significant enough to require careful structural design.</p>
+
+            <p>For lakefront Chicago properties using Exposure C, the velocity pressure coefficient Kz increases substantially, resulting in higher design pressures even at the same wind speed. The difference between Exposure B and C can increase wind loads by 30-50% at low building heights.</p>
+
+            <h3>Chicago Building Code and Permitting</h3>
+            <p>Chicago is unique among major U.S. cities in maintaining its own comprehensive building code rather than simply adopting the IBC wholesale. The <strong>Chicago Building Code (CBC)</strong> incorporates IBC provisions but includes extensive local amendments reflecting Chicago's unique climate, soil conditions, construction practices, and regulatory philosophy.</p>
+
+            <p>Key Chicago Building Code considerations:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> Chicago Building Code (CBC) with IBC as foundational document</li>
+                <li><strong>Local Amendments:</strong> Extensive Chicago-specific requirements for foundations, masonry, fire safety, and structural design</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by CBC</li>
+                <li><strong>Permit Authority:</strong> Chicago Department of Buildings (DOB) handles all building permits within city limits</li>
+                <li><strong>Outside Chicago:</strong> Suburban Cook County areas use International Building Code (IBC) administered by local municipalities</li>
+                <li><strong>High-Rise Requirements:</strong> Buildings over 80 feet have additional structural review requirements</li>
+            </ul>
+
+            <p>You can access Chicago building permits and requirements through the <a href="https://www.chicago.gov/city/en/depts/bldgs.html" target="_blank" rel="noopener">Chicago Department of Buildings</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Chicago projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Chicago Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~100-105 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>105-115 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~130-140 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Lakefront)</h3>
+            <p>Chicago projects require careful Exposure Category determination based on surrounding terrain and proximity to Lake Michigan:</p>
+
+            <div class="chicago-card">
+                <h4>Exposure Category Selection for Chicago</h4>
+                <p><strong>Exposure Category B (Urban/Inland):</strong> Most of Chicago qualifies as Exposure B due to dense urban development with buildings, structures, and obstructions. The Loop, West Loop, Lincoln Park, Lakeview, Wicker Park, and other inland neighborhoods typically use Exposure B. This assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind.</p>
+                <p><strong>Exposure Category C (Lakefront/Open):</strong> Properties directly fronting Lake Michigan typically require Exposure C. This includes areas along Lake Shore Drive from Rogers Park to South Shore, Navy Pier, Museum Campus, and other waterfront developments. Exposure C assumes open terrain with scattered obstructions having heights generally less than 30 feet, which describes the lake surface.</p>
+                <p><strong>Engineering Judgment Required:</strong> The transition between Exposure B and C in Chicago's lakefront areas requires professional engineering judgment. Buildings within 200-600 feet of the lake shoreline are typically considered Exposure C, though the exact distance depends on surrounding development and topography.</p>
+            </div>
+
+            <h3>High-Rise Wind Tunnel Effects in Downtown Chicago</h3>
+            <p>Chicago's downtown area contains the nation's third-largest concentration of high-rise buildings (after New York and Hong Kong). These tall structures create unique wind load considerations:</p>
+
+            <p><strong>Wind Tunnel Testing Requirements:</strong> The Chicago Building Code requires wind tunnel testing for buildings over 600 feet in height or structures with unusual geometric shapes that may experience non-standard wind loading. Wind tunnel analysis provides more accurate pressure distributions than analytical ASCE 7 methods for complex geometries.</p>
+
+            <p><strong>Pedestrian-Level Wind Concerns:</strong> Downtown high-rises create accelerated wind flows at street level, particularly at building corners and through narrow urban canyons. While this primarily affects pedestrian comfort rather than structural loads, Chicago's DOB may require mitigation measures for extreme cases.</p>
+
+            <p><strong>Cladding and Curtain Wall Design:</strong> Chicago's iconic glass curtain wall facades require careful wind load analysis. Component and cladding (C&C) pressures on high-rise glazing can be substantial, particularly on upper floors and at corners. The CBC has specific requirements for curtain wall testing and certification.</p>
+
+            <h3>Chicago Zip Codes and Wind Speed Reference</h3>
+            <p>Chicago zip codes span a diverse area with varying wind speed requirements based on proximity to Lake Michigan and urban density. Common Chicago zip codes include:</p>
+
+            <ul>
+                <li><strong>60601-60611:</strong> Downtown Loop, River North, Streeterville (mostly Exposure B, lakefront is Exposure C)</li>
+                <li><strong>60614-60660:</strong> North Side neighborhoods: Lincoln Park, Lakeview, Uptown, Rogers Park</li>
+                <li><strong>60640, 60660, 60626:</strong> Lakefront North Side (Exposure C along lake)</li>
+                <li><strong>60605, 60616, 60653:</strong> Near South Side, Bronzeville, Hyde Park</li>
+                <li><strong>60615, 60637, 60649:</strong> South Side inland neighborhoods (Exposure B)</li>
+                <li><strong>60622, 60647, 60651:</strong> West Side: Wicker Park, Logan Square, Humboldt Park (Exposure B)</li>
+                <li><strong>60290, 60701-60827:</strong> Suburban Cook County (varies by municipality)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Chicago wind speed based on your specific zip code or street address, accounting for proximity to Lake Michigan and local terrain conditions.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Chicago</h3>
+            <p>Wind load calculations for Chicago building permits have specific PE requirements depending on building type and complexity:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from an Illinois-licensed Professional Engineer</li>
+                <li><strong>Residential Structures:</strong> Single-family homes may not require PE seal for prescriptive designs; multi-family typically requires PE</li>
+                <li><strong>High-Rise Buildings:</strong> Structures over 80 feet require comprehensive PE-sealed structural analysis</li>
+                <li><strong>Wind Tunnel Testing:</strong> Buildings over 600 feet must submit wind tunnel test results from qualified testing facility</li>
+                <li><strong>Curtain Walls:</strong> Large-area glazing systems require PE certification of wind load resistance</li>
+                <li><strong>Best Practice:</strong> Even when not required, PE-sealed calculations provide liability protection and ensure code compliance</li>
+            </ul>
+
+            <h3>Extreme Cold and Wind Load Interactions</h3>
+            <p>Chicago's extreme winter temperatures create unique considerations when combined with wind loads:</p>
+
+            <ul>
+                <li><strong>Material Brittleness:</strong> Structural steel and other materials become more brittle at Chicago's winter temperatures (as low as -20°F to -30°F with wind chill), potentially reducing ductility during wind events</li>
+                <li><strong>Ice Loading:</strong> Glazing, cladding, and roofing systems may experience simultaneous ice accumulation and wind pressure</li>
+                <li><strong>Thermal Movement:</strong> Large temperature swings combined with wind loads require careful detail design for expansion joints</li>
+                <li><strong>HVAC Penetrations:</strong> Roof-mounted mechanical equipment and penthouse structures face combined wind and snow/ice loads</li>
+            </ul>
+
+            <h3>Official Chicago Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Chicago wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.chicago.gov/city/en/depts/bldgs.html" target="_blank" rel="noopener" class="external-link">
+                    Chicago Department of Buildings
+                </a>
+                <a href="https://www.cookcountyil.gov/service/building-and-zoning" target="_blank" rel="noopener" class="external-link">
+                    Cook County Building & Zoning
+                </a>
+                <a href="https://www.idfpr.com/profs/ProfServ.asp" target="_blank" rel="noopener" class="external-link">
+                    Illinois PE Licensing Board
+                </a>
+            </div>
+
+            <h3>Common Chicago Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect Exposure Category:</strong> Assuming all of Chicago is Exposure B—lakefront properties require Exposure C</li>
+                <li><strong>Ignoring CBC Amendments:</strong> Chicago Building Code has unique local amendments beyond base IBC</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher wind speeds</li>
+                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current CBC adoption</li>
+                <li><strong>High-Rise Assumptions:</strong> Tall buildings may require wind tunnel testing instead of analytical methods</li>
+                <li><strong>Neglecting Lake Michigan Fetch:</strong> Underestimating wind acceleration across open water</li>
+                <li><strong>Curtain Wall Pressures:</strong> Failing to properly calculate component and cladding pressures for glazing systems</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Chicago Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Chicago-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Chicago zip code or address and the system automatically applies 105-115 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on proximity to Lake Michigan and surrounding terrain</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current CBC-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Chicago DOB permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Chicago Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Chicago-specific requirements including the 105-115 mph design velocity, appropriate Exposure Category selection, Risk Category adjustments, and component pressure coefficients. Simply enter your Chicago project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Chicago Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Chicago vs Other Midwest Cities Wind Load Requirements</h3>
+            <p>Chicago's wind load requirements are moderate compared to other major Midwest cities:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Design Wind Speed</th>
+                        <th>Exposure Category</th>
+                        <th>Building Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Chicago, IL</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>Chicago Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Milwaukee, WI</strong></td>
+                        <td>105-110 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>Wisconsin Commercial Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Indianapolis, IN</strong></td>
+                        <td>105-110 mph</td>
+                        <td>B typical</td>
+                        <td>Indiana Building Code (IBC)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Detroit, MI</strong></td>
+                        <td>100-105 mph</td>
+                        <td>B (urban), C (waterfront)</td>
+                        <td>Michigan Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>St. Louis, MO</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B typical</td>
+                        <td>IBC with local amendments</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Chicago's lakefront exposure creates wind load conditions similar to other Great Lakes cities, though Chicago's downtown high-rise density is unique among Midwest urban centers.</p>
+
+            <h3>Lake Michigan Ice and Wind Combined Loading</h3>
+            <p>While this page focuses on wind loads, Chicago engineers must also consider ice accumulation on lakefront structures. The combination of wind load and ice loading can create complex design scenarios where:</p>
+
+            <ul>
+                <li>Glazing systems face simultaneous wind pressure and ice impact from lake spray freezing on surfaces</li>
+                <li>Roof-mounted equipment experiences combined wind uplift and ice accumulation weight</li>
+                <li>Cladding attachment must resist wind suction while supporting ice buildup</li>
+                <li>Parapets and railings along lakefront promenades face wind-driven ice formation</li>
+            </ul>
+
+            <p>The ASCE 7 standard provides guidance on combined loading scenarios, though site-specific engineering judgment is often required for extreme lakefront exposure conditions.</p>
+
+            <h3>The "Windy City" Myth vs Reality</h3>
+            <p>Chicago's famous "Windy City" nickname is often misunderstood. Historical research indicates the term originated in the 1890s as a reference to Chicago's boastful politicians rather than its weather. Meteorologically, Chicago is not particularly windy compared to many U.S. cities—average wind speeds are moderate, ranking below cities like Boston, Oklahoma City, and many Great Plains locations.</p>
+
+            <p>However, Chicago does experience significant wind events, particularly:</p>
+
+            <ul>
+                <li><strong>Lake Effect Winds:</strong> Lake Michigan creates local wind acceleration and directional channeling</li>
+                <li><strong>Severe Thunderstorms:</strong> Summer convective systems can produce straight-line winds exceeding 80 mph</li>
+                <li><strong>Winter Storms:</strong> Cold fronts and nor'easters bring sustained high winds combined with extreme cold</li>
+                <li><strong>Urban Canyon Effects:</strong> Downtown streets experience accelerated winds due to building geometry</li>
+            </ul>
+
+            <p>These real wind considerations, combined with the city's high-value building stock and dense urban environment, justify Chicago's careful approach to wind load requirements in the Chicago Building Code.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Chicago-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Chicago projects. Our software automatically handles the 105-115 mph velocity range, Exposure B/C determination, and generates PE-ready reports for Chicago Department of Buildings permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Chicago Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../illinois-wind-load-requirements.html" style="color: #60a5fa;">Illinois Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

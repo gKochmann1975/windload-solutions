@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Antonio Wind Load Requirements | 105-115 mph IBC | Bexar County TX | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to San Antonio wind load requirements. Bexar County design wind speed 105-115 mph, Exposure B/C, IBC with state amendments, Hill Country terrain, severe thunderstorms, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/san-antonio-wind-load-requirements.html">
+    <meta name="keywords" content="San Antonio wind load, Bexar County wind speed, San Antonio wind load calculator, San Antonio building permit, San Antonio wind load requirements, IBC San Antonio, Hill Country wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - San Antonio/Spurs colors (Silver/Black/Turquoise) */
+        .hero {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 25%, #6b7280 50%, #06b6d4 75%, #0891b2 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏰🌊';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #374151;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #374151;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #06b6d4;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #374151;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #374151;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #374151 0%, #6b7280 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(55, 65, 81, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #374151 0%, #6b7280 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* San Antonio Card */
+        .houston-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(55, 65, 81, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .houston-card h4 {
+            color: #374151;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .houston-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Texas",
+                "item": "https://windload.solutions/texas-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "San Antonio",
+                "item": "https://windload.solutions/cities/san-antonio-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../texas-wind-load-requirements.html"><i class="fas fa-star"></i> Texas</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>San Antonio Wind Load Requirements</h1>
+            <p>Bexar County, TX | 105-115 mph Design Wind Speed | IBC with State Amendments | Hill Country Terrain | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate San Antonio Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">105-115</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B</span>
+                    <span class="stat-label">Exposure Category<br>(Urban)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Texas Building<br>Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Thunderstorm<br>Risk</span>
+                </div>
+            </div>
+
+            <h2>San Antonio, Texas: Hill Country Wind Load Requirements</h2>
+            <p>San Antonio, located in <strong>Bexar County, Texas</strong>, has moderate wind load requirements influenced by Hill Country terrain and severe thunderstorm activity. Texas does not have a statewide building code—San Antonio uses the <strong>International Building Code (IBC)</strong> with state amendments adopted by the City of San Antonio and Bexar County. Design wind speeds for Risk Category II structures typically range from <strong>105-115 mph</strong> (3-second gust) depending on precise location and topographic features.</p>
+
+            <p>These requirements reflect San Antonio's inland location and varied terrain characteristics. While the city is approximately 150 miles from the Gulf Coast and far removed from direct hurricane impacts, San Antonio experiences severe thunderstorms, derechos, and occasional tornado activity that can produce damaging straight-line winds. The Hill Country terrain creates unique topographic effects that can locally increase wind pressures on elevated sites.</p>
+
+            <div class="info-box">
+                <h4><strong>🏰</strong> San Antonio Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 105-115 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~120-130 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~130-140 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban areas) or C (open areas/Hill Country)</p>
+                <p><strong>Building Code:</strong> International Building Code (IBC) with Texas State amendments</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Bexar County</p>
+                <p><strong>Special Considerations:</strong> Hill Country terrain, severe thunderstorms, flash flooding</p>
+            </div>
+
+            <h3>Why San Antonio Has 105-115 mph Wind Speed Requirements</h3>
+            <p>San Antonio's design wind speed of 105-115 mph for Risk Category II structures reflects the city's inland location while accounting for severe convective weather systems that regularly impact central Texas. Unlike coastal cities that must design for sustained hurricane winds, San Antonio's wind loads are driven primarily by severe thunderstorms, downbursts, and derechos that can produce intense but localized wind events.</p>
+
+            <p>The Hill Country region surrounding San Antonio creates unique topographic considerations. Buildings located on elevated ridges, bluffs overlooking the San Antonio River valley, or exposed hilltops may experience significantly higher wind pressures than structures in the urban core. ASCE 7-22's topographic factor (Kzt) provisions are particularly important for San Antonio projects in these elevated locations.</p>
+
+            <h3>San Antonio Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for San Antonio projects requires following ASCE 7-22 methodology as adopted by the IBC and Texas State amendments. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #374151; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For San Antonio with V = 110 mph (typical central San Antonio) and standard conditions, the resulting pressures are moderate. A San Antonio project with:</p>
+            <ul>
+                <li><strong>V = 110 mph</strong> (San Antonio typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain—or higher for Hill Country sites)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (typical elevation ~700 ft)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 22.0 psf</strong>—significantly lower than coastal hurricane regions but consistent with inland severe weather areas.</p>
+
+            <p>For Hill Country sites with topographic exposure, the Kzt factor may increase to 1.2 or higher, substantially increasing design pressures for buildings on ridges and hilltops.</p>
+
+            <h3>San Antonio Building Code and Permitting</h3>
+            <p>Texas does not have a statewide building code. San Antonio and Bexar County have adopted the <strong>International Building Code (IBC)</strong> with Texas State amendments specific to the region's climate, geology, and weather risks.</p>
+
+            <p>Key San Antonio building code considerations:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> San Antonio uses IBC (typically the most recent edition with 1-2 year lag)</li>
+                <li><strong>Texas State Amendments:</strong> State-level modifications to IBC addressing Texas-specific conditions</li>
+                <li><strong>Local Amendments:</strong> City of San Antonio adds requirements for foundation design, Edwards Aquifer protection, and flood zones</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by IBC</li>
+                <li><strong>Permit Authority:</strong> San Antonio Development Services Department handles building permits within city limits</li>
+                <li><strong>Unincorporated Areas:</strong> Bexar County Building Inspections Division oversees permits outside San Antonio city limits</li>
+            </ul>
+
+            <p>You can access San Antonio building permits and requirements through the <a href="https://www.sanantonio.gov/dsd" target="_blank" rel="noopener">San Antonio Development Services Department</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>San Antonio projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>San Antonio Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~95-105 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>105-115 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~130-140 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Open Areas)</h3>
+            <p>San Antonio projects require careful Exposure Category determination based on surrounding terrain and development density:</p>
+
+            <div class="houston-card">
+                <h4>Exposure Category Selection for San Antonio</h4>
+                <p><strong>Exposure Category B (Urban):</strong> Most of developed San Antonio qualifies as Exposure B due to suburban and urban development with numerous buildings, trees, and other obstructions. The central business district, residential neighborhoods, and commercial corridors within Loop 410 and Loop 1604 typically meet Exposure B criteria.</p>
+                <p><strong>Exposure Category C (Open/Hill Country):</strong> Areas on the urban fringe, undeveloped Hill Country sites, agricultural land, and exposed hilltops may qualify as Exposure C. This includes areas with open terrain, grasslands, and scattered obstructions. Hill Country ranch land and undeveloped sites west and north of the city often require Exposure C.</p>
+                <p><strong>Topographic Factor Considerations:</strong> Hill Country sites on ridges, escarpments, or elevated terrain may require topographic factor (Kzt) analysis per ASCE 7-22 Section 26.8. Sites with significant elevation changes or hilltop exposure can experience substantially increased wind pressures.</p>
+            </div>
+
+            <h3>Hill Country Terrain and Topographic Effects</h3>
+            <p>San Antonio's location at the edge of the Texas Hill Country creates unique wind load considerations related to terrain and topography:</p>
+
+            <p><strong>Topographic Wind Speed-Up:</strong> Hills, ridges, and escarpments characteristic of the Hill Country can accelerate wind flow, creating localized areas of increased wind pressure. ASCE 7-22 requires topographic factor (Kzt) analysis for buildings on or near these features. Sites with steep slopes (>10% grade) and significant elevation changes (>15 feet over 100 feet horizontal distance) often require Kzt > 1.0.</p>
+
+            <p><strong>Edwards Plateau Escarpment:</strong> The Balcones Escarpment running through the western part of San Antonio marks the boundary between the coastal plains and Hill Country. Buildings located on the escarpment edge face increased wind exposure and may require enhanced design provisions.</p>
+
+            <p><strong>Flash Flood Considerations:</strong> While not directly related to wind loads, Hill Country terrain creates extreme flash flooding risk in San Antonio. Many sites require combined wind and flood analysis, particularly in FEMA Special Flood Hazard Areas along creeks and the San Antonio River.</p>
+
+            <h3>Severe Thunderstorms and Derechos</h3>
+            <p>San Antonio's wind load requirements account for severe convective weather systems that regularly impact central Texas:</p>
+
+            <p><strong>Severe Thunderstorm Activity:</strong> San Antonio experiences frequent severe thunderstorms producing straight-line winds exceeding 60 mph. These events occur most commonly during spring and early summer months when warm, moist Gulf air interacts with dry air from the west. Downbursts and microbursts can produce localized wind speeds exceeding 90 mph.</p>
+
+            <p><strong>Derecho Events:</strong> While less common than individual thunderstorms, derecho events—long-lived, widespread windstorms associated with fast-moving squall lines—can produce sustained winds of 70-100+ mph across San Antonio. These systems can cause widespread damage to structures, trees, and power infrastructure.</p>
+
+            <p><strong>Design Implications:</strong> Unlike hurricane winds that blow steadily from one direction, thunderstorm winds can change direction rapidly and produce intense localized pressures. Component and cladding (C&C) design is particularly important for San Antonio buildings, as wind-driven debris and sudden pressure changes can damage roofing, windows, and exterior cladding.</p>
+
+            <h3>San Antonio Zip Codes and Wind Speed Reference</h3>
+            <p>San Antonio zip codes span urban core areas, suburban development, and Hill Country locations with varying wind speed requirements. Common San Antonio zip codes include:</p>
+
+            <ul>
+                <li><strong>78201-78299:</strong> General San Antonio area (includes PO boxes)</li>
+                <li><strong>78202-78210:</strong> Central San Antonio, downtown, near-downtown neighborhoods</li>
+                <li><strong>78212-78223:</strong> Inner city neighborhoods (typically Exposure B)</li>
+                <li><strong>78230-78260:</strong> North San Antonio, Stone Oak, Hill Country Village</li>
+                <li><strong>78006, 78015, 78023:</strong> Boerne, Hill Country (may be Exposure C with Kzt > 1.0)</li>
+                <li><strong>78130, 78132:</strong> New Braunfels area (transitional terrain)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate San Antonio wind speed based on your specific zip code or street address, accounting for terrain characteristics and topographic features.</p>
+
+            <h3>Professional Engineer (PE) Requirements in San Antonio</h3>
+            <p>Wind load calculations for San Antonio building permits have varying PE requirements depending on building type and complexity:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a Texas-licensed Professional Engineer</li>
+                <li><strong>Residential Structures:</strong> Single-family and small multi-family may not require PE seal for standard designs</li>
+                <li><strong>Complex Structures:</strong> Any building with unusual geometry, height, or occupancy requires PE involvement</li>
+                <li><strong>Military Construction:</strong> Projects on Joint Base San Antonio (Lackland AFB, Fort Sam Houston, Randolph AFB) follow DoD Unified Facilities Criteria with PE requirements</li>
+                <li><strong>Edwards Aquifer Sites:</strong> Projects in the Edwards Aquifer Recharge Zone may require additional PE certifications for environmental compliance</li>
+                <li><strong>Best Practice:</strong> Even when not required, PE-sealed calculations provide liability protection and ensure code compliance</li>
+            </ul>
+
+            <h3>Official San Antonio Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for San Antonio wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.sanantonio.gov/dsd" target="_blank" rel="noopener" class="external-link">
+                    San Antonio Development Services
+                </a>
+                <a href="https://www.bexar.org/1872/Building-Inspections" target="_blank" rel="noopener" class="external-link">
+                    Bexar County Building Inspections
+                </a>
+                <a href="https://pels.texas.gov/" target="_blank" rel="noopener" class="external-link">
+                    Texas PE Licensing Board
+                </a>
+            </div>
+
+            <h3>Common San Antonio Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Ignoring topographic effects:</strong> Hill Country sites often require Kzt > 1.0 for buildings on ridges and slopes</li>
+                <li><strong>Using coastal wind speeds:</strong> San Antonio is 150+ miles inland—do not use Houston/Corpus Christi wind speeds</li>
+                <li><strong>Incorrect Exposure Category:</strong> Urban areas are Exposure B, but Hill Country open land requires Exposure C</li>
+                <li><strong>Neglecting Texas State amendments:</strong> Texas IBC amendments may differ from base IBC provisions</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher wind speeds</li>
+                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current IBC adoption</li>
+                <li><strong>Underestimating thunderstorm wind loads:</strong> Severe thunderstorms can produce localized winds approaching design levels</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles San Antonio Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all San Antonio-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any San Antonio zip code or address and the system automatically applies 105-115 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on terrain and development density</li>
+                <li><strong>Topographic Factor Analysis:</strong> Identifies sites requiring Kzt analysis for Hill Country terrain</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current IBC-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your San Antonio Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all San Antonio-specific requirements including the 105-115 mph design velocity, appropriate Exposure Category selection, topographic factor analysis, Risk Category adjustments, and component pressure coefficients. Simply enter your San Antonio project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate San Antonio Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>San Antonio vs Other Texas Cities Wind Load Comparison</h3>
+            <p>San Antonio's wind load requirements differ from other major Texas cities based on distance from the coast and terrain:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Risk Cat II Wind Speed</th>
+                        <th>Primary Wind Hazard</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>San Antonio</strong></td>
+                        <td>105-115 mph</td>
+                        <td>Thunderstorms, derechos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Houston</strong></td>
+                        <td>130-140 mph</td>
+                        <td>Hurricanes (inland impacts)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Corpus Christi</strong></td>
+                        <td>140-160 mph</td>
+                        <td>Direct hurricane landfall</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dallas</strong></td>
+                        <td>105-120 mph</td>
+                        <td>Thunderstorms, tornadoes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Austin</strong></td>
+                        <td>105-115 mph</td>
+                        <td>Hill Country thunderstorms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>El Paso</strong></td>
+                        <td>90-100 mph</td>
+                        <td>Desert windstorms</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>San Antonio's wind speeds are similar to Austin (both Hill Country cities) but significantly lower than coastal cities like Houston and Corpus Christi that face direct hurricane threats.</p>
+
+            <h3>Military Base Construction Requirements</h3>
+            <p>San Antonio is home to Joint Base San Antonio (JBSA), comprising Lackland Air Force Base, Fort Sam Houston, and Randolph Air Force Base. Military construction projects on these installations follow unique requirements:</p>
+
+            <ul>
+                <li><strong>Unified Facilities Criteria (UFC):</strong> DoD construction uses UFC 1-200-01 and UFC 3-301-01 instead of IBC</li>
+                <li><strong>Enhanced Wind Standards:</strong> Military facilities may require higher design wind speeds than civilian buildings</li>
+                <li><strong>AT/FP Requirements:</strong> Anti-terrorism/Force Protection provisions may affect structural design and wind load distribution</li>
+                <li><strong>Security Clearances:</strong> Engineers working on classified facilities require appropriate clearances</li>
+                <li><strong>PE Licensure:</strong> Texas PE license required for engineers of record on military projects</li>
+            </ul>
+
+            <p>Contractors and engineers working on JBSA projects should coordinate with the Base Civil Engineer office for specific wind load requirements.</p>
+
+            <h3>Flash Flooding and Combined Wind/Flood Analysis</h3>
+            <p>While this page focuses on wind loads, San Antonio engineers must also address flash flooding given the city's Hill Country terrain and creek systems. Many San Antonio properties are in FEMA Special Flood Hazard Areas (SFHAs) requiring elevated or flood-resistant construction. The combination of wind load and flood zone requirements can create complex design scenarios:</p>
+
+            <ul>
+                <li><strong>Elevated Structures:</strong> Buildings elevated above Base Flood Elevation (BFE) on piers or columns face increased wind exposure and higher velocity pressures due to reduced shelter from surrounding terrain</li>
+                <li><strong>Creek Crossings:</strong> Structures near or over creeks must resist both flood forces and wind loads simultaneously</li>
+                <li><strong>Erosion Control:</strong> Wind-driven rainfall can accelerate erosion on Hill Country sites with steep slopes</li>
+                <li><strong>Edwards Aquifer Protection:</strong> Sites in the Edwards Aquifer Recharge Zone require additional environmental protections that may affect foundation design and wind load resistance</li>
+            </ul>
+
+            <p>San Antonio Development Services requires coordinated flood and wind analysis for projects in SFHAs.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get San Antonio-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for San Antonio projects. Our software automatically handles the 105-115 mph velocity range, Exposure B/C determination, topographic factor analysis, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try San Antonio Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../texas-wind-load-requirements.html" style="color: #60a5fa;">Texas Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

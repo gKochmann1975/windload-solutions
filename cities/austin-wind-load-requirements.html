@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Austin Wind Load Requirements | 100-110 mph IBC | Travis County TX | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Austin wind load requirements. Travis County design wind speed 100-110 mph, Exposure B/C, IBC with state amendments, severe thunderstorm risk, Hill Country terrain, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/austin-wind-load-requirements.html">
+    <meta name="keywords" content="Austin wind load, Travis County wind speed, Austin wind load calculator, Austin building permit, Austin wind load requirements, IBC Austin, Hill Country wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Austin/UT Longhorns burnt orange colors */
+        .hero {
+            background: linear-gradient(135deg, #c2410c 0%, #ea580c 25%, #f97316 50%, #fafaf9 75%, #e7e5e4 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🎸🤘';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #c2410c;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #ea580c;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #f97316;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #ea580c;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #ea580c;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(234, 88, 12, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Austin Card */
+        .austin-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(234, 88, 12, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .austin-card h4 {
+            color: #ea580c;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .austin-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Texas",
+                "item": "https://windload.solutions/texas-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Austin",
+                "item": "https://windload.solutions/cities/austin-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../texas-wind-load-requirements.html"><i class="fas fa-star"></i> Texas</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Austin Wind Load Requirements</h1>
+            <p>Travis County, TX | 100-110 mph Design Wind Speed | IBC with State Amendments | Severe Thunderstorm Risk | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Austin Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">100-110</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B</span>
+                    <span class="stat-label">Exposure Category<br>(Urban)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Texas Building Code<br>ASCE 7-22</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Thunderstorm Risk<br>Severe Storms</span>
+                </div>
+            </div>
+
+            <h2>Austin, Texas: Live Music Capital and Tech Hub Wind Load Requirements</h2>
+            <p>Austin, located in <strong>Travis County, Texas</strong>, serves as the state capital and has become a major technology hub with rapid growth and construction activity. Texas does not have a statewide building code—Austin uses the <strong>International Building Code (IBC)</strong> with state amendments adopted by the City of Austin. Design wind speeds for Risk Category II structures typically range from <strong>100-110 mph</strong> (3-second gust) depending on precise location and terrain conditions in the Hill Country.</p>
+
+            <p>These requirements reflect Austin's inland location far from coastal hurricane risks but account for the region's severe thunderstorm activity, occasional hail, and the varied topography of the Texas Hill Country. The combination of rapid development, complex terrain, and severe weather creates unique design challenges for engineers and architects working on Austin construction projects.</p>
+
+            <div class="info-box">
+                <h4><strong>🎸</strong> Austin Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 100-110 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~115-125 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~125-135 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban areas) or C (Hill Country open terrain)</p>
+                <p><strong>Building Code:</strong> International Building Code (IBC) with Texas state amendments</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Travis County</p>
+                <p><strong>Weather Hazards:</strong> Severe thunderstorms, hail, occasional tornadoes</p>
+            </div>
+
+            <h3>Why Austin Has 100-110 mph Wind Speed Requirements</h3>
+            <p>Austin's design wind speed of 100-110 mph for Risk Category II structures reflects the city's inland location in Central Texas, far from coastal hurricane impacts. While lower than Houston or Gulf Coast requirements, these speeds account for the region's severe thunderstorm activity, which can produce damaging straight-line winds, microbursts, and occasional tornadoes.</p>
+
+            <p>The Austin metropolitan area experiences frequent severe thunderstorm events during spring and early summer, with organized squall lines capable of producing wind gusts exceeding 70 mph. While these events rarely approach design wind speeds, the cumulative effect of repeated storm exposure and the potential for extreme thunderstorm wind events necessitate robust building standards.</p>
+
+            <h3>Austin Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Austin projects requires following ASCE 7-22 methodology as adopted by the IBC and Texas state amendments. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #ea580c; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Austin with V = 105 mph (typical central Austin) and standard conditions, the resulting pressures are moderate but significant. An Austin project with:</p>
+            <ul>
+                <li><strong>V = 105 mph</strong> (Austin typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B suburban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat to rolling terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (near sea level elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 20.0 psf</strong>—substantially lower than coastal hurricane zones but higher than many northern regions. Projects in the Hill Country with open exposure or elevated sites may experience higher pressures due to terrain effects and increased exposure.</p>
+
+            <h3>Austin Building Code and Permitting</h3>
+            <p>Texas does not have a statewide building code, so Austin has independently adopted the <strong>International Building Code (IBC)</strong> with state amendments and local modifications specific to Austin's requirements.</p>
+
+            <p>Key Austin building code considerations:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> Austin uses IBC (typically the most recent edition with 1-2 year adoption lag)</li>
+                <li><strong>State Amendments:</strong> Texas adds specific requirements for residential construction, energy efficiency, and accessibility</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by IBC</li>
+                <li><strong>Permit Authority:</strong> Austin Development Services Department handles building permits within city limits</li>
+                <li><strong>Travis County:</strong> Unincorporated areas outside Austin city limits fall under Travis County jurisdiction</li>
+                <li><strong>Rapid Growth:</strong> High construction volume has led to streamlined review processes for standard designs</li>
+            </ul>
+
+            <p>You can access Austin building permits and requirements through the <a href="https://www.austintexas.gov/department/development-services" target="_blank" rel="noopener">City of Austin Development Services Department</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Austin projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Austin Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~90-100 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>100-110 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~115-125 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~125-135 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Hill Country)</h3>
+            <p>Austin projects require careful Exposure Category determination based on terrain and location within the rapidly growing metropolitan area:</p>
+
+            <div class="austin-card">
+                <h4>Exposure Category Selection for Austin</h4>
+                <p><strong>Exposure Category B (Urban/Suburban):</strong> Most of Austin qualifies as Exposure B due to dense urban and suburban development with numerous buildings, trees, and other obstructions. Downtown Austin, central neighborhoods, and established suburban areas all typically qualify as Exposure B with reduced wind pressures.</p>
+                <p><strong>Exposure Category C (Hill Country/Open):</strong> Properties in the western Hill Country, rural Travis County, and undeveloped areas may qualify as Exposure C. Open ranch land, hilltop sites, and areas with minimal tree cover experience higher wind exposure and increased design pressures.</p>
+                <p><strong>Topographic Effects:</strong> The Hill Country's rolling terrain can create localized wind acceleration over ridges and hilltops, requiring topographic factor (Kzt) adjustments per ASCE 7-22. Projects on prominent hills may experience significantly increased wind loads.</p>
+            </div>
+
+            <h3>Hill Country Terrain Effects and Topography</h3>
+            <p>Austin's location at the eastern edge of the Texas Hill Country creates unique wind load considerations not present in flat regions of Texas:</p>
+
+            <p>The Hill Country features rolling limestone hills, valleys, and escarpments that can significantly affect local wind patterns. Sites located on ridgetops, hilltops, or escarpments may require topographic factor adjustments that increase design wind loads by 20-30% or more. Engineers must carefully evaluate terrain profiles extending upwind and downwind from the project site.</p>
+
+            <p>Additionally, the transition from the relatively flat Blackland Prairie to the east and the rugged Hill Country to the west means that exposure categories can vary dramatically within short distances. A property in downtown Austin (Exposure B) may have design pressures 30-40% lower than a hilltop site just 10 miles west in the Hill Country (Exposure C with topographic effects).</p>
+
+            <h3>Severe Thunderstorms and Wind Events</h3>
+            <p>While Austin does not face hurricane risk, the region experiences significant severe weather events that inform wind load requirements:</p>
+
+            <p><strong>Spring/Summer Severe Thunderstorms:</strong> Austin's severe weather season runs from March through June, with organized thunderstorm complexes producing damaging straight-line winds, large hail, and occasional tornadoes. These systems can generate wind gusts exceeding 70 mph and cause significant structural damage to roofing, siding, and light-framed structures.</p>
+
+            <p><strong>Microburst and Downburst Events:</strong> Intense downdrafts from thunderstorms can produce localized extreme winds exceeding 100 mph over small areas. While brief in duration, these events can cause catastrophic damage to structures not designed for high wind loads.</p>
+
+            <p><strong>Tornado Potential:</strong> While less frequent than areas in North Texas or Oklahoma, Travis County experiences occasional tornadoes, typically rated EF0-EF2. These events reinforce the importance of proper wind-resistant design even in inland locations.</p>
+
+            <h3>Tech Campus and Commercial Construction Boom</h3>
+            <p>Austin's rapid transformation into a major technology hub has created unprecedented construction activity with unique wind load challenges:</p>
+
+            <ul>
+                <li><strong>Large Tech Campuses:</strong> Companies like Tesla, Oracle, Apple, and others have built massive facilities requiring rigorous wind engineering for large roof areas and tall structures</li>
+                <li><strong>High-Rise Development:</strong> Downtown Austin has seen explosive high-rise residential and commercial construction, with wind tunnel studies often required</li>
+                <li><strong>Mixed-Use Developments:</strong> Complex urban projects with varying building heights create challenging aerodynamic interactions</li>
+                <li><strong>Rapid Permitting:</strong> High construction volume has led Austin to streamline standard designs while maintaining rigorous review for complex structures</li>
+            </ul>
+
+            <h3>Austin Zip Codes and Wind Speed Reference</h3>
+            <p>Austin zip codes span urban, suburban, and Hill Country locations with varying wind exposure. Common Austin zip codes include:</p>
+
+            <ul>
+                <li><strong>78701-78705:</strong> Downtown Austin, University of Texas campus (dense urban, Exposure B)</li>
+                <li><strong>78717-78750:</strong> Northwest Austin, rapidly developing areas (transitional exposure)</li>
+                <li><strong>78731-78746:</strong> West Austin, Hill Country transition zone (may require Exposure C)</li>
+                <li><strong>78652-78738:</strong> Western Travis County, Hill Country (often Exposure C with terrain effects)</li>
+                <li><strong>78721-78745:</strong> East Austin, established neighborhoods (typically Exposure B)</li>
+                <li><strong>78748-78749:</strong> South Austin, South Congress area (generally Exposure B)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Austin wind speed based on your specific zip code or street address, accounting for urban vs. Hill Country location and local terrain conditions.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Austin</h3>
+            <p>Wind load calculations for Austin building permits have varying PE requirements depending on building type and complexity:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a Texas-licensed Professional Engineer</li>
+                <li><strong>Residential Structures:</strong> Single-family homes may not require PE seal for standard designs following prescriptive code</li>
+                <li><strong>Complex Structures:</strong> Buildings with unusual geometry, topographic exposure, or special occupancies require PE involvement</li>
+                <li><strong>Travis County Requirements:</strong> Unincorporated areas outside Austin may have different PE requirements</li>
+                <li><strong>Best Practice:</strong> Even when not required, PE-sealed calculations provide liability protection and ensure code compliance</li>
+            </ul>
+
+            <h3>Official Austin Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Austin wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.austintexas.gov/department/development-services" target="_blank" rel="noopener" class="external-link">
+                    Austin Development Services
+                </a>
+                <a href="https://www.traviscountytx.gov/tnr/pec" target="_blank" rel="noopener" class="external-link">
+                    Travis County Building Permits
+                </a>
+                <a href="https://pels.texas.gov/" target="_blank" rel="noopener" class="external-link">
+                    Texas PE Licensing Board
+                </a>
+            </div>
+
+            <h3>Common Austin Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Ignoring Hill Country topography:</strong> Hilltop and ridge sites require topographic factor adjustments that can significantly increase wind loads</li>
+                <li><strong>Incorrect Exposure Category:</strong> Assuming all of Austin is Exposure B—Hill Country sites often require Exposure C</li>
+                <li><strong>Using outdated wind speed maps:</strong> Austin wind speeds have been updated in recent ASCE 7 editions</li>
+                <li><strong>Neglecting state amendments:</strong> Texas has specific code amendments beyond base IBC requirements</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, tech campuses, and assembly buildings require higher wind speeds</li>
+                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current IBC adoption</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Austin Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Austin-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Austin zip code or address and the system automatically applies 100-110 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on urban vs. Hill Country terrain</li>
+                <li><strong>Topographic Effects:</strong> Identifies sites requiring topographic factor adjustments based on terrain analysis</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current IBC-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Austin Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Austin-specific requirements including the 100-110 mph design velocity, appropriate Exposure Category selection, Hill Country topographic effects, Risk Category adjustments, and component pressure coefficients. Simply enter your Austin project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Austin Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Austin vs Houston vs Texas Coastal Wind Load Requirements</h3>
+            <p>Austin's wind load requirements differ significantly from other major Texas cities due to inland location and terrain:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Austin (Inland)</th>
+                        <th>Houston (Near Coast)</th>
+                        <th>Texas Coast HVHZ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Design Wind Speed</strong></td>
+                        <td>100-110 mph</td>
+                        <td>130-140 mph</td>
+                        <td>140-160 mph</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exposure Category</strong></td>
+                        <td>B (urban), C (Hill Country)</td>
+                        <td>B (inland), C (coastal)</td>
+                        <td>C required</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Wind Hazard</strong></td>
+                        <td>Severe thunderstorms</td>
+                        <td>Hurricanes</td>
+                        <td>Major hurricanes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topographic Effects</strong></td>
+                        <td>Significant in Hill Country</td>
+                        <td>Generally flat</td>
+                        <td>Generally flat</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wind-Borne Debris</strong></td>
+                        <td>Not required</td>
+                        <td>Not required</td>
+                        <td>Impact protection required</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Building Code</strong></td>
+                        <td>IBC with state amendments</td>
+                        <td>IBC with local amendments</td>
+                        <td>IBC with coastal provisions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Austin's lower design wind speeds reflect its inland location and distance from hurricane impacts, but engineers must still apply rigorous standards given the region's severe weather potential and complex Hill Country terrain.</p>
+
+            <h3>Hail Damage Considerations</h3>
+            <p>While this page focuses on wind loads, Austin engineers should be aware that the region experiences frequent large hail events that can damage roofing materials, solar panels, HVAC equipment, and skylights. Central Texas, including Austin, is one of the most active hail regions in the United States, with significant hailstorms occurring multiple times per year.</p>
+
+            <p>Designers should consider:</p>
+            <ul>
+                <li>Impact-resistant roofing materials rated for large hail (2+ inches diameter)</li>
+                <li>Protective screening or covers for rooftop mechanical equipment</li>
+                <li>Hail-resistant skylight and glazing specifications</li>
+                <li>Durable cladding materials that resist hail impact damage</li>
+            </ul>
+
+            <h3>Austin's Construction Growth and Design Trends</h3>
+            <p>Austin's explosive population growth and status as a major technology hub have created unique construction trends affecting wind load design:</p>
+
+            <p><strong>Modern Architectural Styles:</strong> Austin favors contemporary designs with large overhangs, expansive glazing, and complex geometries that create challenging wind load scenarios requiring detailed pressure coefficient analysis.</p>
+
+            <p><strong>Sustainable Design:</strong> High emphasis on energy efficiency, solar installations, and green roofs adds complexity to wind load calculations for rooftop equipment and vegetated roof systems.</p>
+
+            <p><strong>Mixed-Use Urban Infill:</strong> Dense downtown development with buildings of varying heights creates aerodynamic interactions and localized wind acceleration effects between structures.</p>
+
+            <p><strong>Hill Country Residential:</strong> Luxury homes built on prominent hilltop sites with dramatic views require careful analysis of topographic wind acceleration and exposure effects.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Austin-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Austin projects. Our software automatically handles the 100-110 mph velocity range, Exposure B/C determination, Hill Country topographic effects, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Austin Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../texas-wind-load-requirements.html" style="color: #60a5fa;">Texas Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

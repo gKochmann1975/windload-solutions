@@ -38,16 +38,16 @@
 ## Tier 2: Major Metropolitan Markets (26-50)
 *High population, significant construction activity*
 
-- [ ] 26. New York City, NY
-- [ ] 27. Los Angeles, CA
-- [ ] 28. Chicago, IL
-- [ ] 29. Dallas, TX
-- [ ] 30. Phoenix, AZ
-- [ ] 31. San Antonio, TX
-- [ ] 32. San Diego, CA
-- [ ] 33. San Jose, CA
-- [ ] 34. Austin, TX
-- [ ] 35. San Francisco, CA
+- [x] 26. New York City, NY ✅ (cities/new-york-city-wind-load-requirements.html)
+- [x] 27. Los Angeles, CA ✅ (cities/los-angeles-wind-load-requirements.html)
+- [x] 28. Chicago, IL ✅ (cities/chicago-wind-load-requirements.html)
+- [x] 29. Dallas, TX ✅ (cities/dallas-wind-load-requirements.html)
+- [x] 30. Phoenix, AZ ✅ (cities/phoenix-wind-load-requirements.html)
+- [x] 31. San Antonio, TX ✅ (cities/san-antonio-wind-load-requirements.html)
+- [x] 32. San Diego, CA ✅ (cities/san-diego-wind-load-requirements.html)
+- [x] 33. San Jose, CA ✅ (cities/san-jose-wind-load-requirements.html)
+- [x] 34. Austin, TX ✅ (cities/austin-wind-load-requirements.html)
+- [x] 35. San Francisco, CA ✅ (cities/san-francisco-wind-load-requirements.html)
 - [ ] 36. Seattle, WA
 - [ ] 37. Denver, CO
 - [ ] 38. Boston, MA
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 25
-- Remaining: 75
+- Completed: 35
+- Remaining: 65
 
 ---
 
