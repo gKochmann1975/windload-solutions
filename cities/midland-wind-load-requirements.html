@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midland Wind Load Requirements | 100-115 mph | Texas IBC | Permian Basin Oil Capital | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Midland wind load requirements. Design wind speed 100-115 mph, City of Midland Building Inspections (IBC adoption), Exposure Category C, open West Texas terrain, Permian Basin oil industry hub, and ASCE 7-22 compliance for Midland County.">
+    <link rel="canonical" href="https://windload.solutions/cities/midland-wind-load-requirements.html">
+    <meta name="keywords" content="Midland wind load, Midland wind speed, Midland wind load calculator, Texas IBC, 100 mph wind speed, Midland building permit, West Texas exposure, Midland wind load requirements, Permian Basin wind">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #374151;
+            background: rgba(55, 65, 81, 0.1);
+            border-color: rgba(55, 65, 81, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Midland oil black and gold (Permian Basin oil industry) */
+        .hero {
+            background: linear-gradient(135deg, #1C1C1C 0%, #2d2d2d 25%, #3d3d3d 50%, #DAA520 75%, #c99a1f 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🛢️⛽';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #1C1C1C;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #1C1C1C;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #DAA520;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #DAA520;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #b45309;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #1C1C1C 0%, #2d2d2d 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(28, 28, 28, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #1C1C1C 0%, #DAA520 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Midland Card */
+        .midland-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(218, 165, 32, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .midland-card h4 {
+            color: #b45309;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .midland-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1C1C1C 0%, #2d2d2d 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #DAA520 0%, #c99a1f 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #c99a1f 0%, #b8890b 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Midland",
+                "item": "https://windload.solutions/cities/midland-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Midland Wind Load Requirements</h1>
+            <p>Permian Basin Oil Capital | Midland County | 100-115 mph Design Wind Speed | Texas IBC | Exposure Category C | West Texas | ASCE 7-22</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Midland Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">100-115</span>
+                    <span class="stat-label">Design Wind Speed (Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE 7-22<br>IBC 2021</span>
+                    <span class="stat-label">Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Moderate Storm Risk</span>
+                </div>
+            </div>
+
+            <h2>Midland: Permian Basin Oil Capital Wind Load Requirements</h2>
+            <p>Midland, the <strong>Permian Basin Oil Capital</strong> and energy hub of West Texas, is located in Midland County in the heart of the nation's most productive petroleum basin with unique wind load requirements driven by its open West Texas terrain, elevated Llano Estacado plateau location, extensive industrial infrastructure for oil and gas operations, and susceptibility to severe thunderstorms, occasional tornadoes, and persistent high winds across the flat Permian Basin landscape. Midland requires design wind speeds ranging from approximately <strong>100-115 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and location-specific exposure conditions.</p>
+
+            <p>Midland operates under the <strong>City of Midland Building Inspections Division</strong>, which adopts the International Building Code (IBC) with local amendments. The City references <strong>ASCE 7-22</strong> for wind load calculations. Midland's distinctive features—wide open West Texas terrain creating Exposure Category C conditions, elevation of approximately 2,800 feet above sea level on the Llano Estacado plateau, extensive oil field infrastructure including tank batteries and industrial facilities, minimal topographic obstruction across the Permian Basin, and West Texas severe weather patterns—create unique structural design considerations necessitating careful analysis of wind speeds, exposure categories, and wind-driven rain considerations for petroleum industry facilities.</p>
+
+            <div class="info-box">
+                <h4><strong>🛢️</strong> Midland Quick Facts</h4>
+                <p><strong>County:</strong> Midland County</p>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 100-115 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~110-125 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~120-135 mph</p>
+                <p><strong>Exposure Category:</strong> Primarily C (open West Texas terrain)</p>
+                <p><strong>Building Code:</strong> City of Midland Building Inspections (IBC 2021 adoption with local amendments)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Notable Features:</strong> Permian Basin petroleum hub, open West Texas terrain, extensive oil industry infrastructure, high wealth from energy sector</p>
+            </div>
+
+            <h3>Why Midland Has 100-115 mph Wind Speed Requirements</h3>
+            <p>Midland's design wind speeds of 100-115 mph are derived from ASCE 7-22 wind speed maps for West Texas. This velocity range accounts for the region's exposure to severe thunderstorms with damaging straight-line winds, occasional tornado activity, and persistent high winds across the open Permian Basin terrain with minimal wind obstruction. The wind speed reflects Midland's location in the elevated, flat West Texas landscape where wind hazards are moderate but increased compared to more sheltered regions due to open terrain exposure.</p>
+
+            <p>The exact wind speed for a specific Midland project depends on precise location within the city and surrounding Midland County. The open nature of West Texas terrain means most sites experience Exposure Category C conditions with higher wind pressures than more urbanized or forested regions. The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or address.</p>
+
+            <h3>City of Midland Building Inspections</h3>
+            <p>Midland operates under the <strong>City of Midland Building Inspections Division</strong>, which establishes local building regulations:</p>
+
+            <ul>
+                <li><strong>IBC Adoption:</strong> City of Midland adopts the International Building Code (IBC 2021) as the base code with local amendments specific to West Texas conditions</li>
+                <li><strong>ASCE 7-22 Reference:</strong> City code references ASCE 7-22 for wind load calculations, the current edition of the standard</li>
+                <li><strong>Building Inspections Authority:</strong> City of Midland Building Inspections Division is the authority having jurisdiction (AHJ) for permit review and inspections within city limits</li>
+                <li><strong>Midland County Jurisdiction:</strong> Properties outside Midland city limits fall under Midland County building permit jurisdiction</li>
+                <li><strong>Professional Engineer Requirements:</strong> All structural calculations must be prepared and sealed by a PE licensed in Texas</li>
+                <li><strong>Oil Industry Facilities:</strong> Petroleum industry facilities including tank batteries, compressor stations, and processing plants require specialized wind load analysis and PE certification</li>
+            </ul>
+
+            <h3>Midland Geographic and Terrain Considerations</h3>
+            <p>Midland's West Texas location significantly influences wind load requirements across the region:</p>
+
+            <ul>
+                <li><strong>Permian Basin Location:</strong> Midland sits in the heart of the Permian Basin, the most productive oil field in the United States, with extensive industrial infrastructure exposed to wind loads</li>
+                <li><strong>Open West Texas Terrain:</strong> The flat to gently rolling Llano Estacado plateau creates Exposure Category C conditions across most of Midland with minimal wind obstruction from terrain or vegetation</li>
+                <li><strong>Elevation:</strong> Midland's elevation of approximately 2,800 feet above sea level provides cooler temperatures than lower elevation Texas cities but increases exposure to high-altitude wind patterns</li>
+                <li><strong>Urban Development:</strong> Downtown Midland and established residential neighborhoods may approach Exposure B characteristics, but surrounding areas are clearly Exposure C</li>
+                <li><strong>Oil Field Infrastructure:</strong> Tank batteries, pump jacks, and industrial facilities throughout the Permian Basin require wind load analysis for exposed industrial structures with flexible tanks and tall equipment</li>
+                <li><strong>Minimal Vegetation:</strong> West Texas vegetation is sparse (mesquite, scrub), providing minimal wind protection compared to forested regions</li>
+            </ul>
+
+            <h3>Exposure Categories in Midland</h3>
+            <p>Midland projects primarily use Exposure Category C due to the open West Texas terrain:</p>
+
+            <ul>
+                <li><strong>Exposure Category C (Primary):</strong> Open terrain with scattered obstructions having heights generally less than 30 feet. This applies to most of Midland including residential areas, commercial developments, and oil field locations across the open Permian Basin</li>
+                <li><strong>Exposure B (Limited):</strong> Dense downtown Midland and mature residential neighborhoods with closely spaced buildings may qualify for Exposure B, but engineers must carefully evaluate site-specific conditions per ASCE 7-22</li>
+                <li><strong>Site-Specific Evaluation:</strong> Engineers must evaluate terrain conditions for at least 20 times the building height (or 2,600 feet, whichever is less) in all directions per ASCE 7-22 to confirm exposure category</li>
+                <li><strong>Oil Field Facilities:</strong> Industrial facilities in oil fields clearly experience Exposure C or even approaching Exposure D conditions with minimal surrounding obstructions</li>
+                <li><strong>Conservative Approach:</strong> When terrain conditions are uncertain, Exposure C is the conservative choice for West Texas locations and provides appropriate design margins</li>
+            </ul>
+
+            <h3>Midland Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Midland projects requires following ASCE 7-22 methodology with Texas IBC requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #b45309; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Midland project with V = 110 mph and Exposure C conditions (open West Texas terrain), the calculation demonstrates the significance of exposure category. A commercial building at 30 feet height with:</p>
+            <ul>
+                <li><strong>V = 110 mph</strong> (typical Midland velocity)</li>
+                <li><strong>Kz = 0.98</strong> (30 ft height, Exposure C)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain, no topographic effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (elevation adjustment minimal at 2,800 ft)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 25.5 psf</strong>—significantly higher than the same building in Exposure B due to the open terrain Kz factor.</p>
+
+            <p>For comparison, an identical building in dense downtown Midland with Exposure B conditions would have Kz = 0.70 at 30 feet, resulting in velocity pressure of approximately 18.2 psf—demonstrating the 40% pressure increase from Exposure C versus Exposure B at the same wind speed.</p>
+
+            <h3>Severe Thunderstorms: Midland's Primary Wind Threat</h3>
+            <p>Severe thunderstorms are the most common source of damaging winds in Midland:</p>
+
+            <ul>
+                <li><strong>Spring and Summer Threat:</strong> April through August brings frequent severe thunderstorms with straight-line winds of 50-70+ mph, occasionally exceeding 80-90 mph in severe downbursts and microbursts</li>
+                <li><strong>Dry Line Dynamics:</strong> The dry line (boundary between dry West Texas air and moist Gulf air) frequently sets up near Midland, triggering explosive thunderstorm development</li>
+                <li><strong>Haboob Events:</strong> West Texas haboobs (dust storms driven by thunderstorm outflows) can produce sudden intense winds with visibility reduced to near zero by blowing dust</li>
+                <li><strong>Combined Hazards:</strong> Severe thunderstorms combine high winds with large hail (West Texas is a major hail zone), creating simultaneous wind and impact loading on structures</li>
+                <li><strong>Flash Flooding:</strong> Despite the desert climate, intense thunderstorm rainfall can produce flash flooding in normally dry arroyos and drainage channels</li>
+            </ul>
+
+            <h3>Tornado History and Risk</h3>
+            <p>While less frequent than thunderstorm winds, tornadoes are a significant threat in West Texas:</p>
+
+            <ul>
+                <li><strong>Moderate Tornado Risk:</strong> Midland County averages approximately one tornado per year, with most tornadoes occurring during spring and early summer severe weather season</li>
+                <li><strong>June 2, 1995 (Friona F3):</strong> F3 tornado in West Texas, demonstrating the region's tornado potential with winds of 158-206 mph</li>
+                <li><strong>May 30, 2019 (Odessa EF2):</strong> EF2 tornado struck nearby Odessa with 111-135 mph winds, causing significant damage to residential and commercial structures</li>
+                <li><strong>Open Terrain Visibility:</strong> The flat West Texas landscape provides excellent visibility for spotting approaching tornadoes, but also allows tornadoes to travel long distances across open terrain</li>
+                <li><strong>Warning Systems:</strong> Midland County has tornado warning sirens and emergency alert systems throughout the metro area</li>
+            </ul>
+
+            <h3>Persistent High Winds in West Texas</h3>
+            <p>In addition to severe weather events, Midland experiences persistent high winds throughout the year:</p>
+
+            <ul>
+                <li><strong>Spring Wind Season:</strong> March through May brings sustained winds of 20-30 mph with gusts to 40-50+ mph on many days, driven by pressure gradients and frontal passages</li>
+                <li><strong>Wind Fatigue:</strong> Persistent winds create fatigue loading on structures, particularly flexible components like signage, canopies, and exposed equipment</li>
+                <li><strong>Dust and Debris:</strong> High winds in the desert environment carry abrasive dust and debris, creating wear on building materials and equipment</li>
+                <li><strong>Oil Field Operations:</strong> Persistent winds affect drilling operations, crane lifts, and other industrial activities in the petroleum sector</li>
+                <li><strong>Wind Energy Potential:</strong> The persistent high winds make West Texas a prime location for wind energy development, with numerous wind farms surrounding Midland</li>
+            </ul>
+
+            <div class="midland-card">
+                <h4>Midland Oil Industry Infrastructure: Specialized Wind Load Considerations</h4>
+                <p><strong>Tank Batteries:</strong> Oil storage tanks are flexible structures sensitive to wind-induced vibrations and dynamic pressures. Large diameter tanks require specialized wind load analysis per API 650 and ASCE 7-22.</p>
+                <p><strong>Compressor Stations:</strong> Natural gas compressor stations with tall stacks and piping require wind load analysis for elevated industrial structures with complex geometry.</p>
+                <p><strong>Processing Facilities:</strong> Petroleum processing facilities combine enclosed buildings with exposed process equipment, requiring comprehensive wind load analysis for both structural elements and equipment anchorage.</p>
+                <p><strong>Key Takeaway:</strong> Petroleum industry facilities in the Permian Basin require specialized wind engineering beyond typical building code provisions, with PE certification mandatory for all structural elements.</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Midland projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Midland Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~95-110 mph</td>
+                        <td>Agricultural facilities, minor storage, temporary structures</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>100-115 mph</td>
+                        <td>Residential, commercial, hotels, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~110-125 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~120-135 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, essential facilities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Industrial Facility Wind Considerations</h3>
+            <p>Midland's extensive petroleum industry infrastructure requires specialized wind engineering:</p>
+
+            <ul>
+                <li><strong>API Standards:</strong> Oil and gas facilities follow API standards (API 650 for storage tanks, API 2350 for overfill protection) in addition to building code requirements</li>
+                <li><strong>Tank Anchorage:</strong> Large diameter storage tanks require wind uplift and overturning analysis with proper anchorage design per API 650 Appendix E</li>
+                <li><strong>Piping and Equipment:</strong> Exposed piping, process equipment, and structural supports require wind load analysis for both static pressures and dynamic effects</li>
+                <li><strong>Dust Control:</strong> West Texas dust environment requires special consideration for wind-driven dust accumulation and abrasion on equipment</li>
+                <li><strong>Crane Operations:</strong> Oil field crane operations are restricted during high wind events, with typical wind speed limits of 20-30 mph for safe lifting operations</li>
+            </ul>
+
+            <h3>Midland Zip Codes and Wind Speed Reference</h3>
+            <p>Midland encompasses zip codes in the 79700-79799 range. Wind speeds are relatively consistent across the region due to uniform open terrain:</p>
+
+            <ul>
+                <li><strong>79701, 79705 (Downtown Midland):</strong> 100-110 mph, Exposure B possible in dense downtown areas but Exposure C more common</li>
+                <li><strong>79703, 79707 (North Midland):</strong> 100-115 mph, Exposure C (open terrain with residential/commercial development)</li>
+                <li><strong>79706 (South Midland):</strong> 100-115 mph, Exposure C (open terrain transitioning to oil fields)</li>
+                <li><strong>79704, 79708 (West Midland):</strong> 100-115 mph, Exposure C (open West Texas terrain)</li>
+                <li><strong>Oil Field Locations (Surrounding Areas):</strong> 100-115 mph, Exposure C (clearly open terrain with minimal obstructions)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed when you enter any Midland zip code or address. For most Midland locations, Exposure Category C is appropriate due to the open West Texas terrain—consult with a Texas-licensed PE for site-specific exposure determination.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Midland Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Midland requirements including location-specific wind velocities (100-115 mph range), Exposure Category C for open West Texas terrain, Risk Category adjustments, and component pressure coefficients. Simply enter your Midland project address or zip code for instant, accurate calculations compliant with Texas IBC and ASCE 7-22.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Midland Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Texas</h3>
+            <p>All wind load calculations for Midland building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in Texas</strong>. The City of Midland Building Inspections Division requires sealed calculations that include:</p>
+
+            <ul>
+                <li>Project address with wind speed determination per ASCE 7-22</li>
+                <li>Design wind speed (100-115 mph range for Risk Category II, location-dependent)</li>
+                <li>Exposure Category determination with supporting justification (typically C for West Texas open terrain)</li>
+                <li>Topographic factor (Kzt) determination (typically 1.0 for flat Permian Basin terrain)</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>Special considerations for industrial facilities including API standards for petroleum infrastructure</li>
+            </ul>
+
+            <p><strong>Texas Board of Professional Engineers and Land Surveyors:</strong> Texas requires PE licensure through the <a href="https://engineers.texas.gov/" target="_blank" rel="noopener">Texas Board of Professional Engineers and Land Surveyors</a>. All structural calculations must bear the seal and signature of a Texas-licensed PE who takes professional responsibility for the design.</p>
+
+            <h3>City of Midland Building Permit Requirements</h3>
+            <p>City of Midland Building Inspections Division has specific procedures for building permits:</p>
+
+            <ul>
+                <li><strong>Permit Application:</strong> Building permit applications submitted to City of Midland Building Inspections Division with complete construction documents</li>
+                <li><strong>Professional Certification:</strong> Requires PE seal for all structural calculations including wind load analysis</li>
+                <li><strong>Plan Review:</strong> City building officials review structural calculations and construction documents for code compliance</li>
+                <li><strong>Construction Documents:</strong> Complete sealed construction documents required, including comprehensive wind load calculations per ASCE 7-22</li>
+                <li><strong>Inspections:</strong> City inspectors conduct inspections throughout construction to verify code compliance</li>
+                <li><strong>Industrial Facilities:</strong> Petroleum industry facilities may require additional approvals from Texas Commission on Environmental Quality (TCEQ) and Railroad Commission of Texas</li>
+            </ul>
+
+            <h3>Official Midland and Texas Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Midland wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.midlandtexas.gov/271/Building-Inspections" target="_blank" rel="noopener" class="external-link">
+                    Midland Building Inspections
+                </a>
+                <a href="https://engineers.texas.gov/" target="_blank" rel="noopener" class="external-link">
+                    Texas PE Board
+                </a>
+                <a href="https://www.co.midland.tx.us/" target="_blank" rel="noopener" class="external-link">
+                    Midland County
+                </a>
+                <a href="https://www.tdi.texas.gov/" target="_blank" rel="noopener" class="external-link">
+                    Texas Dept of Insurance (Building Codes)
+                </a>
+            </div>
+
+            <h3>Common Midland Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect exposure category:</strong> Assuming Exposure B for urban Midland locations when the open West Texas terrain clearly requires Exposure C—this underestimates wind pressures by 30-40%</li>
+                <li><strong>Ignoring dust and abrasion:</strong> Failing to consider West Texas dust environment and wind-driven abrasion on building materials and equipment</li>
+                <li><strong>Overlooking API standards:</strong> Oil and gas facilities require API standards in addition to building code provisions—tanks, piping, and equipment require specialized analysis</li>
+                <li><strong>Neglecting persistent winds:</strong> Focusing only on peak wind speeds while ignoring fatigue effects from persistent high winds throughout the year</li>
+                <li><strong>Using wrong ASCE version:</strong> Ensure calculations use ASCE 7-22 (or the version adopted by current City of Midland code)</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, emergency facilities require higher categories with increased wind speeds</li>
+                <li><strong>Missing Texas PE seal:</strong> All structural calculations must be sealed by a Texas-licensed PE—out-of-state PE seals are not acceptable without Texas licensure</li>
+                <li><strong>Underestimating industrial wind loads:</strong> Petroleum facilities with flexible tanks and exposed equipment require specialized wind engineering beyond standard building provisions</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Midland Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies Midland-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any Midland zip code and the system automatically applies the correct 100-115 mph velocity based on ASCE 7-22 maps</li>
+                <li><strong>ASCE 7-22 Compliance:</strong> All calculations follow ASCE 7-22 methodology (current edition referenced by Texas IBC)</li>
+                <li><strong>Exposure Category C:</strong> Provides appropriate exposure recommendations for typical Midland open terrain conditions</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding per ASCE 7-22</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for City of Midland permit submission and building official review</li>
+                <li><strong>Height-Varying Pressures:</strong> Calculates appropriate Kz coefficients for different building heights with Exposure C velocity profiles</li>
+                <li><strong>Texas Requirements:</strong> Formatted for Texas PE seal and signature with complete calculation documentation</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Texas IBC-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Midland projects. Our software automatically handles location-specific wind velocities (100-115 mph), Exposure Category C for open West Texas terrain, ASCE 7-22 compliance, and generates PE-ready reports for City of Midland Building Inspections permit submission. Get started today and ensure your Permian Basin project meets all wind load requirements.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Midland Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

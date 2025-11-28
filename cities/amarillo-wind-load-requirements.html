@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amarillo Wind Load Requirements | 110-125 mph | Texas Panhandle | City of Amarillo | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Amarillo wind load requirements. Design wind speed 110-125 mph, City of Amarillo Building Safety (IBC adoption), Exposure Category C, extreme High Plains wind, tornado alley core, and ASCE 7-22 compliance for Potter/Randall Counties.">
+    <link rel="canonical" href="https://windload.solutions/cities/amarillo-wind-load-requirements.html">
+    <meta name="keywords" content="Amarillo wind load, Amarillo wind speed, Amarillo wind load calculator, Texas Panhandle, 110 mph wind speed, Amarillo building permit, High Plains exposure, Amarillo wind load requirements">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #374151;
+            background: rgba(55, 65, 81, 0.1);
+            border-color: rgba(55, 65, 81, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Amarillo yellow/gold and saddle brown */
+        .hero {
+            background: linear-gradient(135deg, #FFD700 0%, #F4C430 25%, #DAA520 50%, #8B4513 75%, #654321 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🌾🌪️';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #8B4513;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #8B4513;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #FFD700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #FFF8DC 0%, #FFEFD5 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #FFD700;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #8B4513;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #FFD700 0%, #8B4513 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #FFD700 0%, #8B4513 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Amarillo Card */
+        .amarillo-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .amarillo-card h4 {
+            color: #8B4513;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .amarillo-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #8B4513 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
+            color: #1f2937 !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Amarillo",
+                "item": "https://windload.solutions/cities/amarillo-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Amarillo Wind Load Requirements</h1>
+            <p>Texas Panhandle | Potter/Randall Counties | 110-125 mph Design Wind Speed | City of Amarillo | Exposure Category C | Extreme Wind Region | Tornado Alley Core | ASCE 7-22</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Amarillo Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">110-125</span>
+                    <span class="stat-label">Design Wind Speed (Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE 7-22</span>
+                    <span class="stat-label">City of Amarillo</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">VERY HIGH</span>
+                    <span class="stat-label">Extreme Wind Hazard</span>
+                </div>
+            </div>
+
+            <h2>Amarillo: Texas Panhandle Extreme Wind Load Requirements</h2>
+            <p>Amarillo, the <strong>Yellow Rose of Texas</strong> and economic hub of the Texas Panhandle, is located on the flat, treeless High Plains in Potter and Randall Counties with some of the most extreme wind load requirements in Texas. This region experiences exceptionally high wind speeds driven by its completely flat terrain, minimal surface roughness, persistent westerly winds, exposure to severe thunderstorms, and location in the core of <strong>Tornado Alley</strong>. Amarillo requires design wind speeds ranging from approximately <strong>110-125 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps—among the highest wind speeds in Texas and comparable to Gulf Coast hurricane regions.</p>
+
+            <p>Amarillo operates under the <strong>City of Amarillo Building Safety Division</strong> regulations, which adopt the International Building Code (IBC) with local amendments. The City of Amarillo references <strong>ASCE 7-22</strong> for wind load calculations. Amarillo's distinctive features—elevation of 3,605 feet on the High Plains, completely flat and treeless terrain extending for hundreds of miles in all directions, extreme wind exposure with minimal obstructions, persistent prevailing westerly winds averaging 12-14 mph year-round, position in the heart of Tornado Alley with frequent violent tornadoes, and severe thunderstorm activity with hurricane-force straight-line winds—create extraordinary structural design considerations requiring careful analysis of extreme wind speeds, open terrain exposure, and tornado protection strategies.</p>
+
+            <div class="info-box">
+                <h4><strong>🌾</strong> Amarillo Quick Facts</h4>
+                <p><strong>Counties:</strong> Potter County and Randall County</p>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 110-125 mph (3-second gust, among highest in Texas)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~120-135 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~130-145 mph</p>
+                <p><strong>Exposure Category:</strong> C (flat, open High Plains terrain with minimal obstructions)</p>
+                <p><strong>Building Code:</strong> City of Amarillo Building Safety (IBC adoption with local amendments)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Notable Features:</strong> Extreme flat terrain, tornado alley core, persistent high winds, Route 66, cattle capital</p>
+            </div>
+
+            <h3>Why Amarillo Has 110-125 mph Wind Speed Requirements</h3>
+            <p>Amarillo's exceptionally high design wind speeds of 110-125 mph—among the highest in Texas and comparable to coastal hurricane zones—are driven by multiple compounding factors unique to the Texas Panhandle. The region's position on the completely flat High Plains creates extreme wind exposure with virtually no natural windbreaks or terrain roughness for hundreds of miles. Prevailing westerly winds blow unobstructed across the plains, regularly sustaining 15-30 mph with gusts to 40-60 mph during routine weather events.</p>
+
+            <p>More critically, Amarillo sits in the geographic core of <strong>Tornado Alley</strong>, experiencing frequent violent tornadoes (EF3-EF5) that generate wind speeds exceeding 200 mph in concentrated paths. Severe thunderstorms produce straight-line winds regularly reaching 70-100+ mph, with derecho events creating sustained hurricane-force winds across large areas. The combination of persistent background winds, severe thunderstorm winds, and tornado activity creates a wind hazard environment rivaling or exceeding Gulf Coast hurricane exposure.</p>
+
+            <p>The ASCE 7-22 wind speed maps reflect this extreme hazard, assigning base wind speeds of 110-125 mph for the Amarillo region—velocities typically associated with Category 2-3 hurricanes. These speeds account for the statistical probability of extreme wind events including violent tornadoes, derecho systems, and severe thunderstorm complexes that regularly impact the Texas Panhandle.</p>
+
+            <h3>City of Amarillo Building Safety Division</h3>
+            <p>Amarillo operates under the <strong>City of Amarillo Building Safety Division</strong>, which establishes local building regulations:</p>
+
+            <ul>
+                <li><strong>IBC Adoption:</strong> City of Amarillo adopts the International Building Code (IBC) as the base code with local amendments tailored to Panhandle wind conditions</li>
+                <li><strong>ASCE 7-22 Reference:</strong> City references ASCE 7-22 for wind load calculations, the current edition of the standard</li>
+                <li><strong>Building Permits:</strong> Amarillo Building Safety Division is the authority having jurisdiction (AHJ) for permit review, plan examination, and inspections</li>
+                <li><strong>Potter/Randall County Jurisdiction:</strong> Properties outside Amarillo city limits fall under Potter County or Randall County building permit jurisdiction</li>
+                <li><strong>Professional Engineer Requirements:</strong> All structural calculations for commercial buildings, multi-family residential, and complex structures must be prepared and sealed by a PE licensed in Texas</li>
+                <li><strong>Residential Requirements:</strong> Single-family and two-family dwellings may be designed by qualified building designers, but PE seal is required for engineered structural systems</li>
+                <li><strong>Wind-Resistant Construction:</strong> City emphasizes proper fastening, bracing, and anchorage due to extreme wind exposure</li>
+            </ul>
+
+            <h3>Texas Professional Engineer (PE) Requirements</h3>
+            <p>Texas has specific requirements for structural engineering work:</p>
+
+            <ul>
+                <li><strong>Texas Board of Professional Engineers (TBPE):</strong> Regulates PE licensing and practice in Texas</li>
+                <li><strong>PE Seal Required:</strong> Commercial buildings, multi-family residential, schools, hospitals, and essential facilities require PE-sealed calculations</li>
+                <li><strong>Residential Exemption:</strong> Single-family and two-family dwellings designed using prescriptive provisions may not require PE seal, but engineered designs do</li>
+                <li><strong>Plan of Practice:</strong> PEs in Texas must practice through a licensed engineering firm or hold an engineering firm registration</li>
+                <li><strong>Continuing Education:</strong> Texas PEs must complete 15 PDH (Professional Development Hours) annually to maintain licensure</li>
+                <li><strong>Responsible Charge:</strong> PE must be in responsible charge of all sealed work, with direct supervision and control</li>
+            </ul>
+
+            <h3>Amarillo Geographic and Meteorological Factors</h3>
+            <p>Amarillo's unique geography and meteorology create extreme wind load conditions:</p>
+
+            <ul>
+                <li><strong>High Plains Elevation:</strong> Amarillo sits at 3,605 feet elevation on the Llano Estacado (Staked Plains), one of the largest flat mesas in the world</li>
+                <li><strong>Completely Flat Terrain:</strong> The High Plains extend for hundreds of miles in all directions with virtually no topographic variation, eliminating any natural wind shelter</li>
+                <li><strong>Treeless Landscape:</strong> Minimal vegetation and tree cover—mostly short grasses and agricultural fields—provide almost no surface roughness to slow winds</li>
+                <li><strong>Persistent Prevailing Winds:</strong> Westerly winds blow year-round, averaging 12-14 mph sustained with routine gusts to 30-40 mph, making Amarillo one of the windiest cities in Texas</li>
+                <li><strong>Extreme Wind Exposure:</strong> Fetch distances (unobstructed wind travel distance) exceeding 100+ miles in all directions create maximum wind speed development</li>
+                <li><strong>Route 66 Heritage:</strong> Historic Route 66 passes through Amarillo, with many structures dating to pre-modern wind code eras requiring careful evaluation</li>
+            </ul>
+
+            <h3>Exposure Category C: Open Terrain Classification</h3>
+            <p>Amarillo projects overwhelmingly use <strong>Exposure Category C</strong> due to the flat, open High Plains terrain:</p>
+
+            <ul>
+                <li><strong>Exposure Category C (Primary):</strong> Open terrain with scattered obstructions having heights generally less than 30 feet. This includes flat open country, grasslands, and agricultural areas—precisely describing the Texas Panhandle landscape</li>
+                <li><strong>Minimal Obstructions:</strong> Even within developed areas of Amarillo, building density and vegetation are insufficient to create Exposure B conditions in most locations</li>
+                <li><strong>Downtown Amarillo:</strong> The limited downtown core may approach Exposure B in some directions, but most fetch directions remain open terrain (Exposure C)</li>
+                <li><strong>Suburban and Rural Areas:</strong> All suburban, industrial, and rural areas definitively use Exposure C</li>
+                <li><strong>Agricultural Areas:</strong> Surrounding farmland and ranch land have virtually no obstructions, representing textbook Exposure C conditions</li>
+                <li><strong>Exposure D Consideration:</strong> Sites immediately adjacent to large unobstructed flat areas (such as airport runways, large parking lots, or open fields) may approach Exposure D characteristics, requiring engineering evaluation</li>
+            </ul>
+
+            <p><strong>Critical Distinction from Other Texas Cities:</strong> Unlike Dallas, Houston, or San Antonio where urban development creates Exposure B conditions, Amarillo's limited development density and vast surrounding open plains mean Exposure C is the correct category for nearly all projects. This significantly increases design wind pressures compared to urban Texas cities.</p>
+
+            <h3>Amarillo Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Amarillo projects requires following ASCE 7-22 methodology with City of Amarillo requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #8B4513; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Amarillo project with V = 115 mph (Risk Category II), Exposure C conditions, and flat terrain, the calculation demonstrates the extreme wind pressures. An Amarillo commercial building with:</p>
+            <ul>
+                <li><strong>V = 115 mph</strong> (typical Amarillo velocity for Risk Category II)</li>
+                <li><strong>Kz = 0.85</strong> (30 ft height, Exposure C—significantly higher than Exposure B's 0.70)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain, no topographic effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 0.92</strong> (elevation adjustment for 3,605 ft elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 26.3 psf</strong>—substantially higher than typical inland Texas cities and comparable to Gulf Coast hurricane exposures.</p>
+
+            <p>For comparison, a similar building in Dallas (V = 90 mph, Exposure B, Kz = 0.70) would experience qz = 12.2 psf—Amarillo's wind pressures are <strong>over 2x higher</strong> than Dallas due to the combination of higher base wind speed and more severe exposure category.</p>
+
+            <p><strong>Risk Category III Example (Schools, Assembly):</strong> For V = 125 mph, Exposure C, same conditions, qz increases to approximately <strong>31.2 psf</strong>—approaching design pressures seen in Category 4 hurricane regions.</p>
+
+            <h3>Tornado Alley Core: Amarillo's Most Severe Wind Threat</h3>
+            <p>Amarillo sits in the geographic heart of <strong>Tornado Alley</strong>, experiencing some of the most frequent and violent tornado activity in the United States:</p>
+
+            <ul>
+                <li><strong>High Tornado Frequency:</strong> Potter and Randall Counties average 3-5 tornadoes per year, with peak activity during April-June tornado season</li>
+                <li><strong>Violent Tornado History:</strong> The Texas Panhandle has documented multiple EF4 and EF5 tornadoes, with concentrated damage paths creating wind speeds exceeding 200 mph</li>
+                <li><strong>May 15, 1949:</strong> Twin F4 tornadoes struck Amarillo directly, killing 7 people and causing catastrophic damage across the city</li>
+                <li><strong>June 13, 2021:</strong> EF2 tornado struck west Amarillo, demonstrating continued tornado risk to urban areas</li>
+                <li><strong>April-June Peak Season:</strong> Tornado activity peaks during spring and early summer when Gulf moisture clashes with dry air over the High Plains</li>
+                <li><strong>Long Track Tornadoes:</strong> High Plains tornadoes often travel 20-50+ miles across flat terrain, creating extensive damage paths</li>
+                <li><strong>Limited Warning Time:</strong> Fast-moving storms and rapid tornado development can reduce warning time, emphasizing importance of tornado-resistant construction</li>
+            </ul>
+
+            <p><strong>Design Implication:</strong> While ASCE 7-22 wind speeds account for tornado risk statistically, critical facilities (Risk Category IV) in Amarillo should consider enhanced tornado protection including reinforced safe rooms, impact-resistant cladding, and enhanced anchorage systems.</p>
+
+            <h3>Severe Thunderstorms and Straight-Line Winds</h3>
+            <p>Beyond tornadoes, severe thunderstorms produce extreme straight-line winds regularly impacting Amarillo:</p>
+
+            <ul>
+                <li><strong>Derecho Systems:</strong> The Texas Panhandle experiences derecho events (widespread convective windstorms) producing sustained winds of 70-100+ mph across hundreds of square miles</li>
+                <li><strong>Downburst Winds:</strong> Intense thunderstorm downbursts create localized wind speeds of 80-120+ mph, comparable to EF1-EF2 tornadoes but over larger areas</li>
+                <li><strong>Haboob Dust Storms:</strong> Severe thunderstorm outflows create massive dust storms (haboobs) with leading wind gusts of 60-80+ mph and near-zero visibility</li>
+                <li><strong>April 27, 2015 Haboob:</strong> Massive dust storm with 60+ mph winds created wall of dust over 1,000 feet tall impacting Amarillo and surrounding region</li>
+                <li><strong>Combined Wind and Hail:</strong> Severe thunderstorms frequently combine extreme winds with large hail (2-4+ inches diameter), creating simultaneous impact and pressure loads on roofs and facades</li>
+                <li><strong>Year-Round Threat:</strong> While peak season is spring/summer, severe thunderstorms can occur year-round in the Panhandle</li>
+            </ul>
+
+            <h3>Persistent Background Winds</h3>
+            <p>Even during normal weather, Amarillo experiences persistent high winds that influence structural design:</p>
+
+            <ul>
+                <li><strong>Annual Average Wind Speed:</strong> Amarillo averages 12-14 mph sustained wind speeds year-round, among the highest annual averages in Texas</li>
+                <li><strong>Routine 30-40 mph Gusts:</strong> Wind gusts of 30-40 mph occur routinely during normal weather conditions, not just during storms</li>
+                <li><strong>Spring Wind Season:</strong> March-May brings particularly persistent winds with sustained speeds of 20-30 mph and gusts to 50-60 mph common during passage of frontal systems</li>
+                <li><strong>Fatigue Loading:</strong> Persistent winds create fatigue loading on building components, requiring attention to connection details and cladding attachment</li>
+                <li><strong>Dust and Debris:</strong> High winds carry sand, dust, and agricultural debris, creating abrasion and impact concerns for building exteriors</li>
+            </ul>
+
+            <div class="amarillo-card">
+                <h4>Amarillo vs. Houston Wind Loads: Panhandle Extreme Exposure</h4>
+                <p><strong>Amarillo (110-125 mph, Exposure C):</strong> Flat, open High Plains with minimal obstructions creates extreme wind exposure. Design pressures rival or exceed Gulf Coast hurricane zones despite being 400+ miles inland.</p>
+                <p><strong>Houston (130-150 mph, Exposure B/C):</strong> While Houston has higher base wind speeds due to hurricane risk, urban exposure (B) in developed areas reduces effective pressures. Coastal areas use Exposure C or D.</p>
+                <p><strong>Key Difference:</strong> Amarillo's consistent Exposure C across nearly all projects, combined with high base wind speeds and tornado risk, creates design pressures comparable to coastal hurricane regions. A 30-foot building in Amarillo (V=115 mph, Exp C, qz=26.3 psf) experiences similar pressures to a Houston urban building at higher elevation (V=140 mph, Exp B, qz=27.6 psf).</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Amarillo projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Amarillo Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~105-115 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>110-125 mph</td>
+                        <td>Residential, commercial, hotels, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~120-135 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~130-145 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, essential facilities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Special Consideration for Risk Category IV:</strong> Essential facilities in Amarillo (hospitals, emergency operations centers, fire stations) should consider enhanced tornado protection beyond basic wind load compliance, including reinforced safe rooms meeting ICC 500 or FEMA P-361 standards.</p>
+
+            <h3>Special Design Considerations for Amarillo</h3>
+            <p>Amarillo's extreme wind exposure requires attention to specific design details:</p>
+
+            <ul>
+                <li><strong>Enhanced Fastening:</strong> Roof-to-wall and wall-to-foundation connections require enhanced anchorage beyond typical inland requirements. Use hurricane straps, hold-downs, and continuous load path detailing</li>
+                <li><strong>Impact-Resistant Cladding:</strong> Consider impact-resistant windows, doors, and siding to resist wind-borne debris from tornadoes and severe thunderstorms</li>
+                <li><strong>Roof Systems:</strong> Low-slope roofs are vulnerable to high winds. Use fully adhered roof membranes, enhanced edge fastening, and gravel ballast or mechanically attached systems rated for extreme wind</li>
+                <li><strong>Overhead Doors:</strong> Industrial and commercial overhead doors require wind-rated systems with reinforced tracks, lateral bracing, and positive locking mechanisms</li>
+                <li><strong>Outdoor Equipment:</strong> HVAC equipment, signage, canopies, and outdoor structures require robust anchorage and wind-resistant design for persistent high winds</li>
+                <li><strong>Agricultural Buildings:</strong> Pole barns, equipment sheds, and agricultural structures are particularly vulnerable. Use engineered designs with proper bracing and connections</li>
+                <li><strong>Safe Rooms:</strong> Schools, commercial buildings, and new residential construction should consider ICC 500-compliant tornado safe rooms, especially for Risk Category III and IV facilities</li>
+            </ul>
+
+            <h3>Amarillo Zip Codes and Wind Speed Reference</h3>
+            <p>Amarillo encompasses zip codes in the 79100-79199 range. Wind speeds are relatively uniform due to consistent High Plains exposure:</p>
+
+            <ul>
+                <li><strong>79101, 79102, 79103 (Downtown/Central Amarillo):</strong> 110-120 mph, Exposure C (limited downtown area may have localized Exposure B in some directions)</li>
+                <li><strong>79106, 79109 (West/Southwest Amarillo):</strong> 115-125 mph, Exposure C (open exposure to prevailing westerly winds)</li>
+                <li><strong>79107, 79108 (North/Northeast Amarillo):</strong> 110-120 mph, Exposure C (residential and commercial areas with open surrounding terrain)</li>
+                <li><strong>79110, 79111 (South/Southeast Amarillo):</strong> 110-120 mph, Exposure C (suburban and industrial areas)</li>
+                <li><strong>79118, 79119 (Outer Areas/Randall County):</strong> 115-125 mph, Exposure C (rural and developing areas with maximum open exposure)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed when you enter any Amarillo zip code or address. Due to the consistent flat terrain, topographic factor (Kzt) is typically 1.0 throughout the region, simplifying calculations compared to regions with complex topography.</p>
+
+            <h3>Common Amarillo Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Using Exposure B:</strong> The most critical error—Amarillo projects require Exposure C in nearly all cases. Using Exposure B underestimates wind pressures by 30-50%</li>
+                <li><strong>Applying Dallas/Houston urban wind speeds:</strong> Amarillo requires significantly higher wind speeds than major Texas metro areas despite being smaller</li>
+                <li><strong>Ignoring persistent background winds:</strong> Fatigue loading from constant 20-30 mph winds requires attention to connection details and cladding attachment</li>
+                <li><strong>Inadequate roof anchorage:</strong> Roof systems require enhanced fastening appropriate for 110-125 mph winds with Exposure C</li>
+                <li><strong>Overlooking tornado protection:</strong> While code wind loads account for tornado risk statistically, critical facilities should consider enhanced protection</li>
+                <li><strong>Using older wind maps:</strong> Ensure calculations use ASCE 7-22 wind speeds, not older editions which may have lower velocities</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and essential facilities require higher Risk Categories with increased wind speeds</li>
+                <li><strong>Neglecting debris impact:</strong> Tornado and severe thunderstorm debris impacts require consideration for glazing and cladding systems</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Amarillo Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Amarillo requirements including location-specific wind velocities (110-125 mph range), Exposure Category C for open High Plains terrain, Risk Category adjustments, and component pressure coefficients. Simply enter your Amarillo project address or zip code for instant, accurate calculations compliant with City of Amarillo Building Safety and ASCE 7-22.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Amarillo Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Texas</h3>
+            <p>Commercial and complex residential wind load calculations for Amarillo building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in Texas</strong>. The City of Amarillo Building Safety Division requires sealed calculations that include:</p>
+
+            <ul>
+                <li>Project address with wind speed determination per ASCE 7-22</li>
+                <li>Design wind speed (110-125 mph range for Risk Category II, location-dependent)</li>
+                <li>Exposure Category determination with supporting justification (typically C for Amarillo)</li>
+                <li>Topographic factor (Kzt) determination (typically 1.0 for flat High Plains terrain)</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>Special considerations for tornado protection if applicable (Risk Category IV)</li>
+            </ul>
+
+            <h3>City of Amarillo Building Safety Division</h3>
+            <p>City of Amarillo Building Safety has specific procedures for building permits:</p>
+
+            <ul>
+                <li><strong>Permit Applications:</strong> Submit building permit applications through City of Amarillo Building Safety Division</li>
+                <li><strong>Professional Certification:</strong> Requires PE seal for commercial buildings, multi-family residential, and complex structural systems</li>
+                <li><strong>Plan Review:</strong> Building Safety plan examiners review structural calculations and construction documents for wind load compliance</li>
+                <li><strong>Construction Documents:</strong> Complete sealed construction documents required, including comprehensive wind load calculations</li>
+                <li><strong>Inspections:</strong> Building Safety conducts inspections throughout construction to verify code compliance, with emphasis on roof anchorage and lateral bracing</li>
+                <li><strong>Potter/Randall County Coordination:</strong> Projects outside city limits coordinate with Potter County or Randall County building departments</li>
+            </ul>
+
+            <h3>Official Amarillo and Texas Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Amarillo wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.amarillo.gov/departments/development-services/building-safety" target="_blank" rel="noopener" class="external-link">
+                    Amarillo Building Safety
+                </a>
+                <a href="https://www.tbpe.texas.gov/" target="_blank" rel="noopener" class="external-link">
+                    Texas Board of PE
+                </a>
+                <a href="https://www.co.potter.tx.us/" target="_blank" rel="noopener" class="external-link">
+                    Potter County
+                </a>
+                <a href="https://www.randallcounty.org/" target="_blank" rel="noopener" class="external-link">
+                    Randall County
+                </a>
+            </div>
+
+            <h3>Tornado Safe Rooms and Enhanced Protection</h3>
+            <p>Given Amarillo's location in the core of Tornado Alley, many buildings incorporate enhanced tornado protection:</p>
+
+            <ul>
+                <li><strong>ICC 500 Standard:</strong> International Code Council standard for design and construction of storm shelters</li>
+                <li><strong>FEMA P-361:</strong> Safe Rooms for Tornadoes and Hurricanes: Guidance for Community and Residential Safe Rooms</li>
+                <li><strong>Schools and Public Buildings:</strong> Many newer schools and public facilities include ICC 500-compliant safe rooms providing protection for EF5 tornadoes (250+ mph winds)</li>
+                <li><strong>Residential Safe Rooms:</strong> Above-ground or below-ground safe rooms increasingly common in new residential construction</li>
+                <li><strong>Retrofit Opportunities:</strong> Existing buildings can be retrofitted with internal safe rooms or reinforced shelter areas</li>
+                <li><strong>Community Shelters:</strong> Public tornado shelters available throughout Amarillo for residents without adequate home protection</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Amarillo Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies Amarillo-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any Amarillo zip code and the system automatically applies the correct 110-125 mph velocity based on ASCE 7-22 maps</li>
+                <li><strong>ASCE 7-22 Compliance:</strong> All calculations follow ASCE 7-22 methodology (current edition referenced by City of Amarillo)</li>
+                <li><strong>Exposure Category C:</strong> Provides appropriate Exposure C recommendations for typical Amarillo High Plains conditions</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Elevation Factor:</strong> Automatically applies Ke adjustment for 3,605 ft elevation</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding per ASCE 7-22</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for City of Amarillo Building Safety permit submission and plan examiner review</li>
+                <li><strong>Height-Varying Pressures:</strong> Calculates appropriate Kz coefficients for different building heights with Exposure C profiles</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Texas-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Amarillo projects. Our software automatically handles location-specific extreme wind velocities (110-125 mph), Exposure Category C for open High Plains terrain, ASCE 7-22 compliance, and generates PE-ready reports for City of Amarillo Building Safety permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Amarillo Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fort Worth Wind Load Requirements | 100-115 mph | Texas IBC | Cowtown | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Fort Worth wind load requirements. Design wind speed 100-115 mph, City of Fort Worth Building Inspections (IBC adoption), Exposure Category B/C, DFW metroplex, tornado alley fringe, and ASCE 7-22 compliance for Tarrant County.">
+    <link rel="canonical" href="https://windload.solutions/cities/fort-worth-wind-load-requirements.html">
+    <meta name="keywords" content="Fort Worth wind load, Fort Worth wind speed, Fort Worth wind load calculator, Texas IBC, 100 mph wind speed, Fort Worth building permit, tornado alley exposure, Fort Worth wind load requirements">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #374151;
+            background: rgba(55, 65, 81, 0.1);
+            border-color: rgba(55, 65, 81, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Fort Worth purple/silver (TCU Horned Frogs) */
+        .hero {
+            background: linear-gradient(135deg, #4D1979 0%, #6B2D9E 25%, #8B4BC3 50%, #A3A9AC 75%, #C5CAD0 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🤠🐂';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #4D1979;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #4D1979;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #6B2D9E;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #4D1979;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #4D1979;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #4D1979 0%, #6B2D9E 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(77, 25, 121, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #4D1979 0%, #A3A9AC 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Fort Worth Card */
+        .fortworth-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(77, 25, 121, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .fortworth-card h4 {
+            color: #4D1979;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .fortworth-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #4D1979 0%, #6B2D9E 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #4D1979 0%, #6B2D9E 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(77, 25, 121, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #6B2D9E 0%, #8B4BC3 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(77, 25, 121, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Fort Worth",
+                "item": "https://windload.solutions/cities/fort-worth-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Fort Worth Wind Load Requirements</h1>
+            <p>Cowtown | Tarrant County | 100-115 mph Design Wind Speed | Texas IBC | Exposure Category B/C | DFW Metroplex | ASCE 7-22</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Fort Worth Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">100-115</span>
+                    <span class="stat-label">Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">TX IBC</span>
+                    <span class="stat-label">Texas Building Code<br>(IBC 2021)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE 7-22</span>
+                    <span class="stat-label">Current Standard</span>
+                </div>
+            </div>
+
+            <h2>Fort Worth: Cowtown Wind Load Requirements</h2>
+            <p>Fort Worth, known as <strong>Cowtown</strong> and home to the historic Fort Worth Stockyards, is the fifth-largest city in Texas and a major component of the Dallas-Fort Worth metroplex in Tarrant County. Fort Worth's location in North Texas on the fringe of tornado alley creates unique wind load requirements driven by severe thunderstorms, tornado potential, straight-line winds, and occasional hail events. Fort Worth requires design wind speeds ranging from approximately <strong>100-115 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and location-specific exposure conditions.</p>
+
+            <p>Fort Worth operates under the <strong>City of Fort Worth Building Inspections Division</strong>, which adopts the International Building Code (IBC) with local amendments. The City currently references <strong>ASCE 7-22</strong> for wind load calculations. Fort Worth's distinctive features—location on the western edge of the DFW metroplex, Trinity River corridor, rapidly developing suburbs transitioning from ranch land, historic Stockyards district, and proximity to severe weather corridors—create unique structural design considerations necessitating careful analysis of wind speeds, tornado risks, exposure categories, and component design pressures.</p>
+
+            <div class="info-box">
+                <h4><strong>🤠</strong> Fort Worth Quick Facts</h4>
+                <p><strong>County:</strong> Tarrant County</p>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 100-115 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~110-125 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~115-130 mph</p>
+                <p><strong>Exposure Category:</strong> Primarily B (urban core), C in suburban/developing areas</p>
+                <p><strong>Building Code:</strong> City of Fort Worth Building Inspections (IBC 2021 adoption with local amendments)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Notable Features:</strong> Tornado alley fringe, severe thunderstorms, DFW metroplex, Stockyards heritage, rapid suburban growth</p>
+            </div>
+
+            <h3>Why Fort Worth Has 100-115 mph Wind Speed Requirements</h3>
+            <p>Fort Worth's design wind speeds of 100-115 mph are derived from ASCE 7-22 wind speed maps for North Texas. This velocity range accounts for the region's exposure to severe thunderstorms with damaging straight-line winds, tornado activity on the fringe of tornado alley, and severe convective weather systems that regularly impact the DFW metroplex. The wind speed reflects Fort Worth's inland location with elevated wind hazard compared to typical inland cities but reduced risk compared to coastal hurricane zones.</p>
+
+            <p>The exact wind speed for a specific Fort Worth project depends on precise location within the city and Tarrant County. Central Fort Worth (downtown, Cultural District, Stockyards) typically uses velocities at the lower end of the range with urban Exposure B conditions. Suburban areas (western Fort Worth, Westlake, Trophy Club) and newer developments transitioning from open terrain may experience higher wind exposures with Exposure C conditions. The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or address.</p>
+
+            <h3>City of Fort Worth Building Inspections Division</h3>
+            <p>Fort Worth operates under the <strong>City of Fort Worth Building Inspections Division</strong>, which establishes local building regulations:</p>
+
+            <ul>
+                <li><strong>IBC 2021 Adoption:</strong> Fort Worth adopts the International Building Code (IBC) 2021 edition as the base code with local amendments</li>
+                <li><strong>ASCE 7-22 Reference:</strong> Fort Worth references ASCE 7-22 for wind load calculations, the current edition of the standard</li>
+                <li><strong>City Permitting:</strong> Fort Worth Building Inspections Division is the authority having jurisdiction (AHJ) for permit review and inspections within city limits</li>
+                <li><strong>Tarrant County Jurisdiction:</strong> Properties outside Fort Worth city limits fall under Tarrant County building permit jurisdiction</li>
+                <li><strong>Professional Engineer Requirements:</strong> All structural calculations must be prepared and sealed by a PE licensed in Texas (Texas Board of Professional Engineers and Land Surveyors)</li>
+                <li><strong>Third-Party Review:</strong> Complex projects may require third-party plan review for structural calculations and wind load analysis</li>
+            </ul>
+
+            <h3>Fort Worth Geographic and Development Considerations</h3>
+            <p>Fort Worth's geography and rapid development patterns significantly influence wind load requirements:</p>
+
+            <ul>
+                <li><strong>Urban Core (Exposure B):</strong> Downtown Fort Worth, Cultural District, Near Southside, Stockyards—densely developed urban terrain with numerous closely spaced obstructions (buildings, trees) providing wind shelter</li>
+                <li><strong>Suburban Development (Exposure C):</strong> Western Fort Worth, Alliance, Westlake, Trophy Club—rapidly developing areas transitioning from ranch land with more open terrain and reduced obstructions</li>
+                <li><strong>Trinity River Corridor:</strong> Trinity River creates a natural corridor through central Fort Worth with potential wind channeling effects and reduced obstructions near the river</li>
+                <li><strong>Flat Topography:</strong> Fort Worth region is relatively flat (elevation 650 feet) with minimal topographic effects, typically Kzt = 1.0 throughout the area</li>
+                <li><strong>Tornado Alley Fringe:</strong> Fort Worth sits on the eastern fringe of tornado alley, experiencing severe weather and tornado potential during spring months (March-June)</li>
+                <li><strong>DFW Metroplex Growth:</strong> Rapid suburban expansion westward means many new developments are in transitional exposure zones requiring careful site-specific evaluation</li>
+            </ul>
+
+            <h3>Exposure Categories in Fort Worth</h3>
+            <p>Fort Worth projects may use Exposure Category B or C depending on location and surrounding development:</p>
+
+            <ul>
+                <li><strong>Exposure Category B (Urban Core):</strong> Urban and suburban terrain with numerous closely spaced obstructions (buildings, trees) having heights of 30 feet or more. This applies to downtown Fort Worth, established neighborhoods, Stockyards district, TCU area, and older suburban communities</li>
+                <li><strong>Exposure Category C (Suburban/Developing):</strong> Open terrain with scattered obstructions, generally less than 30 feet in height. This applies to newer suburban developments, western Fort Worth, areas transitioning from ranch/agricultural land, and sites with significant open space</li>
+                <li><strong>Site-Specific Evaluation Required:</strong> Engineers must evaluate site-specific conditions for at least 20 times the building height (or 2,600 feet, whichever is less) in all directions per ASCE 7-22 to determine appropriate exposure</li>
+                <li><strong>Transitional Zones:</strong> Many Fort Worth sites are in transitional zones where exposure may vary by wind direction—upwind terrain evaluation is critical</li>
+                <li><strong>Conservative Approach:</strong> When in doubt between Exposure B and C, use Exposure C (produces higher wind pressures and is conservative)</li>
+            </ul>
+
+            <h3>Fort Worth Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Fort Worth projects requires following ASCE 7-22 methodology with Texas IBC requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #4D1979; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Fort Worth suburban project with V = 110 mph, Exposure C conditions (developing area), and flat topography, the calculation demonstrates typical North Texas design pressures. A western Fort Worth suburban project with:</p>
+            <ul>
+                <li><strong>V = 110 mph</strong> (typical Fort Worth velocity)</li>
+                <li><strong>Kz = 0.85</strong> (30 ft height, Exposure C)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain, no topographic effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (typical elevation ~650 feet)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 26.3 psf</strong>—significantly higher than urban Exposure B locations due to more open terrain and reduced wind shelter.</p>
+
+            <p>For a downtown Fort Worth project with similar wind speed but Exposure B conditions, using Kz = 0.70 (30 ft height, Exposure B), the velocity pressure would be approximately 21.7 psf—demonstrating the significant 21% reduction in pressures due to urban wind shelter effects.</p>
+
+            <h3>Severe Thunderstorms: Fort Worth's Primary Wind Threat</h3>
+            <p>Severe thunderstorms are the most common and destructive source of wind damage in Fort Worth:</p>
+
+            <ul>
+                <li><strong>Warm Season Peak:</strong> April through June brings peak severe thunderstorm activity with damaging straight-line winds of 60-80+ mph, occasionally exceeding 90 mph in severe downbursts</li>
+                <li><strong>Squall Lines:</strong> Organized squall lines and bow echoes produce widespread wind damage across the DFW metroplex, with peak winds along the leading edge</li>
+                <li><strong>Microburst Events:</strong> Intense microbursts can produce localized winds exceeding 100 mph over small areas (1-2 mile diameter), causing catastrophic damage to structures</li>
+                <li><strong>Derecho Potential:</strong> While less common than individual thunderstorms, derechos (widespread convective windstorms) occasionally impact North Texas with sustained damaging winds over large areas</li>
+                <li><strong>Hail Combination:</strong> Severe thunderstorms often combine high winds with large hail (golf ball to softball size), creating simultaneous wind and impact loading on roofs and facades</li>
+                <li><strong>Tree Damage:</strong> Fort Worth's urban forest and landscaping make tree-related wind damage common, with falling trees and branches impacting structures, vehicles, and power lines</li>
+            </ul>
+
+            <h3>Tornado History and Risk: Tornado Alley Fringe</h3>
+            <p>Fort Worth's location on the eastern fringe of tornado alley creates significant tornado risk:</p>
+
+            <ul>
+                <li><strong>Moderate to High Risk:</strong> Tarrant County averages 2-3 tornadoes per year, with significant tornado events occurring regularly in the DFW metroplex</li>
+                <li><strong>March 28, 2000 (Downtown Fort Worth):</strong> EF3 tornado directly struck downtown Fort Worth, causing extensive damage to buildings, vehicles, and infrastructure—demonstrating that major cities are not immune to tornadoes</li>
+                <li><strong>May 15, 2013 (Granbury/Cleburne):</strong> EF4 tornado south of Fort Worth caused catastrophic damage and multiple fatalities, one of the strongest tornadoes in recent North Texas history</li>
+                <li><strong>October 20, 2019 (North Dallas/Richardson):</strong> EF3 tornado in the DFW metroplex caused significant structural damage and demonstrated tornado risk exists even in fall months</li>
+                <li><strong>Spring Peak Season:</strong> March through June is peak tornado season, with April and May experiencing the highest frequency of violent tornadoes</li>
+                <li><strong>Urban Tornado Impact:</strong> Tornadoes can and do impact urban areas. The 2000 downtown Fort Worth tornado proves that dense urban development does not prevent tornado strikes</li>
+                <li><strong>Warning Systems:</strong> Fort Worth and Tarrant County have extensive tornado warning systems, outdoor warning sirens throughout the metro area, and emergency alert capabilities</li>
+            </ul>
+
+            <h3>Straight-Line Wind Events</h3>
+            <p>Straight-line winds from thunderstorms are more frequent than tornadoes but can produce similar damage:</p>
+
+            <ul>
+                <li><strong>Downburst Winds:</strong> Microbursts and macrobursts produce intense straight-line winds that can exceed EF0-EF1 tornado damage (65-110 mph)</li>
+                <li><strong>Widespread Impact:</strong> Unlike tornadoes which affect narrow paths, straight-line wind events can impact large areas simultaneously (10-50+ mile swaths)</li>
+                <li><strong>Peak Wind Zones:</strong> Outflow boundaries and gust fronts produce peak winds along narrow bands, creating localized zones of severe damage within broader wind fields</li>
+                <li><strong>Roof Vulnerability:</strong> Low-slope commercial roofs and metal building roofs are particularly vulnerable to uplift forces from straight-line winds and thunderstorm outflows</li>
+            </ul>
+
+            <div class="fortworth-card">
+                <h4>Fort Worth DFW Metroplex Context: Urban Core vs. Suburban Fringe</h4>
+                <p><strong>Urban Core (Exposure B, Lower Velocities):</strong> Downtown, Cultural District, Stockyards, TCU area—densely developed urban terrain provides wind shelter, typically uses lower end of velocity range (100-105 mph) with Exposure B</p>
+                <p><strong>Suburban Fringe (Exposure C, Higher Velocities):</strong> Western Fort Worth, Alliance, Westlake, Trophy Club—rapidly developing areas transitioning from open ranch land, typically uses higher velocities (110-115 mph) with Exposure C</p>
+                <p><strong>Key Takeaway:</strong> Fort Worth exposure category determination is critical. A suburban Exposure C building experiences approximately 40% higher wind pressures than an urban Exposure B building at the same height due to the Kz coefficient difference</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Fort Worth projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Fort Worth Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~95-110 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>100-115 mph</td>
+                        <td>Residential, commercial, hotels, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~110-125 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~115-130 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, essential facilities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Fort Worth Zip Codes and Wind Speed Reference</h3>
+            <p>Fort Worth encompasses zip codes in the 76100-76199 range. Wind speeds vary by location and exposure conditions:</p>
+
+            <ul>
+                <li><strong>76102, 76104 (Downtown Fort Worth):</strong> 100-105 mph, Exposure B, Kzt = 1.0 (urban core)</li>
+                <li><strong>76107, 76109 (Cultural District/TCU):</strong> 100-110 mph, Exposure B, Kzt = 1.0 (established neighborhoods)</li>
+                <li><strong>76164 (Stockyards/North Side):</strong> 100-110 mph, Exposure B, Kzt = 1.0 (historic district)</li>
+                <li><strong>76177, 76179 (Alliance/North Fort Worth):</strong> 105-115 mph, Exposure C likely, Kzt = 1.0 (developing suburban areas)</li>
+                <li><strong>76126, 76108 (West Fort Worth):</strong> 105-115 mph, Exposure B/C transition, Kzt = 1.0 (site-specific evaluation required)</li>
+                <li><strong>76132, 76133 (Southwest Fort Worth):</strong> 100-110 mph, Exposure B/C varies, Kzt = 1.0 (mixed urban/suburban)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed when you enter any Fort Worth zip code or address. However, exposure category determination requires site-specific analysis of surrounding terrain—consult with a Texas-licensed PE for proper exposure evaluation.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Fort Worth Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Fort Worth requirements including location-specific wind velocities (100-115 mph range), Exposure Category B/C evaluation guidance, Risk Category adjustments, and component pressure coefficients. Simply enter your Fort Worth project address or zip code for instant, accurate calculations compliant with Texas IBC and ASCE 7-22. Note: Site-specific exposure category determination by a Texas PE is required.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Fort Worth Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Texas</h3>
+            <p>All wind load calculations for Fort Worth building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in Texas</strong> by the Texas Board of Professional Engineers and Land Surveyors. The Fort Worth Building Inspections Division requires sealed calculations that include:</p>
+
+            <ul>
+                <li>Project address with wind speed determination per ASCE 7-22</li>
+                <li>Design wind speed (100-115 mph range for Risk Category II, location-dependent)</li>
+                <li>Exposure Category determination with supporting justification and upwind terrain analysis (critical for B vs. C determination)</li>
+                <li>Topographic factor (Kzt) determination (typically 1.0 for flat Fort Worth terrain, but must be verified)</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>Special considerations for tornado risk, severe weather exposure, and hail impact resistance</li>
+            </ul>
+
+            <h3>Fort Worth Building Inspections Division</h3>
+            <p>Fort Worth Building Inspections has specific procedures for building permits:</p>
+
+            <ul>
+                <li><strong>Online Portal:</strong> Fort Worth offers online permit applications and submissions through the city portal</li>
+                <li><strong>Professional Certification:</strong> Requires Texas PE seal for all structural calculations</li>
+                <li><strong>Third-Party Review:</strong> Complex projects may require third-party plan review for structural and wind load calculations</li>
+                <li><strong>Plan Review:</strong> Building Inspections Division plan examiners review structural calculations and construction documents</li>
+                <li><strong>Construction Documents:</strong> Complete sealed construction documents required, including comprehensive wind load calculations and component specifications</li>
+                <li><strong>Inspections:</strong> Building Inspections Division conducts inspections throughout construction to verify code compliance</li>
+                <li><strong>Special Inspections:</strong> High-wind resistance features may require special inspections during construction</li>
+            </ul>
+
+            <h3>Official Fort Worth and Texas Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Fort Worth wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.fortworthtexas.gov/departments/development-services/building-inspections" target="_blank" rel="noopener" class="external-link">
+                    Fort Worth Building Inspections
+                </a>
+                <a href="https://www.tbpe.texas.gov/" target="_blank" rel="noopener" class="external-link">
+                    Texas Board of Professional Engineers
+                </a>
+                <a href="https://www.tarrantcounty.com/" target="_blank" rel="noopener" class="external-link">
+                    Tarrant County Government
+                </a>
+                <a href="https://www.weather.gov/fwd/" target="_blank" rel="noopener" class="external-link">
+                    NWS Fort Worth
+                </a>
+            </div>
+
+            <h3>Common Fort Worth Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect exposure category:</strong> Assuming Exposure B for all Fort Worth projects is improper—suburban and developing areas often require Exposure C with significantly higher pressures</li>
+                <li><strong>Inadequate upwind terrain analysis:</strong> Failing to evaluate upwind terrain for 20H or 2,600 feet (whichever is less) in all directions can result in incorrect exposure determination</li>
+                <li><strong>Underestimating tornado risk:</strong> Fort Worth is on the tornado alley fringe with significant tornado history. Safe rooms and storm shelters should be considered for schools, hospitals, and public buildings</li>
+                <li><strong>Using uniform wind speed across all locations:</strong> Wind speeds vary by location and exposure. Downtown vs. western suburban locations have different design requirements</li>
+                <li><strong>Neglecting hail impact resistance:</strong> Fort Worth experiences severe hail events. Roof coverings and skylights should be designed for impact resistance per IBC Chapter 15</li>
+                <li><strong>Using wrong ASCE version:</strong> Ensure calculations use ASCE 7-22 (current edition referenced by Fort Worth)</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, emergency facilities require higher categories with increased wind speeds and enhanced performance requirements</li>
+                <li><strong>Missing Fort Worth permit requirements:</strong> Fort Worth has specific permit submission, professional certification, and inspection requirements that must be followed</li>
+                <li><strong>Ignoring transitional exposure zones:</strong> Many Fort Worth sites are in areas where exposure varies by direction—directional exposure analysis may be required</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Fort Worth Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies Fort Worth-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any Fort Worth zip code and the system automatically applies the correct 100-115 mph velocity based on ASCE 7-22 maps</li>
+                <li><strong>ASCE 7-22 Compliance:</strong> All calculations follow ASCE 7-22 methodology (current edition referenced by Fort Worth Building Inspections)</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides exposure recommendations with guidance on B vs. C determination for Fort Worth locations</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV per ASCE 7-22 Table 1.5-2</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding per ASCE 7-22 Figure 30.4-1 and 30.5-1</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Fort Worth Building Inspections permit submission and plan examiner review</li>
+                <li><strong>Height-Varying Pressures:</strong> Calculates appropriate Kz coefficients for different building heights and exposure categories</li>
+                <li><strong>Texas-Specific Compliance:</strong> Addresses Texas IBC requirements and Fort Worth local amendments</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Texas IBC-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Fort Worth projects. Our software automatically handles location-specific wind velocities (100-115 mph), Exposure Category B/C evaluation, ASCE 7-22 compliance, and generates PE-ready reports for Fort Worth Building Inspections permit submission. Consult with a Texas-licensed PE for site-specific exposure determination and tornado risk assessment.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Fort Worth Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -82,16 +82,16 @@
 - [x] 63. Cleveland, OH ✅ (cities/cleveland-wind-load-requirements.html)
 - [x] 64. Cincinnati, OH ✅ (cities/cincinnati-wind-load-requirements.html)
 - [x] 65. Pittsburgh, PA ✅ (cities/pittsburgh-wind-load-requirements.html)
-- [ ] 66. Milwaukee, WI
-- [ ] 67. Albuquerque, NM
-- [ ] 68. Tucson, AZ
-- [ ] 69. El Paso, TX
-- [ ] 70. Fort Worth, TX
-- [ ] 71. Arlington, TX
-- [ ] 72. Plano, TX
-- [ ] 73. Lubbock, TX
-- [ ] 74. Amarillo, TX
-- [ ] 75. Midland, TX
+- [x] 66. Milwaukee, WI ✅ (cities/milwaukee-wind-load-requirements.html)
+- [x] 67. Albuquerque, NM ✅ (cities/albuquerque-wind-load-requirements.html)
+- [x] 68. Tucson, AZ ✅ (cities/tucson-wind-load-requirements.html)
+- [x] 69. El Paso, TX ✅ (cities/el-paso-wind-load-requirements.html)
+- [x] 70. Fort Worth, TX ✅ (cities/fort-worth-wind-load-requirements.html)
+- [x] 71. Arlington, TX ✅ (cities/arlington-wind-load-requirements.html)
+- [x] 72. Plano, TX ✅ (cities/plano-wind-load-requirements.html)
+- [x] 73. Lubbock, TX ✅ (cities/lubbock-wind-load-requirements.html)
+- [x] 74. Amarillo, TX ✅ (cities/amarillo-wind-load-requirements.html)
+- [x] 75. Midland, TX ✅ (cities/midland-wind-load-requirements.html)
 
 ## Tier 4: Remaining Strategic Markets (76-100)
 *Complete coverage, regional hubs*
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 65
-- Remaining: 35
+- Completed: 75
+- Remaining: 25
 
 ---
 
