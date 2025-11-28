@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wichita Wind Load Requirements | 110-120 mph IBC | Sedgwick County KS | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Wichita wind load requirements. Sedgwick County design wind speed 110-120 mph, Exposure B/C, IBC adoption, TORNADO ALLEY CORE, Air Capital aviation hub, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/wichita-wind-load-requirements.html">
+    <meta name="keywords" content="Wichita wind load, Sedgwick County wind speed, Wichita wind load calculator, Wichita building permit, Wichita wind load requirements, IBC Wichita, Tornado Alley wind loads, Air Capital wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Wichita Blue/Gold (wheat fields, aviation) */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 25%, #3b82f6 50%, #fbbf24 75%, #f59e0b 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '✈️🌾';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #2563eb;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #1e40af;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #2563eb;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Wichita Card */
+        .dallas-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .dallas-card h4 {
+            color: #2563eb;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .dallas-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Kansas",
+                "item": "https://windload.solutions/kansas-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Wichita",
+                "item": "https://windload.solutions/cities/wichita-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../kansas-wind-load-requirements.html"><i class="fas fa-star"></i> Kansas</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Wichita Wind Load Requirements</h1>
+            <p>Sedgwick County, KS | 110-120 mph Design Wind Speed | AIR CAPITAL OF THE WORLD | Kansas International Building Code (IBC) | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Wichita Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">110-120</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Kansas Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">HIGH</span>
+                    <span class="stat-label">Tornado Risk</span>
+                </div>
+            </div>
+
+            <h2>Wichita, Kansas: Air Capital Tornado Alley Wind Load Requirements</h2>
+            <p>Wichita, located in <strong>Sedgwick County, Kansas</strong>, has elevated wind load requirements that reflect its position in the core of Tornado Alley and its role as the Air Capital of the World. Kansas adopts the <strong>International Building Code (IBC)</strong> statewide, which Wichita and Sedgwick County enforce with local amendments. Design wind speeds for Risk Category II structures typically range from <strong>110-120 mph</strong> (3-second gust) based on ASCE 7-22 wind speed maps.</p>
+
+            <p>These requirements exist because Wichita sits in the heart of Tornado Alley with frequent severe thunderstorms, tornadoes, and extreme convective wind events. Kansas ranks third nationally in tornado frequency, and Sedgwick County experiences regular severe weather from April through June. The combination of Great Plains geography, aviation industry infrastructure (Boeing, Spirit AeroSystems, Textron Aviation), and the region's vast wheat fields creates unique wind load considerations for structural engineering in the Air Capital.</p>
+
+            <div class="info-box">
+                <h4><strong>✈️🌾</strong> Wichita Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 110-120 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~125-135 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~135-145 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban areas), C (open plains/wheat fields)</p>
+                <p><strong>Building Code:</strong> Kansas International Building Code (IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Sedgwick County</p>
+                <p><strong>Weather Risks:</strong> HIGH tornado risk, Tornado Alley core, severe thunderstorms, derechos, aviation industry structural demands</p>
+            </div>
+
+            <h3>Why Wichita Has 110-120 mph Wind Speed Requirements</h3>
+            <p>Wichita's design wind speed of 110-120 mph for Risk Category II structures reflects the city's location in the core of Tornado Alley—one of the most tornado-prone regions on Earth. While ASCE 7 wind speeds are based on synoptic (large-scale) wind events rather than tornadoes, Wichita's elevated base wind speed accounts for:</p>
+
+            <ul>
+                <li><strong>Tornado Alley Core Location:</strong> Sedgwick County sits in the heart of Tornado Alley where warm Gulf moisture meets cold Canadian air over flat plains, creating ideal conditions for violent tornadoes</li>
+                <li><strong>Historical Tornado Events:</strong> Wichita has experienced multiple significant tornadoes including the 1999 Haysville F4 tornado, 1991 Andover F5 tornado (20 miles east), and regular EF2-EF3 events</li>
+                <li><strong>May 1991 Andover F5 Tornado:</strong> Though centered on Andover (20 miles east), this F5 tornado with 260+ mph winds devastated the Wichita metropolitan area, killed 17 people, and caused $300+ million in damage</li>
+                <li><strong>Severe Thunderstorm Derechos:</strong> Organized severe thunderstorm complexes produce widespread damaging straight-line winds exceeding 80-100 mph across the Kansas plains</li>
+                <li><strong>Great Plains Exposure:</strong> The flat Kansas prairie provides minimal terrain obstruction, allowing winds to accelerate across vast distances with Exposure C conditions predominant</li>
+                <li><strong>Aviation Industry Requirements:</strong> As the Air Capital (Boeing, Spirit, Textron), aircraft manufacturing and testing facilities require enhanced wind load design for large industrial structures</li>
+                <li><strong>Wheat Belt Agricultural Infrastructure:</strong> The Wichita region is the heart of Kansas wheat country, requiring robust wind-resistant design for agricultural facilities and grain elevators</li>
+            </ul>
+
+            <p>Wichita's tornado climatology is among the most severe in the nation. Kansas ranks third nationally in tornado frequency (behind Texas and Oklahoma), and the Wichita area experiences an average of 8-12 tornadoes per year within Sedgwick County and surrounding areas. The May-June severe weather season brings frequent supercell thunderstorms capable of producing large hail (2"+ diameter), damaging winds, and tornadoes.</p>
+
+            <h3>Wichita Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Wichita projects requires following ASCE 7-22 methodology as adopted by the Kansas International Building Code. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #2563eb; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Wichita with V = 115 mph (typical central Wichita) and standard conditions, the resulting pressures are significantly elevated. A Wichita project with:</p>
+            <ul>
+                <li><strong>V = 115 mph</strong> (Wichita typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (near sea level, ~1,300 ft elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 24.2 psf</strong>—substantially higher than non-severe-weather regions and reflecting Wichita's Tornado Alley exposure.</p>
+
+            <p>For open wheat fields and developing areas using Exposure C (much of Sedgwick County outside central Wichita), the pressures increase significantly due to the higher velocity pressure coefficient for open terrain exposure typical of the Kansas prairie.</p>
+
+            <h3>Wichita Building Code and Permitting</h3>
+            <p>Kansas adopts the <strong>International Building Code (IBC)</strong> statewide, which is enforced by the City of Wichita and Sedgwick County with local amendments specific to Kansas conditions.</p>
+
+            <p>Key Wichita building code considerations:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> Wichita uses IBC (currently 2021 IBC) as adopted by Kansas with state-specific amendments</li>
+                <li><strong>Kansas State Amendments:</strong> Kansas provides statewide amendments to IBC accounting for regional tornado and severe weather risk</li>
+                <li><strong>Local Amendments:</strong> City of Wichita and Sedgwick County add specific requirements for tornado shelters, safe rooms, and wind resistance</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 (or ASCE 7-16 depending on IBC edition adopted) as referenced by IBC</li>
+                <li><strong>Permit Authority:</strong> City of Wichita Metropolitan Area Building and Construction Department handles building permits within city limits</li>
+                <li><strong>Tornado Shelter Recommendations:</strong> While not universally mandated, Kansas strongly encourages tornado shelters in schools, hospitals, and critical facilities following ICC 500 standards</li>
+            </ul>
+
+            <p>You can access Wichita building permits and requirements through the <a href="https://www.wichita.gov/MABC/Pages/default.aspx" target="_blank" rel="noopener">City of Wichita Metropolitan Area Building and Construction Department</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Wichita projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Wichita Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~105-110 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>110-120 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~125-135 mph</td>
+                        <td>Schools (tornado shelter recommendations), assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~135-145 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs (tornado shelter recommendations)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Open Plains)</h3>
+            <p>Wichita projects require careful Exposure Category determination based on surrounding terrain and development density:</p>
+
+            <div class="dallas-card">
+                <h4>Exposure Category Selection for Wichita</h4>
+                <p><strong>Exposure Category B (Urban):</strong> Central Wichita, established neighborhoods, and dense urban areas qualify as Exposure B due to numerous buildings, trees, and other obstructions. Exposure B assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind. This applies to downtown Wichita, College Hill, Riverside, and established inner suburbs.</p>
+                <p><strong>Exposure Category C (Open Plains/Wheat Fields):</strong> Much of the Wichita metropolitan area—particularly developing suburbs in Derby, Haysville, Park City, Maize, Goddard, and outlying Sedgwick County—qualifies as Exposure C. The Kansas prairie features vast wheat fields and open terrain with scattered obstructions. Exposure C produces significantly higher wind pressures than Exposure B and is the more common exposure category for Wichita area projects.</p>
+                <p><strong>Engineering Judgment Required:</strong> The transition between Exposure B and C in Wichita's rapidly developing suburbs requires professional engineering judgment. When in doubt, the more conservative Exposure C should be used, which is appropriate for most Wichita area locations given the open Kansas plains terrain.</p>
+            </div>
+
+            <h3>Wichita HIGH Tornado Risk Considerations</h3>
+            <p>Wichita's wind load requirements are fundamentally driven by the city's position in the core of Tornado Alley—one of the most tornado-prone regions on Earth:</p>
+
+            <p><strong>May 1991 Andover F5 Tornado:</strong> On April 26, 1991, an F5 tornado struck Andover, Kansas (20 miles east of Wichita) producing winds exceeding 260 mph. The tornado killed 17 people, injured 350+, destroyed the Golden Spur Mobile Home Park (completely obliterating 226 mobile homes), and caused $300+ million in damage. This event remains the benchmark for extreme tornado events in the Wichita metropolitan area and prompted widespread discussion of mobile home tornado safety and shelter requirements.</p>
+
+            <p><strong>1999 Haysville F4 Tornado:</strong> On May 3, 1999 (same day as the devastating Bridge Creek-Moore F5 in Oklahoma), an F4 tornado struck Haysville, Kansas (directly south of Wichita) with 207-260 mph winds. The tornado caused extensive damage to residential areas and demonstrated the vulnerability of southern Wichita suburbs to violent tornadoes.</p>
+
+            <p><strong>Tornado Frequency:</strong> Sedgwick County averages 8-12 tornadoes per year within the county and immediately surrounding areas. Wichita proper has been struck or narrowly missed by significant tornadoes in 1991, 1999, 2012, and numerous other years. The peak tornado season runs from April through June, with May being the most active month.</p>
+
+            <p><strong>Severe Thunderstorm Winds:</strong> Beyond tornadoes, Wichita experiences frequent severe thunderstorms producing damaging straight-line winds exceeding 70-90 mph. Derecho events (organized lines of severe thunderstorms) can produce widespread wind damage across the Kansas plains.</p>
+
+            <p><strong>Aviation Industry Considerations:</strong> As the Air Capital of the World, Wichita is home to Boeing, Spirit AeroSystems, Textron Aviation (Cessna, Beechcraft), and numerous aviation suppliers. Aircraft manufacturing facilities, testing hangars, and aerospace infrastructure require enhanced wind load design to protect high-value assets and ensure operational continuity during severe weather events.</p>
+
+            <h3>Wichita Zip Codes and Wind Speed Reference</h3>
+            <p>Wichita zip codes span Sedgwick County with relatively consistent wind speed requirements. Common Wichita area zip codes include:</p>
+
+            <ul>
+                <li><strong>67201-67221:</strong> Wichita proper (downtown, Delano, College Hill, Riverside)</li>
+                <li><strong>67226, 67230:</strong> East Wichita (established residential areas)</li>
+                <li><strong>67052, 67060:</strong> Derby, Haysville (southern suburbs—1999 tornado zone)</li>
+                <li><strong>67204, 67212, 67220:</strong> Northwest Wichita (Maize area)</li>
+                <li><strong>67147, 67235:</strong> Goddard, western Sedgwick County (open plains)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Wichita wind speed based on your specific zip code or street address, accounting for local terrain conditions and exposure.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Wichita</h3>
+            <p>Wind load calculations for Wichita building permits have varying PE requirements depending on building type and complexity:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a Kansas-licensed Professional Engineer</li>
+                <li><strong>Residential Structures:</strong> Single-family and small multi-family may not require PE seal for standard designs</li>
+                <li><strong>Complex Structures:</strong> Any building with unusual geometry, height, or occupancy requires PE involvement</li>
+                <li><strong>Aviation/Industrial Facilities:</strong> Aircraft manufacturing, testing, and aerospace structures require PE design given high-value assets and structural complexity</li>
+                <li><strong>Agricultural Structures:</strong> Large grain elevators and agricultural facilities typically require PE-sealed calculations</li>
+                <li><strong>Tornado Shelters/Safe Rooms:</strong> Require PE design and compliance with ICC 500 or FEMA P-361 standards</li>
+                <li><strong>Best Practice:</strong> Given Wichita's HIGH tornado risk, PE-sealed calculations are highly recommended even when not required</li>
+            </ul>
+
+            <p>Kansas Professional Engineers must be licensed through the <a href="https://kansas.gov/ksbtp/" target="_blank" rel="noopener">Kansas State Board of Technical Professions</a>.</p>
+
+            <h3>Official Wichita Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Wichita wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.wichita.gov/MABC/Pages/default.aspx" target="_blank" rel="noopener" class="external-link">
+                    City of Wichita Building and Construction
+                </a>
+                <a href="https://kansas.gov/ksbtp/" target="_blank" rel="noopener" class="external-link">
+                    Kansas PE Licensing Board
+                </a>
+                <a href="https://www.sedgwickcounty.org/" target="_blank" rel="noopener" class="external-link">
+                    Sedgwick County Government
+                </a>
+            </div>
+
+            <h3>Common Wichita Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Underestimating tornado risk:</strong> Wichita is in the CORE of Tornado Alley—wind load design is critical</li>
+                <li><strong>Incorrect Exposure Category:</strong> Most of Wichita area qualifies as Exposure C due to Kansas plains terrain—do NOT assume Exposure B</li>
+                <li><strong>Using outdated wind speed maps:</strong> Wichita wind speeds have been updated in recent ASCE 7 editions to account for severe weather data</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools and critical facilities require higher wind speeds and tornado shelter provisions</li>
+                <li><strong>Outdated ASCE 7 version:</strong> Must use current ASCE 7 edition per Kansas IBC adoption</li>
+                <li><strong>Neglecting aviation industry standards:</strong> Aircraft manufacturing and aerospace facilities require enhanced structural design beyond standard IBC minimums</li>
+                <li><strong>Ignoring hail resistance:</strong> Roof systems must resist both wind uplift AND large hail impact (2"+ diameter) common in Kansas</li>
+                <li><strong>Underestimating agricultural structure loads:</strong> Grain elevators and wheat storage facilities require specialized wind load analysis</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Wichita Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Wichita-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Wichita zip code or address and the system automatically applies 110-120 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on urban density and terrain (most areas default to Exposure C)</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Kansas IBC-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Wichita permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Wichita Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Wichita-specific requirements including the 110-120 mph design velocity, appropriate Exposure Category selection (B/C), Risk Category adjustments, and component pressure coefficients. Simply enter your Wichita project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Wichita Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Wichita vs Other Kansas/Tornado Alley Cities Wind Load Requirements</h3>
+            <p>Wichita's wind load requirements reflect HIGH tornado risk in the core of Tornado Alley:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Design Wind Speed (Risk Cat II)</th>
+                        <th>Tornado Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Wichita, KS</strong></td>
+                        <td>110-120 mph</td>
+                        <td>HIGH - Tornado Alley core, 1991 Andover F5, 1999 Haysville F4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oklahoma City, OK</strong></td>
+                        <td>115-125 mph</td>
+                        <td>EXTREME - May 2013 EF5 Moore, May 1999 F5 Bridge Creek-Moore</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kansas City, MO/KS</strong></td>
+                        <td>110-120 mph</td>
+                        <td>HIGH - Tornado Alley</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topeka, KS</strong></td>
+                        <td>110-120 mph</td>
+                        <td>HIGH - 1966 F5 tornado devastated city</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Wichita represents the Air Capital of the World located in the core of Tornado Alley. The combination of 110-120 mph base wind speeds, Exposure C Kansas plains terrain, and HIGH tornado frequency makes Wichita one of the most demanding wind load design environments in Kansas and the central United States.</p>
+
+            <h3>Wichita Metro Area and Sedgwick County Considerations</h3>
+            <p>The Wichita metropolitan area includes numerous suburbs and cities with similar wind load requirements:</p>
+
+            <ul>
+                <li><strong>Derby:</strong> 12 miles south of Wichita—rapid growth area with open plains exposure, 110-120 mph wind speeds, Exposure C</li>
+                <li><strong>Haysville:</strong> Southern suburb directly adjacent to Wichita—1999 F4 tornado zone, similar wind speed requirements, Exposure C</li>
+                <li><strong>Andover:</strong> 20 miles east of Wichita—epicenter of 1991 F5 tornado, Butler County jurisdiction, similar tornado risk and wind speeds</li>
+                <li><strong>Maize:</strong> Northwestern suburb with rapid growth—110-120 mph, transitioning from Exposure C to B in established areas</li>
+                <li><strong>Goddard:</strong> Western suburb with agricultural surroundings—110-120 mph, Exposure C open plains</li>
+                <li><strong>Park City:</strong> Northern suburb—similar tornado exposure and wind speed requirements</li>
+            </ul>
+
+            <p>Engineers working across the Wichita metro area should recognize the consistently HIGH tornado risk and elevated wind load requirements throughout Sedgwick County. The 1991 Andover F5 tornado demonstrated the widespread nature of tornado risk in the Wichita metropolitan area, as the tornado tracked from south-central Sedgwick County through Butler County, affecting multiple communities.</p>
+
+            <h3>Wichita Air Capital Aviation Industry Considerations</h3>
+            <p>As the Air Capital of the World, Wichita's aviation industry creates unique wind load design challenges:</p>
+
+            <ul>
+                <li><strong>Aircraft Manufacturing Facilities:</strong> Boeing, Spirit AeroSystems, and Textron Aviation facilities house high-value assets requiring enhanced structural protection</li>
+                <li><strong>Testing and Certification Hangars:</strong> Large-span structures with critical operational requirements during severe weather</li>
+                <li><strong>Airport Infrastructure:</strong> Wichita Dwight D. Eisenhower National Airport, McConnell Air Force Base, and general aviation airports require robust wind-resistant design</li>
+                <li><strong>Supply Chain Facilities:</strong> Hundreds of aviation suppliers and aerospace component manufacturers operate in the Wichita area</li>
+                <li><strong>Operational Continuity:</strong> Aviation industry structures must maintain functionality during severe weather events to support global aerospace supply chains</li>
+            </ul>
+
+            <p>The aviation industry in Wichita typically designs structures to exceed minimum IBC requirements, employing enhanced wind load factors and specialized structural engineering to protect high-value aircraft and manufacturing equipment.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Wichita-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Wichita projects. Our software automatically handles the 110-120 mph velocity range, Exposure B/C determination, and generates PE-ready reports for building permit submission in the Air Capital of the World.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Wichita Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../kansas-wind-load-requirements.html" style="color: #60a5fa;">Kansas Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

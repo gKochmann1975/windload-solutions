@@ -72,16 +72,16 @@
 - [x] 53. Kansas City, MO ✅ (cities/kansas-city-wind-load-requirements.html)
 - [x] 54. St. Louis, MO ✅ (cities/st-louis-wind-load-requirements.html)
 - [x] 55. Memphis, TN ✅ (cities/memphis-wind-load-requirements.html)
-- [ ] 56. Little Rock, AR
-- [ ] 57. Wichita, KS
-- [ ] 58. Omaha, NE
-- [ ] 59. Des Moines, IA
-- [ ] 60. Birmingham, AL
-- [ ] 61. Louisville, KY
-- [ ] 62. Columbus, OH
-- [ ] 63. Cleveland, OH
-- [ ] 64. Cincinnati, OH
-- [ ] 65. Pittsburgh, PA
+- [x] 56. Little Rock, AR ✅ (cities/little-rock-wind-load-requirements.html)
+- [x] 57. Wichita, KS ✅ (cities/wichita-wind-load-requirements.html)
+- [x] 58. Omaha, NE ✅ (cities/omaha-wind-load-requirements.html)
+- [x] 59. Des Moines, IA ✅ (cities/des-moines-wind-load-requirements.html)
+- [x] 60. Birmingham, AL ✅ (cities/birmingham-wind-load-requirements.html)
+- [x] 61. Louisville, KY ✅ (cities/louisville-wind-load-requirements.html)
+- [x] 62. Columbus, OH ✅ (cities/columbus-wind-load-requirements.html)
+- [x] 63. Cleveland, OH ✅ (cities/cleveland-wind-load-requirements.html)
+- [x] 64. Cincinnati, OH ✅ (cities/cincinnati-wind-load-requirements.html)
+- [x] 65. Pittsburgh, PA ✅ (cities/pittsburgh-wind-load-requirements.html)
 - [ ] 66. Milwaukee, WI
 - [ ] 67. Albuquerque, NM
 - [ ] 68. Tucson, AZ
@@ -132,9 +132,9 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 55
-- Remaining: 45
+- Completed: 65
+- Remaining: 35
 
 ---
 
-*Last Updated: November 27, 2025*
+*Last Updated: November 28, 2025*
