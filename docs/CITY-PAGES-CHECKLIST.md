@@ -58,20 +58,20 @@
 - [x] 43. Portland, OR ✅ (cities/portland-wind-load-requirements.html)
 - [x] 44. Minneapolis, MN ✅ (cities/minneapolis-wind-load-requirements.html)
 - [x] 45. Detroit, MI ✅ (cities/detroit-wind-load-requirements.html)
-- [ ] 46. Charlotte, NC
-- [ ] 47. Raleigh, NC
-- [ ] 48. Nashville, TN
-- [ ] 49. Baltimore, MD
-- [ ] 50. Indianapolis, IN
+- [x] 46. Charlotte, NC ✅ (cities/charlotte-wind-load-requirements.html)
+- [x] 47. Raleigh, NC ✅ (cities/raleigh-wind-load-requirements.html)
+- [x] 48. Nashville, TN ✅ (cities/nashville-wind-load-requirements.html)
+- [x] 49. Baltimore, MD ✅ (cities/baltimore-wind-load-requirements.html)
+- [x] 50. Indianapolis, IN ✅ (cities/indianapolis-wind-load-requirements.html)
 
 ## Tier 3: Secondary Markets & Tornado Alley (51-75)
 *Tornado risk, growing markets*
 
-- [ ] 51. Oklahoma City, OK
-- [ ] 52. Tulsa, OK
-- [ ] 53. Kansas City, MO
-- [ ] 54. St. Louis, MO
-- [ ] 55. Memphis, TN
+- [x] 51. Oklahoma City, OK ✅ (cities/oklahoma-city-wind-load-requirements.html)
+- [x] 52. Tulsa, OK ✅ (cities/tulsa-wind-load-requirements.html)
+- [x] 53. Kansas City, MO ✅ (cities/kansas-city-wind-load-requirements.html)
+- [x] 54. St. Louis, MO ✅ (cities/st-louis-wind-load-requirements.html)
+- [x] 55. Memphis, TN ✅ (cities/memphis-wind-load-requirements.html)
 - [ ] 56. Little Rock, AR
 - [ ] 57. Wichita, KS
 - [ ] 58. Omaha, NE
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 45
-- Remaining: 55
+- Completed: 55
+- Remaining: 45
 
 ---
 

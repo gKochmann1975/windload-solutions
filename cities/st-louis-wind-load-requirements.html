@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Louis Wind Load Requirements | 105-115 mph IBC | Independent City MO | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to St. Louis wind load requirements. Independent City design wind speed 105-115 mph, Exposure B/C, Missouri IBC adoption, Gateway Arch, Mississippi River exposure, tornado and seismic considerations, ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/st-louis-wind-load-requirements.html">
+    <meta name="keywords" content="St. Louis wind load, St. Louis City wind speed, St. Louis wind load calculator, St. Louis building permit, St. Louis wind load requirements, Missouri Building Code, Gateway Arch wind loads, New Madrid seismic">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - St. Louis Red/Navy colors (Cardinals) */
+        .hero {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 25%, #f87171 50%, #1e40af 75%, #1e3a5f 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏛️⚾';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #b91c1c;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #dc2626;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #ef4444;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #dc2626;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* St. Louis Card */
+        .stlouis-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(220, 38, 38, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .stlouis-card h4 {
+            color: #dc2626;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .stlouis-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Missouri",
+                "item": "https://windload.solutions/missouri-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "St. Louis",
+                "item": "https://windload.solutions/cities/st-louis-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../missouri-wind-load-requirements.html"><i class="fas fa-landmark"></i> Missouri</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>St. Louis Wind Load Requirements</h1>
+            <p>Independent City, MO | 105-115 mph Design Wind Speed | Missouri IBC | Gateway Arch | Mississippi River Exposure | Tornado & Seismic Zone</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate St. Louis Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">105-115</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Missouri Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Tornado/Seismic Risk</span>
+                </div>
+            </div>
+
+            <h2>St. Louis, Missouri: Gateway Arch Wind Load Requirements</h2>
+            <p>St. Louis, officially designated as an <strong>Independent City</strong> (also known as St. Louis City), has unique wind load requirements reflecting its Mississippi River location and position in a moderate tornado risk zone. Missouri adopts the <strong>International Building Code (IBC)</strong> with state amendments as its building code framework. Design wind speeds for Risk Category II structures typically range from <strong>105-115 mph</strong> (3-second gust) depending on specific location and exposure conditions.</p>
+
+            <p>St. Louis presents distinctive engineering challenges beyond standard wind loads. The city's iconic Gateway Arch demonstrates extreme wind engineering, the Mississippi River creates open exposure conditions for waterfront properties, the region lies within the New Madrid Seismic Zone requiring combined wind/seismic design, and proximity to Tornado Alley means structures must account for severe convective wind events including the devastating 2011 Joplin tornado that occurred approximately 250 miles southwest.</p>
+
+            <div class="info-box">
+                <h4><strong>🌪️</strong> St. Louis Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 105-115 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~120-130 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~130-140 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban) or C (Mississippi River waterfront)</p>
+                <p><strong>Building Code:</strong> Missouri adopts International Building Code (IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>Jurisdiction:</strong> Independent City (St. Louis City)</p>
+                <p><strong>Special Considerations:</strong> Gateway Arch, Mississippi River exposure, tornado risk, New Madrid seismic zone</p>
+            </div>
+
+            <h3>Why St. Louis Has 105-115 mph Wind Speed Requirements</h3>
+            <p>St. Louis's design wind speed of 105-115 mph for Risk Category II structures reflects the city's Midwest location with moderate baseline wind exposure plus elevated risk from severe thunderstorm outbreaks and tornadoes. The range accounts for varying exposure conditions—densely developed neighborhoods like the Central West End, Soulard, or The Hill typically use the lower end (105 mph with Exposure B), while properties along the Mississippi River waterfront or near open areas may require higher velocities (115 mph with Exposure C).</p>
+
+            <p>The Mississippi River plays a crucial role in St. Louis wind load determinations. Similar to Chicago's Lake Michigan exposure, the river creates an open fetch allowing winds to accelerate across the water surface. Properties along the riverfront—including the Gateway Arch grounds, Laclede's Landing, and downtown waterfront developments—experience higher wind pressures due to Exposure Category C conditions. In contrast, buildings in established neighborhoods benefit from Exposure Category B with surrounding structures providing wind shelter.</p>
+
+            <p>St. Louis also faces tornado risk that influences design philosophy. While tornadoes themselves exceed design wind speeds, the severe thunderstorm systems that produce tornadoes frequently generate straight-line winds, downbursts, and microbursts in the 70-90 mph range. The 2011 Joplin tornado, though not in St. Louis proper, demonstrated the devastating potential of EF-5 tornado events in the region and reinforced the importance of robust wind-resistant construction.</p>
+
+            <h3>St. Louis Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for St. Louis projects requires following ASCE 7-22 methodology as adopted by the Missouri Building Code. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #dc2626; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For St. Louis with V = 110 mph (typical mid-range) and standard conditions, the resulting pressures are moderate but significant. A St. Louis project with:</p>
+            <ul>
+                <li><strong>V = 110 mph</strong> (St. Louis typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (near sea level, ~460 ft elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 22.3 psf</strong>—moderate compared to coastal hurricane regions but significant enough to require careful structural design, particularly for large roof areas and cladding systems.</p>
+
+            <p>For Mississippi River waterfront properties using Exposure C, the velocity pressure coefficient Kz increases substantially, resulting in higher design pressures even at the same nominal wind speed. The difference between Exposure B and C can increase wind loads by 30-50% at low building heights, making proper exposure determination critical.</p>
+
+            <h3>Missouri Building Code and St. Louis Permitting</h3>
+            <p>Missouri adopts the International Building Code (IBC) as its state building code with specific Missouri amendments. Unlike Chicago which maintains its own comprehensive code, St. Louis City implements the state-adopted IBC with local administrative procedures.</p>
+
+            <p>Key Missouri/St. Louis Building Code considerations:</p>
+
+            <ul>
+                <li><strong>State Code Adoption:</strong> Missouri adopts International Building Code (IBC) as state standard</li>
+                <li><strong>Local Administration:</strong> St. Louis City Department of Public Safety, Building Division handles permit enforcement</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by current IBC</li>
+                <li><strong>Permit Authority:</strong> St. Louis Building Division for projects within Independent City limits</li>
+                <li><strong>St. Louis County:</strong> Suburban areas outside city limits fall under St. Louis County jurisdiction with same IBC base</li>
+                <li><strong>Seismic Provisions:</strong> New Madrid Seismic Zone requires seismic design in addition to wind loads</li>
+            </ul>
+
+            <p>You can access St. Louis building permits and requirements through the <a href="https://www.stlouis-mo.gov/government/departments/public-safety/building/" target="_blank" rel="noopener">St. Louis Building Division</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>St. Louis projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>St. Louis Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~100-105 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>105-115 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~130-140 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Riverfront)</h3>
+            <p>St. Louis projects require careful Exposure Category determination based on surrounding terrain and proximity to the Mississippi River:</p>
+
+            <div class="stlouis-card">
+                <h4>Exposure Category Selection for St. Louis</h4>
+                <p><strong>Exposure Category B (Urban/Inland):</strong> Most of St. Louis City qualifies as Exposure B due to established urban development with buildings, structures, and obstructions. Downtown west of the riverfront, the Central West End, Soulard, Lafayette Square, The Hill, Tower Grove, and other established neighborhoods typically use Exposure B. This assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind.</p>
+                <p><strong>Exposure Category C (Riverfront/Open):</strong> Properties directly fronting the Mississippi River typically require Exposure C. This includes the Gateway Arch grounds, Laclede's Landing, the riverfront corridor along Leonor K. Sullivan Boulevard, and waterfront developments. Exposure C assumes open terrain with scattered obstructions having heights generally less than 30 feet, which describes the river surface and immediate shoreline.</p>
+                <p><strong>Engineering Judgment Required:</strong> The transition between Exposure B and C in St. Louis's riverfront areas requires professional engineering judgment. Buildings within 200-600 feet of the river typically warrant Exposure C consideration, though the exact determination depends on intervening development, levee configurations, and local topography.</p>
+            </div>
+
+            <h3>The Gateway Arch: Iconic Wind Engineering</h3>
+            <p>St. Louis's most recognizable landmark, the Gateway Arch, represents one of the world's most sophisticated wind engineering achievements. While most St. Louis structures follow conventional ASCE 7 wind load procedures, the Arch demonstrates advanced design principles:</p>
+
+            <p><strong>Wind Tunnel Testing:</strong> The 630-foot tall Gateway Arch underwent extensive wind tunnel testing during its 1960s design phase. The catenary curve shape was specifically chosen to minimize wind loading while achieving aesthetic goals. Wind pressures on the stainless steel skin vary dramatically from base to apex.</p>
+
+            <p><strong>Structural System:</strong> The Arch's triangular cross-section and catenary geometry naturally resist wind loads through compression forces in the legs. Unlike conventional buildings where wind creates bending moments, the Arch's shape converts wind loads into axial compression forces it's designed to carry.</p>
+
+            <p><strong>Dynamic Response:</strong> The Arch can sway up to 18 inches in 150 mph winds. Damping systems control dynamic motion, and the tram system automatically shuts down when movements exceed operational thresholds.</p>
+
+            <p>While typical St. Louis buildings don't require the extreme wind engineering of the Gateway Arch, the landmark demonstrates the importance of proper wind load analysis for the region's structures.</p>
+
+            <h3>St. Louis Zip Codes and Wind Speed Reference</h3>
+            <p>St. Louis City zip codes span diverse neighborhoods with varying wind speed requirements based on terrain and river proximity. Common St. Louis zip codes include:</p>
+
+            <ul>
+                <li><strong>63101-63103:</strong> Downtown/Riverfront (Exposure C along river, B inland)</li>
+                <li><strong>63104:</strong> Soulard, Lafayette Square (Exposure B)</li>
+                <li><strong>63108:</strong> Central West End (Exposure B)</li>
+                <li><strong>63109:</strong> The Hill, Southwest Garden (Exposure B)</li>
+                <li><strong>63110-63113:</strong> Midtown, Grand Center, Hyde Park (Exposure B)</li>
+                <li><strong>63116-63118:</strong> South City neighborhoods (Exposure B)</li>
+                <li><strong>63120, 63130:</strong> North City areas (Exposure B)</p>
+                <li><strong>63105-63124:</strong> St. Louis County (Clayton, University City, etc. - separate jurisdiction)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate St. Louis wind speed based on your specific zip code or street address, accounting for proximity to the Mississippi River and local terrain conditions.</p>
+
+            <h3>Professional Engineer (PE) Requirements in St. Louis</h3>
+            <p>Wind load calculations for St. Louis building permits have specific PE requirements depending on building type and complexity:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a Missouri-licensed Professional Engineer</li>
+                <li><strong>Residential Structures:</strong> Single-family homes may not require PE seal for prescriptive designs; multi-family typically requires PE</li>
+                <li><strong>Large Structures:</strong> Significant commercial, industrial, or institutional buildings require comprehensive PE-sealed structural analysis</li>
+                <li><strong>Seismic/Wind Combination:</strong> Projects in New Madrid Seismic Zone may require PE certification of combined load effects</li>
+                <li><strong>High-Value Buildings:</strong> Hospitals, schools, and essential facilities require enhanced PE review</li>
+                <li><strong>Best Practice:</strong> Even when not strictly required, PE-sealed calculations provide liability protection and ensure code compliance</li>
+            </ul>
+
+            <h3>Tornado Risk and Wind Load Design Philosophy</h3>
+            <p>St. Louis sits in a moderate tornado risk zone, with the region experiencing EF-0 to EF-3 tornadoes periodically. The 2011 Joplin tornado (EF-5, 250 miles southwest) demonstrated the catastrophic potential of extreme tornado events in the broader Missouri/Midwest region.</p>
+
+            <p>Important tornado considerations for St. Louis wind design:</p>
+
+            <ul>
+                <li><strong>Design Limitations:</strong> Standard ASCE 7 wind loads (105-115 mph) do NOT protect against direct tornado strikes, which can exceed 200 mph</li>
+                <li><strong>Severe Thunderstorms:</strong> The same systems producing tornadoes often generate straight-line winds, downbursts, and microbursts in the 70-90 mph range that fall within design wind speed envelopes</li>
+                <li><strong>Safe Rooms:</strong> ICC 500 and FEMA P-361 provide standards for tornado safe rooms and storm shelters designed for 250+ mph winds</li>
+                <li><strong>Critical Facilities:</strong> Hospitals, fire stations, and emergency operations centers may incorporate enhanced wind-resistant design or dedicated tornado shelters</li>
+                <li><strong>Best Practice:</strong> Consider incorporating interior safe rooms or reinforced areas for residential and commercial projects, particularly schools</li>
+            </ul>
+
+            <p>See our dedicated <a href="../tornado-alley-wind-loads-safety.html">Tornado Alley Wind Loads and Safety</a> page for comprehensive guidance on tornado-resistant design.</p>
+
+            <h3>New Madrid Seismic Zone: Combined Wind and Seismic Design</h3>
+            <p>St. Louis lies within the influence zone of the New Madrid Seismic Zone, one of the most active earthquake regions in the United States east of the Rocky Mountains. The 1811-1812 New Madrid earthquakes were among the largest in U.S. history, and the region continues to experience seismic activity.</p>
+
+            <p>Combined wind and seismic design considerations for St. Louis:</p>
+
+            <ul>
+                <li><strong>Load Combinations:</strong> ASCE 7 specifies load combinations including both wind (W) and earthquake (E) effects, though not typically simultaneously</li>
+                <li><strong>Seismic Design Category:</strong> St. Louis typically falls into Seismic Design Category C or D depending on soil conditions and building importance</li>
+                <li><strong>Structural Detailing:</strong> Seismic detailing requirements (ductile connections, special moment frames) may govern structural design over wind loads</li>
+                <li><strong>Lateral Force Resisting Systems:</strong> Must satisfy both wind and seismic requirements, with seismic often controlling for shorter buildings</li>
+                <li><strong>Foundation Design:</strong> Soil conditions and seismic considerations significantly affect foundation requirements independent of wind loads</li>
+            </ul>
+
+            <p>Structural engineers designing St. Louis buildings must simultaneously satisfy wind load requirements (ASCE 7 Chapter 26-30) and seismic requirements (ASCE 7 Chapter 11-12, 15-18), with proper load combinations determining governing design forces.</p>
+
+            <h3>Official St. Louis Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for St. Louis wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.stlouis-mo.gov/government/departments/public-safety/building/" target="_blank" rel="noopener" class="external-link">
+                    St. Louis Building Division
+                </a>
+                <a href="https://pr.mo.gov/ape.asp" target="_blank" rel="noopener" class="external-link">
+                    Missouri PE Licensing Board
+                </a>
+                <a href="https://www.stlouisco.com/YourGovernment/CountyDepartments/Planning/BuildingandConstruction" target="_blank" rel="noopener" class="external-link">
+                    St. Louis County Building
+                </a>
+            </div>
+
+            <h3>Common St. Louis Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect Exposure Category:</strong> Assuming all of St. Louis is Exposure B—riverfront properties require Exposure C</li>
+                <li><strong>Ignoring Seismic Requirements:</strong> Forgetting that New Madrid Seismic Zone requires combined wind/seismic design</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher wind speeds</li>
+                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current IBC adoption</li>
+                <li><strong>Tornado Misconceptions:</strong> Expecting standard wind design to provide tornado protection (it doesn't)</li>
+                <li><strong>Neglecting Mississippi River Fetch:</strong> Underestimating wind acceleration across open water</li>
+                <li><strong>Jurisdictional Confusion:</strong> Confusing St. Louis City (Independent City) with St. Louis County (separate jurisdiction)</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles St. Louis Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all St. Louis-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any St. Louis zip code or address and the system automatically applies 105-115 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on proximity to Mississippi River and surrounding terrain</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Missouri-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for St. Louis Building Division permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your St. Louis Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all St. Louis-specific requirements including the 105-115 mph design velocity, appropriate Exposure Category selection, Risk Category adjustments, and component pressure coefficients. Simply enter your St. Louis project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate St. Louis Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>St. Louis vs Other Midwest Cities Wind Load Requirements</h3>
+            <p>St. Louis's wind load requirements are comparable to other major Midwest cities, with unique seismic considerations:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Design Wind Speed</th>
+                        <th>Exposure Category</th>
+                        <th>Special Considerations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>St. Louis, MO</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (riverfront)</td>
+                        <td>New Madrid seismic, tornado risk</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chicago, IL</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>Chicago Building Code, Lake Michigan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Indianapolis, IN</strong></td>
+                        <td>105-110 mph</td>
+                        <td>B typical</td>
+                        <td>Tornado alley, moderate seismic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kansas City, MO</strong></td>
+                        <td>110-120 mph</td>
+                        <td>B typical</td>
+                        <td>Higher tornado risk, open plains</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Memphis, TN</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (Mississippi River)</td>
+                        <td>New Madrid seismic, riverfront</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>St. Louis's riverfront exposure creates wind load conditions similar to Chicago's Lake Michigan and Memphis's Mississippi River exposure, while the New Madrid Seismic Zone creates unique combined loading scenarios.</p>
+
+            <h3>Mississippi River Ice and Wind Combined Loading</h3>
+            <p>While less severe than Great Lakes ice conditions, the Mississippi River at St. Louis can experience ice formation during extreme winter cold snaps. Combined ice and wind loading considerations include:</p>
+
+            <ul>
+                <li>Waterfront structures facing wind-driven ice floes during spring breakup</li>
+                <li>Riverfront promenades and railings experiencing combined wind and ice accumulation</li>
+                <li>Bridge structures (Eads Bridge, Martin Luther King Bridge) designed for ice impact forces plus wind loads</li>
+                <li>Levee walls and flood control structures subject to combined hydraulic, ice, and wind forces</li>
+            </ul>
+
+            <h3>Historic St. Louis Architecture and Wind Retrofits</h3>
+            <p>St. Louis contains numerous historic buildings dating to the 19th and early 20th centuries, many of which predate modern wind load standards. Renovation and retrofit projects face unique challenges:</p>
+
+            <ul>
+                <li><strong>Unreinforced Masonry:</strong> Many historic St. Louis buildings feature unreinforced brick masonry that may not meet current wind load requirements</li>
+                <li><strong>Historic Preservation:</strong> Modifications must often comply with historic preservation guidelines while achieving code-required wind resistance</li>
+                <li><strong>Cladding Attachment:</strong> Historic facades require careful evaluation of attachment capacity for wind loads</li>
+                <li><strong>Seismic Retrofits:</strong> Historic buildings often require both wind and seismic retrofitting simultaneously</li>
+            </ul>
+
+            <p>Engineers working on historic St. Louis buildings should coordinate with the <a href="https://www.stlouis-mo.gov/government/departments/planning/cultural-resources/" target="_blank" rel="noopener">St. Louis Cultural Resources Office</a> to balance preservation and code compliance.</p>
+
+            <h3>St. Louis Climate and Severe Weather Patterns</h3>
+            <p>Beyond design wind speeds, St. Louis engineers should understand the region's severe weather climatology:</p>
+
+            <p><strong>Tornado Season:</strong> Peak tornado activity occurs April through June, with a secondary peak in November. While St. Louis City proper experiences relatively few direct tornado strikes, the metro area averages 1-2 tornadoes per year.</p>
+
+            <p><strong>Severe Thunderstorms:</strong> St. Louis experiences frequent severe thunderstorms producing damaging straight-line winds, large hail, and heavy rainfall. These systems can generate widespread wind damage even without tornado formation.</p>
+
+            <p><strong>Derechos:</strong> Rare but severe derecho events (widespread, long-lived straight-line windstorms) can affect the St. Louis region, producing sustained winds exceeding 80 mph over large areas.</p>
+
+            <p><strong>Winter Storms:</strong> While less intense than tornado season, winter storms can combine moderate wind loads with ice accumulation on structures, creating complex loading scenarios.</p>
+
+            <p>These weather patterns reinforce the importance of proper wind-resistant design per ASCE 7-22 and the Missouri Building Code, even though design wind speeds represent rare events rather than typical conditions.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get St. Louis-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for St. Louis projects. Our software automatically handles the 105-115 mph velocity range, Exposure B/C determination, and generates PE-ready reports for St. Louis Building Division permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try St. Louis Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../missouri-wind-load-requirements.html" style="color: #60a5fa;">Missouri Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
