@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denver Wind Load Requirements | 115-130 mph IBC | Denver County CO | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Denver wind load requirements. Denver County design wind speed 115-130 mph, Exposure B/C, IBC Colorado adoption, Chinook winds, Front Range exposure, high altitude effects, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/denver-wind-load-requirements.html">
+    <meta name="keywords" content="Denver wind load, Denver County wind speed, Denver wind load calculator, Denver building permit, Denver wind load requirements, IBC Colorado, Chinook winds, Front Range wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Denver Broncos colors (Orange/Navy) */
+        .hero {
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 25%, #fb923c 50%, #1e40af 75%, #1e3a5f 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏔️🐴';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #ea580c;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #f97316;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #ea580c;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #f97316;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #f97316;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Denver Card */
+        .denver-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(249, 115, 22, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .denver-card h4 {
+            color: #f97316;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .denver-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Colorado",
+                "item": "https://windload.solutions/colorado-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Denver",
+                "item": "https://windload.solutions/cities/denver-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../colorado-wind-load-requirements.html"><i class="fas fa-mountain"></i> Colorado</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Denver Wind Load Requirements</h1>
+            <p>Denver County, CO | 115-130 mph Design Wind Speed | IBC Colorado Adoption | Chinook Winds | Front Range Exposure | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Denver Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">115-130</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category<br>(Urban/Open Plains)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Colorado Building Code<br>(ASCE 7-22)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">HIGH</span>
+                    <span class="stat-label">Chinook Wind<br>Risk</span>
+                </div>
+            </div>
+
+            <h2>Denver, Colorado: Front Range Chinook Wind Load Requirements</h2>
+            <p>Denver, located in <strong>Denver County, Colorado</strong> (a consolidated city-county), has elevated wind load requirements that account for its unique Front Range location, Chinook wind exposure, and high altitude effects. Colorado adopts the <strong>International Building Code (IBC)</strong> with state amendments. Design wind speeds for Risk Category II structures typically range from <strong>115-130 mph</strong> (3-second gust) based on ASCE 7-22 wind speed maps, significantly higher than many inland locations.</p>
+
+            <p>These requirements exist because Denver experiences powerful Chinook winds (warm, dry downslope winds from the Rocky Mountains), severe thunderstorms, occasional tornadoes, blizzard conditions with extreme winds, and the atmospheric effects of high altitude (5,280 feet elevation). The combination of Front Range topography, mountain wave effects, and exposure to open plains east of the city creates a challenging wind environment requiring robust structural design.</p>
+
+            <div class="info-box">
+                <h4><strong>🏔️</strong> Denver Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 115-130 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~130-145 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~140-155 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban core), C (eastern plains/new development)</p>
+                <p><strong>Building Code:</strong> International Building Code (IBC) with Colorado state amendments</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Denver County (city-county consolidated government)</p>
+                <p><strong>Weather Risks:</strong> Chinook winds, blizzards, severe thunderstorms, high altitude effects</p>
+                <p><strong>Elevation:</strong> ~5,280 feet (1 mile above sea level)</p>
+            </div>
+
+            <h3>Why Denver Has 115-130 mph Wind Speed Requirements</h3>
+            <p>Denver's design wind speed of 115-130 mph for Risk Category II structures is among the highest for non-coastal locations in the United States. This elevated wind speed reflects Denver's unique meteorological position at the base of the Front Range:</p>
+
+            <ul>
+                <li><strong>Chinook Winds:</strong> Denver experiences powerful Chinook winds—warm, dry downslope winds from the Rockies that can produce extreme sustained winds and gusts exceeding 100 mph. These "snow eaters" cause rapid temperature rises and create severe wind loads.</li>
+                <li><strong>Front Range Mountain Wave Effects:</strong> Complex terrain creates mountain wave effects, rotors, and downslope windstorms that amplify wind speeds at lower elevations.</li>
+                <li><strong>Open Plains Exposure:</strong> Eastern Denver opens to the Great Plains, providing long fetch distances with minimal obstructions, increasing wind exposure (Exposure Category C).</li>
+                <li><strong>High Altitude Effects:</strong> At 5,280 feet elevation, atmospheric density is approximately 17% lower than sea level, requiring adjustments to wind pressure calculations via the elevation factor Ke.</li>
+                <li><strong>Blizzard Conditions:</strong> Denver blizzards combine heavy snow with sustained high winds, creating extreme loading conditions on structures.</li>
+                <li><strong>Severe Thunderstorms:</strong> Spring and summer severe thunderstorms produce damaging straight-line winds, microbursts, and occasional tornadoes.</li>
+            </ul>
+
+            <p>Notable Denver wind events include the January 1982 Chinook windstorm with gusts to 143 mph at the National Center for Atmospheric Research (NCAR) in Boulder, frequent 80-100+ mph Chinook events along the foothills, and the March 2021 windstorm with widespread damage across the Front Range. Denver's wind climate is more severe than many assume for an inland, non-coastal location.</p>
+
+            <h3>Denver Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Denver projects requires following ASCE 7-22 methodology with special attention to the elevation factor Ke due to Denver's high altitude. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #f97316; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Denver with V = 120 mph (typical central Denver) and high altitude conditions, the resulting pressures are substantial. A Denver project with:</p>
+            <ul>
+                <li><strong>V = 120 mph</strong> (Denver typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain, not on slopes)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 0.85</strong> (approximately 5,000 ft elevation per ASCE 7-22 Table 26.9-1)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 21.9 psf</strong>. Note that while the elevation factor Ke reduces pressure due to lower air density, the significantly higher base wind speed V more than compensates, resulting in high design pressures.</p>
+
+            <p>For eastern Denver suburbs and areas exposed to open plains (Exposure C), velocity pressure coefficients increase substantially, requiring even higher design pressures for building components and cladding.</p>
+
+            <h3>Denver Building Code and Permitting</h3>
+            <p>Denver operates as a consolidated city-county government and has adopted the <strong>International Building Code (IBC)</strong> with Colorado state amendments and Denver-specific local amendments. The Colorado Division of Fire Prevention and Control oversees statewide code adoption.</p>
+
+            <p>Key Denver building code considerations:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> Denver uses IBC with Colorado state amendments and local Denver amendments</li>
+                <li><strong>Code Edition:</strong> Colorado typically adopts IBC editions with a 2-3 year lag; verify current edition with Denver Community Planning and Development</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by current IBC adoption</li>
+                <li><strong>Permit Authority:</strong> Denver Community Planning and Development (CPD) handles building permits for all of Denver County</li>
+                <li><strong>Local Amendments:</strong> Denver adds specific requirements for snow loads, wind-snow interaction, foundation design on expansive soils, and seismic considerations</li>
+                <li><strong>High Altitude Considerations:</strong> Design must account for reduced air density, increased UV exposure, and temperature extremes</li>
+            </ul>
+
+            <p>You can access Denver building permits and requirements through the <a href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development" target="_blank" rel="noopener">Denver Community Planning and Development Department</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Denver projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Denver Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~110-120 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>115-130 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~130-145 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~140-155 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Open Plains)</h3>
+            <p>Denver projects require careful Exposure Category determination based on surrounding terrain, urban density, and proximity to the open eastern plains:</p>
+
+            <div class="denver-card">
+                <h4>Exposure Category Selection for Denver</h4>
+                <p><strong>Exposure Category B (Urban Core/Established Areas):</strong> Central Denver, Capitol Hill, Cherry Creek, Park Hill, and other established urban and suburban neighborhoods with dense development qualify as Exposure B. This assumes urban and suburban areas with buildings and vegetation having heights generally less than 30 feet extending more than 800 feet upwind in all directions.</p>
+                <p><strong>Exposure Category C (Eastern Plains/New Development):</strong> Eastern Denver suburbs (Aurora, Commerce City, Green Valley Ranch) and areas opening to the plains east of the city typically require Exposure C. This includes open terrain with scattered obstructions less than 30 feet tall. The transition from urban Front Range to open plains is gradual, requiring engineering judgment.</p>
+                <p><strong>Western Foothills Special Considerations:</strong> Areas near the foothills (Lakewood, Golden, Morrison) may require topographic factor Kzt adjustments due to slope and escarpment effects. Chinook winds are particularly severe in these locations.</p>
+                <p><strong>Professional Engineering Required:</strong> Denver's complex terrain, Chinook wind exposure, and rapid suburban development require professional engineering judgment for proper Exposure Category selection. When uncertain, the more conservative Exposure C should be used.</p>
+            </div>
+
+            <h3>Chinook Winds and Front Range Meteorology</h3>
+            <p>Denver's wind load requirements are dominated by Chinook wind considerations—a meteorological phenomenon unique to Front Range locations:</p>
+
+            <p><strong>Chinook Wind Mechanism:</strong> Chinook winds occur when strong westerly flow crosses the Continental Divide, descends the eastern slopes of the Rockies, and accelerates through compression and adiabatic warming. This creates warm, dry winds with extreme velocities at lower elevations. Denver, Boulder, Fort Collins, and Colorado Springs experience the most severe Chinook events.</p>
+
+            <p><strong>Wind Speed Characteristics:</strong> Chinook winds can sustain 60-80 mph with gusts exceeding 100-140 mph for extended periods (6-24+ hours). The January 1982 event produced 137 mph sustained winds at NCAR Mesa Lab in Boulder with gusts to 143 mph. These sustained high-speed events create extreme structural loading beyond typical thunderstorm wind gusts.</p>
+
+            <p><strong>Structural Implications:</strong> Unlike brief thunderstorm gusts, Chinook winds maintain high speeds for hours, subjecting structures to prolonged fatigue loading. Roof systems, cladding attachments, glazing systems, and anchorage must resist both peak pressures and cyclic fatigue. The ASCE 7 3-second gust wind speed accounts for this sustained loading.</p>
+
+            <p><strong>Seasonal Pattern:</strong> Chinook winds are most common December through March but can occur year-round. Buildings must resist the combination of Chinook winds, snow loading, and rapid temperature fluctuations (Denver has recorded 50°F+ temperature rises in hours during Chinook events).</p>
+
+            <h3>High Altitude Wind Load Effects</h3>
+            <p>Denver's 5,280-foot elevation (exactly one mile above sea level) creates unique considerations for wind load design:</p>
+
+            <ul>
+                <li><strong>Elevation Factor Ke:</strong> ASCE 7-22 Table 26.9-1 provides elevation adjustment factors accounting for reduced air density at altitude. For Denver at ~5,000 feet, Ke ≈ 0.85, reducing velocity pressure by approximately 15% compared to sea level. However, Denver's base wind speeds are so high that final pressures remain substantial.</li>
+                <li><strong>Atmospheric Density:</strong> Air density at 5,280 feet is approximately 83% of sea-level density, directly affecting dynamic pressure. The standard velocity pressure equation accounts for this via Ke.</li>
+                <li><strong>UV and Temperature Extremes:</strong> High altitude increases UV radiation exposure (affecting material degradation) and temperature extremes (Denver experiences both -20°F and 100°F+ temperatures), requiring durable cladding and sealant systems.</li>
+                <li><strong>Combined Wind-Snow Loading:</strong> Denver's high snow loads (25-40+ psf ground snow load) must be combined with wind loads per ASCE 7 load combinations, particularly for roof drift and unbalanced loading scenarios.</li>
+            </ul>
+
+            <h3>Denver Zip Codes and Wind Speed Reference</h3>
+            <p>Denver zip codes span urban core to eastern plains suburbs with varying wind exposure. Common Denver zip codes include:</p>
+
+            <ul>
+                <li><strong>80201-80299:</strong> Downtown Denver, Capitol Hill, LoDo, RiNo</li>
+                <li><strong>80203-80212:</strong> Central Denver neighborhoods (Cheesman Park, Congress Park, City Park)</li>
+                <li><strong>80220-80239:</strong> East Denver (Park Hill, Montbello, Stapleton/Central Park)</li>
+                <li><strong>80014-80019:</strong> Aurora (eastern suburbs with plains exposure)</li>
+                <li><strong>80401-80465:</strong> Golden, Lakewood (western foothills with Chinook exposure)</li>
+                <li><strong>80290-80295:</strong> Denver International Airport area (extreme plains exposure)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Denver wind speed based on your specific zip code or street address, accounting for local terrain, elevation, and Chinook wind exposure patterns.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Denver</h3>
+            <p>Wind load calculations for Denver building permits have specific PE requirements that vary by building type:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Require PE-sealed calculations from a Colorado-licensed Professional Engineer for all commercial and multi-family projects</li>
+                <li><strong>Residential Structures:</strong> Single-family homes following prescriptive code provisions may not require PE seal, but engineered designs are strongly recommended for Denver wind conditions</li>
+                <li><strong>Complex/Non-Standard Structures:</strong> Any building with unusual geometry, height >35 feet, large roof areas, or special occupancies requires PE involvement</li>
+                <li><strong>High Wind Zones:</strong> Areas with elevated wind speeds or Chinook exposure may require additional PE review even for otherwise standard designs</li>
+                <li><strong>Best Practice:</strong> Given Denver's severe Chinook wind exposure and high altitude effects, PE-sealed calculations are recommended for all but the simplest structures</li>
+            </ul>
+
+            <p>Colorado Professional Engineers must be licensed through the <a href="https://dpo.colorado.gov/AES" target="_blank" rel="noopener">Colorado Department of Regulatory Agencies Division of Professions and Occupations (Architects, Engineers, and Land Surveyors Board)</a>.</p>
+
+            <h3>Official Denver Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Denver wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development" target="_blank" rel="noopener" class="external-link">
+                    Denver Community Planning & Development
+                </a>
+                <a href="https://dpo.colorado.gov/AES" target="_blank" rel="noopener" class="external-link">
+                    Colorado PE Licensing Board
+                </a>
+                <a href="https://codefoundation.colorado.gov/" target="_blank" rel="noopener" class="external-link">
+                    Colorado Division of Fire Prevention & Control
+                </a>
+            </div>
+
+            <h3>Common Denver Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Underestimating Chinook wind severity:</strong> Chinook winds create sustained high-speed events exceeding typical thunderstorm gusts—do not use lower wind speeds</li>
+                <li><strong>Incorrect Exposure Category:</strong> Eastern Denver suburbs opening to plains require Exposure C, not B</li>
+                <li><strong>Neglecting topographic effects:</strong> Foothills areas require Kzt adjustments for slope and escarpment effects</li>
+                <li><strong>Ignoring elevation factor:</strong> Must apply Ke ≈ 0.85 for Denver's 5,280-foot elevation per ASCE 7-22 Table 26.9-1</li>
+                <li><strong>Using outdated wind speed maps:</strong> Denver wind speeds have increased in recent ASCE 7 editions to account for Chinook wind data</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require significantly higher design wind speeds</li>
+                <li><strong>Neglecting wind-snow interaction:</strong> Denver requires combined wind and snow load analysis, particularly for roof drift conditions</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Denver Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Denver-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Denver zip code or address and the system automatically applies 115-130 mph based on location and Chinook wind exposure</li>
+                <li><strong>Elevation Factor Application:</strong> Automatically applies Ke ≈ 0.85 for Denver's 5,280-foot elevation per ASCE 7-22</li>
+                <li><strong>Exposure Category Assignment:</strong> Determines Exposure B (urban core) or C (eastern plains) based on terrain and development density</li>
+                <li><strong>Topographic Factor Calculation:</strong> Applies Kzt adjustments for foothills locations with slope and escarpment effects</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current IBC-adopted ASCE 7-22 requirements with Colorado amendments</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding specific to Denver conditions</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Denver CPD permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Denver Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Denver-specific requirements including the 115-130 mph design velocity, Chinook wind considerations, high altitude elevation factor Ke, appropriate Exposure Category selection, Risk Category adjustments, and component pressure coefficients. Simply enter your Denver project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Denver Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Denver vs Colorado Mountain Wind Load Requirements</h3>
+            <p>Denver's wind load requirements differ from higher elevation Colorado mountain locations:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Denver (Front Range)</th>
+                        <th>High Mountain Locations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Design Wind Speed</strong></td>
+                        <td>115-130 mph</td>
+                        <td>120-150+ mph (varies by elevation)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Elevation</strong></td>
+                        <td>~5,280 feet</td>
+                        <td>8,000-12,000+ feet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Elevation Factor Ke</strong></td>
+                        <td>~0.85</td>
+                        <td>~0.70-0.75 (higher elevations)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exposure Category</strong></td>
+                        <td>B (urban), C (plains)</td>
+                        <td>C or D (exposed ridges)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Wind Source</strong></td>
+                        <td>Chinook winds, thunderstorms</td>
+                        <td>Mountain wave, ridge winds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Snow Loads</strong></td>
+                        <td>25-40 psf ground snow</td>
+                        <td>60-300+ psf ground snow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topographic Factor Kzt</strong></td>
+                        <td>1.0 (flat) to 1.2 (foothills)</td>
+                        <td>1.0 to 1.5+ (exposed ridges)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>While Denver has high wind speeds for its elevation, mountain locations at 8,000-12,000+ feet experience even more extreme conditions with hurricane-force winds, massive snow loads, and complex topographic effects requiring specialized engineering.</p>
+
+            <h3>Denver Metro Area Considerations</h3>
+            <p>The Denver metropolitan area extends from foothills to eastern plains, creating varying wind load requirements:</p>
+
+            <ul>
+                <li><strong>Western Suburbs (Lakewood, Golden, Morrison):</strong> Foothills exposure with severe Chinook wind effects, requiring topographic factor Kzt adjustments</li>
+                <li><strong>Central Denver (Downtown, Capitol Hill, Cherry Creek):</strong> Urban Exposure B with moderate Chinook exposure, 115-120 mph typical</li>
+                <li><strong>Northern Suburbs (Thornton, Westminster, Broomfield):</strong> Transitional zone from urban to open terrain, mixed Exposure B/C</li>
+                <li><strong>Eastern Suburbs (Aurora, Commerce City, DIA):</strong> Open plains Exposure C with maximum wind speeds 120-130 mph</li>
+                <li><strong>Southern Suburbs (Littleton, Highlands Ranch, Castle Rock):</strong> Transitional exposure with some topographic effects from Palmer Divide</li>
+            </ul>
+
+            <p>Engineers working across the Denver metro area must verify specific wind speeds, exposure categories, and topographic factors for each project location. The rapid transition from mountain foothills to Great Plains creates complex wind patterns requiring site-specific analysis.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Denver-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Denver projects accounting for Chinook winds, high altitude effects, and Front Range exposure. Our software automatically handles the 115-130 mph velocity range, elevation factor Ke, Exposure B/C determination, topographic effects, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Denver Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../colorado-wind-load-requirements.html" style="color: #60a5fa;">Colorado Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

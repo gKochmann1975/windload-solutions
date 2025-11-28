@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detroit Wind Load Requirements | 105-115 mph MBC | Wayne County MI | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Detroit wind load requirements. Wayne County design wind speed 105-115 mph, Exposure B/C, Michigan Building Code, Great Lakes influence, Detroit River exposure, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/detroit-wind-load-requirements.html">
+    <meta name="keywords" content="Detroit wind load, Wayne County wind speed, Detroit wind load calculator, Detroit building permit, Detroit wind load requirements, Michigan Building Code, Detroit River wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Detroit Blue/Silver colors */
+        .hero {
+            background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 25%, #38bdf8 50%, #94a3b8 75%, #64748b 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🚗🏭';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #0369a1;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #0ea5e9;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #38bdf8;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #0ea5e9;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #0ea5e9;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Detroit Card */
+        .detroit-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .detroit-card h4 {
+            color: #0ea5e9;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .detroit-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Michigan",
+                "item": "https://windload.solutions/michigan-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Detroit",
+                "item": "https://windload.solutions/cities/detroit-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../michigan-wind-load-requirements.html"><i class="fas fa-landmark"></i> Michigan</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Detroit Wind Load Requirements</h1>
+            <p>Wayne County, MI | 105-115 mph Design Wind Speed | Michigan Building Code | Great Lakes Influence | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Detroit Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">105-115</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MBC</span>
+                    <span class="stat-label">Michigan Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Lake Effect Risk</span>
+                </div>
+            </div>
+
+            <h2>Detroit, Michigan: Motor City Wind Load Requirements</h2>
+            <p>Detroit, located in <strong>Wayne County, Michigan</strong>, has unique wind load requirements influenced by its position on the Detroit River and proximity to Lake St. Clair and Lake Erie. The city operates under the <strong>Michigan Building Code (MBC)</strong>, which adopts the International Building Code (IBC) with state-specific amendments. Design wind speeds for Risk Category II structures typically range from <strong>105-115 mph</strong> (3-second gust) depending on location and exposure to Great Lakes waterways.</p>
+
+            <p>As the heart of America's automotive industry, Detroit features a mix of historic industrial facilities, modern manufacturing plants, commercial developments, and residential neighborhoods. The city's waterfront location along the Detroit River creates unique exposure conditions, particularly for developments along the riverfront, Belle Isle, and areas near Lake St. Clair. Lake-effect weather patterns from the Great Lakes can intensify wind events and create challenging design scenarios.</p>
+
+            <div class="info-box">
+                <h4><strong>💨</strong> Detroit Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 105-115 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~120-130 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~130-140 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban inland) or C (Detroit River/Lake St. Clair)</p>
+                <p><strong>Building Code:</strong> Michigan Building Code (MBC) - adopts IBC</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Wayne County</p>
+                <p><strong>Special Considerations:</strong> Great Lakes influence, Detroit River exposure, lake-effect weather, industrial facilities</p>
+            </div>
+
+            <h3>Why Detroit Has 105-115 mph Wind Speed Requirements</h3>
+            <p>Detroit's design wind speed of 105-115 mph for Risk Category II structures reflects the city's location in southeastern Michigan with moderate wind exposure influenced by the Great Lakes. The range accounts for varying exposure conditions—inland areas with dense urban development typically use the lower end (105 mph), while riverfront and lakefront properties exposed to open water may require the higher end (115 mph).</p>
+
+            <p>The Detroit River, connecting Lake St. Clair to Lake Erie, plays a crucial role in local wind patterns. The river creates an open fetch allowing winds to accelerate across the water surface with minimal obstruction. Buildings along the riverfront, particularly in areas like downtown Detroit's Renaissance Center district, the Riverfront Conservancy area, and developments on Belle Isle, experience higher wind pressures due to this Exposure Category C condition. In contrast, buildings in inland neighborhoods like Midtown, Corktown, or the North End benefit from Exposure Category B conditions with surrounding structures providing wind breaks.</p>
+
+            <h3>Detroit Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Detroit projects requires following ASCE 7-22 methodology as adopted by the Michigan Building Code. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #0ea5e9; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Detroit with V = 110 mph (typical mid-range) and standard conditions, the resulting pressures are moderate. A Detroit project with:</p>
+            <ul>
+                <li><strong>V = 110 mph</strong> (Detroit typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (near sea level, 580 ft elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 22.3 psf</strong>—moderate compared to coastal hurricane regions but significant enough to require careful structural design.</p>
+
+            <p>For Detroit riverfront properties using Exposure C, the velocity pressure coefficient Kz increases substantially, resulting in higher design pressures even at the same wind speed. The difference between Exposure B and C can increase wind loads by 30-50% at low building heights.</p>
+
+            <h3>Michigan Building Code and Permitting</h3>
+            <p>Detroit operates under the <strong>Michigan Building Code (MBC)</strong>, which adopts the International Building Code (IBC) as its foundation with Michigan-specific amendments. The state code is administered at the local level by municipal building departments.</p>
+
+            <p>Key Michigan Building Code considerations for Detroit:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> Michigan Building Code (MBC) based on IBC with state amendments</li>
+                <li><strong>Local Administration:</strong> City of Detroit Buildings, Safety Engineering & Environmental Department (BSEED)</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by MBC</li>
+                <li><strong>Permit Authority:</strong> Detroit BSEED handles all building permits within city limits</li>
+                <li><strong>Suburban Wayne County:</strong> Other Wayne County municipalities administer MBC through local building departments</li>
+                <li><strong>Industrial Facilities:</strong> Automotive and manufacturing facilities may have additional requirements for large-span structures</li>
+            </ul>
+
+            <p>You can access Detroit building permits and requirements through the <a href="https://detroitmi.gov/departments/buildings-safety-engineering-and-environmental-department" target="_blank" rel="noopener">Detroit Buildings, Safety Engineering & Environmental Department</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Detroit projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Detroit Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~100-105 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>105-115 mph</td>
+                        <td>Residential, commercial, industrial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~130-140 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, essential facilities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Waterfront)</h3>
+            <p>Detroit projects require careful Exposure Category determination based on surrounding terrain and proximity to waterways:</p>
+
+            <div class="detroit-card">
+                <h4>Exposure Category Selection for Detroit</h4>
+                <p><strong>Exposure Category B (Urban/Inland):</strong> Most of Detroit qualifies as Exposure B due to urban development with buildings, structures, and obstructions. Downtown, Midtown, Corktown, Eastern Market, and other inland neighborhoods typically use Exposure B. This assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind.</p>
+                <p><strong>Exposure Category C (Waterfront/Open):</strong> Properties directly fronting the Detroit River, Lake St. Clair shoreline, or Belle Isle waterfront typically require Exposure C. This includes developments along the Riverwalk, Renaissance Center area, Harbortown, and lakefront properties. Exposure C assumes open terrain with scattered obstructions having heights generally less than 30 feet, which describes water surfaces.</p>
+                <p><strong>Engineering Judgment Required:</strong> The transition between Exposure B and C in Detroit's waterfront areas requires professional engineering judgment. Buildings within 200-600 feet of water are typically considered Exposure C, though the exact distance depends on surrounding development and topography.</p>
+            </div>
+
+            <h3>Great Lakes Influence and Lake-Effect Weather</h3>
+            <p>Detroit's proximity to three Great Lakes—Lake St. Clair to the northeast, Lake Erie to the southeast, and Lake Huron to the north—creates unique meteorological conditions that affect wind loads:</p>
+
+            <p><strong>Lake-Effect Wind Events:</strong> During fall and winter, cold air moving across relatively warm lake waters can intensify wind speeds and create sudden wind direction changes. While lake-effect is most famous for snow, it also influences wind patterns and can produce localized areas of enhanced wind speeds.</p>
+
+            <p><strong>Severe Thunderstorms:</strong> Summer convective weather systems moving across the Great Lakes can produce significant straight-line winds, particularly when storms cross the warm lake waters. These systems can generate wind gusts exceeding 70 mph in severe cases.</p>
+
+            <p><strong>Seasonal Wind Patterns:</strong> Prevailing winds in Detroit shift seasonally. Winter winds typically blow from the northwest to west, while summer winds are more variable with frequent southwest flows. The Detroit River acts as a wind channel, potentially accelerating flows along the river corridor regardless of seasonal pattern.</p>
+
+            <h3>Industrial Construction and Automotive Facilities</h3>
+            <p>Detroit's legacy as the automotive capital creates unique wind load considerations for industrial facilities:</p>
+
+            <ul>
+                <li><strong>Large-Span Manufacturing Buildings:</strong> Automotive assembly plants and supplier facilities often feature large, clear-span structures that are particularly sensitive to wind loads. These buildings require careful analysis of both MWFRS and C&C pressures.</li>
+                <li><strong>Overhead Cranes:</strong> Many industrial facilities house heavy overhead crane systems that must be designed for combined vertical loads and lateral wind forces on building frames.</li>
+                <li><strong>Paint Booth Structures:</strong> Automotive painting facilities often include tall exhaust stacks and specialized ventilation systems requiring wind load analysis for both structural integrity and operational performance.</li>
+                <li><strong>Outdoor Storage:</strong> Parts warehouses and inventory storage areas may include outdoor racking systems subject to wind loads on stored materials.</li>
+                <li><strong>Retooling Flexibility:</strong> Modern automotive facilities are designed for periodic retooling, requiring structural systems that can accommodate future equipment changes while maintaining wind load capacity.</li>
+            </ul>
+
+            <h3>Detroit Zip Codes and Wind Speed Reference</h3>
+            <p>Detroit zip codes span a diverse area with varying wind speed requirements based on proximity to waterways and urban density. Common Detroit zip codes include:</p>
+
+            <ul>
+                <li><strong>48226, 48243:</strong> Downtown Detroit, Renaissance Center, GM headquarters (Exposure B inland, C riverfront)</li>
+                <li><strong>48207, 48214:</strong> East riverfront, Belle Isle area (Exposure C along water)</li>
+                <li><strong>48201, 48202:</strong> Midtown, Wayne State University, Cultural Center (Exposure B)</li>
+                <li><strong>48216, 48209:</strong> Southwest Detroit, Mexicantown, Delray (Exposure B, C near river)</li>
+                <li><strong>48203, 48238:</strong> North End, New Center, Highland Park border (Exposure B)</li>
+                <li><strong>48221, 48235:</strong> Northwest Detroit, Grandmont-Rosedale, Brightmoor (Exposure B)</li>
+                <li><strong>48224, 48236:</strong> East side neighborhoods (Exposure B)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Detroit wind speed based on your specific zip code or street address, accounting for proximity to the Detroit River, Lake St. Clair, and local terrain conditions.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Detroit</h3>
+            <p>Wind load calculations for Detroit building permits have specific PE requirements depending on building type and complexity:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a Michigan-licensed Professional Engineer</li>
+                <li><strong>Industrial Facilities:</strong> Manufacturing, assembly plants, and industrial structures require comprehensive PE-sealed structural analysis</li>
+                <li><strong>Residential Structures:</strong> Single-family homes may not require PE seal for prescriptive designs; multi-family typically requires PE</li>
+                <li><strong>Large-Span Structures:</strong> Buildings with spans exceeding conventional limits require detailed PE analysis</li>
+                <li><strong>Hazardous Occupancies:</strong> Facilities storing or processing hazardous materials require PE certification</li>
+                <li><strong>Best Practice:</strong> Even when not required, PE-sealed calculations provide liability protection and ensure code compliance</li>
+            </ul>
+
+            <h3>Official Detroit and Wayne County Building Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Detroit wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://detroitmi.gov/departments/buildings-safety-engineering-and-environmental-department" target="_blank" rel="noopener" class="external-link">
+                    Detroit BSEED
+                </a>
+                <a href="https://www.waynecounty.com/departments/publicservices/dev.aspx" target="_blank" rel="noopener" class="external-link">
+                    Wayne County Development Services
+                </a>
+                <a href="https://www.michigan.gov/lara/bureau-list/bcc" target="_blank" rel="noopener" class="external-link">
+                    Michigan Bureau of Construction Codes
+                </a>
+                <a href="https://www.michigan.gov/lara/bureau-list/bpl" target="_blank" rel="noopener" class="external-link">
+                    Michigan PE Licensing (LARA)
+                </a>
+            </div>
+
+            <h3>Common Detroit Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect Exposure Category:</strong> Assuming all of Detroit is Exposure B—riverfront and lakefront properties require Exposure C</li>
+                <li><strong>Ignoring Lake Influence:</strong> Underestimating wind acceleration across open water surfaces</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher wind speeds</li>
+                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current MBC adoption</li>
+                <li><strong>Industrial Building Assumptions:</strong> Large-span automotive facilities require special consideration beyond conventional building analysis</li>
+                <li><strong>Neglecting Equipment Loads:</strong> Failing to account for wind forces on rooftop HVAC, industrial exhaust systems, or crane runway beams</li>
+                <li><strong>Lake-Effect Weather:</strong> Not considering seasonal wind pattern variations and lake-effect intensification</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Detroit Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Detroit-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Detroit zip code or address and the system automatically applies 105-115 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on proximity to Detroit River, Lake St. Clair, and surrounding terrain</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current MBC-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Detroit BSEED permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Detroit Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Detroit-specific requirements including the 105-115 mph design velocity, appropriate Exposure Category selection, Risk Category adjustments, and component pressure coefficients. Simply enter your Detroit project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Detroit Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Detroit vs Other Great Lakes Cities Wind Load Requirements</h3>
+            <p>Detroit's wind load requirements are comparable to other major Great Lakes cities:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Design Wind Speed</th>
+                        <th>Exposure Category</th>
+                        <th>Building Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Detroit, MI</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (waterfront)</td>
+                        <td>Michigan Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chicago, IL</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>Chicago Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Milwaukee, WI</strong></td>
+                        <td>105-110 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>Wisconsin Commercial Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cleveland, OH</strong></td>
+                        <td>105-115 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>Ohio Building Code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Buffalo, NY</strong></td>
+                        <td>110-120 mph</td>
+                        <td>B (urban), C (lakefront)</td>
+                        <td>New York State Building Code</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Detroit's waterfront exposure creates wind load conditions similar to other Great Lakes cities, with the unique characteristic of being positioned between multiple lakes and on an international border waterway.</p>
+
+            <h3>Detroit River International Bridge Considerations</h3>
+            <p>Detroit's unique position as an international border city with multiple bridges and a tunnel to Windsor, Ontario, creates specialized wind load scenarios:</p>
+
+            <ul>
+                <li><strong>Ambassador Bridge:</strong> The iconic suspension bridge connecting Detroit to Windsor experiences significant wind loads and serves as a reference point for open-water exposure conditions</li>
+                <li><strong>Detroit-Windsor Tunnel:</strong> Ventilation buildings and portal structures require careful wind load analysis for equipment mounting and structural integrity</li>
+                <li><strong>Gordie Howe International Bridge:</strong> The new cable-stayed bridge under construction represents state-of-the-art wind engineering for long-span structures in Great Lakes environments</li>
+                <li><strong>Riverfront Development:</strong> Proximity to these crossing points affects exposure determinations for nearby buildings</li>
+            </ul>
+
+            <h3>Automotive Industry Legacy and Modern Development</h3>
+            <p>Detroit's automotive heritage continues to influence building design and wind load considerations:</p>
+
+            <p><strong>Historic Facilities Renovation:</strong> Many classic automotive plants are being converted to mixed-use developments. These renovations must bring historic structures up to current wind load standards while preserving architectural character. Large factory windows, sawtooth roofs, and open floor plans create unique structural challenges.</p>
+
+            <p><strong>Modern Manufacturing:</strong> New automotive and mobility technology facilities continue to be built in the Detroit area. Electric vehicle battery plants, autonomous vehicle testing facilities, and advanced manufacturing require specialized structural systems designed for both current wind loads and future flexibility.</p>
+
+            <p><strong>Urban Redevelopment:</strong> Detroit's revitalization has brought new residential, commercial, and mixed-use development to previously industrial areas. These projects must account for changing exposure conditions as surrounding buildings are added or removed, potentially affecting wind patterns over time.</p>
+
+            <h3>Seasonal Weather Extremes and Wind Loads</h3>
+            <p>Detroit experiences significant seasonal temperature variation that can interact with wind loads:</p>
+
+            <ul>
+                <li><strong>Winter Cold:</strong> Extreme cold (temperatures can reach -10°F to -20°F or lower) affects material properties, potentially reducing ductility during wind events</li>
+                <li><strong>Ice Storm Loading:</strong> Freezing rain combined with wind creates complex loading scenarios on glazing, cladding, and structural frames</li>
+                <li><strong>Thermal Movement:</strong> Large temperature swings (summer highs around 90°F, winter lows below 0°F) combined with wind loads require careful expansion joint design</li>
+                <li><strong>Snow and Wind Combined:</strong> Roof structures must resist simultaneous snow drift loading and wind uplift in winter storm conditions</li>
+            </ul>
+
+            <p>While wind loads and snow loads are typically considered separately in design, Detroit's climate requires engineers to consider load combinations during extreme weather events.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Detroit-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Detroit projects. Our software automatically handles the 105-115 mph velocity range, Exposure B/C determination, and generates PE-ready reports for Detroit BSEED permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Detroit Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../michigan-wind-load-requirements.html" style="color: #60a5fa;">Michigan Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

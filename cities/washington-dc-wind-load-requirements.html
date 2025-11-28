@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washington, DC Wind Load Requirements | 110-120 mph | DC Construction Codes | Federal District | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Washington, DC wind load requirements. Federal district design wind speed 110-120 mph, DC Construction Codes, Exposure Category B/C, ASCE 7-22 compliance, and federal building standards.">
+    <link rel="canonical" href="https://windload.solutions/cities/washington-dc-wind-load-requirements.html">
+    <meta name="keywords" content="Washington DC wind load, DC wind speed, District of Columbia wind load, DC wind load calculator, DC Construction Codes, 110 mph wind speed, DC building permit, federal building wind requirements, Potomac waterfront wind load">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #1e40af;
+            background: rgba(30, 64, 175, 0.1);
+            border-color: rgba(30, 64, 175, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - DC red/navy (Capitals, monuments) */
+        .hero {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 25%, #f87171 50%, #1e40af 75%, #1e3a5f 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏛️🇺🇸';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #b91c1c;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #1e40af;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #3b82f6;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #1e40af;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #1e40af;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* DC Card */
+        .dc-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(220, 38, 38, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .dc-card h4 {
+            color: #dc2626;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .dc-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Washington, DC",
+                "item": "https://windload.solutions/cities/washington-dc-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Washington, DC Wind Load Requirements</h1>
+            <p>District of Columbia | 110-120 mph Design Wind Speed | DC Construction Codes | Exposure Category B/C | ASCE 7-22</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate DC Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">110-120</span>
+                    <span class="stat-label">Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">DCCC</span>
+                    <span class="stat-label">DC Construction Codes</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Moderate Wind Risk</span>
+                </div>
+            </div>
+
+            <h2>Washington, DC: Nation's Capital Wind Load Requirements</h2>
+            <p>Washington, DC (the District of Columbia) is a unique federal district serving as the nation's capital, featuring distinctive wind load requirements driven by federal building standards, historic monument preservation requirements, urban development patterns, and Potomac River waterfront exposure. DC requires design wind speeds ranging from approximately <strong>110-120 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and location-specific exposure to coastal storms, nor'easters, and occasional tropical systems.</p>
+
+            <p>Washington, DC is governed by the <strong>DC Construction Codes</strong>, which adopt the International Building Code (IBC) with District-specific amendments. The DC Department of Buildings (formerly DCRA) enforces these codes, referencing ASCE 7-22 for wind load calculations. The city's unique characteristics—federal building requirements, strict height restrictions (no building taller than the Capitol dome or Washington Monument), extensive historic preservation districts, Potomac River waterfront exposure, and dense urban development—create sophisticated structural design requirements necessitating careful analysis of wind speeds, exposure categories, and regulatory compliance.</p>
+
+            <div class="info-box">
+                <h4><strong>🏛️</strong> Washington, DC Quick Facts</h4>
+                <p><strong>Jurisdiction:</strong> District of Columbia (federal district, not a state or county)</p>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 110-120 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~125-135 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~135-145 mph</p>
+                <p><strong>Exposure Category:</strong> B (dense urban areas), C (Potomac River waterfront)</p>
+                <p><strong>Building Code:</strong> DC Construction Codes (adopts IBC with amendments)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Notable Features:</strong> Federal buildings, height restrictions, historic preservation, Potomac exposure</p>
+            </div>
+
+            <h3>Why Washington, DC Has 110-120 mph Wind Speed Requirements</h3>
+            <p>Washington, DC's design wind speeds of 110-120 mph are derived from ASCE 7-22 wind speed maps for the mid-Atlantic coastal region. This velocity range accounts for the District's exposure to Atlantic tropical systems, coastal nor'easters, and occasional severe thunderstorms while recognizing that wind speeds vary based on location—from exposed waterfront areas along the Potomac River and Anacostia River to the densely developed urban core where substantial building density provides significant wind sheltering.</p>
+
+            <p>The exact wind speed for a specific DC project depends on precise location and exposure. Waterfront areas (Georgetown Waterfront, The Wharf, Navy Yard, Anacostia waterfront) typically require higher velocities (115-120 mph) with Exposure Category C due to direct water exposure. Dense urban areas (downtown DC, Capitol Hill, Dupont Circle, Adams Morgan) generally require moderate velocities (110-115 mph) with Exposure Category B due to extensive surrounding development. The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or address.</p>
+
+            <h3>DC Construction Codes: IBC Adoption with District Amendments</h3>
+            <p>Washington, DC operates under the <strong>DC Construction Codes</strong>, which are based on the International Building Code with District-specific modifications:</p>
+
+            <ul>
+                <li><strong>IBC Adoption:</strong> DC adopts the International Building Code (IBC) with local amendments specific to District requirements</li>
+                <li><strong>ASCE 7-22 Reference:</strong> DC Construction Codes reference ASCE 7-22 for wind load calculations (the current edition)</li>
+                <li><strong>DC Department of Buildings:</strong> The DC DOB (formerly Department of Consumer and Regulatory Affairs/DCRA) is the authority having jurisdiction (AHJ) with unique permitting and review requirements</li>
+                <li><strong>Height Restrictions:</strong> DC has strict building height limitations—generally no building can exceed the width of the adjacent street plus 20 feet, with absolute maximums based on zone (typically 130-160 feet)</li>
+                <li><strong>Federal Building Standards:</strong> Federal buildings follow separate GSA and federal standards while coordinating with DC codes</li>
+                <li><strong>Historic Preservation:</strong> Extensive historic district requirements through DC Historic Preservation Office (HPO) affecting building modifications</li>
+                <li><strong>Professional Engineer Requirements:</strong> All structural calculations must be prepared and sealed by a PE licensed in the District of Columbia</li>
+            </ul>
+
+            <h3>Washington, DC Geographic Considerations</h3>
+            <p>Washington, DC's geography significantly influences wind load requirements across the District's four quadrants (NW, NE, SW, SE):</p>
+
+            <ul>
+                <li><strong>Downtown/Federal Triangle (NW):</strong> Dense urban core with major federal buildings, museums, monuments. Typically Exposure Category B due to urban sheltering, though monuments on the National Mall may have unique exposure conditions</li>
+                <li><strong>Georgetown Waterfront (NW):</strong> Potomac River exposure requires Exposure Category C and higher wind speeds (115-120 mph). Historic Georgetown district adds preservation requirements</li>
+                <li><strong>The Wharf/Southwest Waterfront (SW):</strong> Direct Potomac and Washington Channel exposure requires Exposure C. Major redevelopment area with modern construction</li>
+                <li><strong>Capitol Hill (NE/SE):</strong> Urban development typically Exposure B. Eastern Market, H Street corridor, residential neighborhoods with moderate urban density</li>
+                <li><strong>Anacostia/Navy Yard (SE):</strong> Anacostia River waterfront areas require Exposure C. Navy Yard redevelopment and eastern DC neighborhoods</li>
+                <li><strong>Rock Creek Park:</strong> Large urban park creating potential terrain variations and topographic effects requiring analysis</li>
+                <li><strong>Potomac Palisades:</strong> Elevated terrain along Potomac River may require topographic factor (Kzt) adjustments</li>
+            </ul>
+
+            <h3>Federal Buildings and Height Restrictions</h3>
+            <p>Washington, DC has unique considerations for federal buildings and height limitations:</p>
+
+            <ul>
+                <li><strong>Height Act of 1910:</strong> Limits building heights to width of adjacent street plus 20 feet. Commercial streets typically allow 130 feet; residential streets 90 feet. Pennsylvania Avenue allows 160 feet</li>
+                <li><strong>Federal Buildings:</strong> Government buildings (Capitol, White House, federal agencies) follow GSA standards and federal codes while coordinating with DC requirements</li>
+                <li><strong>Historic Monuments:</strong> Washington Monument, Lincoln Memorial, Jefferson Memorial, and other monuments require specialized wind engineering for preservation and visitor safety</li>
+                <li><strong>Design Implications:</strong> Height restrictions limit most buildings to mid-rise construction (10-15 stories), reducing some high-rise wind engineering complexities common in other major cities</li>
+                <li><strong>Wind Pressures:</strong> While buildings are limited in height, wind pressures remain significant at upper floors, particularly for waterfront and exposed locations</li>
+            </ul>
+
+            <h3>Historic Preservation and Wind Load Considerations</h3>
+            <p>Washington, DC has extensive historic preservation requirements affecting wind load design:</p>
+
+            <ul>
+                <li><strong>Historic Districts:</strong> Georgetown, Capitol Hill, Dupont Circle, and many other neighborhoods are designated historic districts with strict preservation requirements</li>
+                <li><strong>HPO Review:</strong> DC Historic Preservation Office reviews all projects in historic districts, requiring compatible designs with existing structures</li>
+                <li><strong>Facade Retention:</strong> Many projects involve historic facade retention while constructing new buildings behind, requiring careful wind load transfer design</li>
+                <li><strong>Material Requirements:</strong> Historic buildings often require specialized wind-resistant retrofits while maintaining historic character</li>
+                <li><strong>Adaptive Reuse:</strong> Converting historic buildings to new uses requires updated wind load calculations while preserving historic elements</li>
+            </ul>
+
+            <h3>Washington, DC Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for DC projects requires following ASCE 7-22 methodology with DC Construction Code requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #dc2626; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical DC waterfront project with V = 115 mph and Exposure C conditions, the resulting pressures are substantial. A Southwest Waterfront project with:</p>
+            <ul>
+                <li><strong>V = 115 mph</strong> (waterfront velocity)</li>
+                <li><strong>Kz = 0.85</strong> (15 ft height, Exposure C)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (sea level)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 31.9 psf</strong>—substantial pressures requiring careful engineering.</p>
+
+            <p>For a dense urban downtown DC location with V = 110 mph and Exposure B conditions, pressures are somewhat reduced due to urban sheltering but remain significant, particularly for mid-rise structures at the upper height limits.</p>
+
+            <h3>Hurricane and Storm History: DC Wind Events</h3>
+            <p>While Washington, DC is inland from the coast, the District has experienced significant tropical and extratropical wind events:</p>
+
+            <ul>
+                <li><strong>Hurricane Isabel (2003):</strong> The most significant recent tropical system to impact DC. Made landfall in North Carolina and tracked through DC region with sustained winds of 50-60 mph and gusts to 70+ mph. Widespread tree damage, power outages, and Potomac River flooding</li>
+                <li><strong>Hurricane Agnes (1972):</strong> Tropical storm conditions at DC arrival but caused catastrophic flooding along Potomac River and significant wind damage</li>
+                <li><strong>Hurricane Hazel (1954):</strong> Maintained hurricane intensity far inland, impacting DC with hurricane-force winds and historic damage</li>
+                <li><strong>Derecho (June 2012):</strong> Fast-moving severe thunderstorm complex produced widespread straight-line winds of 60-80 mph across DC metro area. Extensive tree damage and power outages</li>
+                <li><strong>Nor'easters:</strong> Extratropical systems frequently impact DC, sometimes producing sustained winds of 40-50 mph with higher gusts. Winter nor'easters can bring significant wind and snow combinations</li>
+                <li><strong>Hurricane Irene (2011):</strong> Tropical storm conditions with sustained winds of 40-50 mph and gusts to 60+ mph. Widespread tree damage and flooding</li>
+            </ul>
+
+            <div class="dc-card">
+                <h4>DC Waterfront vs. Urban Core: Understanding Exposure Categories</h4>
+                <p><strong>Waterfront Areas (Exposure C):</strong> Georgetown Waterfront, The Wharf, Navy Yard, Anacostia waterfront, Potomac and Anacostia River waterfronts—design wind speed 115-120 mph, Exposure Category C required, direct water exposure</p>
+                <p><strong>Dense Urban Core (Exposure B):</strong> Downtown DC, Capitol Hill, Dupont Circle, Adams Morgan, Columbia Heights—design wind speed 110-115 mph, Exposure Category B typically applies due to extensive surrounding development and urban wind sheltering</p>
+                <p><strong>Key Takeaway:</strong> DC projects require careful location-specific exposure category determination. Waterfront projects use Exposure C; dense urban projects use Exposure B</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>DC projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>DC Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~105-115 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>110-120 mph</td>
+                        <td>Residential, commercial, hotels, most standard occupancies (typical apartments, offices)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~125-135 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~135-145 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, essential facilities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Categories: Waterfront vs. Urban DC</h3>
+            <p>DC projects require careful exposure category determination based on location and surrounding development:</p>
+
+            <ul>
+                <li><strong>Exposure Category C (Waterfront):</strong> Required for Potomac River, Anacostia River, and Washington Channel waterfront areas. Open terrain with direct water exposure and scattered obstructions less than 30 feet</li>
+                <li><strong>Exposure Category B (Dense Urban):</strong> Appropriate for downtown DC, Capitol Hill, and other densely developed urban areas. Urban/suburban terrain with numerous closely spaced obstructions (buildings) having heights greater than 30 feet</li>
+                <li><strong>Transition Zones:</strong> Areas near the transition between waterfront and dense urban core require careful engineering judgment. Engineers must evaluate exposure for at least 20 times the building height in all directions</li>
+                <li><strong>National Mall:</strong> The open National Mall area creates unique exposure conditions for monuments and museums requiring specialized wind engineering</li>
+            </ul>
+
+            <h3>Washington, DC Zip Codes and Wind Speed Reference</h3>
+            <p>Washington, DC encompasses zip codes in the 20001-20020 and 20024-20032 ranges (plus federal/special zip codes). Wind speeds and exposure categories vary by location:</p>
+
+            <ul>
+                <li><strong>20001-20006 (Downtown/Federal Triangle):</strong> 110-115 mph, Exposure B (dense urban core), significant urban sheltering</li>
+                <li><strong>20007 (Georgetown):</strong> 110-120 mph, Exposure B (historic district) or C (waterfront areas along Potomac)</li>
+                <li><strong>20024 (Southwest Waterfront/The Wharf):</strong> 115-120 mph, Exposure C, direct Potomac River/Washington Channel waterfront</li>
+                <li><strong>20003, 20002 (Capitol Hill):</strong> 110-115 mph, Exposure B (urban residential)</li>
+                <li><strong>20020, 20019 (Anacostia):</strong> 110-115 mph, Exposure B (urban) or C (Anacostia waterfront)</li>
+                <li><strong>20032 (Navy Yard/Anacostia waterfront):</strong> 115-120 mph, Exposure C (waterfront development)</li>
+                <li><strong>20008-20010 (Upper Northwest - Woodley Park/Cleveland Park):</strong> 110-115 mph, Exposure B, residential neighborhoods</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed and exposure category recommendations when you enter any DC zip code or address, using ASCE 7-22 wind speed maps and local terrain analysis.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your DC Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Washington, DC requirements including location-specific wind velocities (110-120 mph range), appropriate Exposure Category recommendations (B for dense urban, C for waterfront), Risk Category adjustments, and component pressure coefficients. Simply enter your DC project address or zip code for instant, accurate calculations compliant with DC Construction Codes and ASCE 7-22.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate DC Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Washington, DC</h3>
+            <p>All wind load calculations for DC building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in the District of Columbia</strong>. The DC Department of Buildings requires sealed calculations that include:</p>
+
+            <ul>
+                <li>Project address with wind speed determination per ASCE 7-22</li>
+                <li>Design wind speed (110-120 mph range for Risk Category II, location-dependent)</li>
+                <li>Exposure Category determination with supporting justification (B for dense urban, C for waterfront)</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>Compliance with height restriction requirements (Height Act of 1910)</li>
+                <li>Consideration of Potomac/Anacostia waterfront exposure for applicable projects</li>
+                <li>Historic preservation coordination for projects in historic districts</li>
+            </ul>
+
+            <h3>DC Department of Buildings and Permitting</h3>
+            <p>Washington, DC has specific building department procedures:</p>
+
+            <ul>
+                <li><strong>DC Department of Buildings (DOB):</strong> Authority having jurisdiction, formerly Department of Consumer and Regulatory Affairs (DCRA)</li>
+                <li><strong>Online Permitting:</strong> Electronic permit applications through DC DOB portal</li>
+                <li><strong>Professional Certification:</strong> Requires Registered Design Professional (PE/RA) certification</li>
+                <li><strong>Plan Review:</strong> DC DOB plan examiners perform detailed technical review of structural calculations</li>
+                <li><strong>Historic Preservation Office (HPO):</strong> Separate review required for projects in historic districts</li>
+                <li><strong>Federal Coordination:</strong> Federal buildings coordinate with DC but follow separate GSA standards</li>
+                <li><strong>Construction Documents:</strong> Complete sealed construction documents required, including comprehensive wind load calculations</li>
+            </ul>
+
+            <h3>Official Washington, DC Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for DC wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://dob.dc.gov/" target="_blank" rel="noopener" class="external-link">
+                    DC Department of Buildings
+                </a>
+                <a href="https://dob.dc.gov/page/building-codes" target="_blank" rel="noopener" class="external-link">
+                    DC Construction Codes
+                </a>
+                <a href="https://dob.dc.gov/page/dc-historical-preservation-office" target="_blank" rel="noopener" class="external-link">
+                    DC Historic Preservation Office
+                </a>
+                <a href="https://dcra.dc.gov/node/164742" target="_blank" rel="noopener" class="external-link">
+                    DC PE Licensing
+                </a>
+            </div>
+
+            <h3>Common DC Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect exposure category:</strong> Waterfront areas require Exposure C, dense urban areas use Exposure B. Improper determination significantly affects calculated pressures</li>
+                <li><strong>Assuming uniform wind speed:</strong> DC wind speeds vary from 110-120 mph depending on location and exposure to Potomac/Anacostia waterfront</li>
+                <li><strong>Neglecting height restrictions:</strong> Height Act limits must be verified and incorporated into building design</li>
+                <li><strong>Ignoring historic preservation:</strong> Projects in historic districts require HPO coordination and may have specialized wind load retrofit requirements</li>
+                <li><strong>Using outdated ASCE version:</strong> DC Construction Codes reference ASCE 7-22 (current edition)</li>
+                <li><strong>Overlooking topographic effects:</strong> Potomac Palisades and elevated terrain may require topographic factor (Kzt) adjustments</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, emergency facilities require higher categories with increased wind speeds</li>
+                <li><strong>Confusing federal and DC codes:</strong> Federal buildings follow GSA standards; private buildings follow DC Construction Codes</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles DC Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Washington, DC-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any DC zip code and the system automatically applies the correct 110-120 mph velocity based on ASCE 7-22 maps and waterfront/urban location</li>
+                <li><strong>ASCE 7-22 Compliance:</strong> All calculations follow ASCE 7-22 methodology (the current version referenced by DC Construction Codes)</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides appropriate exposure recommendations (B for dense urban, C for waterfront)</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding per ASCE 7-22</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for DC DOB permit submission and plan examiner review</li>
+                <li><strong>Height-Varying Pressures:</strong> Calculates appropriate Kz coefficients for different building heights up to DC's height restrictions</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get DC Construction Code-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Washington, DC projects. Our software automatically handles location-specific wind velocities (110-120 mph), appropriate Exposure Category recommendations (B/C), ASCE 7-22 compliance, and generates PE-ready reports for DC Department of Buildings permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try DC Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

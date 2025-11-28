@@ -48,16 +48,16 @@
 - [x] 33. San Jose, CA ✅ (cities/san-jose-wind-load-requirements.html)
 - [x] 34. Austin, TX ✅ (cities/austin-wind-load-requirements.html)
 - [x] 35. San Francisco, CA ✅ (cities/san-francisco-wind-load-requirements.html)
-- [ ] 36. Seattle, WA
-- [ ] 37. Denver, CO
-- [ ] 38. Boston, MA
-- [ ] 39. Atlanta, GA
-- [ ] 40. Philadelphia, PA
-- [ ] 41. Washington, DC
-- [ ] 42. Las Vegas, NV
-- [ ] 43. Portland, OR
-- [ ] 44. Minneapolis, MN
-- [ ] 45. Detroit, MI
+- [x] 36. Seattle, WA ✅ (cities/seattle-wind-load-requirements.html)
+- [x] 37. Denver, CO ✅ (cities/denver-wind-load-requirements.html)
+- [x] 38. Boston, MA ✅ (cities/boston-wind-load-requirements.html)
+- [x] 39. Atlanta, GA ✅ (cities/atlanta-wind-load-requirements.html)
+- [x] 40. Philadelphia, PA ✅ (cities/philadelphia-wind-load-requirements.html)
+- [x] 41. Washington, DC ✅ (cities/washington-dc-wind-load-requirements.html)
+- [x] 42. Las Vegas, NV ✅ (cities/las-vegas-wind-load-requirements.html)
+- [x] 43. Portland, OR ✅ (cities/portland-wind-load-requirements.html)
+- [x] 44. Minneapolis, MN ✅ (cities/minneapolis-wind-load-requirements.html)
+- [x] 45. Detroit, MI ✅ (cities/detroit-wind-load-requirements.html)
 - [ ] 46. Charlotte, NC
 - [ ] 47. Raleigh, NC
 - [ ] 48. Nashville, TN
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 35
-- Remaining: 65
+- Completed: 45
+- Remaining: 55
 
 ---
 
