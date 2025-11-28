@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key West Wind Load Requirements | 170-180 mph Extreme Exposure | Monroe County | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Key West wind load requirements. Monroe County extreme wind exposure 170-180 mph design speed, Exposure Category D, Florida Keys hurricane vulnerability, FBC 8th Edition, wind-borne debris region compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/key-west-wind-load-requirements.html">
+    <meta name="keywords" content="Key West wind load, Monroe County wind speed, Florida Keys wind load, Key West wind load calculator, 170 mph wind speed, Key West building permit, Exposure Category D, Key West wind load requirements">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Key West specific colors (Florida orange/blue with tropical sunset) */
+        .hero {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 25%, #ffa07a 50%, #0ea5e9 75%, #0284c7 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🌅🌴';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #ff6b35;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #ff6b35;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #ff8c42;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b35;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #ff6b35;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Extreme Wind Card */
+        .hvhz-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .hvhz-card h4 {
+            color: #ff6b35;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hvhz-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Florida",
+                "item": "https://windload.solutions/florida-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Key West",
+                "item": "https://windload.solutions/cities/key-west-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../florida-wind-load-requirements.html"><i class="fas fa-sun"></i> Florida</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Key West Wind Load Requirements</h1>
+            <p>Monroe County Florida Keys | 170-180 mph Extreme Design Wind Speed | Exposure Category D | Wind-Borne Debris Region | Surrounded by Open Water</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Key West Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">170-180</span>
+                    <span class="stat-label">mph Design Wind Speed (Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">D</span>
+                    <span class="stat-label">Exposure Category Required</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">FL</span>
+                    <span class="stat-label">Product Approval Required</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">EXTREME</span>
+                    <span class="stat-label">Hurricane Risk</span>
+                </div>
+            </div>
+
+            <h2>Key West: Extreme Wind Exposure at the Edge of America</h2>
+            <p>Key West, located at the southern tip of the Florida Keys in <strong>Monroe County, Florida</strong>, faces some of the most extreme wind load requirements in the United States. With design wind speeds of <strong>170-180 mph</strong> (3-second gust) for Risk Category II structures and mandatory <strong>Exposure Category D</strong> (the highest exposure classification), Key West's island geography creates the most severe wind load conditions possible.</p>
+
+            <p>While Key West is technically not within the official <strong>High-Velocity Hurricane Zone (HVHZ)</strong>—which applies only to Miami-Dade and Broward Counties—the wind load requirements are equally extreme or even more severe due to the unique exposure conditions. Surrounded entirely by open water with minimal obstructions, Key West buildings face sustained hurricane-force winds from all directions without the protection of terrain, forests, or adjacent structures.</p>
+
+            <div class="info-box">
+                <h4><strong>🌅</strong> Key West / Monroe County Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 170-180 mph (3-second gust, per ASCE 7-22)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~180-190 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~190-200 mph</p>
+                <p><strong>Exposure Category:</strong> D (open water exposure - highest category)</p>
+                <p><strong>Building Code:</strong> Florida Building Code 8th Edition (2023)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Product Approval:</strong> Florida Product Approval numbers required</p>
+                <p><strong>Wind-Borne Debris Region:</strong> Yes - impact-resistant glazing required</p>
+                <p><strong>County:</strong> Monroe County (Florida Keys)</p>
+            </div>
+
+            <h3>Why Key West Has Extreme Wind Requirements</h3>
+            <p>Key West's extreme wind load requirements stem from multiple factors that combine to create the worst possible wind exposure scenario:</p>
+
+            <ul>
+                <li><strong>Island Geography:</strong> Key West is surrounded entirely by open water, with the Atlantic Ocean to the east and the Gulf of Mexico to the west</li>
+                <li><strong>Exposure Category D:</strong> The highest exposure classification, with no terrain obstructions and fetch distances extending over open water for miles in all directions</li>
+                <li><strong>Direct Hurricane Path:</strong> Located in the prime Atlantic hurricane corridor, with major storms frequently passing directly over the Florida Keys</li>
+                <li><strong>Hurricane Irma (2017):</strong> A Category 4 hurricane that devastated the Keys with sustained winds of 130 mph and gusts over 150 mph</li>
+                <li><strong>Minimal Elevation:</strong> Low-lying terrain provides no topographic shielding from extreme winds</li>
+                <li><strong>Historical Vulnerability:</strong> The Labor Day Hurricane of 1935 remains the strongest landfalling hurricane in U.S. history, striking the Keys with estimated winds of 185 mph</li>
+            </ul>
+
+            <p>These factors result in design wind speeds approaching or exceeding HVHZ requirements despite being geographically outside the official HVHZ boundary.</p>
+
+            <h3>Exposure Category D: The Most Severe Wind Classification</h3>
+            <p><strong>Exposure Category D</strong> represents the most severe wind exposure condition in ASCE 7-22. It applies to areas where:</p>
+
+            <ul>
+                <li>The building is directly exposed to wind flowing over open water (excluding shorelines in hurricane regions)</li>
+                <li>The fetch distance extends at least 5,000 feet (1,524 meters) or 20 times the building height, whichever is greater</li>
+                <li>Structures have minimal obstructions between them and open water</li>
+            </ul>
+
+            <p>In Key West, Exposure D is mandatory for virtually all structures due to the island's geography. This exposure category produces significantly higher velocity pressures than Exposure C (used for most HVHZ areas) or Exposure B (suburban/urban).</p>
+
+            <div class="hvhz-card">
+                <h4>📊 Exposure Category Comparison for Key West</h4>
+                <p>For a structure at 15 feet mean roof height with V = 175 mph:</p>
+                <p><strong>Exposure D (Key West):</strong> Kz = 1.03, resulting in qz ≈ 67 psf</p>
+                <p><strong>Exposure C (typical HVHZ):</strong> Kz = 0.85, resulting in qz ≈ 55 psf</p>
+                <p><strong>Exposure B (not permitted):</strong> Kz = 0.57, resulting in qz ≈ 37 psf</p>
+                <p style="margin-top: 1rem;"><em>Key West's Exposure D requirements result in approximately 20-25% higher wind pressures than Exposure C and 80% higher than Exposure B.</em></p>
+            </div>
+
+            <h3>Key West Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Key West projects requires following ASCE 7-22 methodology with careful attention to Exposure Category D coefficients and extreme velocity ranges. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #ff6b35; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a Key West project with typical conditions:</p>
+            <ul>
+                <li><strong>V = 175 mph</strong> (example within 170-180 mph range for Risk Category II)</li>
+                <li><strong>Kz = 1.03</strong> (15 ft height, Exposure D)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain, minimal topographic effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (sea level elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 66.9 psf</strong>—among the highest in the United States for residential construction.</p>
+
+            <h3>Florida Product Approval Requirements</h3>
+            <p>All exterior building components in Key West must have valid <strong>Florida Product Approval</strong> numbers demonstrating compliance with the Florida Building Code and ASCE 7-22 wind load standards. While Miami-Dade County has its own Notice of Acceptance (NOA) system, Key West and Monroe County projects require statewide Florida Product Approvals.</p>
+
+            <p>Products requiring approval include:</p>
+
+            <ul>
+                <li><strong>Windows and Doors:</strong> All glazing assemblies must demonstrate compliance with high-velocity wind pressure testing and impact resistance</li>
+                <li><strong>Impact-Resistant Systems:</strong> Required throughout Key West as part of the Wind-Borne Debris Region</li>
+                <li><strong>Roof Coverings:</strong> Shingles, tiles, metal roofing, and membrane systems need Florida approvals</li>
+                <li><strong>Wall Cladding:</strong> Exterior finish systems require wind pressure testing documentation</li>
+                <li><strong>Shutters and Protective Systems:</strong> Storm shutters must have approval numbers</li>
+                <li><strong>Skylights:</strong> Must meet both wind pressure and impact requirements</li>
+            </ul>
+
+            <p>Verify product approvals through the <a href="https://www.floridabuilding.org/" target="_blank" rel="noopener">Florida Building Commission</a> website before specification or purchase.</p>
+
+            <h3>Wind-Borne Debris Region Requirements</h3>
+            <p>Key West is located entirely within a <strong>Wind-Borne Debris Region</strong> per ASCE 7-22, requiring impact-resistant glazing or protective systems for all exterior openings. This requirement addresses the high risk of flying debris during hurricanes, which can breach building envelopes and lead to catastrophic pressure increases and structural failure.</p>
+
+            <p>Compliance options include:</p>
+            <ul>
+                <li><strong>Impact-Resistant Glazing:</strong> Windows and doors tested to withstand large missile impacts (9-lb 2x4 lumber)</li>
+                <li><strong>Hurricane Shutters:</strong> Properly tested and approved shutter systems that can be deployed before storm events</li>
+                <li><strong>Laminated Glass:</strong> Multi-layer glazing systems that resist penetration even when cracked</li>
+            </ul>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Key West projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1, with higher categories requiring increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Key West Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~155-165 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>170-180 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~180-190 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~190-200 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Hurricane Irma and Key West's Vulnerability</h3>
+            <p>Hurricane Irma in September 2017 demonstrated the extreme vulnerability of the Florida Keys. As a powerful Category 4 hurricane, Irma made landfall at Cudjoe Key (just northeast of Key West) with maximum sustained winds of 130 mph and gusts exceeding 150 mph. Key West experienced sustained hurricane-force winds for over 12 hours.</p>
+
+            <p>The storm caused catastrophic damage throughout the Keys:</p>
+            <ul>
+                <li>Nearly 25% of homes in the Keys were destroyed</li>
+                <li>Another 65% sustained major damage</li>
+                <li>Entire mobile home parks were obliterated</li>
+                <li>Storm surge up to 10 feet inundated low-lying areas</li>
+                <li>The islands were without power for weeks</li>
+            </ul>
+
+            <p>Buildings constructed to modern wind load standards (post-2002 FBC) performed significantly better than older structures, validating the importance of current extreme wind requirements for the Keys.</p>
+
+            <h3>Key West Zip Codes and Wind Speed Reference</h3>
+            <p>Key West and the Lower Florida Keys share similar extreme wind exposure conditions. Common zip codes include:</p>
+
+            <ul>
+                <li><strong>33040:</strong> Key West (primary)</li>
+                <li><strong>33041:</strong> Big Pine Key</li>
+                <li><strong>33042:</strong> Summerland Key</li>
+                <li><strong>33043:</strong> Big Torch Key</li>
+                <li><strong>33044:</strong> Cudjoe Key</li>
+                <li><strong>33045:</strong> Key West Naval Air Station</li>
+                <li><strong>33050:</strong> Marathon and Middle Keys</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate extreme wind speeds and mandatory Exposure Category D when you enter any Florida Keys zip code or address.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Key West Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Key West extreme wind requirements including the 170-180 mph design velocity range, mandatory Exposure Category D, Risk Category adjustments, and component pressure coefficients. Simply enter your Key West project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Key West Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Key West</h3>
+            <p>All wind load calculations for Key West building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) or Architect licensed in Florida</strong>. The sealed calculations must include:</p>
+
+            <ul>
+                <li>Project address and zip code with confirmation of Monroe County location</li>
+                <li>Design wind speed (170-180 mph range for Risk Category II with specific value selected)</li>
+                <li>Exposure Category D designation and justification</li>
+                <li>Risk Category determination with supporting documentation</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>Product specifications with Florida Product Approval numbers</li>
+                <li>Wind-borne debris protection details</li>
+            </ul>
+
+            <h3>Official Monroe County and Florida Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Key West wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.monroecounty-fl.gov/1004/Building" target="_blank" rel="noopener" class="external-link">
+                    Monroe County Building Department
+                </a>
+                <a href="https://www.floridabuilding.org/" target="_blank" rel="noopener" class="external-link">
+                    Florida Building Commission
+                </a>
+                <a href="https://www.myfloridalicense.com/" target="_blank" rel="noopener" class="external-link">
+                    Florida PE Licensing (DBPR)
+                </a>
+            </div>
+
+            <h3>Common Key West Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Using Exposure C instead of D:</strong> Key West requires Exposure D due to open water exposure</li>
+                <li><strong>Underestimating wind speed:</strong> Must use 170-180 mph range per ASCE 7-22 maps for the Keys</li>
+                <li><strong>Assuming HVHZ exemption:</strong> While not technically HVHZ, requirements are equally or more stringent</li>
+                <li><strong>Products without Florida Approval:</strong> All exterior components need valid FL approval numbers</li>
+                <li><strong>Ignoring debris impact requirements:</strong> All glazing must be impact-resistant or protected</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher categories</li>
+                <li><strong>Using outdated codes:</strong> Must use ASCE 7-22 per FBC 8th Edition (2023)</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Key West Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Key West-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Exposure D:</strong> Recognizes Florida Keys zip codes and enforces Exposure Category D</li>
+                <li><strong>Extreme Wind Speeds:</strong> Applies appropriate 170-180 mph velocities based on ASCE 7-22 maps</li>
+                <li><strong>Risk Category Adjustment:</strong> Properly adjusts velocities for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Florida Building Code requirements</li>
+                <li><strong>Exposure D Coefficients:</strong> Correctly applies higher Kz values for open water exposure</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Monroe County permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Key West-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Key West and Florida Keys projects. Our software automatically handles the extreme 170-180 mph velocities, mandatory Exposure Category D, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Key West Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../florida-wind-load-requirements.html" style="color: #60a5fa;">Florida Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

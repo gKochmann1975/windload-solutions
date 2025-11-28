@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Orleans Wind Load Requirements | 150-160 mph | Orleans Parish | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to New Orleans wind load requirements. Orleans Parish design wind speed 150-160 mph, Hurricane Katrina and Ida lessons, Exposure Category C coastal, and Louisiana Building Code compliance with ASCE 7-22.">
+    <link rel="canonical" href="https://windload.solutions/cities/new-orleans-wind-load-requirements.html">
+    <meta name="keywords" content="New Orleans wind load, Orleans Parish wind speed, New Orleans wind load calculator, Louisiana building code, Hurricane Katrina, Hurricane Ida, 150 mph wind speed, New Orleans building permit, New Orleans wind load requirements">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - New Orleans specific colors (purple and gold) */
+        .hero {
+            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 25%, #a855f7 50%, #fbbf24 75%, #f59e0b 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '⚜️🎺';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #6d28d9;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #6d28d9;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #a855f7;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #6d28d9;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #6d28d9;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #6d28d9 0%, #a855f7 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(109, 40, 217, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #6d28d9 0%, #a855f7 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Hurricane Card */
+        .hurricane-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(109, 40, 217, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .hurricane-card h4 {
+            color: #6d28d9;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hurricane-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Louisiana",
+                "item": "https://windload.solutions/louisiana-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "New Orleans",
+                "item": "https://windload.solutions/cities/new-orleans-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../louisiana-wind-load-requirements.html"><i class="fas fa-fleur-de-lis"></i> Louisiana</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>New Orleans Wind Load Requirements</h1>
+            <p>Orleans Parish | 150-160 mph Design Wind Speed | Exposure Category C Coastal | Hurricane Katrina & Ida Lessons | Louisiana Building Code</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate New Orleans Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">150-160</span>
+                    <span class="stat-label">mph Design Wind Speed (Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">C</span>
+                    <span class="stat-label">Exposure Category (Coastal)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">EXTREME</span>
+                    <span class="stat-label">Hurricane Risk Zone</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE 7-22</span>
+                    <span class="stat-label">Current Wind Load Standard</span>
+                </div>
+            </div>
+
+            <h2>New Orleans: Extreme Hurricane Risk and Stringent Wind Load Requirements</h2>
+            <p>New Orleans, located in <strong>Orleans Parish, Louisiana</strong>, has some of the most stringent wind load requirements in the United States due to its extreme vulnerability to hurricanes and catastrophic history with tropical cyclones. The city requires a design wind speed of <strong>150-160 mph</strong> (3-second gust) for Risk Category II structures per ASCE 7-22 maps, reflecting New Orleans' direct exposure to Gulf of Mexico hurricanes.</p>
+
+            <p>These elevated requirements exist because New Orleans sits below sea level on the Gulf Coast, directly in the path of Atlantic and Gulf hurricanes. The city has experienced devastating hurricane impacts, most notably <strong>Hurricane Katrina in 2005</strong>—one of the deadliest and costliest natural disasters in U.S. history—and more recently <strong>Hurricane Ida in 2021</strong>, which made landfall as a Category 4 hurricane with 150 mph winds. Every building permit in New Orleans must demonstrate compliance with Louisiana State Uniform Construction Code requirements incorporating ASCE 7-22 wind load provisions.</p>
+
+            <div class="info-box">
+                <h4><strong>⚜️</strong> New Orleans / Orleans Parish Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 150-160 mph (3-second gust)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~165-175 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~175-185 mph</p>
+                <p><strong>Exposure Category:</strong> C (coastal/near Gulf), B possible inland areas</p>
+                <p><strong>Building Code:</strong> Louisiana State Uniform Construction Code (adopts IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>HVHZ Status:</strong> NOT in HVHZ (Florida-only designation)</p>
+                <p><strong>Hurricane Zone:</strong> EXTREME - Direct Gulf of Mexico exposure</p>
+                <p><strong>Parish:</strong> Orleans Parish (Louisiana uses parishes, not counties)</p>
+            </div>
+
+            <h3>Why New Orleans Has 150-160 mph Wind Speed Requirements</h3>
+            <p>New Orleans' 150-160 mph design wind speed for Risk Category II structures reflects the city's extreme hurricane vulnerability and documented history of catastrophic storm impacts. The city sits on the Gulf Coast below sea level, surrounded by Lake Pontchartrain to the north and the Mississippi River, creating a geographic situation where hurricane winds can cause devastating damage.</p>
+
+            <p>Hurricane Katrina in August 2005 fundamentally changed building practices in New Orleans. While Katrina's winds at landfall reached Category 3 strength (125 mph), the storm surge and levee failures caused unprecedented flooding that destroyed over 200,000 homes and displaced hundreds of thousands of residents. The disaster revealed critical infrastructure vulnerabilities and led to comprehensive updates to Louisiana building codes.</p>
+
+            <p>More recently, Hurricane Ida made landfall near New Orleans on August 29, 2021 (exactly 16 years after Katrina) as a powerful Category 4 hurricane with sustained winds of 150 mph—directly validating New Orleans' design wind speed requirements. Ida caused widespread structural damage throughout the New Orleans metro area, with thousands of buildings experiencing roof loss, window failures, and cladding damage. The 150-160 mph velocity represents a conservative approach that accounts for the most severe hurricane scenarios likely to affect the region.</p>
+
+            <h3>Hurricane Katrina and Hurricane Ida: Lessons Learned</h3>
+            <div class="hurricane-card">
+                <h4>Hurricane Katrina (August 29, 2005)</h4>
+                <p><strong>Category at Landfall:</strong> Category 3 (125 mph sustained winds)</p>
+                <p><strong>Impact on New Orleans:</strong> Catastrophic flooding from levee failures, over 1,800 deaths, 80% of city flooded, 200,000+ homes destroyed or severely damaged</p>
+                <p><strong>Code Changes:</strong> Led to comprehensive updates to Louisiana building codes, enhanced flood protection standards, improved levee systems, and stricter wind load requirements</p>
+                <p><strong>Economic Cost:</strong> Over $125 billion in damages, making it one of the costliest natural disasters in U.S. history</p>
+            </div>
+
+            <div class="hurricane-card">
+                <h4>Hurricane Ida (August 29, 2021)</h4>
+                <p><strong>Category at Landfall:</strong> Category 4 (150 mph sustained winds)</p>
+                <p><strong>Impact on New Orleans:</strong> Extreme wind damage, complete power grid failure, widespread roof and structural failures, demonstrated the importance of post-Katrina code improvements</p>
+                <p><strong>Validation of Design Wind Speeds:</strong> Ida's 150 mph winds directly validated the 150-160 mph design wind speed requirements—structures built to current codes performed significantly better than older buildings</p>
+                <p><strong>Economic Cost:</strong> Over $75 billion in damages across Louisiana, with billions in damage in New Orleans metro area</p>
+            </div>
+
+            <h3>New Orleans Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for New Orleans projects requires following ASCE 7-22 methodology while incorporating Louisiana-specific code requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #6d28d9; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For New Orleans coastal areas with V = 155 mph (mid-range ASCE 7-22 value) and typical conditions, the resulting pressures are substantially higher than inland Louisiana locations. A New Orleans coastal project with:</p>
+            <ul>
+                <li><strong>V = 155 mph</strong> (New Orleans coastal velocity per ASCE 7-22)</li>
+                <li><strong>Kz = 0.85</strong> (15 ft height, Exposure C)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (sea level elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 47.1 psf</strong>—significantly higher than inland Louisiana locations and comparable to other major Gulf Coast cities.</p>
+
+            <h3>Exposure Categories in New Orleans</h3>
+            <p>New Orleans projects must carefully evaluate Exposure Category based on proximity to the Gulf of Mexico, Lake Pontchartrain, and the Mississippi River. Unlike Miami-Dade County which mandates Exposure C for all structures, Louisiana follows standard ASCE 7-22 exposure determination procedures:</p>
+
+            <ul>
+                <li><strong>Exposure C (Coastal/Near Water):</strong> Required for structures within 1,500 feet of the Gulf Coast, Lake Pontchartrain shoreline, or Mississippi River—covers most of downtown New Orleans, the French Quarter, and waterfront areas. Exposure C assumes open terrain with scattered obstructions.</li>
+                <li><strong>Exposure B (Suburban/Inland):</strong> May be used for inland New Orleans neighborhoods with dense urban development, multiple obstructions, and distance from water bodies. However, engineers should use conservative judgment given New Orleans' overall coastal vulnerability.</li>
+            </ul>
+
+            <p>Many engineers conservatively use Exposure C for all New Orleans projects given the city's geographic situation, even when ASCE 7-22 would technically permit Exposure B for certain inland locations.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>New Orleans projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>New Orleans Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~140-145 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>150-160 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~165-175 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~175-185 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Louisiana State Uniform Construction Code</h3>
+            <p>New Orleans building permits must comply with the <strong>Louisiana State Uniform Construction Code (LSUCC)</strong>, which adopts the International Building Code (IBC) with Louisiana-specific amendments. The current LSUCC adopts the 2021 IBC which references <strong>ASCE 7-22</strong> for wind load calculations.</p>
+
+            <p>Key Louisiana code provisions affecting New Orleans wind loads:</p>
+            <ul>
+                <li><strong>ASCE 7-22 Mandatory:</strong> All wind load calculations must use current ASCE 7-22 methodology</li>
+                <li><strong>Risk Category IV for Critical Facilities:</strong> Hospitals, emergency operations centers, and fire stations must meet Risk Category IV wind requirements</li>
+                <li><strong>Wind-Borne Debris Regions:</strong> Many coastal New Orleans areas are designated as wind-borne debris regions requiring glazing protection</li>
+                <li><strong>Flood Zone Coordination:</strong> Wind loads must be calculated in coordination with flood elevation requirements</li>
+            </ul>
+
+            <h3>New Orleans Zip Codes and Wind Speed Reference</h3>
+            <p>New Orleans zip codes in Orleans Parish fall within the 150-160 mph design wind speed range for Risk Category II per ASCE 7-22, with coastal areas typically at the higher end. Common New Orleans zip codes include:</p>
+
+            <ul>
+                <li><strong>70112-70119:</strong> French Quarter, Central Business District, Warehouse District, Garden District</li>
+                <li><strong>70122-70127:</strong> Gentilly, Lake Terrace, Lakefront areas (near Lake Pontchartrain)</li>
+                <li><strong>70128-70131:</strong> East New Orleans, New Orleans East</li>
+                <li><strong>70163-70165:</strong> Algiers, Gretna area (West Bank)</li>
+                <li><strong>70114-70118:</strong> Uptown, Carrollton, Audubon areas</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct design wind speed when you enter any New Orleans zip code or street address by referencing ASCE 7-22 wind speed maps, eliminating the need for manual map interpolation.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your New Orleans Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all New Orleans requirements including the 150-160 mph design velocity, appropriate Exposure Category determination, Risk Category adjustments, and component pressure coefficients. Simply enter your New Orleans project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate New Orleans Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Louisiana</h3>
+            <p>All wind load calculations for New Orleans building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in Louisiana</strong>. The sealed calculations must include:</p>
+
+            <ul>
+                <li>Project address and zip code with ASCE 7-22 wind speed determination</li>
+                <li>Design wind speed (150-160 mph range for Risk Category II)</li>
+                <li>Exposure Category determination with supporting documentation</li>
+                <li>Risk Category determination per ASCE 7-22 Table 1.5-1</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>Wind-borne debris region determination if applicable</li>
+            </ul>
+
+            <h3>Official New Orleans and Louisiana Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for New Orleans wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://nola.gov/safety-and-permits/" target="_blank" rel="noopener" class="external-link">
+                    City of New Orleans Safety & Permits
+                </a>
+                <a href="https://www.doa.la.gov/osp/osfm/building-codes/" target="_blank" rel="noopener" class="external-link">
+                    Louisiana State Fire Marshal - Building Codes
+                </a>
+                <a href="https://www.lapels.com/" target="_blank" rel="noopener" class="external-link">
+                    Louisiana Professional Engineering Board
+                </a>
+            </div>
+
+            <h3>Common New Orleans Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Using outdated wind speeds:</strong> Must use ASCE 7-22 maps showing 150-160 mph for New Orleans, not older ASCE 7-10 or 7-16 values</li>
+                <li><strong>Incorrect Exposure Category:</strong> Coastal New Orleans projects near water require Exposure C, not suburban Exposure B</li>
+                <li><strong>Ignoring Risk Category:</strong> Schools, hospitals, and assembly buildings require Risk Category III or IV with higher wind speeds</li>
+                <li><strong>Using county instead of parish:</strong> Louisiana uses parishes—Orleans Parish, not "Orleans County"</li>
+                <li><strong>Assuming HVHZ requirements:</strong> New Orleans is NOT in Florida's HVHZ zone and does NOT require NOA product approvals</li>
+                <li><strong>Outdated calculation methods:</strong> Must use current ASCE 7-22 per Louisiana code adoption</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles New Orleans Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all New Orleans-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Wind Speed Lookup:</strong> Enter any New Orleans zip code and the system applies the correct 150-160 mph velocity from ASCE 7-22 maps</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides recommendations for Exposure C (coastal) vs. Exposure B (inland) based on project location</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Louisiana Building Code requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Louisiana building permit submission</li>
+            </ul>
+
+            <h3>Wind-Borne Debris Regions in New Orleans</h3>
+            <p>Many coastal areas of New Orleans are designated as <strong>Wind-Borne Debris Regions</strong> per ASCE 7-22, requiring glazing protection for windows and doors. While not subject to the stringent TAS impact testing required in Florida's HVHZ, New Orleans wind-borne debris regions still require:</p>
+
+            <ul>
+                <li><strong>Glazing Protection:</strong> Impact-resistant glazing, shutters, or other approved protection systems</li>
+                <li><strong>ASTM E1996 or E1886 Testing:</strong> National standards for impact resistance (less stringent than Florida TAS protocols)</li>
+                <li><strong>Code Official Approval:</strong> All glazing protection systems must be approved by Orleans Parish building officials</li>
+            </ul>
+
+            <p>The wind-borne debris region designation applies to areas within one mile of the Gulf Coast and areas where the design wind speed for Risk Category II structures exceeds 140 mph.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get New Orleans-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for New Orleans and Orleans Parish projects. Our software automatically handles the 150-160 mph Gulf Coast velocity, appropriate Exposure Category, and generates PE-ready reports for Louisiana building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try New Orleans Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../louisiana-wind-load-requirements.html" style="color: #60a5fa;">Louisiana Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
