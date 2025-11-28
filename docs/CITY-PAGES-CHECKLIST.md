@@ -27,12 +27,12 @@
 - [x] 16. Myrtle Beach, SC ✅ (cities/myrtle-beach-wind-load-requirements.html)
 - [x] 17. Wilmington, NC ✅ (cities/wilmington-wind-load-requirements.html)
 - [x] 18. Virginia Beach, VA ✅ (cities/virginia-beach-wind-load-requirements.html)
-- [ ] 19. Norfolk, VA
-- [ ] 20. Atlantic City, NJ
-- [ ] 21. Long Island, NY
-- [ ] 22. Cape Cod, MA
-- [ ] 23. Honolulu, HI
-- [ ] 24. San Juan, PR
+- [x] 19. Norfolk, VA ✅ (cities/norfolk-wind-load-requirements.html)
+- [x] 20. Atlantic City, NJ ✅ (cities/atlantic-city-wind-load-requirements.html)
+- [x] 21. Long Island, NY ✅ (cities/long-island-wind-load-requirements.html)
+- [x] 22. Cape Cod, MA ✅ (cities/cape-cod-wind-load-requirements.html)
+- [x] 23. Honolulu, HI ✅ (cities/honolulu-wind-load-requirements.html)
+- [x] 24. San Juan, PR ✅ (cities/san-juan-wind-load-requirements.html)
 - [x] 25. Key West, FL ✅ (cities/key-west-wind-load-requirements.html)
 
 ## Tier 2: Major Metropolitan Markets (26-50)
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 19
-- Remaining: 81
+- Completed: 25
+- Remaining: 75
 
 ---
 
