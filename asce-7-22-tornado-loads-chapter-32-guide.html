@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCE 7-22 Tornado Loads | Chapter 32 Complete Guide | Tornado Design Wind Speeds</title>
+    <meta name="description" content="Complete guide to ASCE 7-22 Chapter 32 Tornado Loads. Learn about tornado-prone regions, design wind speeds, Risk Category III and IV requirements, and tornado shelter design per the new ASCE 7-22 provisions.">
+    <link rel="canonical" href="https://windload.solutions/asce-7-22-tornado-loads-chapter-32-guide">
+    <meta name="keywords" content="ASCE 7-22 tornado loads, Chapter 32 tornado, tornado design wind speed, tornado-prone region, tornado shelter design, Risk Category III tornado, Risk Category IV tornado, ASCE 7-22 tornado map">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Mobile Navigation */
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            padding: 6rem 0 2rem 0;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-links.active {
+            left: 0;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 1rem 2rem;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 24, 255, 0.05);
+            color: #0018ff;
+            border-left-color: #0018ff;
+        }
+
+        .nav-links a i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Hero Section - Tornado Theme */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(75, 0, 130, 0.9) 0%, rgba(25, 25, 112, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.9);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Quick Answer Box - Tornado Purple */
+        .quick-answer {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin: -3rem auto 3rem;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.3);
+        }
+
+        .quick-answer h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quick-answer p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quick-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 3px solid #7c3aed;
+        }
+
+        .content-section h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .content-section h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #374151;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #7c3aed;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #5b21b6;
+        }
+
+        /* NEW in ASCE 7-22 Badge */
+        .new-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Risk Category Cards */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .risk-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid #e5e7eb;
+        }
+
+        .risk-card.cat-iii {
+            border-color: #f59e0b;
+        }
+
+        .risk-card.cat-iv {
+            border-color: #ef4444;
+        }
+
+        .risk-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .risk-card.cat-iii h3 {
+            color: #d97706;
+        }
+
+        .risk-card.cat-iv h3 {
+            color: #dc2626;
+        }
+
+        .risk-card ul {
+            margin: 1rem 0 0 1.5rem;
+        }
+
+        .risk-card li {
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+
+        /* Tornado Speed Table */
+        .tornado-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .tornado-table thead {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+        }
+
+        .tornado-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .tornado-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .tornado-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .tornado-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Info Box - Purple Theme */
+        .info-box {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #7c3aed;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #f59e0b;
+            margin: 2rem 0;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box p {
+            color: #78350f;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Critical Box - Red */
+        .critical-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #ef4444;
+            margin: 2rem 0;
+        }
+
+        .critical-box h4 {
+            color: #991b1b;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .critical-box p {
+            color: #7f1d1d;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tornado Region Map Placeholder */
+        .map-container {
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .map-container h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .region-visual {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .region-box {
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .region-box.zone-1 {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .region-box.zone-2 {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .region-box.zone-0 {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        }
+
+        .region-box span {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+            border: none;
+            padding-top: 0;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Links */
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #7c3aed;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(124,58,237,0.15);
+        }
+
+        /* Calculator CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Chapter Reference */
+        .chapter-ref {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chapter-ref i {
+            font-size: 2rem;
+            color: #7c3aed;
+        }
+
+        .chapter-ref-content h4 {
+            margin: 0 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .chapter-ref-content p {
+            margin: 0;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .quick-answer {
+                margin: -2rem 1rem 2rem;
+                padding: 1.5rem;
+            }
+
+            .chapter-ref {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "ASCE 7-22 Tornado Loads: Complete Chapter 32 Guide",
+        "description": "Comprehensive guide to the new ASCE 7-22 Chapter 32 tornado load provisions, including tornado-prone regions, design wind speeds, and requirements for Risk Category III and IV buildings.",
+        "author": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://windload.solutions/images/windloadsolutions-logo.svg"
+            }
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-11-29"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is new about tornado loads in ASCE 7-22?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7-22 introduces Chapter 32, a completely new chapter dedicated to tornado loads. This is the first time ASCE 7 has included specific provisions for tornado design. It applies to Risk Category III and IV buildings in tornado-prone regions and establishes tornado design wind speeds separate from the standard wind speed maps."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which buildings require tornado load design per ASCE 7-22?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7-22 Chapter 32 tornado load provisions apply to Risk Category III buildings (schools, jails, buildings with 300+ occupants) and Risk Category IV buildings (hospitals, fire stations, emergency shelters, essential facilities) located in tornado-prone regions as defined by ASCE 7-22 Figure 32.4-1."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are tornado-prone regions in ASCE 7-22?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7-22 defines tornado-prone regions through Figure 32.4-1, which shows contours of tornado design wind speeds across the United States. These regions are primarily concentrated in the Great Plains and Midwest (Tornado Alley), extending from Texas through Oklahoma, Kansas, Nebraska, and into the upper Midwest, with moderate risk areas in the Southeast."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do tornado design wind speeds differ from regular wind speeds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Tornado design wind speeds in ASCE 7-22 Chapter 32 are determined from Figure 32.4-1 specifically for tornado loading and are separate from the Chapter 26 basic wind speed maps used for non-tornado design. Tornado speeds can reach 160-250 mph in high-risk areas and represent EF-scale tornado intensities with specific return periods."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does ASCE 7-22 require tornado shelters?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7-22 Chapter 32 includes provisions for tornado shelter design. When required by the Authority Having Jurisdiction (AHJ) or building code, tornado shelters must be designed using the tornado load provisions. ICC 500 Standard for the Design and Construction of Storm Shelters provides additional detailed requirements for tornado shelter construction."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ASCE 7 Standards",
+                "item": "https://windload.solutions/asce-7-standards.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "ASCE 7-22 Tornado Loads",
+                "item": "https://windload.solutions/asce-7-22-tornado-loads-chapter-32-guide"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Wind Load Guide</a>
+        <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-wind"></i> Tornado Alley Guide</a>
+        <a href="hvhz-high-velocity-hurricane-zone-guide.html"><i class="fas fa-hurricane"></i> HVHZ Guide</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="images/wind-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">NEW IN ASCE 7-22</span>
+            <h1>ASCE 7-22 Tornado Loads<br>Chapter 32 Guide</h1>
+            <p>The first-ever tornado load provisions in ASCE 7 history. Learn about the new Chapter 32 requirements for Risk Category III and IV buildings in tornado-prone regions.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Calculate Wind Loads</a>
+        </div>
+    </section>
+
+    <!-- Quick Answer -->
+    <div class="container">
+        <div class="quick-answer">
+            <h2><i class="fas fa-bolt"></i> What's New in ASCE 7-22</h2>
+            <p><strong>Chapter 32 is brand new.</strong> For the first time in ASCE 7 history, tornado loads have their own dedicated chapter with specific design requirements.</p>
+            <p><strong>Who it affects:</strong> Risk Category III buildings (schools, assembly) and Risk Category IV buildings (hospitals, emergency facilities) in tornado-prone regions.</p>
+            <p><strong>Key change:</strong> These buildings must now be designed for tornado wind speeds in addition to standard wind loads, using tornado-specific maps and load factors.</p>
+        </div>
+    </div>
+
+    <!-- Chapter Reference -->
+    <div class="container">
+        <div class="chapter-ref">
+            <i class="fas fa-book"></i>
+            <div class="chapter-ref-content">
+                <h4>ASCE 7-22 Chapter 32: Tornado Loads</h4>
+                <p>Sections 32.1-32.6 | First introduced in ASCE 7-22 | No equivalent in ASCE 7-16 or earlier</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="container">
+            <h2>Why ASCE 7-22 Added Tornado Provisions <span class="new-badge">NEW</span></h2>
+            <p>Prior to ASCE 7-22, tornado loads were not explicitly addressed in the standard. Engineers either relied on basic wind load provisions (which don't capture tornado behavior), referenced FEMA guidelines, or used ICC 500 for storm shelter design. This left a gap in the design of critical facilities in tornado-prone regions.</p>
+
+            <p>The addition of Chapter 32 was driven by several factors:</p>
+            <ul>
+                <li><strong>Research advances:</strong> Better tornado wind speed data from enhanced Fujita (EF) scale studies and damage surveys</li>
+                <li><strong>Critical facility protection:</strong> Need to protect schools, hospitals, and emergency facilities where occupants cannot evacuate</li>
+                <li><strong>Consistency:</strong> Provides uniform approach rather than jurisdiction-by-jurisdiction requirements</li>
+                <li><strong>Life safety focus:</strong> Addresses the unique hazard tornadoes pose to building occupants</li>
+            </ul>
+
+            <div class="critical-box">
+                <h4><i class="fas fa-exclamation-circle"></i> Critical Understanding</h4>
+                <p><strong>Chapter 32 does NOT replace Chapter 26-30 wind load requirements.</strong> Buildings must still be designed for conventional wind loads. Chapter 32 provisions are <em>in addition to</em> standard wind design for applicable Risk Category III and IV buildings.</p>
+            </div>
+
+            <h2>Which Buildings Require Tornado Design?</h2>
+            <p>ASCE 7-22 Section 32.1 defines the scope of tornado load provisions. They apply when <strong>both</strong> conditions are met:</p>
+
+            <ol>
+                <li>The building is <strong>Risk Category III or IV</strong></li>
+                <li>The building is located in a <strong>tornado-prone region</strong> as defined by Figure 32.4-1</li>
+            </ol>
+
+            <div class="risk-grid">
+                <div class="risk-card cat-iii">
+                    <h3><i class="fas fa-school"></i> Risk Category III</h3>
+                    <p><strong>Tornado provisions apply to:</strong></p>
+                    <ul>
+                        <li>Schools (K-12 and higher education)</li>
+                        <li>Jails and detention facilities</li>
+                        <li>Buildings with 300+ occupants</li>
+                        <li>Power generating stations</li>
+                        <li>Water treatment facilities</li>
+                        <li>Sewage treatment plants</li>
+                        <li>Telecommunication centers</li>
+                    </ul>
+                </div>
+                <div class="risk-card cat-iv">
+                    <h3><i class="fas fa-hospital"></i> Risk Category IV</h3>
+                    <p><strong>Tornado provisions apply to:</strong></p>
+                    <ul>
+                        <li>Hospitals and healthcare facilities</li>
+                        <li>Fire and rescue stations</li>
+                        <li>Police stations</li>
+                        <li>Emergency shelters</li>
+                        <li>Emergency operations centers</li>
+                        <li>Air traffic control towers</li>
+                        <li>Buildings with critical national defense functions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4><strong>Risk Category I and II Buildings</strong></h4>
+                <p>Standard residential and commercial buildings (Risk Category I and II) are <strong>not required</strong> to be designed for tornado loads under ASCE 7-22. They continue to use only Chapter 26-30 wind provisions.</p>
+                <p>However, voluntary tornado shelter areas within these buildings may be designed per Chapter 32 or ICC 500.</p>
+            </div>
+
+            <h2>Tornado-Prone Regions</h2>
+            <p>ASCE 7-22 Figure 32.4-1 defines tornado-prone regions through contour maps showing tornado design wind speeds. The highest risk areas correspond to "Tornado Alley" and surrounding regions:</p>
+
+            <div class="map-container">
+                <h4>Tornado Risk Zones (Conceptual)</h4>
+                <div class="region-visual">
+                    <div class="region-box zone-1">High Risk<span>OK, KS, NE, TX Panhandle</span></div>
+                    <div class="region-box zone-2">Moderate Risk<span>Midwest, Southeast</span></div>
+                    <div class="region-box zone-0">Lower Risk<span>Coastal, Mountain, Northeast</span></div>
+                </div>
+                <p style="margin-top: 1rem; color: #4b5563; font-size: 0.95rem;"><strong>Note:</strong> Actual tornado design wind speeds must be determined from ASCE 7-22 Figure 32.4-1. Contact a licensed engineer for site-specific values.</p>
+            </div>
+
+            <h3>States with Highest Tornado Design Wind Speeds</h3>
+            <p>Based on ASCE 7-22 Figure 32.4-1, the following states have significant portions within tornado-prone regions requiring Chapter 32 design:</p>
+            <ul>
+                <li><strong>Oklahoma</strong> - Highest tornado design wind speeds in the nation (up to 250 mph for certain risk categories)</li>
+                <li><strong>Kansas</strong> - Central and eastern portions in high-risk contours</li>
+                <li><strong>Nebraska</strong> - Southern and eastern regions</li>
+                <li><strong>Texas</strong> - Panhandle and North Texas</li>
+                <li><strong>Iowa</strong> - Significant portions in moderate-high risk</li>
+                <li><strong>Missouri</strong> - Western and central regions</li>
+                <li><strong>Arkansas</strong> - Northern portions</li>
+                <li><strong>Illinois</strong> - Central and southern regions</li>
+                <li><strong>Indiana</strong> - Central and southern portions</li>
+                <li><strong>Alabama, Mississippi, Tennessee</strong> - "Dixie Alley" tornado corridor</li>
+            </ul>
+
+            <h2>Tornado Design Wind Speeds</h2>
+            <p>Chapter 32 establishes tornado design wind speeds that differ from standard basic wind speeds in Chapter 26. Key aspects:</p>
+
+            <table class="tornado-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Chapter 26 (Standard Wind)</th>
+                        <th>Chapter 32 (Tornado)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Speed Basis</strong></td>
+                        <td>3-second gust at 33 ft</td>
+                        <td>3-second gust tornado wind speed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Map Reference</strong></td>
+                        <td>Figures 26.5-1 through 26.5-2</td>
+                        <td>Figure 32.4-1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Speed Range</strong></td>
+                        <td>95-180 mph typical</td>
+                        <td>60-250 mph (varies by location)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category Dependence</strong></td>
+                        <td>Yes (different maps)</td>
+                        <td>Yes (different contours for III vs IV)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exposure Category</strong></td>
+                        <td>B, C, or D per site</td>
+                        <td>Exposure C assumed per Section 32.5</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Important Note on Exposure</h4>
+                <p>Section 32.5 specifies that <strong>Exposure C</strong> shall be used for tornado load calculations regardless of actual site conditions. This conservative approach accounts for the fact that tornadoes can level surrounding terrain, eliminating surface roughness effects.</p>
+            </div>
+
+            <h2>Load Calculation Procedures</h2>
+            <p>ASCE 7-22 Section 32.5 outlines the tornado load calculation procedure. Key provisions include:</p>
+
+            <h3>Section 32.5.1 - General Requirements</h3>
+            <ul>
+                <li>Use tornado wind speed from Figure 32.4-1 for the applicable Risk Category</li>
+                <li>Apply Exposure Category C for all sites</li>
+                <li>Calculate velocity pressure using standard equation with tornado wind speed</li>
+                <li>Internal pressure coefficients per Section 32.5.3</li>
+            </ul>
+
+            <h3>Section 32.5.2 - Velocity Pressure</h3>
+            <p>The velocity pressure equation for tornado loads follows the same form as Equation 26.10-1, but uses tornado-specific parameters:</p>
+            <p style="background: #f8fafc; padding: 1rem; border-radius: 8px; font-family: monospace; text-align: center;">
+                q<sub>T</sub> = 0.00256 K<sub>z</sub> K<sub>zt</sub> K<sub>e</sub> V<sub>T</sub><sup>2</sup>
+            </p>
+            <p>Where V<sub>T</sub> is the tornado design wind speed from Figure 32.4-1.</p>
+
+            <h3>Section 32.5.3 - Internal Pressure</h3>
+            <p>Tornado loads require consideration of <strong>Atmospheric Pressure Change (APC)</strong> effects unique to tornado vortices. Section 32.5.3 provides requirements for internal pressure that account for the rapid pressure drop as a tornado passes.</p>
+
+            <div class="info-box">
+                <h4><strong>Atmospheric Pressure Change (APC)</strong></h4>
+                <p>Unlike standard wind, tornadoes create a significant atmospheric pressure drop within their vortex. ASCE 7-22 addresses this through APC provisions that must be combined with wind-induced internal pressures for enclosed buildings.</p>
+                <p>This is a major difference from standard wind design and can significantly affect roof and wall pressures.</p>
+            </div>
+
+            <h2>Tornado Shelter Requirements</h2>
+            <p>Section 32.6 addresses tornado shelters and safe rooms. Key provisions:</p>
+
+            <ul>
+                <li><strong>Applicability:</strong> When tornado shelters are required by building code or Authority Having Jurisdiction</li>
+                <li><strong>Design basis:</strong> Use tornado wind speed for the shelter location</li>
+                <li><strong>Reference standard:</strong> ICC 500 Standard for the Design and Construction of Storm Shelters</li>
+                <li><strong>Debris impact:</strong> Shelters must resist windborne debris impact per ICC 500</li>
+            </ul>
+
+            <h3>When Are Tornado Shelters Required?</h3>
+            <p>ASCE 7-22 itself does not mandate tornado shelters. However, the following may require them:</p>
+            <ul>
+                <li><strong>IBC Section 423:</strong> Storm shelters required in certain occupancies (schools, 911 call centers, emergency operations centers) in areas with 250 mph tornado speed</li>
+                <li><strong>State/local codes:</strong> Oklahoma, Kansas, and other states have additional shelter requirements</li>
+                <li><strong>FEMA safe room programs:</strong> Voluntary programs with specific design criteria</li>
+            </ul>
+
+            <div class="critical-box">
+                <h4><i class="fas fa-exclamation-circle"></i> ICC 500 Reference</h4>
+                <p>For detailed tornado shelter design requirements including debris impact resistance, door specifications, ventilation, and occupancy calculations, refer to <strong>ICC 500-2020 Standard for the Design and Construction of Storm Shelters</strong>.</p>
+            </div>
+
+            <h2>Practical Implementation</h2>
+            <p>For engineers implementing ASCE 7-22 Chapter 32, consider the following workflow:</p>
+
+            <ol>
+                <li><strong>Determine Risk Category</strong> - Verify the building is Risk Category III or IV per Table 1.5-1</li>
+                <li><strong>Check tornado-prone region</strong> - Reference Figure 32.4-1 to determine if site is in tornado-prone region</li>
+                <li><strong>Obtain tornado design wind speed</strong> - Read V<sub>T</sub> from Figure 32.4-1 for applicable risk category</li>
+                <li><strong>Calculate tornado loads</strong> - Apply Section 32.5 procedures with Exposure C</li>
+                <li><strong>Compare with standard wind</strong> - Building must satisfy both Chapter 26-30 AND Chapter 32 requirements</li>
+                <li><strong>Address shelters if required</strong> - Design tornado shelters per Section 32.6 and ICC 500 if applicable</li>
+            </ol>
+
+            <h2>Comparison: Before and After ASCE 7-22</h2>
+
+            <table class="tornado-table">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>ASCE 7-16 and Earlier</th>
+                        <th>ASCE 7-22</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tornado provisions</strong></td>
+                        <td>None - not addressed</td>
+                        <td>Full Chapter 32 dedicated provisions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tornado design wind speeds</strong></td>
+                        <td>Not provided</td>
+                        <td>Figure 32.4-1 maps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Critical facility tornado design</strong></td>
+                        <td>Optional/by jurisdiction</td>
+                        <td>Required for RC III/IV in tornado-prone regions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Atmospheric pressure change</strong></td>
+                        <td>Not addressed</td>
+                        <td>Section 32.5.3 provisions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tornado shelter reference</strong></td>
+                        <td>Separate (FEMA, ICC 500)</td>
+                        <td>Integrated with ICC 500 reference</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>State-Specific Considerations</h2>
+            <p>While ASCE 7-22 provides the technical requirements, state adoption varies:</p>
+
+            <ul>
+                <li><a href="states/oklahoma-wind-load-requirements.html">Oklahoma</a> - In the heart of Tornado Alley with highest wind speed contours. State has additional tornado shelter requirements for schools.</li>
+                <li><a href="states/texas-wind-load-requirements.html">Texas</a> - Panhandle region has high tornado design speeds. State codes reference ASCE 7 with Texas-specific amendments.</li>
+                <li><a href="states/kansas-wind-load-requirements.html">Kansas</a> - Significant tornado risk throughout state. State adoption of IBC includes Chapter 32.</li>
+                <li><a href="states/missouri-wind-load-requirements.html">Missouri</a> - Moderate to high tornado risk. Joplin 2011 tornado influenced local requirements.</li>
+                <li><a href="states/alabama-wind-load-requirements.html">Alabama</a> - Part of "Dixie Alley" with significant tornado activity. April 2011 super outbreak affected codes.</li>
+            </ul>
+
+            <h2>Related ASCE 7-22 Changes</h2>
+            <p>Chapter 32 is one of several significant changes in ASCE 7-22. Related updates include:</p>
+
+            <ul>
+                <li><strong>Updated wind speed maps</strong> - Chapter 26 basic wind speed maps updated with new data</li>
+                <li><strong>Ground elevation factor (K<sub>e</sub>)</strong> - New factor for sites above sea level</li>
+                <li><strong>Topographic effects</strong> - Refined K<sub>zt</sub> provisions</li>
+                <li><strong>Component and cladding</strong> - Updated pressure coefficients in Chapter 30</li>
+            </ul>
+
+            <p>For a comprehensive overview of all ASCE 7-22 wind changes, see our <a href="asce-7-standards.html">ASCE 7 Standards Guide</a>.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Calculate Wind Loads Per ASCE 7-22</h2>
+            <p>WindLoadCalc.com provides ASCE 7-22 compliant wind load calculations for standard wind design. Enter your location and building parameters to get professional-grade calculations instantly.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Try Wind Load Calculator</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2>Related Resources</h2>
+            <div class="external-links-grid">
+                <a href="tornado-alley-wind-loads-safety.html" class="external-link">
+                    <i class="fas fa-wind"></i> Tornado Alley Wind Guide
+                </a>
+                <a href="risk-categories-wind-loads-guide.html" class="external-link">
+                    <i class="fas fa-shield-alt"></i> Risk Categories Explained
+                </a>
+                <a href="asce-7-standards.html" class="external-link">
+                    <i class="fas fa-book"></i> ASCE 7 Standards Overview
+                </a>
+                <a href="wind-exposure-categories-guide.html" class="external-link">
+                    <i class="fas fa-layer-group"></i> Exposure Categories Guide
+                </a>
+                <a href="complete-guide-wind-load-calculations.html" class="external-link">
+                    <i class="fas fa-graduation-cap"></i> Complete Wind Load Guide
+                </a>
+                <a href="states/oklahoma-wind-load-requirements.html" class="external-link">
+                    <i class="fas fa-map-marker-alt"></i> Oklahoma Requirements
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1f2937; color: white; padding: 3rem 0;">
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Professional ASCE 7 Wind Load Resources and Education</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
