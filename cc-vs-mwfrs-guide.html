@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Components & Cladding (C&C) vs MWFRS | Complete Comparison Guide | ASCE 7</title>
+    <meta name="description" content="Understand the critical differences between Components & Cladding (C&C) and Main Wind Force Resisting System (MWFRS) calculations per ASCE 7. Learn when to use each method and how pressures differ.">
+    <link rel="canonical" href="https://windload.solutions/cc-vs-mwfrs-guide">
+    <meta name="keywords" content="components and cladding, MWFRS, C&C wind load, main wind force resisting system, ASCE 7, wind pressure, effective wind area, building envelope">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Mobile Navigation */
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            padding: 6rem 0 2rem 0;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-links.active {
+            left: 0;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 1rem 2rem;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 24, 255, 0.05);
+            color: #0018ff;
+            border-left-color: #0018ff;
+        }
+
+        .nav-links a i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 24, 255, 0.85) 0%, rgba(24, 30, 87, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Quick Answer Box */
+        .quick-answer {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin: -3rem auto 3rem;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .quick-answer h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quick-answer p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quick-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 3px solid #ff6b35;
+        }
+
+        .content-section h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .content-section h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #374151;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #ff6b35;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #ff8c42;
+        }
+
+        /* Comparison Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-card.cc {
+            border-color: #3b82f6;
+        }
+
+        .comparison-card.mwfrs {
+            border-color: #8b5cf6;
+        }
+
+        .comparison-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .comparison-card.cc h3 {
+            color: #3b82f6;
+        }
+
+        .comparison-card.mwfrs h3 {
+            color: #8b5cf6;
+        }
+
+        .comparison-card ul {
+            margin: 1rem 0 0 1.5rem;
+        }
+
+        .comparison-card li {
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #ff6b35;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #ff6b35;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #f59e0b;
+            margin: 2rem 0;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box p {
+            color: #78350f;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Zone Diagram */
+        .zone-diagram {
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .zone-diagram h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .zone-visual {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .zone-box {
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .zone-box.interior {
+            background: #10b981;
+        }
+
+        .zone-box.edge {
+            background: #f59e0b;
+        }
+
+        .zone-box.corner {
+            background: #ef4444;
+        }
+
+        .zone-box span {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+            border: none;
+            padding-top: 0;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Links */
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        /* Calculator CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .quick-answer {
+                margin: -2rem 1rem 2rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Components & Cladding (C&C) vs MWFRS: Complete Comparison Guide",
+        "description": "Understand the critical differences between Components & Cladding (C&C) and Main Wind Force Resisting System (MWFRS) calculations per ASCE 7.",
+        "author": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://windload.solutions/images/windloadsolutions-logo.svg"
+            }
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-11-29"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is the difference between C&C and MWFRS?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "C&C (Components & Cladding) calculations determine wind pressures on building envelope elements like windows, doors, and wall panels. MWFRS (Main Wind Force Resisting System) calculations determine wind forces on the structural frame. C&C pressures are typically higher due to localized peak pressures on smaller areas."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When should I use C&C vs MWFRS calculations?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use C&C calculations when selecting windows, doors, cladding, and designing their connections. Use MWFRS calculations when designing the structural frame, foundations, lateral bracing, and shear walls."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why are C&C pressures higher than MWFRS?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "C&C pressures are higher because smaller tributary areas experience higher localized peak pressures. Corner and edge zones especially experience concentrated wind effects. MWFRS pressures are averaged over larger areas because the structural system responds to overall building forces."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ASCE 7 Standards",
+                "item": "https://windload.solutions/asce-7-standards.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "C&C vs MWFRS Guide",
+                "item": "https://windload.solutions/cc-vs-mwfrs-guide"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Wind Load Guide</a>
+        <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+        <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+        <a href="hvhz-high-velocity-hurricane-zone-guide.html"><i class="fas fa-hurricane"></i> HVHZ Guide</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="images/wind-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">ASCE 7 GUIDE</span>
+            <h1>Components & Cladding (C&C) vs MWFRS</h1>
+            <p>Master the critical differences between C&C and MWFRS wind load calculations. Learn when to use each method, how pressures differ, and why getting this right matters for building safety and code compliance.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Calculate Both C&C and MWFRS</a>
+        </div>
+    </section>
+
+    <!-- Quick Answer -->
+    <div class="container">
+        <div class="quick-answer">
+            <h2><i class="fas fa-bolt"></i> Quick Answer</h2>
+            <p><strong>C&C (Components & Cladding)</strong> = Wind pressures for windows, doors, wall panels, roof panels, and their connections. Higher pressures due to localized effects.</p>
+            <p><strong>MWFRS (Main Wind Force Resisting System)</strong> = Wind forces for structural frame, columns, beams, shear walls, and foundations. Lower pressures averaged over larger areas.</p>
+            <p><strong>Key Rule:</strong> Always calculate BOTH. C&C for envelope design, MWFRS for structural design. They serve different purposes and are not interchangeable.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="container">
+            <h2>Understanding the Two Wind Load Systems</h2>
+            <p>ASCE 7 requires two separate wind load calculations because different building systems respond differently to wind. The <strong>building envelope</strong> (exterior components) experiences concentrated localized pressures, while the <strong>structural frame</strong> responds to overall building forces. Using the wrong pressures can result in inadequate designs or unnecessary over-engineering.</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card cc">
+                    <h3><i class="fas fa-window-maximize"></i> Components & Cladding (C&C)</h3>
+                    <p><strong>What it covers:</strong></p>
+                    <ul>
+                        <li>Windows and glazing</li>
+                        <li>Exterior doors</li>
+                        <li>Wall cladding panels</li>
+                        <li>Roof panels and decking</li>
+                        <li>Shutters and louvers</li>
+                        <li>Fasteners and connections</li>
+                        <li>Soffits and fascia</li>
+                    </ul>
+                </div>
+                <div class="comparison-card mwfrs">
+                    <h3><i class="fas fa-building"></i> Main Wind Force Resisting System</h3>
+                    <p><strong>What it covers:</strong></p>
+                    <ul>
+                        <li>Structural frame (columns, beams)</li>
+                        <li>Lateral bracing systems</li>
+                        <li>Shear walls</li>
+                        <li>Moment frames</li>
+                        <li>Diaphragms</li>
+                        <li>Foundations</li>
+                        <li>Overall building stability</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Why C&C Pressures Are Higher Than MWFRS</h2>
+            <p>One of the most common questions is: "Why do C&C calculations produce higher pressures than MWFRS?" The answer lies in how wind affects buildings at different scales:</p>
+
+            <h3>1. Tributary Area Effect</h3>
+            <p>C&C pressures depend on <strong>effective wind area</strong> - smaller areas experience higher peak pressures because localized gusts have more impact. A 3-foot window experiences higher peak pressure than a 50-foot wall section. MWFRS pressures are averaged over the entire building surface because the structural system responds to overall forces, not localized peaks.</p>
+
+            <h3>2. Zone Location Effect</h3>
+            <p>C&C calculations divide the building into zones with different pressure coefficients:</p>
+
+            <div class="zone-diagram">
+                <h4>C&C Pressure Zones (Roof Example)</h4>
+                <div class="zone-visual">
+                    <div class="zone-box corner">Zone 3<span>Corners</span></div>
+                    <div class="zone-box edge">Zone 2<span>Edges/Perimeter</span></div>
+                    <div class="zone-box interior">Zone 1<span>Interior Field</span></div>
+                </div>
+                <p style="margin-top: 1rem; color: #4b5563;">Corner zones (Zone 3) experience the highest pressures due to wind flow separation and vortex shedding.</p>
+            </div>
+
+            <h3>3. Statistical Basis</h3>
+            <p>C&C pressures are based on peak instantaneous pressures that must be resisted by individual components. MWFRS pressures are based on the sustained loads that the overall structure must resist, allowing for load sharing among structural elements.</p>
+
+            <h2>Comparison Table: C&C vs MWFRS</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Characteristic</th>
+                        <th>C&C</th>
+                        <th>MWFRS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ASCE 7 Chapter</strong></td>
+                        <td>Chapter 30</td>
+                        <td>Chapters 27, 28</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pressure Magnitude</strong></td>
+                        <td>Higher (peak localized)</td>
+                        <td>Lower (averaged)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tributary Area</strong></td>
+                        <td>Individual components (1-500 sq ft typical)</td>
+                        <td>Entire building face</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zone Dependence</strong></td>
+                        <td>Yes (Interior, Edge, Corner)</td>
+                        <td>No (uniform distribution)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Used For</strong></td>
+                        <td>Product selection, connection design</td>
+                        <td>Structural frame design</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Both + and - Pressures</strong></td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Internal Pressure</strong></td>
+                        <td>Included</td>
+                        <td>Included</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>When to Use Each Calculation</h2>
+
+            <div class="info-box">
+                <h4><strong>Use C&C Calculations When:</strong></h4>
+                <p>• Selecting windows, doors, or storefronts (comparing product DP ratings to required pressures)</p>
+                <p>• Specifying wall cladding systems (metal panels, EIFS, stucco)</p>
+                <p>• Designing roof panel fastening patterns</p>
+                <p>• Determining hurricane shutter requirements</p>
+                <p>• Designing connections between envelope components and structure</p>
+                <p>• Specifying skylights, louvers, or other penetrations</p>
+            </div>
+
+            <div class="info-box">
+                <h4><strong>Use MWFRS Calculations When:</strong></h4>
+                <p>• Designing the structural frame (steel, concrete, wood, masonry)</p>
+                <p>• Sizing lateral force resisting elements (braces, shear walls, moment frames)</p>
+                <p>• Designing foundations for overturning and sliding</p>
+                <p>• Checking overall building drift and stability</p>
+                <p>• Designing diaphragms (roof, floor decks)</p>
+                <p>• Determining base shear for lateral analysis</p>
+            </div>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Common Mistake</h4>
+                <p><strong>Never use MWFRS pressures to select C&C products!</strong> MWFRS pressures are lower and will result in under-designed envelope components. A window selected based on MWFRS pressures may fail during a high-wind event, causing envelope breach, water intrusion, and potential structural damage from internal pressure increase.</p>
+            </div>
+
+            <h2>Effective Wind Area Explained</h2>
+            <p>A critical concept in C&C calculations is <strong>effective wind area</strong>. This is NOT simply the area of the component being designed. For rectangular products:</p>
+
+            <p><strong>Effective Wind Area = Span × Span/3</strong></p>
+
+            <p>However, effective wind area need not be less than the actual tributary area. This calculation accounts for the correlation of wind gusts across a surface - larger spans "see" more averaged wind pressures while smaller spans experience more concentrated peaks.</p>
+
+            <h3>Example: Window Effective Wind Area</h3>
+            <ul>
+                <li><strong>Window Size:</strong> 4 ft wide × 5 ft tall</li>
+                <li><strong>Span (longer dimension):</strong> 5 ft</li>
+                <li><strong>Calculated:</strong> 5 × 5/3 = 8.33 sq ft</li>
+                <li><strong>Actual area:</strong> 4 × 5 = 20 sq ft</li>
+                <li><strong>Effective Wind Area:</strong> 20 sq ft (use actual, since it's larger than calculated)</li>
+            </ul>
+
+            <h2>ASCE 7 Chapter References</h2>
+
+            <h3>For C&C (Chapter 30)</h3>
+            <ul>
+                <li><strong>Part 1:</strong> Low-Rise Buildings (h ≤ 60 ft)</li>
+                <li><strong>Part 2:</strong> Low-Rise Buildings (Simplified)</li>
+                <li><strong>Part 3:</strong> All Buildings (h > 60 ft)</li>
+                <li><strong>Part 4:</strong> All Buildings (Simplified)</li>
+                <li><strong>Part 5:</strong> Open Buildings (roof overhangs)</li>
+                <li><strong>Part 6:</strong> Parapets and Rooftop Equipment</li>
+            </ul>
+
+            <h3>For MWFRS (Chapters 27-28)</h3>
+            <ul>
+                <li><strong>Chapter 27:</strong> Directional Procedure (most common)</li>
+                <li><strong>Chapter 28:</strong> Envelope Procedure (low-rise buildings)</li>
+            </ul>
+
+            <p>Most engineers use Chapter 30 Part 1 or Part 3 for C&C and Chapter 27 Part 1 for MWFRS, though simplified methods are available for certain building types.</p>
+
+            <h2>Practical Example: Pressure Comparison</h2>
+            <p>Consider a 3-story commercial building in Miami, FL (175 mph design wind speed, Exposure C):</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>C&C Pressure</th>
+                        <th>MWFRS Pressure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Wall - Interior Zone</td>
+                        <td>±72 psf</td>
+                        <td>±48 psf</td>
+                    </tr>
+                    <tr>
+                        <td>Wall - Corner Zone</td>
+                        <td>±108 psf</td>
+                        <td>±48 psf (same)</td>
+                    </tr>
+                    <tr>
+                        <td>Roof - Interior Zone</td>
+                        <td>-85 psf / +32 psf</td>
+                        <td>-62 psf / +28 psf</td>
+                    </tr>
+                    <tr>
+                        <td>Roof - Corner Zone</td>
+                        <td>-142 psf / +32 psf</td>
+                        <td>-62 psf / +28 psf</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Notice how C&C corner zone pressures can be nearly 3× higher than MWFRS pressures for the same location. This is why using the wrong pressure type can be dangerous.</p>
+
+            <h2>How WindLoadCalc.com Handles Both</h2>
+            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically generates both C&C and MWFRS calculations for your project:</p>
+
+            <ul>
+                <li><strong>C&C Output:</strong> Zone-based pressures for all wall and roof zones, organized by effective wind area</li>
+                <li><strong>MWFRS Output:</strong> Design pressures for windward, leeward, side walls, and roof surfaces</li>
+                <li><strong>Product Selection Tables:</strong> Easy-to-use tables for matching window/door DP ratings to required pressures</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculations suitable for permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Both C&C and MWFRS Pressures Instantly</h2>
+            <p>WindLoadCalc.com calculates both Components & Cladding and MWFRS pressures per ASCE 7-22 and ASCE 7-16. Enter your location and building dimensions to get comprehensive wind load calculations for envelope and structural design.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Try Wind Load Calculator</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2>Related Resources</h2>
+            <div class="external-links-grid">
+                <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html" class="external-link">
+                    <i class="fas fa-th"></i> Full C&C Calculation Guide
+                </a>
+                <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html" class="external-link">
+                    <i class="fas fa-building"></i> Full MWFRS Guide
+                </a>
+                <a href="complete-guide-wind-load-calculations.html" class="external-link">
+                    <i class="fas fa-graduation-cap"></i> Complete Wind Load Guide
+                </a>
+                <a href="wind-exposure-categories-guide.html" class="external-link">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                </a>
+                <a href="risk-categories-wind-loads-guide.html" class="external-link">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                </a>
+                <a href="hvhz-high-velocity-hurricane-zone-guide.html" class="external-link">
+                    <i class="fas fa-hurricane"></i> HVHZ Guide
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1f2937; color: white; padding: 3rem 0;">
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Professional ASCE 7 Wind Load Resources and Education</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
