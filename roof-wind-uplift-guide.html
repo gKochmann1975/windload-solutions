@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roof Wind Uplift Guide | C&C Roof Pressures | Zones 1, 2, 3 | ASCE 7</title>
+    <meta name="description" content="Complete guide to roof wind uplift pressures per ASCE 7. Learn C&C roof zones (1, 2, 3), uplift calculations for roofing, fastener design, and roof-to-wall connections for high-wind regions.">
+    <link rel="canonical" href="https://windload.solutions/roof-wind-uplift-guide">
+    <meta name="keywords" content="roof wind uplift, roof C&C pressures, roof zone 1 2 3, ASCE 7 roof loads, roof fastener design, roof to wall connection, hurricane roof straps, wind uplift calculation">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Mobile Navigation */
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            padding: 6rem 0 2rem 0;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 5px 0 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-links.active {
+            left: 0;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 1rem 2rem;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-links a:hover {
+            background: rgba(0, 24, 255, 0.05);
+            color: #0018ff;
+            border-left-color: #0018ff;
+        }
+
+        .nav-links a i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Hero Section - Red Uplift Theme */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(153, 27, 27, 0.95) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Quick Answer Box */
+        .quick-answer {
+            background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin: -3rem auto 3rem;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
+        }
+
+        .quick-answer h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quick-answer p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .quick-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 3px solid #ef4444;
+        }
+
+        .content-section h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .content-section h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #374151;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul, .content-section ol {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #ef4444;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #991b1b;
+        }
+
+        /* Roof Zone Diagram */
+        .zone-diagram {
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .zone-diagram h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .zone-visual {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .zone-box {
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .zone-box.zone-1 {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .zone-box.zone-2 {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .zone-box.zone-3 {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .zone-box span {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .data-table thead {
+            background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+            color: white;
+        }
+
+        .data-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .data-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #ef4444;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #ef4444;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #f59e0b;
+            margin: 2rem 0;
+        }
+
+        .warning-box h4 {
+            color: #92400e;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box p {
+            color: #78350f;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+            border: none;
+            padding-top: 0;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Links */
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #ef4444;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #ef4444;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239,68,68,0.15);
+        }
+
+        /* Calculator CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .quick-answer {
+                margin: -2rem 1rem 2rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Roof Wind Uplift Guide: C&C Pressures and Zone Design",
+        "description": "Comprehensive guide to roof wind uplift pressures per ASCE 7 including roof zones 1, 2, 3, uplift calculations, fastener design, and roof-to-wall connections.",
+        "author": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://windload.solutions/images/windloadsolutions-logo.svg"
+            }
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-11-29"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What are roof zones 1, 2, and 3 in ASCE 7?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7 defines three roof C&C zones: Zone 1 is the interior field of the roof with lowest pressures, Zone 2 is the perimeter/edge area with higher pressures, and Zone 3 is the corner area with highest pressures. Zone boundaries are defined by dimension 'a' which is typically 10% of the least horizontal dimension or 0.4h, whichever is smaller."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why are roof corner pressures (Zone 3) so much higher?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Roof corner pressures are highest because wind flowing over the building creates vortices (spiral wind patterns) at corners that generate intense localized suction. These corner vortices can create uplift pressures 2-3 times higher than the interior roof field, making proper fastening in Zone 3 critical for preventing roof failure."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I calculate roof-to-wall connection uplift?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Roof-to-wall connection uplift is calculated using C&C pressures multiplied by the tributary roof area for each connection point. The net uplift must be resisted by hurricane straps, clips, or other connectors with adequate capacity. In high-wind regions, connectors may need to resist 500-2000+ pounds of uplift per connection."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What fastener spacing is required for high-wind roof zones?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Fastener spacing varies by zone, roof type, and wind speed. Zone 3 corners typically require the closest spacing (often 4-6 inches on center at edges), Zone 2 edges require intermediate spacing, and Zone 1 field areas allow the widest spacing. Manufacturers provide specific fastening schedules based on design pressures."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need hurricane straps for my roof?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Hurricane straps or equivalent connectors are required in most high-wind regions (typically where design wind speeds exceed 110-115 mph). Many building codes require continuous load path connections from roof to foundation. Even in moderate wind areas, straps significantly improve roof performance during severe storms."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "ASCE 7 Standards",
+                "item": "https://windload.solutions/asce-7-standards.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Roof Wind Uplift Guide",
+                "item": "https://windload.solutions/roof-wind-uplift-guide"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Wind Load Guide</a>
+        <a href="cc-vs-mwfrs-guide.html"><i class="fas fa-balance-scale"></i> C&C vs MWFRS</a>
+        <a href="building-envelope-wind-loads-guide.html"><i class="fas fa-building"></i> Building Envelope</a>
+        <a href="hvhz-high-velocity-hurricane-zone-guide.html"><i class="fas fa-hurricane"></i> HVHZ Guide</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="images/wind-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">ASCE 7 ROOF C&C</span>
+            <h1>Roof Wind Uplift Guide</h1>
+            <p>Master roof wind uplift calculations for zones 1, 2, and 3. Learn fastener design, hurricane straps, and roof-to-wall connections to prevent roof failures in high-wind events.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Calculate Roof Uplift</a>
+        </div>
+    </section>
+
+    <!-- Quick Answer -->
+    <div class="container">
+        <div class="quick-answer">
+            <h2><i class="fas fa-arrow-up"></i> Quick Answer</h2>
+            <p><strong>Roof uplift</strong> = Negative (suction) wind pressure that tries to lift the roof off the building. Corners (Zone 3) experience the highest uplift, often 2-3x higher than interior areas (Zone 1).</p>
+            <p><strong>Key concept:</strong> Roofs fail when uplift force exceeds the weight of roofing plus connection capacity. In hurricanes, roofs often fail at corners first due to concentrated vortex suction.</p>
+            <p><strong>Critical design:</strong> Roof-to-wall connections (hurricane straps) and fastener patterns must be designed for C&C pressures, not MWFRS. This is where most roof failures originate.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="container">
+            <h2>Understanding Roof C&C Zones</h2>
+            <p>ASCE 7 divides roofs into three zones based on pressure intensity. Understanding these zones is critical for proper fastener spacing, roofing selection, and connection design.</p>
+
+            <div class="zone-diagram">
+                <h4>Roof C&C Pressure Zones</h4>
+                <div class="zone-visual">
+                    <div class="zone-box zone-1">Zone 1<span>Interior Field</span></div>
+                    <div class="zone-box zone-2">Zone 2<span>Edges/Perimeter</span></div>
+                    <div class="zone-box zone-3">Zone 3<span>Corners (Highest)</span></div>
+                </div>
+                <p style="margin-top: 1rem; color: #4b5563;">Zone 3 corner width = Zone 2 edge width = dimension 'a' (typically 10% of least horizontal dimension or 0.4h, not less than 4% of least dimension or 3 ft)</p>
+            </div>
+
+            <h3>Zone 1 - Interior Field</h3>
+            <p>Zone 1 covers the central portion of the roof away from edges and corners. While Zone 1 pressures are the lowest, they still exceed MWFRS pressures and must not be ignored. This zone typically comprises the majority of roof area.</p>
+            <ul>
+                <li>Lowest C&C pressure coefficients</li>
+                <li>Standard fastener spacing per manufacturer</li>
+                <li>Typically 50-70% of roof area</li>
+            </ul>
+
+            <h3>Zone 2 - Edges/Perimeter</h3>
+            <p>Zone 2 extends along all roof edges for a width of dimension 'a'. As wind flows over the building, it accelerates at roof edges causing higher suction. Ridge lines on gable roofs also experience Zone 2 pressures.</p>
+            <ul>
+                <li>Moderate C&C pressure coefficients</li>
+                <li>Reduced fastener spacing required</li>
+                <li>Extends 'a' from all edges and ridges</li>
+            </ul>
+
+            <h3>Zone 3 - Corners</h3>
+            <p>Zone 3 occupies corners where two Zone 2 areas meet. Corner vortices create intense localized suction that can be 2-3 times higher than Zone 1. This is where most roof failures initiate during hurricanes and severe storms.</p>
+            <ul>
+                <li><strong>Highest</strong> C&C pressure coefficients</li>
+                <li>Closest fastener spacing required</li>
+                <li>Often requires enhanced connection details</li>
+                <li>Critical for roof membrane and shingle attachment</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Corner Failure Mode</h4>
+                <p>Post-storm damage surveys consistently show roof failures initiating at corners (Zone 3). Once a corner lifts, the failure propagates across the roof as wind gets under the membrane or sheathing. Proper Zone 3 design is the first line of defense.</p>
+            </div>
+
+            <h2>Why Roof Uplift Is Critical</h2>
+            <p>Roof systems must resist significant suction (negative) pressures during high winds. Unlike walls that experience both positive and negative pressures, roofs primarily experience suction. Key factors:</p>
+
+            <h3>Physics of Roof Uplift</h3>
+            <ol>
+                <li><strong>Bernoulli effect:</strong> Fast-moving air over the roof creates low pressure (suction)</li>
+                <li><strong>Internal pressure:</strong> Positive internal pressure pushes up on the roof from inside</li>
+                <li><strong>Combined effect:</strong> External suction + internal pressure = total uplift force</li>
+                <li><strong>Dead load offset:</strong> Only the weight of roofing and structure resists uplift</li>
+            </ol>
+
+            <h3>Net Uplift Calculation</h3>
+            <p>Net roof uplift = C&C suction pressure + internal pressure - dead load</p>
+
+            <div class="info-box">
+                <h4><strong>Example: Net Uplift on Low-Rise Building</strong></h4>
+                <p><strong>Zone 3 C&C pressure:</strong> -85 psf (suction)</p>
+                <p><strong>Internal pressure (enclosed):</strong> +18 psf (adds to uplift)</p>
+                <p><strong>Combined uplift:</strong> -85 + (-18) = -103 psf</p>
+                <p><strong>Dead load (roofing + structure):</strong> +15 psf</p>
+                <p><strong>Net uplift:</strong> -103 + 15 = -88 psf</p>
+                <p>Connections must resist 88 psf net uplift in Zone 3.</p>
+            </div>
+
+            <h2>Roof-to-Wall Connections</h2>
+            <p>The roof-to-wall connection is the critical link in the continuous load path. These connections must transfer roof uplift forces to wall framing and ultimately to the foundation.</p>
+
+            <h3>Connection Types</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Connector Type</th>
+                        <th>Typical Capacity</th>
+                        <th>Application</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Toe Nails</strong></td>
+                        <td>100-200 lbs</td>
+                        <td>Low-wind areas only; not permitted in high-wind</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hurricane Clips</strong></td>
+                        <td>200-500 lbs</td>
+                        <td>Moderate wind areas; single-sided attachment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hurricane Straps</strong></td>
+                        <td>500-1000+ lbs</td>
+                        <td>High-wind areas; wraps over truss/rafter</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Engineered Connectors</strong></td>
+                        <td>1500-3000+ lbs</td>
+                        <td>Extreme wind; custom designed for loads</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Calculating Required Capacity</h3>
+            <p>Connection uplift capacity = Net uplift pressure × Tributary area</p>
+            <p>For a rafter spaced at 24" on center with 15 ft span:</p>
+            <ul>
+                <li>Tributary area = 2 ft × 15 ft = 30 sq ft</li>
+                <li>Net uplift = -88 psf (from example above)</li>
+                <li>Required capacity = 88 × 30 = 2,640 lbs per connection</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Zone 3 Corners</h4>
+                <p>Connections at roof corners (Zone 3) require the highest capacity. Don't use field area (Zone 1) pressures for corner connections. Zone 3 may require capacities 2-3 times higher than Zone 1.</p>
+            </div>
+
+            <h2>Roof Fastener Design</h2>
+            <p>Roof covering fasteners (for shingles, metal panels, membrane attachment) must resist C&C uplift pressures. Proper fastener selection and spacing prevents roof cover failure.</p>
+
+            <h3>Fastener Spacing by Zone</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>Typical Edge Spacing</th>
+                        <th>Typical Field Spacing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Zone 1 (Field)</strong></td>
+                        <td>6" o.c.</td>
+                        <td>12" o.c.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zone 2 (Edges)</strong></td>
+                        <td>4-6" o.c.</td>
+                        <td>6" o.c.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zone 3 (Corners)</strong></td>
+                        <td>4" o.c.</td>
+                        <td>4-6" o.c.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Manufacturer Requirements</h3>
+            <p>Most roofing manufacturers provide high-wind installation instructions that specify:</p>
+            <ul>
+                <li>Fastener type and size</li>
+                <li>Spacing patterns for each zone</li>
+                <li>Starter course requirements</li>
+                <li>Edge and ridge details</li>
+                <li>Underlayment requirements</li>
+            </ul>
+
+            <h2>Roof Types and Uplift Considerations</h2>
+
+            <h3>Low-Slope/Flat Roofs</h3>
+            <ul>
+                <li><strong>Membrane attachment:</strong> Fully adhered, mechanically attached, or ballasted</li>
+                <li><strong>FM Global requirements:</strong> Many commercial roofs require FM approval</li>
+                <li><strong>Perimeter and corner securement:</strong> Enhanced attachment in Zones 2 and 3</li>
+                <li><strong>Parapet effects:</strong> May affect pressure distribution and zone dimensions</li>
+            </ul>
+
+            <h3>Steep-Slope Roofs</h3>
+            <ul>
+                <li><strong>Shingle uplift:</strong> Wind can lift shingle tabs; sealant strips critical</li>
+                <li><strong>Ridge venting:</strong> Must resist uplift while maintaining ventilation</li>
+                <li><strong>Roof pitch effect:</strong> Steeper roofs may have different pressure coefficients</li>
+                <li><strong>Hip vs gable:</strong> Hip roofs generally perform better in high winds</li>
+            </ul>
+
+            <h3>Metal Roofs</h3>
+            <ul>
+                <li><strong>Standing seam:</strong> Clip attachment allows thermal movement</li>
+                <li><strong>Through-fastened:</strong> Exposed fasteners; more uplift resistant but potential leak points</li>
+                <li><strong>Panel width:</strong> Wider panels have larger tributary area per fastener</li>
+                <li><strong>Edge/rake details:</strong> Critical for preventing wind entry and progressive failure</li>
+            </ul>
+
+            <h2>Continuous Load Path</h2>
+            <p>The roof is one component in the continuous load path that must transfer wind forces from roof to foundation. Every connection must be designed for the loads passing through it:</p>
+
+            <ol>
+                <li><strong>Roof covering → Sheathing:</strong> Nails or screws resist covering uplift</li>
+                <li><strong>Sheathing → Framing:</strong> Sheathing nailing resists diaphragm loads and uplift</li>
+                <li><strong>Rafters/Trusses → Wall:</strong> Hurricane straps/connectors resist uplift</li>
+                <li><strong>Wall → Floor/Foundation:</strong> Hold-downs and anchor bolts complete the path</li>
+            </ol>
+
+            <div class="info-box">
+                <h4><strong>Chain Analogy</strong></h4>
+                <p>The continuous load path is only as strong as its weakest link. Missing or undersized hurricane straps can cause roof failure even if all other connections are adequate. Every connection in the chain must resist its share of loads.</p>
+            </div>
+
+            <h2>Code Requirements by Region</h2>
+
+            <h3>Florida Building Code / HVHZ</h3>
+            <ul>
+                <li>FBC Roofing Chapter 15 requirements</li>
+                <li>HVHZ enhanced attachment schedules</li>
+                <li>Secondary water barrier requirements</li>
+                <li>Product approval and labeling</li>
+            </ul>
+
+            <h3>Texas Windstorm (TWIA)</h3>
+            <ul>
+                <li>WPI-8 inspection requirements for coastal counties</li>
+                <li>Continuous load path documentation</li>
+                <li>Enhanced roof-to-wall connections</li>
+            </ul>
+
+            <h3>International Building Code</h3>
+            <ul>
+                <li>IBC Chapter 15 Roof Assemblies</li>
+                <li>ASCE 7 reference for wind pressures</li>
+                <li>Special inspections for high-wind regions</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Calculate Roof Uplift Pressures</h2>
+            <p>WindLoadCalc.com calculates C&C roof pressures for all three zones per ASCE 7-22 and ASCE 7-16. Get zone-by-zone pressures for accurate fastener and connection design.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Try Wind Load Calculator</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h2>Related Resources</h2>
+            <div class="external-links-grid">
+                <a href="building-envelope-wind-loads-guide.html" class="external-link">
+                    <i class="fas fa-building"></i> Building Envelope Guide
+                </a>
+                <a href="cc-vs-mwfrs-guide.html" class="external-link">
+                    <i class="fas fa-balance-scale"></i> C&C vs MWFRS Guide
+                </a>
+                <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html" class="external-link">
+                    <i class="fas fa-th"></i> Full C&C Calculation Guide
+                </a>
+                <a href="hvhz-high-velocity-hurricane-zone-guide.html" class="external-link">
+                    <i class="fas fa-hurricane"></i> HVHZ Requirements
+                </a>
+                <a href="wind-exposure-categories-guide.html" class="external-link">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                </a>
+                <a href="complete-guide-wind-load-calculations.html" class="external-link">
+                    <i class="fas fa-graduation-cap"></i> Complete Wind Load Guide
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1f2937; color: white; padding: 3rem 0;">
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Professional ASCE 7 Wind Load Resources and Education</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
