@@ -106,21 +106,21 @@
 - [x] 83. Stockton, CA ✅ (cities/stockton-wind-load-requirements.html)
 - [x] 84. Bakersfield, CA ✅ (cities/bakersfield-wind-load-requirements.html)
 - [x] 85. Salt Lake City, UT ✅ (cities/salt-lake-city-wind-load-requirements.html)
-- [ ] 86. Boise, ID
-- [ ] 87. Spokane, WA
-- [ ] 88. Tacoma, WA
-- [ ] 89. Anchorage, AK
-- [ ] 90. Providence, RI
-- [ ] 91. Hartford, CT
-- [ ] 92. Newark, NJ
-- [ ] 93. Jersey City, NJ
-- [ ] 94. Buffalo, NY
-- [ ] 95. Rochester, NY
-- [ ] 96. Syracuse, NY
-- [ ] 97. Albany, NY
-- [ ] 98. Richmond, VA
-- [ ] 99. Greensboro, NC
-- [ ] 100. Durham, NC
+- [x] 86. Boise, ID ✅ (cities/boise-wind-load-requirements.html)
+- [x] 87. Spokane, WA ✅ (cities/spokane-wind-load-requirements.html)
+- [x] 88. Tacoma, WA ✅ (cities/tacoma-wind-load-requirements.html)
+- [x] 89. Anchorage, AK ✅ (cities/anchorage-wind-load-requirements.html)
+- [x] 90. Providence, RI ✅ (cities/providence-wind-load-requirements.html)
+- [x] 91. Hartford, CT ✅ (cities/hartford-wind-load-requirements.html)
+- [x] 92. Newark, NJ ✅ (cities/newark-wind-load-requirements.html)
+- [x] 93. Jersey City, NJ ✅ (cities/jersey-city-wind-load-requirements.html)
+- [x] 94. Buffalo, NY ✅ (cities/buffalo-wind-load-requirements.html)
+- [x] 95. Rochester, NY ✅ (cities/rochester-wind-load-requirements.html)
+- [x] 96. Syracuse, NY ✅ (cities/syracuse-wind-load-requirements.html)
+- [x] 97. Albany, NY ✅ (cities/albany-wind-load-requirements.html)
+- [x] 98. Richmond, VA ✅ (cities/richmond-wind-load-requirements.html)
+- [x] 99. Greensboro, NC ✅ (cities/greensboro-wind-load-requirements.html)
+- [x] 100. Durham, NC ✅ (cities/durham-wind-load-requirements.html)
 
 ---
 
@@ -132,8 +132,8 @@
 
 ## Progress
 - Total Cities: 100
-- Completed: 85
-- Remaining: 15
+- Completed: 100 ✅
+- Remaining: 0
 
 ---
 

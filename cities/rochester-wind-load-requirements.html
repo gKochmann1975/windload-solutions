@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rochester NY Wind Load Requirements | 100-110 mph | New York State Building Code | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Rochester NY wind load requirements. Design wind speed 100-110 mph, New York State Building Code (IBC adoption), Exposure Category B urban/C near Lake Ontario, and ASCE 7-22 compliance for Finger Lakes region.">
+    <link rel="canonical" href="https://windload.solutions/cities/rochester-wind-load-requirements.html">
+    <meta name="keywords" content="Rochester wind load, Rochester wind speed, Rochester wind load calculator, New York State Building Code, 100 mph wind speed, Rochester building permit, Rochester wind load requirements, Lake Ontario wind">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Rochester Yellow/Blue (Kodak heritage) */
+        .hero {
+            background: linear-gradient(135deg, #FFD700 0%, #F4C430 25%, #003DA5 50%, #002D7A 75%, #001F5C 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '📷🌸';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #003DA5;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #003DA5;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #FFD700;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFF4CC 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #FFD700;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #003DA5;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #003DA5 0%, #002D7A 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 61, 165, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #003DA5 0%, #002D7A 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Rochester Card */
+        .rochester-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .rochester-card h4 {
+            color: #003DA5;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .rochester-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #F4C430 100%);
+            color: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Rochester NY",
+                "item": "https://windload.solutions/cities/rochester-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Rochester NY Wind Load Requirements</h1>
+            <p>Monroe County New York | 100-110 mph Design Wind Speed | New York State Building Code (IBC) | Exposure Category B Urban/C Near Lake Ontario | ASCE 7-22 | Finger Lakes Region</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Rochester Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">100-110</span>
+                    <span class="stat-label">Design Wind Speed<br>(Risk Cat II, mph)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category<br>(Urban/Lakefront)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">NYSBC</span>
+                    <span class="stat-label">NY State Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE<br>7-22</span>
+                    <span class="stat-label">Wind Load Standard</span>
+                </div>
+            </div>
+
+            <h2>Rochester: Great Lakes Wind Load Requirements</h2>
+            <p>Rochester is located in Monroe County, New York, on the southern shore of Lake Ontario in the Finger Lakes region. As the third-largest city in New York State, Rochester has moderate wind load requirements appropriate for its Great Lakes location and inland position. Rochester requires a design wind speed of approximately <strong>100-110 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and the city's exposure to lake-effect winds, extratropical systems, and occasional severe thunderstorms.</p>
+
+            <p>Rochester is governed by the <strong>New York State Building Code (NYSBC)</strong>, which adopts the International Building Code (IBC) and references ASCE 7-22 for wind load calculations. The city's position on Lake Ontario's southern shore, legacy as home to Kodak and Xerox, and proximity to the Genesee River gorge create unique structural engineering considerations requiring careful analysis of wind speeds, exposure categories, and topographic effects from lake influence.</p>
+
+            <div class="info-box">
+                <h4><strong>📷</strong> Rochester Quick Facts</h4>
+                <p><strong>County:</strong> Monroe County</p>
+                <p><strong>Region:</strong> Finger Lakes, Western New York</p>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 100-110 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~110-120 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~120-130 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban areas), C (Lake Ontario waterfront)</p>
+                <p><strong>Building Code:</strong> New York State Building Code (NYSBC, adopts IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>Notable Features:</strong> Lake Ontario, Genesee River, High Falls, Kodak/Xerox heritage, Lilac Festival</p>
+            </div>
+
+            <h3>Why Rochester Has 100-110 mph Wind Speed Requirements</h3>
+            <p>Rochester's design wind speeds of 100-110 mph are derived from ASCE 7-22 wind speed maps for the Western New York and Lake Ontario region. This velocity range accounts for the city's exposure to lake-effect weather systems, extratropical storms tracking across the Great Lakes, and severe thunderstorm complexes, while recognizing that Rochester experiences lower wind speeds than coastal regions due to its inland position and substantial urban development providing wind sheltering.</p>
+
+            <p>The exact wind speed for a specific Rochester project depends on precise location. Areas immediately adjacent to Lake Ontario shoreline (Ontario Beach Park, Charlotte, Lake Ontario State Parkway) typically require the higher end of the range (105-110 mph) due to direct lake exposure and reduced terrain roughness, while inland urban areas (downtown Rochester, Park Avenue, East Avenue historic districts) may use the lower end (100-105 mph) due to substantial urban development. The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or address.</p>
+
+            <h3>Rochester Geographic and Climate Considerations</h3>
+            <p>Rochester's unique geography and climate significantly influence wind load requirements:</p>
+
+            <ul>
+                <li><strong>Lake Ontario Influence:</strong> The city's position on Lake Ontario's southern shore creates lake-effect weather patterns with enhanced wind speeds near the waterfront and potential for rapid weather changes</li>
+                <li><strong>Genesee River Gorge:</strong> High Falls and the Genesee River gorge can create localized wind acceleration and channeling effects in downtown areas</li>
+                <li><strong>Urban Heat Island:</strong> Rochester's substantial urban development creates terrain roughness that reduces wind speeds in central city areas but may create turbulence</li>
+                <li><strong>Finger Lakes Proximity:</strong> The city's location at the northern edge of the Finger Lakes region influences regional weather patterns and wind flow</li>
+                <li><strong>Lake-Effect Weather:</strong> Winter and spring lake-effect systems can produce strong winds, though typically not approaching design wind speeds</li>
+                <li><strong>Severe Thunderstorms:</strong> Summer severe thunderstorm complexes can produce brief but intense straight-line winds and occasional tornadoes</li>
+            </ul>
+
+            <h3>Rochester Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Rochester projects requires following ASCE 7-22 methodology with New York State Building Code requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #003DA5; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Rochester urban project with V = 105 mph and Exposure B conditions, the resulting pressures are moderate and typical of inland northern cities. A downtown Rochester project with:</p>
+            <ul>
+                <li><strong>V = 105 mph</strong> (urban Rochester velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B)</li>
+                <li><strong>Kzt = 1.0</strong> (flat terrain, no gorge effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (500 ft elevation)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 20.0 psf</strong>—moderate pressures typical of northern inland cities, significantly lower than coastal regions but requiring proper engineering for wind resistance.</p>
+
+            <h3>Lake-Effect Weather and Extratropical Storms</h3>
+            <p>Rochester's wind load requirements are primarily driven by extratropical weather systems and lake-effect conditions rather than tropical cyclones:</p>
+
+            <ul>
+                <li><strong>Lake-Effect Wind Events:</strong> Lake Ontario generates strong northwest winds during fall and winter lake-effect events, though sustained winds rarely approach design levels. These systems can produce localized wind speeds of 40-60 mph with higher gusts</li>
+                <li><strong>Extratropical Cyclones:</strong> Strong low-pressure systems tracking across the Great Lakes or up the St. Lawrence River valley can produce widespread winds of 50-70 mph with gusts to 80+ mph</li>
+                <li><strong>Severe Thunderstorms:</strong> Summer severe weather can produce brief but intense straight-line winds (60-80 mph) and occasional tornadoes. The Memorial Day 1998 tornado outbreak affected the Rochester region</li>
+                <li><strong>Winter Storms:</strong> Major winter nor'easters and Alberta Clippers can produce sustained winds of 30-50 mph with gusts to 60-70 mph, combined with heavy snow creating structural loading concerns</li>
+                <li><strong>Tropical Storm Remnants:</strong> Post-tropical cyclones occasionally affect Rochester with heavy rain and moderate winds, though rarely approaching design wind speeds (examples include Hurricane Agnes 1972, Tropical Storm Lee 2011)</li>
+            </ul>
+
+            <p>The ASCE 7-22 wind speed maps account for all these weather phenomena using statistical analysis of historical wind records to determine appropriate design velocities for Rochester's climate and geographic position.</p>
+
+            <div class="rochester-card">
+                <h4>Rochester Lakefront vs. Urban: Understanding Wind Speed and Exposure Variation</h4>
+                <p><strong>Lake Ontario Waterfront (Charlotte, Ontario Beach, Lake Shore Boulevard):</strong> Design wind speed 105-110 mph, Exposure Category C typically required, direct lake exposure with reduced terrain roughness</p>
+                <p><strong>Urban Rochester (Downtown, Park Avenue, East Avenue):</strong> Design wind speed 100-105 mph, Exposure Category B appropriate, substantial urban development provides wind sheltering</p>
+                <p><strong>Inland Suburban Areas (Pittsford, Henrietta, Greece):</strong> Design wind speed 100-105 mph, Exposure Category B typical, residential/commercial development with trees</p>
+                <p><strong>Key Takeaway:</strong> Rochester projects require location-specific wind speed and exposure category determination based on proximity to Lake Ontario and urban development density</p>
+            </div>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Rochester projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Rochester Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~95-105 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>100-110 mph</td>
+                        <td>Residential, commercial, hotels, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~110-120 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials, University of Rochester facilities</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Hospitals (Strong Memorial, Rochester General), fire stations, emergency shelters, police facilities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Categories: Urban vs. Lakefront Rochester</h3>
+            <p>Rochester projects require careful exposure category determination based on location and surrounding terrain:</p>
+
+            <ul>
+                <li><strong>Exposure Category B (Urban/Suburban):</strong> Appropriate for most Rochester projects in developed areas (downtown, Park Avenue, East Avenue, suburban neighborhoods). Urban and suburban terrain with numerous closely spaced obstructions having size of single-family dwellings or larger</li>
+                <li><strong>Exposure Category C (Lake Ontario Waterfront):</strong> Required for projects immediately adjacent to Lake Ontario (Charlotte, Ontario Beach, Lake Shore Boulevard). Open terrain with scattered obstructions generally less than 30 feet in height, includes flat open country and grasslands</li>
+                <li><strong>Exposure Category D (Rare):</strong> May apply to structures directly on Lake Ontario shoreline with unobstructed exposure over water for significant distances, or exposed lakefront piers and platforms</li>
+            </ul>
+
+            <p>Engineers must carefully evaluate exposure categories for Rochester projects, particularly for sites near the transition between urban areas and Lake Ontario waterfront. The 2020 New York State Building Code provides specific guidance on exposure category determination. Improper exposure category selection can significantly affect calculated wind pressures and structural design.</p>
+
+            <h3>Rochester Zip Codes and Wind Speed Reference</h3>
+            <p>Rochester uses zip codes in the 14600-14699 range. Wind speeds vary slightly by location:</p>
+
+            <ul>
+                <li><strong>14612, 14613, 14621:</strong> Lake Ontario waterfront areas (Charlotte, Irondequoit Bay) - typically 105-110 mph, Exposure C near shoreline</li>
+                <li><strong>14604, 14605, 14607, 14608:</strong> Downtown Rochester, High Falls, Genesee River corridor - typically 100-105 mph, Exposure B urban</li>
+                <li><strong>14607, 14610, 14618:</strong> East Avenue, Park Avenue, historic neighborhoods - typically 100-105 mph, Exposure B urban</li>
+                <li><strong>14534, 14586, 14623, 14626:</strong> Suburban areas (Pittsford, Henrietta, Greece) - typically 100-105 mph, Exposure B suburban</li>
+                <li><strong>14642, 14627:</strong> University of Rochester, medical center - 100-110 mph, Risk Category III/IV for critical facilities</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed and exposure category recommendations when you enter any Rochester zip code or address, using ASCE 7-22 wind speed maps and local terrain analysis.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Rochester Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Rochester requirements including location-specific wind velocities (100-110 mph range), appropriate Exposure Category recommendations (B urban/C lakefront), Risk Category adjustments, and component pressure coefficients. Simply enter your Rochester project address or zip code for instant, accurate calculations compliant with New York State Building Code.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Rochester Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in Rochester and New York State</h3>
+            <p>All wind load calculations for Rochester building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in New York State</strong>. New York has strict engineering practice laws requiring PE seals for structural design. The sealed calculations must include:</p>
+
+            <ul>
+                <li>Project address and zip code with wind speed determination methodology</li>
+                <li>Design wind speed (100-110 mph range for Risk Category II, location-specific)</li>
+                <li>Exposure Category determination with supporting justification and site photographs if applicable</li>
+                <li>Risk Category determination with supporting documentation per ASCE 7-22 Table 1.5-1</li>
+                <li>Complete ASCE 7-22 calculation methodology with all coefficients and factors</li>
+                <li>Component and Cladding (C&C) pressures for all building elements (windows, doors, roof panels, siding)</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures for overall structural design if applicable</li>
+                <li>Consideration of Lake Ontario influence and topographic effects if applicable</li>
+                <li>Professional Engineer seal, signature, and date on all calculation pages</li>
+            </ul>
+
+            <p>Monroe County and the City of Rochester require PE-sealed structural calculations for most commercial projects and complex residential projects. New York State Education Law Article 145 governs the practice of professional engineering and requires licensure for structural design work.</p>
+
+            <h3>Official Rochester and New York State Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Rochester wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.cityofrochester.gov/buildinginspections/" target="_blank" rel="noopener" class="external-link">
+                    Rochester Building Inspections
+                </a>
+                <a href="https://www.monroecounty.gov/planning-building" target="_blank" rel="noopener" class="external-link">
+                    Monroe County Building Department
+                </a>
+                <a href="https://dos.ny.gov/building-codes" target="_blank" rel="noopener" class="external-link">
+                    NY State Building Code (NYSBC)
+                </a>
+                <a href="http://www.op.nysed.gov/prof/pels/" target="_blank" rel="noopener" class="external-link">
+                    NY State PE Licensing
+                </a>
+            </div>
+
+            <h3>Common Rochester Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Using incorrect wind speed:</strong> Rochester requires 100-110 mph depending on location, not a single uniform value for the entire city or region</li>
+                <li><strong>Incorrect exposure category:</strong> Lake Ontario waterfront areas require Exposure C, while urban areas typically use Exposure B. Using the wrong category can result in 20-30% pressure errors</li>
+                <li><strong>Ignoring Lake Ontario effects:</strong> Projects near the lakeshore must account for enhanced wind speeds and reduced terrain roughness</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, universities (University of Rochester), hospitals (Strong Memorial, Rochester General) require higher risk categories and increased wind speeds</li>
+                <li><strong>Outdated calculations:</strong> Must use ASCE 7-22 per current New York State Building Code (2020 edition as of 2025), not older ASCE 7-10 or ASCE 7-16 editions</li>
+                <li><strong>Missing PE seal:</strong> New York requires Professional Engineer seal and signature on all structural calculations</li>
+                <li><strong>Neglecting topographic effects:</strong> Genesee River gorge and local terrain variations may require topographic factor (Kzt) adjustments in some locations</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Rochester Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Rochester-specific requirements:</p>
+
+            <ul>
+                <li><strong>Location-Specific Wind Speed:</strong> Enter any Rochester zip code or address and the system automatically applies the correct 100-110 mph velocity based on ASCE 7-22 wind speed maps</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides appropriate exposure recommendations based on urban vs. lakefront location with justification</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV per ASCE 7-22 requirements</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current New York State Building Code requirements (2020 NYSBC adopting IBC 2018/ASCE 7-22)</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding, parapets, and all building components</li>
+                <li><strong>MWFRS Calculations:</strong> Provides Main Wind Force Resisting System pressures for overall structural design when applicable</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Professional Engineer review and building permit submission to Rochester Building Inspections Department</li>
+                <li><strong>New York Code References:</strong> Includes specific citations to New York State Building Code provisions and ASCE 7-22 sections</li>
+            </ul>
+
+            <h3>Rochester's Legacy: Kodak, Xerox, and Innovation</h3>
+            <p>Rochester's industrial heritage as the home of Eastman Kodak and Xerox Corporation has shaped the city's built environment with numerous large industrial and commercial facilities requiring careful wind load analysis. The city's transformation from manufacturing hub to education and healthcare center (University of Rochester, Rochester Institute of Technology, Strong Memorial Hospital) continues to drive construction of sophisticated buildings requiring modern wind engineering.</p>
+
+            <p>The Port of Rochester, Charlotte neighborhood, and Lake Ontario State Parkway provide recreational waterfront access while creating exposure considerations for structural design. High Falls and the Genesee River gorge create unique topographic conditions in downtown Rochester that may require special wind load considerations for projects in the immediate vicinity.</p>
+
+            <h3>Rochester Climate and Weather Patterns</h3>
+            <p>Rochester experiences a humid continental climate with four distinct seasons, significant lake-effect weather influence, and moderate wind exposure:</p>
+
+            <ul>
+                <li><strong>Winter (December-February):</strong> Cold with frequent lake-effect snow from Lake Ontario. Strong northwest winds during lake-effect events can produce sustained winds of 30-50 mph. Major winter storms can bring winds of 40-60 mph combined with heavy snow</li>
+                <li><strong>Spring (March-May):</strong> Transitional season with variable weather. Strong extratropical cyclones can produce winds of 40-60 mph. Severe thunderstorm season begins in late spring</li>
+                <li><strong>Summer (June-August):</strong> Warm and humid with frequent thunderstorms. Severe thunderstorm complexes can produce brief but intense straight-line winds (60-80 mph) and occasional tornadoes. The famous Lilac Festival occurs in May, celebrating Rochester's mild spring weather</li>
+                <li><strong>Fall (September-November):</strong> Mild with beautiful fall foliage in the Finger Lakes region. Lake Ontario remains warm, moderating temperatures. Occasional strong wind events from extratropical systems</li>
+            </ul>
+
+            <p>The ASCE 7-22 wind speed maps for Rochester are based on 50-year return period statistical analysis of all these weather patterns, ensuring structures are designed for the most severe wind events expected in the region's climate.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Rochester-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Rochester projects. Our software automatically handles location-specific wind velocities (100-110 mph), appropriate Exposure Category recommendations (B/C), and generates PE-ready reports for building permit submission to Rochester Building Inspections Department and Monroe County.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Rochester Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

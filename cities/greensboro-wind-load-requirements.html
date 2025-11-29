@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greensboro Wind Load Requirements | 100-110 mph | Guilford County NC | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Greensboro wind load requirements. Guilford County NC design wind speed 100-110 mph, Piedmont Triad region, Exposure Category B urban, and North Carolina State Building Code compliance with ASCE 7-22.">
+    <link rel="canonical" href="https://windload.solutions/cities/greensboro-wind-load-requirements.html">
+    <meta name="keywords" content="Greensboro wind load, Guilford County wind speed, Greensboro wind load calculator, North Carolina building code, 100 mph wind speed, Greensboro building permit, Greensboro wind load requirements, Piedmont Triad">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Greensboro blue and gold colors */
+        .hero {
+            background: linear-gradient(135deg, #0f4d92 0%, #1e5fa8 25%, #3d7dc4 50%, #ffc72c 75%, #f4b41a 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏭🌿';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #0f4d92;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #0f4d92;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #1e5fa8;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #0f4d92;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #0f4d92;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #0f4d92 0%, #3d7dc4 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(15, 77, 146, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #0f4d92 0%, #3d7dc4 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Greensboro Card */
+        .greensboro-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(15, 77, 146, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .greensboro-card h4 {
+            color: #0f4d92;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .greensboro-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffc72c 0%, #f4b41a 100%);
+            color: #1f2937;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "North Carolina",
+                "item": "https://windload.solutions/north-carolina-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Greensboro",
+                "item": "https://windload.solutions/cities/greensboro-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../north-carolina-wind-load-requirements.html"><i class="fas fa-star"></i> North Carolina</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Greensboro Wind Load Requirements</h1>
+            <p>Guilford County North Carolina | 100-110 mph Design Wind Speed | Piedmont Triad Region | UNCG & NC A&T | Exposure Category B Urban | NC State Building Code</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Greensboro Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">100-110</span>
+                    <span class="stat-label">mph Design Wind Speed (Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B</span>
+                    <span class="stat-label">Exposure Category (Urban)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">NC IBC</span>
+                    <span class="stat-label">State Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">ASCE<br>7-22</span>
+                    <span class="stat-label">Current Wind Load Standard</span>
+                </div>
+            </div>
+
+            <h2>Greensboro/Guilford County: Piedmont Triad Wind Load Requirements</h2>
+            <p>Greensboro, located in <strong>Guilford County, North Carolina</strong>, is the third-largest city in North Carolina and the anchor of the Piedmont Triad region. Greensboro requires a design wind speed of approximately <strong>100-110 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps and the city's inland Piedmont location.</p>
+
+            <p>As a major Piedmont city situated between the Appalachian Mountains to the west and the Atlantic coastal plain to the east, Greensboro faces moderate wind load requirements compared to coastal North Carolina cities. The city is home to the University of North Carolina at Greensboro (UNCG) and North Carolina A&T State University, with a rich textile manufacturing heritage and civil rights history. All Greensboro building permits must comply with the <strong>North Carolina State Building Code</strong>, which adopts the International Building Code (IBC) with state-specific amendments.</p>
+
+            <div class="info-box">
+                <h4><strong>🏭🌿</strong> Greensboro/Guilford County Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 100-110 mph (3-second gust, Piedmont region)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~110-120 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~120-130 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban/suburban - most of Greensboro)</p>
+                <p><strong>Building Code:</strong> North Carolina State Building Code (adopts IBC)</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>County:</strong> Guilford County</p>
+                <p><strong>Region:</strong> Piedmont Triad (Greensboro, Winston-Salem, High Point)</p>
+                <p><strong>Notable Features:</strong> Textile heritage, civil rights history, UNCG, NC A&T</p>
+            </div>
+
+            <h3>Why Greensboro Has 100-110 mph Wind Speed Requirements</h3>
+            <p>Greensboro's 100-110 mph design wind speed for Risk Category II structures reflects the city's Piedmont location in central North Carolina, approximately 200 miles inland from the Atlantic coast. This velocity is significantly lower than coastal North Carolina cities like Wilmington (130-140 mph) or the Outer Banks (150+ mph), but still accounts for severe thunderstorms, occasional tornadoes, and remnants of tropical systems that can affect the Piedmont region.</p>
+
+            <p>The Piedmont region of North Carolina, where Greensboro is located, sits at elevations of 700-900 feet above sea level with rolling terrain. While the city does not face direct hurricane impacts like coastal areas, tropical storm remnants occasionally bring damaging winds to the region. The design wind speed accounts for:</p>
+
+            <ul>
+                <li><strong>Severe Thunderstorms:</strong> Piedmont North Carolina experiences frequent severe thunderstorms with straight-line winds that can exceed 70-80 mph</li>
+                <li><strong>Tropical System Remnants:</strong> Hurricanes and tropical storms occasionally penetrate inland to the Piedmont, though significantly weakened from coastal landfall</li>
+                <li><strong>Occasional Tornadoes:</strong> The Piedmont region experiences tornadoes, typically EF0-EF2 intensity</li>
+                <li><strong>Winter Storm Winds:</strong> Strong cold fronts and nor'easters can produce high winds in the Piedmont</li>
+            </ul>
+
+            <h3>Greensboro's Piedmont Triad Location and Geography</h3>
+            <p>Greensboro serves as one of three anchor cities in North Carolina's Piedmont Triad region (along with Winston-Salem and High Point). The city's geography influences wind load considerations:</p>
+
+            <ul>
+                <li><strong>Piedmont Plateau:</strong> Greensboro sits on the gently rolling Piedmont plateau at approximately 900 feet elevation, creating relatively consistent exposure conditions across the city</li>
+                <li><strong>Urban Development:</strong> As North Carolina's third-largest city, Greensboro features substantial urban density that provides wind obstruction, typically allowing Exposure Category B for most projects</li>
+                <li><strong>Tree Coverage:</strong> Extensive tree coverage throughout Greensboro neighborhoods provides additional wind obstructions supporting Exposure B classification</li>
+                <li><strong>Distance from Coast:</strong> Located approximately 200 miles from the Atlantic coast, Greensboro is well-insulated from direct hurricane impacts</li>
+                <li><strong>Appalachian Mountain Influence:</strong> The Blue Ridge Mountains approximately 100 miles to the west provide some shielding from western weather systems</li>
+            </ul>
+
+            <h3>Greensboro Hurricane and Tropical System History</h3>
+            <p>While Greensboro does not experience direct hurricane landfalls due to its inland location, tropical system remnants occasionally bring significant wind and flooding to the Piedmont Triad:</p>
+
+            <div class="greensboro-card">
+                <h4>Notable Tropical System Impacts on Greensboro</h4>
+                <p><strong>Hurricane Hugo Remnants (1989):</strong> After making landfall in South Carolina as a Category 4 hurricane, Hugo's remnants brought 40-50 mph winds and heavy rain to Greensboro, causing power outages and tree damage</p>
+                <p><strong>Hurricane Fran (1996):</strong> Fran's remnants produced sustained winds of 30-40 mph with gusts to 60 mph in Greensboro, causing extensive tree damage and prolonged power outages across the Piedmont</p>
+                <p><strong>Hurricane Floyd (1999):</strong> Floyd brought catastrophic flooding to eastern North Carolina with moderate wind impacts in the Greensboro area</p>
+                <p><strong>Hurricane Isabel (2003):</strong> Isabel's remnants brought tropical storm-force winds to the Piedmont, including Greensboro, with widespread power outages</p>
+                <p><strong>Hurricane Florence (2018):</strong> While primarily a coastal and eastern NC event, Florence's remnants brought heavy rain to the Piedmont with minimal wind impact</p>
+            </div>
+
+            <h3>Greensboro Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Greensboro projects requires following ASCE 7-22 methodology with North Carolina State Building Code requirements. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #0f4d92; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For a typical Greensboro project with V = 105 mph (mid-range Piedmont velocity) and Exposure B urban conditions, the resulting pressures are moderate compared to coastal areas. A Greensboro project with:</p>
+            <ul>
+                <li><strong>V = 105 mph</strong> (Greensboro Piedmont velocity per ASCE 7-22)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B)</li>
+                <li><strong>Kzt = 1.0</strong> (relatively flat Piedmont terrain)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (~900 ft elevation, minimal impact)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 21.5 psf</strong>—substantially lower than coastal North Carolina but still requiring proper structural design for Piedmont wind conditions.</p>
+
+            <h3>Exposure Categories in Greensboro</h3>
+            <p>Greensboro projects typically qualify for Exposure Category B due to the city's substantial urban development and tree coverage. However, engineers must evaluate exposure based on project-specific conditions:</p>
+
+            <ul>
+                <li><strong>Exposure B (Urban/Suburban - Most Common):</strong> Applies to most Greensboro projects in developed areas with buildings, trees, and other obstructions. Exposure B assumes urban/suburban terrain with numerous closely spaced obstructions having the size of single-family dwellings or larger.</li>
+                <li><strong>Exposure C (Open Terrain - Rare):</strong> May apply to projects in large open fields, industrial areas, or locations with minimal obstructions. Less common in Greensboro's developed urban environment.</li>
+                <li><strong>Exposure D (Flat Unobstructed - Not Applicable):</strong> Not applicable in Greensboro as this exposure requires unobstructed flat terrain near large water bodies</li>
+            </ul>
+
+            <p>The majority of Greensboro projects qualify for the less conservative Exposure B classification due to the city's dense urban fabric, extensive tree canopy, and substantial building coverage throughout residential and commercial areas.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Greensboro projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Greensboro Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~95-100 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>100-110 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~110-120 mph</td>
+                        <td>Schools, colleges (UNCG, NC A&T), assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~120-130 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, emergency operations centers</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>North Carolina State Building Code Requirements</h3>
+            <p>Greensboro operates under the <strong>North Carolina State Building Code</strong>, which is administered by the North Carolina Department of Insurance - Office of State Fire Marshal. The NC Building Code adopts the International Building Code (IBC) with North Carolina-specific amendments:</p>
+
+            <ul>
+                <li><strong>IBC Adoption:</strong> North Carolina adopts the International Building Code with state-specific modifications</li>
+                <li><strong>ASCE 7-22:</strong> Current wind load standard for all new construction in North Carolina</li>
+                <li><strong>State Amendments:</strong> North Carolina-specific modifications address local climate, seismic considerations, and regional building practices</li>
+                <li><strong>Local Enforcement:</strong> City of Greensboro Building Inspections Department enforces the NC State Building Code</li>
+                <li><strong>Guilford County Jurisdiction:</strong> Projects outside Greensboro city limits fall under Guilford County building inspection authority</li>
+            </ul>
+
+            <h3>Greensboro's Textile Heritage and Modern Development</h3>
+            <p>Greensboro's identity as a former textile manufacturing center and modern education hub influences its building landscape:</p>
+
+            <div class="greensboro-card">
+                <h4>Greensboro Historical Context</h4>
+                <p><strong>Textile Heritage:</strong> Greensboro was a major textile manufacturing center in the 20th century, with many historic mill buildings now repurposed for commercial and residential use</p>
+                <p><strong>Civil Rights History:</strong> The 1960 Woolworth lunch counter sit-ins in downtown Greensboro were pivotal events in the American civil rights movement</p>
+                <p><strong>Higher Education:</strong> UNCG and NC A&T State University are major institutional presences requiring Risk Category III design for academic buildings and assembly facilities</p>
+                <p><strong>Piedmont Triad Region:</strong> Greensboro forms part of the Piedmont Triad metro area with Winston-Salem and High Point, creating a substantial regional economic center</p>
+            </div>
+
+            <h3>Greensboro Zip Codes and Wind Speed Reference</h3>
+            <p>Greensboro uses zip codes in the 27401-27499 range. Wind speeds are relatively consistent across the city due to similar Piedmont elevation and urban density:</p>
+
+            <ul>
+                <li><strong>27401-27408:</strong> Downtown Greensboro, urban core areas - typically 100-110 mph, Exposure B urban</li>
+                <li><strong>27409-27410:</strong> Northwest Greensboro, residential areas - 100-110 mph, Exposure B</li>
+                <li><strong>27403, 27411:</strong> UNCG and NC A&T campus areas - 100-110 mph, Exposure B, Risk Category III for academic buildings</li>
+                <li><strong>27405, 27406, 27407:</strong> East and Northeast Greensboro - 100-110 mph, Exposure B</li>
+                <li><strong>27455, 27495, 27498:</strong> Surrounding Guilford County areas - 100-110 mph, Exposure B or C depending on development</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct design wind speed when you enter any Greensboro or Guilford County zip code or street address, referencing ASCE 7-22 wind speed maps and eliminating manual map interpolation.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Greensboro Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Greensboro/Guilford County requirements including the 100-110 mph Piedmont design velocity, Exposure Category B urban determination, Risk Category adjustments, and component pressure coefficients. Simply enter your Greensboro project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Greensboro Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Professional Engineer (PE) Requirements in North Carolina</h3>
+            <p>All wind load calculations for Greensboro building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in North Carolina</strong>. The NC Board of Examiners for Engineers and Surveyors regulates engineering practice in the state. Sealed calculations must include:</p>
+
+            <ul>
+                <li>Project address and zip code with ASCE 7-22 wind speed determination</li>
+                <li>Design wind speed (100-110 mph range for Risk Category II in Greensboro)</li>
+                <li>Exposure Category determination with supporting justification (typically Exposure B for urban Greensboro)</li>
+                <li>Risk Category determination per ASCE 7-22 Table 1.5-1</li>
+                <li>Complete ASCE 7-22 calculation methodology</li>
+                <li>Component and Cladding (C&C) pressures for all building elements</li>
+                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
+                <li>PE seal and signature from North Carolina-licensed Professional Engineer</li>
+            </ul>
+
+            <h3>Official Greensboro and North Carolina Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Greensboro wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.greensboro-nc.gov/departments/planning-development/building-inspections" target="_blank" rel="noopener" class="external-link">
+                    City of Greensboro Building Inspections
+                </a>
+                <a href="https://www.osfm.nc.gov/" target="_blank" rel="noopener" class="external-link">
+                    NC Office of State Fire Marshal - Building Codes
+                </a>
+                <a href="https://www.ncdoi.gov/code-officials" target="_blank" rel="noopener" class="external-link">
+                    NC Department of Insurance - Code Officials
+                </a>
+                <a href="https://www.ncbels.org/" target="_blank" rel="noopener" class="external-link">
+                    NC Board of Examiners for Engineers and Surveyors
+                </a>
+            </div>
+
+            <h3>Common Greensboro Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Using coastal wind speeds:</strong> Greensboro requires 100-110 mph (Piedmont), NOT 130-150 mph like coastal North Carolina cities</li>
+                <li><strong>Incorrect Exposure Category:</strong> Most Greensboro urban projects qualify for Exposure B, not the more conservative Exposure C</li>
+                <li><strong>Ignoring Risk Category:</strong> UNCG, NC A&T academic buildings, schools, and hospitals require Risk Category III or IV with higher wind speeds</li>
+                <li><strong>Using outdated wind speeds:</strong> Must use ASCE 7-22 wind speed maps, not older ASCE 7-10 or ASCE 7-16 values</li>
+                <li><strong>Neglecting topographic effects:</strong> While Greensboro is relatively flat, hillside projects may require topographic factor Kzt > 1.0</li>
+                <li><strong>Incorrect PE licensing:</strong> Wind load calculations must be sealed by a North Carolina-licensed PE, not an out-of-state license</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Greensboro Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Greensboro-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Wind Speed Lookup:</strong> Enter any Greensboro zip code and the system applies the correct 100-110 mph Piedmont velocity from ASCE 7-22 maps</li>
+                <li><strong>Exposure Category Guidance:</strong> Provides recommendations for Exposure B (urban) vs. Exposure C (open) based on project location and surrounding development</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current North Carolina State Building Code requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding, and other components</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for North Carolina building permit submission with space for PE seal</li>
+            </ul>
+
+            <h3>Greensboro vs. Coastal North Carolina: Understanding the Difference</h3>
+            <p>It's critical for engineers to understand the substantial difference between Piedmont and coastal North Carolina wind load requirements:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Design Wind Speed (Risk Cat II)</th>
+                        <th>Typical Exposure</th>
+                        <th>Hurricane Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Greensboro (Piedmont)</strong></td>
+                        <td>100-110 mph</td>
+                        <td>Exposure B (urban)</td>
+                        <td>Low - remnants only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Charlotte (Piedmont)</strong></td>
+                        <td>100-115 mph</td>
+                        <td>Exposure B (urban)</td>
+                        <td>Low - remnants only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Raleigh (Piedmont)</strong></td>
+                        <td>110-120 mph</td>
+                        <td>Exposure B (urban)</td>
+                        <td>Moderate - stronger remnants</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wilmington (Coastal)</strong></td>
+                        <td>130-140 mph</td>
+                        <td>Exposure C (coastal)</td>
+                        <td>High - direct hurricane exposure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Outer Banks (Coastal)</strong></td>
+                        <td>150-160 mph</td>
+                        <td>Exposure C/D (coastal)</td>
+                        <td>Extreme - barrier islands</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Piedmont Triad Regional Considerations</h3>
+            <p>Greensboro is part of the larger Piedmont Triad metropolitan area. Wind load requirements are similar across the Triad cities:</p>
+
+            <ul>
+                <li><strong>Greensboro:</strong> 100-110 mph, Guilford County, state's third-largest city</li>
+                <li><strong>Winston-Salem:</strong> 100-110 mph, Forsyth County, similar Piedmont conditions</li>
+                <li><strong>High Point:</strong> 100-110 mph, Guilford/Randolph/Davidson Counties, "Furniture Capital of the World"</li>
+            </ul>
+
+            <p>All three Triad cities share similar Piedmont geography, elevation, and urban density, resulting in comparable wind load requirements and typical Exposure B classifications for urban projects.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Greensboro-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Greensboro and Guilford County projects. Our software automatically handles the 100-110 mph Piedmont velocity, Exposure Category B urban determination, and generates PE-ready reports for North Carolina building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Greensboro Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../north-carolina-wind-load-requirements.html" style="color: #60a5fa;">North Carolina Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

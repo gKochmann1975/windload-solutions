@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spokane Wind Load Requirements | 90-100 mph WSBC | Spokane County WA | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Spokane wind load requirements. Spokane County design wind speed 90-100 mph, Exposure B/C, Washington State Building Code, Inland Northwest exposure, Eastern Washington hub, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/spokane-wind-load-requirements.html">
+    <meta name="keywords" content="Spokane wind load, Spokane County wind speed, Spokane wind load calculator, Spokane building permit, Spokane wind load requirements, WSBC Spokane, Inland Northwest winds">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Spokane Maroon/Silver (Gonzaga colors) */
+        .hero {
+            background: linear-gradient(135deg, #6B1F3A 0%, #8B2F4A 25%, #AB3F5A 50%, #999999 75%, #C0C0C0 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🌲⛰️';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #6B1F3A;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #6B1F3A;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #8B2F4A;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #f8e8ec 0%, #f0d5dd 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #6B1F3A;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #6B1F3A;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #6B1F3A 0%, #8B2F4A 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(107, 31, 58, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #6B1F3A 0%, #8B2F4A 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Spokane Card */
+        .spokane-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(107, 31, 58, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .spokane-card h4 {
+            color: #6B1F3A;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .spokane-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B2F4A 0%, #6B1F3A 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Washington",
+                "item": "https://windload.solutions/washington-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Spokane",
+                "item": "https://windload.solutions/cities/spokane-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../washington-wind-load-requirements.html"><i class="fas fa-flag"></i> Washington</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Spokane Wind Load Requirements</h1>
+            <p>Spokane County, WA | 90-100 mph Design Wind Speed | WSBC (Adopts IBC) | Inland Northwest | Eastern Washington Hub | Exposure B/C</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Spokane Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">90-100</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B/C</span>
+                    <span class="stat-label">Exposure Category<br>(Urban/Surrounding)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">WSBC</span>
+                    <span class="stat-label">WA State<br>Building Code</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">MOD</span>
+                    <span class="stat-label">Moderate<br>Wind Risk</span>
+                </div>
+            </div>
+
+            <h2>Spokane, Washington: Inland Northwest Wind and Seismic Design Requirements</h2>
+            <p>Spokane, located in <strong>Spokane County, Washington</strong>, has unique wind load requirements influenced by its Inland Northwest location, proximity to the Rocky Mountains, and position as Eastern Washington's urban hub. The city adopts the <strong>Washington State Building Code (WSBC)</strong>, which is based on the International Building Code (IBC) with Washington-specific amendments. Design wind speeds for Risk Category II structures typically range from <strong>90-100 mph</strong> (3-second gust) based on ASCE 7-22, though these values vary with exposure and terrain.</p>
+
+            <p>As the largest city between Seattle and Minneapolis, Spokane experiences moderate wind conditions typical of inland regions. While wind loads are moderate, <strong>seismic design requirements are significant</strong> due to proximity to active fault systems. However, wind load analysis remains mandatory for code compliance, particularly for buildings in exposed areas and those in surrounding open terrain.</p>
+
+            <div class="info-box">
+                <h4><strong>🌲</strong> Spokane Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 90-100 mph (3-second gust)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~105-115 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~115-125 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban), C (surrounding areas)</p>
+                <p><strong>Building Code:</strong> Washington State Building Code (WSBC) - adopts IBC</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
+                <p><strong>County:</strong> Spokane County</p>
+                <p><strong>Climate:</strong> Inland Northwest, four-season continental climate</p>
+            </div>
+
+            <h3>Why Spokane Has 90-100 mph Wind Speed Requirements</h3>
+            <p>Spokane's design wind speed of 90-100 mph for Risk Category II structures reflects the city's Inland Northwest location and moderate inland wind exposure. While these values are moderate compared to coastal regions, Spokane faces unique challenges:</p>
+
+            <ul>
+                <li><strong>Inland Location:</strong> Spokane sits on the eastern edge of Washington, shielded from Pacific storms by the Cascade Range, resulting in lower base wind speeds than western Washington</li>
+                <li><strong>Continental Climate:</strong> Four-season climate with cold winters and warm summers, experiencing occasional strong wind events but generally moderate conditions</li>
+                <li><strong>Urban Sheltering:</strong> Downtown Spokane and most urban neighborhoods qualify as Exposure B due to dense development and mature trees</li>
+                <li><strong>Surrounding Open Terrain:</strong> Areas outside the urban core, particularly agricultural lands and prairie areas, require Exposure C analysis</li>
+                <li><strong>Expo '74 Legacy:</strong> Historic downtown development and Riverfront Park area require careful wind analysis for preservation and new construction</li>
+            </ul>
+
+            <p>Despite moderate base wind speeds, Spokane engineers must carefully evaluate exposure conditions, particularly for buildings in transitional zones between urban and open terrain.</p>
+
+            <h3>Spokane Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Spokane projects requires following ASCE 7-22 methodology as adopted by the WSBC. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #6B1F3A; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Spokane with V = 95 mph (typical) and standard conditions, the resulting pressures are moderate. A Spokane project with:</p>
+            <ul>
+                <li><strong>V = 95 mph</strong> (Spokane typical velocity)</li>
+                <li><strong>Kz = 0.85</strong> (30 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (relatively flat terrain, no significant topographic effects)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 1.0</strong> (approximately 1,900 ft elevation, minimal adjustment)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 19.8 psf</strong>—moderate pressures typical of Inland Northwest urban locations.</p>
+
+            <p>For areas in surrounding open terrain using Exposure C, the pressures increase due to higher velocity pressure coefficients (Kz), potentially reaching 25+ psf at roof heights.</p>
+
+            <h3>Washington State Building Code (WSBC) and Spokane Requirements</h3>
+            <p>Washington has a mandatory statewide building code—the Washington State Building Code (WSBC)—which is based on the International Building Code (IBC) with Washington-specific amendments:</p>
+
+            <p>Key Spokane building code considerations:</p>
+
+            <ul>
+                <li><strong>Base Code:</strong> Washington State Building Code (WSBC), which is IBC with Washington amendments</li>
+                <li><strong>Spokane Amendments:</strong> Spokane may have city-specific amendments for local conditions</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind and seismic load calculations follow ASCE 7-22 as adopted by WSBC</li>
+                <li><strong>Permit Authority:</strong> City of Spokane Building and Planning Services Department</li>
+                <li><strong>Seismic Concerns:</strong> Seismic design required due to proximity to active fault systems in the region</li>
+                <li><strong>PE Requirements:</strong> Structural calculations require a Washington-licensed Professional Engineer</li>
+            </ul>
+
+            <p>You can access Spokane building permits and requirements through the <a href="https://my.spokanecity.org/bps/" target="_blank" rel="noopener">City of Spokane Building and Planning Services</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Spokane projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Spokane Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~85-95 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>90-100 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~105-115 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~115-125 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) vs C (Surrounding Areas)</h3>
+            <p>Spokane projects require careful Exposure Category determination based on surrounding terrain and development density:</p>
+
+            <div class="spokane-card">
+                <h4>Exposure Category Selection for Spokane</h4>
+                <p><strong>Exposure Category B (Urban):</strong> Most of downtown Spokane and established neighborhoods qualify as Exposure B due to dense urban development with buildings, houses, and mature trees. Downtown, Browne's Addition, South Hill, Logan, Hillyard, and most residential neighborhoods typically use Exposure B. This assumes urban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind.</p>
+                <p><strong>Exposure Category C (Surrounding Areas):</strong> Areas outside the urban core, particularly in Spokane Valley, Liberty Lake, and surrounding agricultural or prairie lands should use Exposure C. This includes new developments at the urban fringe, industrial parks, and properties with open terrain exposure. Exposure C produces significantly higher wind pressures than Exposure B due to reduced surface roughness.</p>
+                <p><strong>Engineering Judgment Required:</strong> Buildings in transitional zones between urban and open areas require professional engineering judgment. When in doubt, use the more conservative exposure category (C over B).</p>
+            </div>
+
+            <h3>Spokane River and Terrain Considerations</h3>
+            <p>Spokane's wind load analysis must account for unique local conditions:</p>
+
+            <p><strong>Spokane River Valley:</strong> The Spokane River cuts through downtown, creating the scenic Spokane Falls and Riverfront Park. Buildings along the river gorge may experience channeling effects and should be evaluated carefully for local wind acceleration.</p>
+
+            <p><strong>South Hill Elevation:</strong> The South Hill neighborhood sits at higher elevation than downtown, potentially experiencing different wind conditions. Topographic effects should be evaluated for buildings on prominent hills.</p>
+
+            <p><strong>Evergreen Forests:</strong> Surrounding ponderosa pine forests and evergreen vegetation provide natural wind protection in many areas, contributing to Exposure B conditions in wooded neighborhoods.</p>
+
+            <h3>Seismic Design Considerations (Often Governs Over Wind)</h3>
+            <p>A critical consideration for Spokane projects is that <strong>seismic design often governs over wind design</strong>:</p>
+
+            <ul>
+                <li><strong>Seismic vs Wind Loads:</strong> Spokane is in a moderate to high seismic zone due to proximity to active faults in the region. Seismic lateral loads may exceed wind lateral loads for many structures.</li>
+                <li><strong>Still Required:</strong> Despite seismic concerns, wind load calculations are mandatory for building permits and must be included in structural calculations</li>
+                <li><strong>Cladding Critical:</strong> While seismic may govern structural framing, wind loads often govern cladding, curtain walls, windows, and roofing design</li>
+                <li><strong>Combined Analysis:</strong> Engineers must check both seismic and wind load cases, designing for whichever governs each structural element</li>
+            </ul>
+
+            <h3>Spokane Zip Codes and Wind Speed Reference</h3>
+            <p>Spokane zip codes span diverse terrain with varying wind speed and exposure requirements:</p>
+
+            <ul>
+                <li><strong>99201-99299:</strong> Primary Spokane zip codes covering all areas</li>
+                <li><strong>99201-99204:</strong> Downtown, West Central, Browne's Addition (Exposure B urban)</li>
+                <li><strong>99205-99208:</strong> North Side, Five Mile, Northwest (Exposure B residential)</li>
+                <li><strong>99210-99218:</strong> South Hill, Lincoln Heights, Southeast (B/C transitional)</li>
+                <li><strong>99212-99216:</strong> Spokane Valley, East Valley (Exposure C in open areas)</li>
+                <li><strong>99217-99224:</strong> West Plains, Cheney area (Exposure C open terrain)</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Spokane wind speed based on your specific zip code or street address, accounting for local terrain conditions and urban development patterns.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Spokane/Washington</h3>
+            <p>Wind load calculations for Spokane building permits have strict PE requirements:</p>
+
+            <ul>
+                <li><strong>Washington PE License Required:</strong> Structural calculations must be prepared by a Washington-licensed Professional Engineer (Civil or Structural)</li>
+                <li><strong>Structural Engineer Preferred:</strong> Complex projects benefit from SE (Structural Engineer) license holders</li>
+                <li><strong>Seismic Expertise:</strong> Given seismic concerns, Spokane structural engineers should have seismic design experience</li>
+                <li><strong>Plan Review:</strong> City of Spokane conducts thorough plan review of all structural calculations before permit issuance</li>
+                <li><strong>Special Inspections:</strong> Projects require special inspection and testing during construction per WSBC requirements</li>
+            </ul>
+
+            <h3>Official Spokane and Washington Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Spokane wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://my.spokanecity.org/bps/" target="_blank" rel="noopener" class="external-link">
+                    City of Spokane Building & Planning
+                </a>
+                <a href="https://www.commerce.wa.gov/building-code-council/" target="_blank" rel="noopener" class="external-link">
+                    WA State Building Code Council
+                </a>
+                <a href="https://www.dol.wa.gov/business/engineerslandsurveyors/" target="_blank" rel="noopener" class="external-link">
+                    WA Board for Professional Engineers
+                </a>
+            </div>
+
+            <h3>Common Spokane Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Incorrect Exposure Category:</strong> Surrounding open areas require Exposure C, not urban Exposure B</li>
+                <li><strong>Ignoring topographic effects:</strong> South Hill and other elevated areas may require topographic factor adjustments</li>
+                <li><strong>Assuming seismic always governs:</strong> Even though seismic often dominates, wind governs cladding and components</li>
+                <li><strong>Using wrong WSBC edition:</strong> Must use current Washington State Building Code edition</li>
+                <li><strong>Neglecting river gorge effects:</strong> Buildings near Spokane River gorge may experience local wind acceleration</li>
+                <li><strong>Overlooking snow load interactions:</strong> Spokane receives significant snow, requiring combined snow and wind analysis for roof design</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Spokane Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Spokane-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Spokane zip code or address and the system automatically applies 90-100 mph based on location</li>
+                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on terrain and urban development patterns</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current WSBC-adopted ASCE 7-22 requirements</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for City of Spokane permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Spokane Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Spokane-specific requirements including the 90-100 mph design velocity, appropriate Exposure Category selection (B/C), Risk Category adjustments, and component pressure coefficients. Simply enter your Spokane project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Spokane Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Spokane vs Other Washington Cities Wind Load Requirements</h3>
+            <p>Spokane's wind load requirements differ from Western Washington cities due to its inland location:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Spokane</th>
+                        <th>Seattle, WA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Design Wind Speed</strong></td>
+                        <td>90-100 mph</td>
+                        <td>100-110 mph</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exposure Category</strong></td>
+                        <td>B (urban), C (surrounding)</td>
+                        <td>B (urban), C (waterfront)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Building Code</strong></td>
+                        <td>WSBC (adopts IBC)</td>
+                        <td>WSBC (adopts IBC)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Location</strong></td>
+                        <td>Inland Northwest</td>
+                        <td>Puget Sound waterfront</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Seismic Concerns</strong></td>
+                        <td>Moderate to High</td>
+                        <td>High (Cascadia, Seattle Fault)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Climate</strong></td>
+                        <td>Continental, four-season</td>
+                        <td>Rainy maritime</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Spokane's unique position as Eastern Washington's largest city creates a distinctive building environment combining Inland Northwest terrain, moderate wind exposure, and continental climate requiring careful engineering analysis.</p>
+
+            <h3>Expo '74 Legacy and Historic Downtown Considerations</h3>
+            <p>Spokane hosted the 1974 World's Fair (Expo '74), which transformed the downtown waterfront and created Riverfront Park. Wind analysis for this historic area requires special considerations:</p>
+
+            <ul>
+                <li><strong>Historic Structures:</strong> Many buildings in downtown Spokane predate modern wind load codes, requiring careful evaluation for renovations and additions</li>
+                <li><strong>Riverfront Park:</strong> The park's bridges, pavilions, and structures along the Spokane River require wind analysis accounting for gorge effects</li>
+                <li><strong>Urban Redevelopment:</strong> Ongoing downtown revitalization projects must comply with current WSBC wind load requirements</li>
+                <li><strong>Preservation Requirements:</strong> Historic preservation projects must balance wind safety with architectural integrity</li>
+            </ul>
+
+            <h3>Gonzaga University and Educational Facilities</h3>
+            <p>Spokane is home to Gonzaga University and other educational institutions, which often require Risk Category III design:</p>
+
+            <ul>
+                <li>University buildings with assembly occupancies require 105-115 mph design wind speeds (Risk Category III)</li>
+                <li>Educational facilities must meet enhanced safety requirements including higher wind loads</li>
+                <li>Campus planning should account for both wind and seismic design requirements</li>
+                <li>Athletic facilities and large-span structures require detailed wind analysis</li>
+            </ul>
+
+            <h3>Snow Load and Wind Interaction</h3>
+            <p>Spokane receives significant snowfall, creating important interaction between snow and wind loads:</p>
+
+            <ul>
+                <li>Roof design must consider both snow loads and wind uplift pressures</li>
+                <li>Wind-driven snow accumulation patterns affect drift load calculations</li>
+                <li>Combination of snow weight and wind suction must be evaluated</li>
+                <li>Parapets, roof edges, and equipment screens require analysis for both snow and wind</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Spokane-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Spokane projects. Our software automatically handles the 90-100 mph velocity range, Exposure B/C determination, and generates PE-ready reports for City of Spokane permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Spokane Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../washington-wind-load-requirements.html" style="color: #60a5fa;">Washington Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boise Wind Load Requirements | 90-100 mph IBC | Ada County ID | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Boise wind load requirements. Ada County design wind speed 90-100 mph, Exposure B, IBC Idaho adoption, Treasure Valley, foothills topographic effects, and ASCE 7-22 compliance.">
+    <link rel="canonical" href="https://windload.solutions/cities/boise-wind-load-requirements.html">
+    <meta name="keywords" content="Boise wind load, Ada County wind speed, Boise wind load calculator, Boise building permit, Boise wind load requirements, IBC Idaho, Treasure Valley wind loads">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Boise State Broncos colors (Blue/Orange) */
+        .hero {
+            background: linear-gradient(135deg, #0033A0 0%, #003d99 25%, #D64309 50%, #e04d0f 75%, #0033A0 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🏔️🥔';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.28;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #0033A0;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #D64309;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #0033A0;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e6f0ff 0%, #cce0ff 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #0033A0;
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #0033A0;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Key Stats Box */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #0033A0 0%, #D64309 100%);
+            color: white;
+            padding: 2rem 0.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 51, 160, 0.3);
+        }
+
+        .stat-box .stat-value {
+            font-size: 3rem;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #0033A0 0%, #D64309 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Boise Card */
+        .boise-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(0, 51, 160, 0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .boise-card h4 {
+            color: #0033A0;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .boise-card p {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Risk Category Badge */
+        .risk-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0033A0 0%, #D64309 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Idaho",
+                "item": "https://windload.solutions/idaho-wind-load-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Boise",
+                "item": "https://windload.solutions/cities/boise-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="../index.html" class="logo">
+                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="../resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="../idaho-wind-load-requirements.html"><i class="fas fa-mountain"></i> Idaho</a>
+        <a href="../asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="../resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Boise Wind Load Requirements</h1>
+            <p>Ada County, ID | 90-100 mph Design Wind Speed | IBC Idaho Adoption | Treasure Valley | Foothills Topography | Exposure B</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Boise Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- Key Stats -->
+            <div class="key-stats">
+                <div class="stat-box">
+                    <span class="stat-value">90-100</span>
+                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">B</span>
+                    <span class="stat-label">Exposure Category<br>(Urban/Suburban)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">IBC</span>
+                    <span class="stat-label">Idaho Building Code<br>(ASCE 7-22)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">FOOTHILLS</span>
+                    <span class="stat-label">Topographic<br>Effects</span>
+                </div>
+            </div>
+
+            <h2>Boise, Idaho: Treasure Valley Mountain Wind Load Requirements</h2>
+            <p>Boise, located in <strong>Ada County, Idaho</strong>, has moderate wind load requirements that account for its Treasure Valley location, Boise River corridor, and proximity to the Boise Foothills. Idaho adopts the <strong>International Building Code (IBC)</strong> with state amendments. Design wind speeds for Risk Category II structures typically range from <strong>90-100 mph</strong> (3-second gust) based on ASCE 7-22 wind speed maps, representative of inland mountain valley conditions.</p>
+
+            <p>These requirements exist because Boise experiences wind channeling through the Treasure Valley, downslope wind events from the Boise Foothills, occasional severe thunderstorms, and the meteorological effects of mountain valley topography at approximately 2,700 feet elevation. The combination of Boise Front topography, valley wind patterns, and exposure to the Snake River Plain creates site-specific wind conditions requiring proper structural design.</p>
+
+            <div class="info-box">
+                <h4><strong>🏔️</strong> Boise Wind Load Quick Facts</h4>
+                <p><strong>Design Wind Speed (Risk Category II):</strong> 90-100 mph (3-second gust, varies by location)</p>
+                <p><strong>Design Wind Speed (Risk Category III):</strong> ~100-115 mph</p>
+                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~110-125 mph</p>
+                <p><strong>Exposure Category:</strong> B (urban/suburban areas), potential topographic effects near foothills</p>
+                <p><strong>Building Code:</strong> International Building Code (IBC) with Idaho state amendments</p>
+                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
+                <p><strong>County:</strong> Ada County</p>
+                <p><strong>Weather Risks:</strong> Foothills downslope winds, valley wind channeling, severe thunderstorms, mountain valley effects</p>
+                <p><strong>Elevation:</strong> ~2,700 feet above sea level</p>
+            </div>
+
+            <h3>Why Boise Has 90-100 mph Wind Speed Requirements</h3>
+            <p>Boise's design wind speed of 90-100 mph for Risk Category II structures is typical for inland mountain valley locations in the Intermountain West. This moderate wind speed reflects Boise's unique position in the Treasure Valley at the base of the Boise Front:</p>
+
+            <ul>
+                <li><strong>Treasure Valley Channeling:</strong> The Boise River valley and broader Treasure Valley create wind channeling effects, particularly during strong weather systems crossing the region.</li>
+                <li><strong>Boise Foothills Downslope Winds:</strong> The Boise Front (foothills rising immediately north and east of the city) generates downslope wind events that can produce localized high wind speeds in foothill neighborhoods.</li>
+                <li><strong>Mountain Valley Meteorology:</strong> Temperature inversions, valley-mountain wind circulation patterns, and cold air drainage from higher elevations create complex local wind conditions.</li>
+                <li><strong>Snake River Plain Exposure:</strong> Western and southern Boise open to the Snake River Plain, providing increased wind exposure compared to sheltered valley locations.</li>
+                <li><strong>Severe Thunderstorms:</strong> Spring and summer severe thunderstorms can produce damaging straight-line winds and occasional microbursts, particularly in valley locations.</li>
+                <li><strong>High Desert Climate:</strong> Boise's high desert climate features strong daytime heating and terrain-driven wind patterns that create localized wind enhancement.</li>
+            </ul>
+
+            <p>While Boise does not experience extreme wind events like coastal hurricanes or Front Range Chinook winds, proper engineering design accounting for topographic effects and valley wind patterns is essential for structural integrity and building code compliance.</p>
+
+            <h3>Boise Wind Load Calculations: Step by Step</h3>
+            <p>Calculating wind loads for Boise projects requires following ASCE 7-22 methodology with attention to elevation factor Ke and potential topographic factor Kzt near the foothills. The fundamental velocity pressure equation is:</p>
+
+            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #0033A0; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+
+            <p>For Boise with V = 95 mph (typical central Boise) and moderate elevation conditions, the resulting pressures are moderate. A Boise project with:</p>
+            <ul>
+                <li><strong>V = 95 mph</strong> (Boise typical velocity)</li>
+                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
+                <li><strong>Kzt = 1.0</strong> (flat valley terrain, not on slopes)</li>
+                <li><strong>Kd = 0.85</strong> (buildings)</li>
+                <li><strong>Ke = 0.96</strong> (approximately 2,700 ft elevation per ASCE 7-22 Table 26.9-1)</li>
+            </ul>
+            <p>Results in a velocity pressure of approximately <strong>qz = 16.8 psf</strong>. The elevation factor Ke provides a modest reduction due to lower air density compared to sea level.</p>
+
+            <p>For properties in the Boise Foothills or on elevated terrain, the topographic factor Kzt may exceed 1.0, increasing design pressures for buildings on slopes, ridges, or escarpments. Professional engineering analysis is required for foothill locations.</p>
+
+            <h3>Boise Building Code and Permitting</h3>
+            <p>The City of Boise and Ada County have adopted the <strong>International Building Code (IBC)</strong> with Idaho state amendments. The Idaho Division of Building Safety oversees statewide code adoption and enforcement.</p>
+
+            <p>Key Boise building code considerations:</p>
+
+            <ul>
+                <li><strong>Building Code Adoption:</strong> Boise and Ada County use IBC with Idaho state amendments</li>
+                <li><strong>Code Edition:</strong> Idaho typically adopts IBC editions with a 1-3 year lag; verify current edition with Boise Planning and Development Services</li>
+                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by current IBC adoption</li>
+                <li><strong>Permit Authority:</strong> City of Boise Planning and Development Services for city limits; Ada County Building Department for unincorporated areas</li>
+                <li><strong>Local Amendments:</strong> Boise adds specific requirements for seismic design, snow loads, and foundation design considerations</li>
+                <li><strong>Foothills Development:</strong> Special attention required for hillside development, including slope stability, drainage, and wildfire interface requirements</li>
+            </ul>
+
+            <p>You can access Boise building permits and requirements through the <a href="https://www.cityofboise.org/departments/planning-and-development-services/" target="_blank" rel="noopener">City of Boise Planning and Development Services</a>.</p>
+
+            <h3>Risk Categories and Wind Speed Adjustments</h3>
+            <p>Boise projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Risk Category</th>
+                        <th>Boise Design Wind Speed</th>
+                        <th>Building Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Risk Category I</strong></td>
+                        <td>~85-95 mph</td>
+                        <td>Agricultural facilities, temporary structures, minor storage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category II</strong></td>
+                        <td>90-100 mph</td>
+                        <td>Residential, commercial, most standard occupancies</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category III</strong></td>
+                        <td>~100-115 mph</td>
+                        <td>Schools, assembly >300, substantial hazardous materials</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Category IV</strong></td>
+                        <td>~110-125 mph</td>
+                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Exposure Category: B (Urban) with Potential Topographic Effects</h3>
+            <p>Boise projects require careful Exposure Category determination based on surrounding terrain, urban density, and proximity to the Boise Foothills:</p>
+
+            <div class="boise-card">
+                <h4>Exposure Category Selection for Boise</h4>
+                <p><strong>Exposure Category B (Urban/Suburban Areas):</strong> Central Boise, North End, East Boise, Southeast Boise, and established suburban neighborhoods typically qualify as Exposure B. This assumes urban and suburban areas with buildings and vegetation having heights generally less than 30 feet extending more than 800 feet upwind in all directions.</p>
+                <p><strong>Topographic Effects Near Foothills:</strong> Properties in the Boise Foothills, Bogus Basin Road corridor, and hillside developments may require topographic factor Kzt adjustments due to slope and escarpment effects. Buildings on slopes steeper than 10% or within 100H of ridge crests (where H is the height of the topographic feature) require detailed Kzt analysis per ASCE 7-22 Section 26.8.</p>
+                <p><strong>Western Boise/Meridian Transition:</strong> Western areas opening toward the Snake River Plain may have reduced sheltering compared to central valley locations, but generally remain Exposure B given suburban development density.</p>
+                <p><strong>Professional Engineering Required:</strong> Boise's foothills topography, valley wind patterns, and elevation gradients require professional engineering judgment for proper Exposure Category selection and topographic factor application. When uncertain, more conservative assumptions should be used.</p>
+            </div>
+
+            <h3>Foothills Wind Effects and Topographic Factors</h3>
+            <p>The Boise Foothills create unique wind load considerations for hillside development:</p>
+
+            <p><strong>Downslope Wind Events:</strong> Cold air drainage and downslope wind events from higher elevations can create enhanced wind speeds at foothill locations, particularly during nighttime cooling and strong weather systems. These localized effects may not be fully captured by regional wind speed maps.</p>
+
+            <p><strong>Topographic Factor Kzt:</strong> ASCE 7-22 Section 26.8 requires topographic factor analysis for buildings on hills, ridges, and escarpments. Foothill properties with steep slopes, ridge locations, or cliff-edge exposure may require Kzt values of 1.1-1.5 or higher, significantly increasing design wind pressures. The topographic amplification depends on slope steepness, distance from crest, and building height.</p>
+
+            <p><strong>Wind-Fire Interface:</strong> Foothills development in the wildland-urban interface must consider wind-driven wildfire exposure in addition to structural wind loads, affecting building material selection, defensible space requirements, and emergency access planning.</p>
+
+            <p><strong>Site-Specific Analysis:</strong> Given the variability of topographic effects, foothill properties should receive site-specific wind engineering analysis considering local terrain, exposure direction, and potential wind amplification mechanisms.</p>
+
+            <h3>Treasure Valley Wind Patterns</h3>
+            <p>Boise's location in the Treasure Valley creates distinctive wind patterns that influence structural design:</p>
+
+            <ul>
+                <li><strong>Valley Wind Channeling:</strong> The Boise River valley and broader Treasure Valley orient roughly northwest-southeast, providing a preferential axis for wind channeling during regional weather events.</li>
+                <li><strong>Mountain-Valley Circulation:</strong> Daytime upslope winds and nighttime downslope winds create diurnal wind patterns, with strongest effects in foothills areas and valley-mountain transition zones.</li>
+                <li><strong>Temperature Inversions:</strong> Winter temperature inversions can trap cold air in the valley while foothills experience significantly different wind conditions, creating elevation-dependent wind exposure.</li>
+                <li><strong>Snake River Plain Influence:</strong> Westerly and southwesterly winds crossing the Snake River Plain accelerate into the valley, particularly affecting western Boise and Meridian areas.</li>
+            </ul>
+
+            <h3>Boise Metro Area Zip Codes and Wind Speed Reference</h3>
+            <p>Boise and surrounding areas span valley floor to foothills terrain with varying wind exposure. Common Boise area zip codes include:</p>
+
+            <ul>
+                <li><strong>83702:</strong> Downtown Boise, North End, Boise State University</li>
+                <li><strong>83703:</strong> Boise Bench, South Boise</li>
+                <li><strong>83704:</strong> West Boise, Garden City</li>
+                <li><strong>83705:</strong> Northeast Boise, Highlands</li>
+                <li><strong>83706:</strong> North Boise, Foothills area</li>
+                <li><strong>83709:</strong> Southeast Boise</li>
+                <li><strong>83712:</strong> East Boise</li>
+                <li><strong>83716:</strong> Boise Foothills (elevated terrain)</li>
+                <li><strong>83642:</strong> Meridian (west of Boise)</li>
+                <li><strong>83646:</strong> Meridian/Eagle</li>
+            </ul>
+
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Boise wind speed based on your specific zip code or street address, accounting for local terrain, elevation, and valley wind exposure patterns.</p>
+
+            <h3>Professional Engineer (PE) Requirements in Boise</h3>
+            <p>Wind load calculations for Boise building permits have specific PE requirements that vary by building type and jurisdiction:</p>
+
+            <ul>
+                <li><strong>Commercial Buildings:</strong> Require PE-sealed calculations from an Idaho-licensed Professional Engineer for all commercial and multi-family projects</li>
+                <li><strong>Residential Structures:</strong> Single-family homes following prescriptive code provisions may not require PE seal, but engineered designs are recommended for complex structures or challenging sites</li>
+                <li><strong>Foothills Development:</strong> Hillside development, properties on steep slopes, or buildings requiring topographic factor analysis typically require PE involvement regardless of occupancy type</li>
+                <li><strong>Complex/Non-Standard Structures:</strong> Any building with unusual geometry, height >35 feet, large roof areas, or special occupancies requires PE-sealed calculations</li>
+                <li><strong>Best Practice:</strong> Given Boise's topographic variability and potential for localized wind effects, PE-sealed calculations provide confidence in code compliance and long-term structural performance</li>
+            </ul>
+
+            <p>Idaho Professional Engineers must be licensed through the <a href="https://ipels.idaho.gov/" target="_blank" rel="noopener">Idaho Board of Licensure of Professional Engineers and Professional Land Surveyors (IPELS)</a>.</p>
+
+            <h3>Official Boise Building Department Resources</h3>
+            <p>Engineers, architects, and contractors should reference these official resources for Boise wind load compliance:</p>
+
+            <div class="external-links-grid">
+                <a href="https://www.cityofboise.org/departments/planning-and-development-services/" target="_blank" rel="noopener" class="external-link">
+                    City of Boise Planning & Development Services
+                </a>
+                <a href="https://ipels.idaho.gov/" target="_blank" rel="noopener" class="external-link">
+                    Idaho PE Licensing Board (IPELS)
+                </a>
+                <a href="https://dbs.idaho.gov/" target="_blank" rel="noopener" class="external-link">
+                    Idaho Division of Building Safety
+                </a>
+            </div>
+
+            <h3>Common Boise Wind Load Mistakes to Avoid</h3>
+            <ul>
+                <li><strong>Ignoring topographic effects:</strong> Foothills properties require Kzt analysis—do not assume Kzt = 1.0 for hillside locations</li>
+                <li><strong>Incorrect elevation factor:</strong> Must apply Ke ~ 0.96 for Boise's 2,700-foot elevation per ASCE 7-22 Table 26.9-1</li>
+                <li><strong>Neglecting valley wind patterns:</strong> Wind channeling through Treasure Valley can create directional wind enhancement not reflected in omnidirectional wind speeds</li>
+                <li><strong>Using outdated wind speed maps:</strong> Verify current ASCE 7-22 wind speeds for your specific Boise location</li>
+                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require significantly higher design wind speeds than residential structures</li>
+                <li><strong>Assuming uniform exposure:</strong> Boise's topographic variability creates location-dependent exposure conditions requiring site-specific evaluation</li>
+                <li><strong>Overlooking wildfire considerations:</strong> Foothills development must address wind-fire interface requirements in addition to structural wind loads</li>
+            </ul>
+
+            <h3>How WindLoadCalc.com Handles Boise Requirements</h3>
+            <p>The <a href="https://windloadcalc.com" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Boise-specific requirements:</p>
+
+            <ul>
+                <li><strong>Automatic Velocity Determination:</strong> Enter any Boise zip code or address and the system automatically applies 90-100 mph based on location and terrain</li>
+                <li><strong>Elevation Factor Application:</strong> Automatically applies Ke ~ 0.96 for Boise's 2,700-foot elevation per ASCE 7-22</li>
+                <li><strong>Exposure Category Assignment:</strong> Determines Exposure B for urban/suburban areas based on development density</li>
+                <li><strong>Topographic Factor Guidance:</strong> Provides guidance for foothills locations requiring Kzt analysis, with tools for calculating topographic amplification</li>
+                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
+                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current IBC-adopted ASCE 7-22 requirements with Idaho amendments</li>
+                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding specific to Boise conditions</li>
+                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
+                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Boise permit submission</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Boise Wind Load Calculations</h2>
+            <p>WindLoadCalc.com automatically handles all Boise-specific requirements including the 90-100 mph design velocity, Treasure Valley conditions, elevation factor Ke, appropriate Exposure Category selection, topographic effects for foothills locations, Risk Category adjustments, and component pressure coefficients. Simply enter your Boise project address or zip code for instant, accurate calculations.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Calculate Boise Wind Loads Now →</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <h3>Boise vs Other Idaho Wind Load Requirements</h3>
+            <p>Boise's wind load requirements differ from other Idaho regions due to valley location and elevation:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Boise (Treasure Valley)</th>
+                        <th>Idaho Falls/Eastern Idaho</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Design Wind Speed</strong></td>
+                        <td>90-100 mph</td>
+                        <td>90-110 mph (higher elevations)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Elevation</strong></td>
+                        <td>~2,700 feet</td>
+                        <td>4,700-6,000+ feet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Elevation Factor Ke</strong></td>
+                        <td>~0.96</td>
+                        <td>~0.88-0.92 (higher elevations)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exposure Category</strong></td>
+                        <td>B (urban valley)</td>
+                        <td>B/C (varies by location)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary Wind Source</strong></td>
+                        <td>Valley channeling, downslope winds</td>
+                        <td>High plateau winds, severe thunderstorms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Snow Loads</strong></td>
+                        <td>20-40 psf ground snow</td>
+                        <td>30-80+ psf ground snow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topographic Factor Kzt</strong></td>
+                        <td>1.0 (valley) to 1.3+ (foothills)</td>
+                        <td>1.0 to 1.2+ (varies by terrain)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>While Boise has moderate wind speeds compared to exposed high-elevation Idaho locations, proper engineering design accounting for valley wind patterns and foothills topography remains essential for structural integrity and code compliance.</p>
+
+            <h3>Treasure Valley Metro Area Considerations</h3>
+            <p>The Treasure Valley metropolitan area extends from Boise west through Meridian, Eagle, Nampa, and Caldwell, creating varying wind load requirements:</p>
+
+            <ul>
+                <li><strong>Boise Foothills (83702, 83706, 83716):</strong> Elevated terrain with topographic wind effects, requiring Kzt analysis and potential wind speed enhancement</li>
+                <li><strong>Central Boise (83702, 83703, 83705):</strong> Urban Exposure B with valley wind channeling, 90-95 mph typical</li>
+                <li><strong>West Boise/Meridian (83704, 83642, 83646):</strong> Suburban development with Snake River Plain exposure, mixed Exposure B</li>
+                <li><strong>Eagle/Star (83616, 83669):</strong> Transitional suburban-rural exposure with some agricultural areas</li>
+                <li><strong>Nampa/Caldwell (83651, 83686):</strong> Western valley locations with similar wind exposure to Boise but more agricultural/open terrain</li>
+            </ul>
+
+            <p>Engineers working across the Treasure Valley must verify specific wind speeds, exposure categories, and topographic factors for each project location. The valley's gentle topography generally provides consistent wind exposure, but foothills areas require special attention.</p>
+
+            <h3>Idaho's Growing Tech Hub and Development</h3>
+            <p>Boise's rapid growth as a technology and business hub has driven significant construction activity across the Treasure Valley:</p>
+
+            <p><strong>Urban Infill Development:</strong> Downtown Boise and established neighborhoods are experiencing high-density residential and mixed-use development, with taller buildings requiring more sophisticated wind load analysis than typical low-rise construction.</p>
+
+            <p><strong>Suburban Expansion:</strong> Western expansion into Meridian, Eagle, and Star is creating large-scale residential developments and commercial centers that must account for transitional exposure conditions as farmland is converted to suburban use.</p>
+
+            <p><strong>Foothills Development:</strong> Continued hillside development in the Boise Foothills creates premium locations with enhanced views but also increased wind exposure, topographic effects, and wildfire interface requirements.</p>
+
+            <p><strong>Outdoor Recreation Economy:</strong> Boise's proximity to world-class outdoor recreation (Bogus Basin ski area, Boise River greenbelt, extensive trail systems) drives construction of recreation facilities, trailheads, and mountain resort development requiring elevation and exposure-specific wind analysis.</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get Boise-Compliant Wind Load Calculations Today</h2>
+            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Boise projects accounting for Treasure Valley conditions, elevation effects, and foothills topography. Our software automatically handles the 90-100 mph velocity range, elevation factor Ke, Exposure B determination, topographic effects, and generates PE-ready reports for building permit submission.</p>
+            <a href="https://windloadcalc.com" class="cta-button">Try Boise Wind Load Calculator →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
+            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
+            <p style="margin-top: 0.5rem;"><a href="../idaho-wind-load-requirements.html" style="color: #60a5fa;">Idaho Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
