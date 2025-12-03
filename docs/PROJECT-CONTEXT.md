@@ -42,6 +42,8 @@ windload-solutions-parent/
 4. `building-envelope-wind-loads-guide.html` - Wall C&C, zones 4/5
 5. `roof-wind-uplift-guide.html` - Roof C&C, zones 1/2/3
 6. `window-door-wind-pressure-guide.html` - DP ratings, impact glazing
+7. `solar-panel-wind-load-guide.html` - ASCE 7-16 & 7-22 Chapter 29, GCrn, Section 29.4.5 (NEW)
+8. `sign-billboard-wind-load-guide.html` - Section 29.3, Cf, Case A/B/C (NEW)
 
 ### City Pages (100 total)
 All in `/cities/` folder with pattern: `[city]-wind-load-requirements.html`
@@ -103,8 +105,31 @@ All in `/cities/` folder with pattern: `[city]-wind-load-requirements.html`
 - Blue = Building envelope
 - Red = Roof/uplift
 - Cyan = Windows/doors
+- Orange = Solar panels
+- Green = Signs/billboards
 - Mobile-responsive design
 - Font Awesome icons throughout
+
+### Header Standard (IMPORTANT)
+All pages must follow this header format (reference: tulsa-wind-load-requirements.html):
+```html
+<div class="logo-hamburger-row">
+    <a href="..." class="logo">
+        <img src="images/windloadsolutions-logo.svg" ...>
+    </a>
+</div>
+<div class="header-right">
+    <a href="..." class="calculator-cta">...</a>  <!-- Orange gradient button -->
+    <a href="..." class="header-cta">State Requirements</a>
+    <a href="..." class="header-cta">ASCE 7</a>
+    <a href="..." class="header-cta">Resources</a>
+    <button class="hamburger">...</button>
+</div>
+```
+- Logo ONLY in logo-hamburger-row (no hamburger)
+- Hamburger button in header-right (at end)
+- calculator-cta with gradient styling for main CTA
+- nav-overlay + nav-links structure for mobile menu
 
 ---
 
@@ -154,8 +179,6 @@ git log --oneline -5
 ### Content Expansion
 - More city pages for high-wind regions
 - Additional state-specific HVHZ content
-- Solar panel wind load guide
-- Sign/billboard wind load guide
 
 ### Technical Improvements
 - Add pillar pages to articles.html navigation cards
@@ -176,6 +199,21 @@ git log --oneline -5
 
 ## Session History Summary
 
+### 2025-12-03
+- Created Solar Panel Wind Load Guide (ASCE 7-16 & 7-22, Chapter 29)
+  - GCrn coefficients, gamma factors, roof zones
+  - NEW Section 29.4.5 ground-mount provisions (ASCE 7-22 only)
+  - CTAs link to windloadcalc.com/shop/solar-panels.html
+- Created Sign & Billboard Wind Load Guide (Section 29.3)
+  - Force coefficients (Cf), Case A/B/C load patterns
+  - Porosity effects for open signs
+  - CTAs link to windloadcalc.com/shop/specialty.html
+- Fixed header consistency across all pages
+  - Solar and sign guides updated to match site standard
+  - Albany city page fixed (was the only incorrect one of 100)
+- Added both guides to articles.html "Comprehensive Pillar Guides" section
+- Updated sitemap.xml with both new guides (priority 0.9)
+
 ### 2025-11-30
 - Created Chapter 32 tornado pillar page
 - Added FAQ schema to all 100 city pages
@@ -193,4 +231,14 @@ git log --oneline -5
 
 ---
 
-*Last updated: 2025-11-30*
+## Product Page Links (windloadcalc.com)
+
+| Guide Page | Product Link |
+|------------|--------------|
+| solar-panel-wind-load-guide.html | windloadcalc.com/shop/solar-panels.html |
+| sign-billboard-wind-load-guide.html | windloadcalc.com/shop/specialty.html |
+| All other pages | windloadcalc.com/wind-load-calculator-shop.html |
+
+---
+
+*Last updated: 2025-12-03*
