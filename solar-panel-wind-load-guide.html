@@ -179,51 +179,121 @@
             background: #1f2937;
         }
 
-        /* Fullscreen Menu */
-        .fullscreen-menu {
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
             z-index: 999;
             opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
+            transition: opacity 0.3s ease;
         }
 
-        .fullscreen-menu.active {
+        .nav-overlay.active {
+            display: block;
             opacity: 1;
-            visibility: visible;
         }
 
-        .fullscreen-menu-content {
-            display: flex;
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
             flex-direction: column;
             gap: 1.5rem;
-            text-align: center;
-            padding: 2rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
-        .fullscreen-menu-content a {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1f2937;
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
             text-decoration: none;
-            padding: 0.5rem 2rem;
-            border-radius: 10px;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
             transition: all 0.3s ease;
+            position: relative;
         }
 
-        .fullscreen-menu-content a:hover {
-            background: rgba(245, 158, 11, 0.1);
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 0;
+            background: #f59e0b;
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            height: 100%;
+        }
+
+        .nav-links a:hover {
             color: #f59e0b;
+            padding-left: 0.5rem;
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
         }
 
         /* Hero Section - Solar Orange Theme */
@@ -803,32 +873,38 @@
     <header class="main-header">
         <div class="header-container">
             <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com/shop/solar-panels.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
                 <button class="hamburger" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <a href="/" class="logo">
-                    <img src="wls.png" alt="WindLoad Solutions" class="logo-image">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="https://windloadcalc.com/shop/solar-panels.html" class="header-cta">Get Solar Panel Calculator</a>
             </div>
         </div>
     </header>
 
-    <!-- Fullscreen Menu -->
-    <nav class="fullscreen-menu">
-        <div class="fullscreen-menu-content">
-            <a href="/">Home</a>
-            <a href="/articles">Articles</a>
-            <a href="/asce-7-standards">ASCE 7 Standards</a>
-            <a href="/state-requirements">State Requirements</a>
-            <a href="/resources">Resources</a>
-            <a href="/complete-guide-wind-load-calculations">Complete Guide</a>
-            <a href="https://windloadcalc.com/shop/solar-panels.html">Solar Panel Calculator</a>
-        </div>
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Guide</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
 
     <!-- Hero Section -->
@@ -1284,25 +1360,33 @@
             }
         });
 
-        // Hamburger menu
+        // Mobile menu toggle
         const hamburger = document.querySelector('.hamburger');
-        const fullscreenMenu = document.querySelector('.fullscreen-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
         const logo = document.querySelector('.logo');
 
-        hamburger.addEventListener('click', () => {
+        function toggleMenu() {
             hamburger.classList.toggle('active');
-            fullscreenMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
             logo.classList.toggle('menu-active');
-        });
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
 
-        // Close menu when clicking a link
-        document.querySelectorAll('.fullscreen-menu-content a').forEach(link => {
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
             link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                fullscreenMenu.classList.remove('active');
-                logo.classList.remove('menu-active');
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
             });
         });
     </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </body>
 </html>
