@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorado Wind Load Requirements | 2021 IBC, ASCE 7-16 & 7-22, Home Rule | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Colorado wind load requirements including 2021 IBC, ASCE 7-16/7-22, Denver code adoption, Aurora engineering criteria, Ke ground elevation factor, and jurisdiction-specific requirements.">
+    <link rel="canonical" href="https://windload.solutions/colorado-wind-load-requirements">
+    <meta name="keywords" content="Colorado wind load, Denver wind load, Aurora building code, ASCE 7-16 Colorado, ASCE 7-22 Denver, Colorado building codes, wind load calculator Colorado, Ke elevation factor, Colorado home rule">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+
+        /* Header Styles from index.html */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Colorado colors (Blue/White/Gold mountains) */
+        .hero {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 25%, #60a5fa 50%, #f59e0b 75%, #fbbf24 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '\26F0\FE0F\1F3D4\FE0F';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.25;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .home-rule-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .home-rule-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .home-rule-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .tornado-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            margin-left: 0.5rem;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .tornado-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .tornado-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #2563eb;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #60a5fa;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+            margin: 2rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left-color: #f59e0b;
+        }
+
+        .info-box.elevation {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left-color: #10b981;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #2563eb;
+        }
+
+        .info-box.warning h4 strong {
+            color: #f59e0b;
+        }
+
+        .info-box.elevation h4 strong {
+            color: #10b981;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Jurisdiction Cards */
+        .jurisdiction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .jurisdiction-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .jurisdiction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
+            border-color: #2563eb;
+        }
+
+        .jurisdiction-card h4 {
+            color: #2563eb;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .jurisdiction-card p {
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .jurisdiction-card .code-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .jurisdiction-card .transition-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .formula-box h4 {
+            color: #60a5fa;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .formula-box .formula {
+            font-size: 1.3rem;
+            color: #fbbf24;
+            margin: 1rem 0;
+        }
+
+        .formula-box .formula-desc {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* External Link Styles */
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            color: #0018ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            border: 2px solid #e5e7eb;
+        }
+
+        .external-link:hover {
+            background: white;
+            border-color: #0018ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
+        }
+
+        .external-link::after {
+            content: '\2197';
+            font-size: 1.2rem;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* City Links */
+        .city-links-section {
+            background: #f9fafb;
+            padding: 4rem 0;
+        }
+
+        .city-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid #2563eb;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .city-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.15);
+        }
+
+        .city-card h4 {
+            font-size: 1.25rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .city-card p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .home-rule-badge,
+            .tornado-badge {
+                display: block;
+                margin: 0.5rem auto;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Colorado Wind Loads",
+                "item": "https://windload.solutions/colorado-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+
+    <!-- FAQ Schema for Featured Snippets -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What ASCE 7 version does Colorado use for wind load calculations?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Colorado is a home rule state where building codes are adopted at the local jurisdiction level. Most major cities like Aurora currently use the 2021 IBC with ASCE 7-16. Denver is transitioning to the 2024 IBC with ASCE 7-22, effective December 31, 2025."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the Ke ground elevation factor and why is it important in Colorado?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Ke (Ground Elevation Factor) adjusts wind velocity pressure for reduced air density at higher elevations. At Denver's elevation of 5,280 ft, Ke is approximately 0.88, resulting in a 12% reduction in design wind pressures compared to sea level. This is critical for accurate Colorado wind load calculations."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the design wind speed for Denver, Colorado?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Denver design wind speeds are 105-110 mph for Risk Category II structures, 110-115 mph for Risk Category III, and 120-125 mph for Risk Category IV per ASCE 7-16. The default exposure category is B for most urban/suburban areas."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does Colorado require impact-resistant glazing?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Colorado is NOT within a wind-borne debris region. Impact-resistant glazing and hurricane shutters are not required by code. Standard wind load design provisions apply for windows, doors, and fenestration."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When will Denver adopt ASCE 7-22?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Denver is adopting the 2025 Denver Building Code (based on 2024 IBC with ASCE 7-22) effective December 31, 2025. A transition period runs from July through December 2025."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do tornado loads apply in Colorado?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Eastern Colorado (the plains region) may require tornado load consideration for Risk Category III and IV structures under ASCE 7-22 Chapter 32. Most of Colorado west of the Rocky Mountains is not in the primary tornado corridor."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation with Hierarchical Structure -->
+<nav class="nav-links">
+    <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+
+    <!-- ASCE 7 Standards with click submenu -->
+    <div class="nav-section">
+        <a href="#" class="nav-section-header" onclick="event.preventDefault(); toggleNavSection(this);">
+            <i class="fas fa-book"></i> ASCE 7 Standards
+            <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+
+        <div class="nav-section-content">
+            <!-- Wind Speed & Maps submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-wind"></i> Wind Speed & Maps
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="3-second-gust-wind-speed.html" class="nav-subitem"><i class="fas fa-gauge-high"></i> 3-Second Gust</a>
+                    <a href="basic-wind-speed-explained.html" class="nav-subitem"><i class="fas fa-circle-info"></i> Basic Wind Speed</a>
+                    <a href="asce-7-16-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map"></i> ASCE 7-16 Maps</a>
+                    <a href="asce-7-22-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map-location-dot"></i> ASCE 7-22 Maps</a>
+                    <a href="wind-speed-by-location.html" class="nav-subitem"><i class="fas fa-location-dot"></i> Wind Speed by Location</a>
+                </div>
+            </div>
+
+            <!-- Exposure Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="exposure-category-selection-guide.html" class="nav-subitem"><i class="fas fa-compass"></i> Selection Guide</a>
+                    <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-subitem"><i class="fas fa-city"></i> Exposure B</a>
+                    <a href="exposure-c-open-terrain-wind-loads.html" class="nav-subitem"><i class="fas fa-seedling"></i> Exposure C</a>
+                    <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-subitem"><i class="fas fa-water"></i> Exposure D</a>
+                    <a href="exposure-transition-zones.html" class="nav-subitem"><i class="fas fa-arrows-left-right"></i> Transition Zones</a>
+                </div>
+            </div>
+
+            <!-- Risk Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="risk-category-selection-guide.html" class="nav-subitem"><i class="fas fa-list-check"></i> Selection Guide</a>
+                    <a href="risk-category-1-agricultural-buildings.html" class="nav-subitem"><i class="fas fa-warehouse"></i> Category I</a>
+                    <a href="risk-category-2-standard-occupancy.html" class="nav-subitem"><i class="fas fa-building"></i> Category II</a>
+                    <a href="risk-category-3-assembly-buildings.html" class="nav-subitem"><i class="fas fa-users"></i> Category III</a>
+                    <a href="risk-category-4-essential-facilities.html" class="nav-subitem"><i class="fas fa-hospital"></i> Category IV</a>
+                </div>
+            </div>
+
+            <!-- Design Methods submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-drafting-compass"></i> Design Methods
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="asd-allowable-stress-design-wind-loads.html" class="nav-subitem"><i class="fas fa-ruler-combined"></i> ASD Method</a>
+                    <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="nav-subitem"><i class="fas fa-weight-hanging"></i> LRFD Method</a>
+                    <a href="asd-lrfd-conversion-guide.html" class="nav-subitem"><i class="fas fa-arrows-rotate"></i> ASD / LRFD</a>
+                    <a href="nominal-vs-ultimate-wind-loads.html" class="nav-subitem"><i class="fas fa-code-compare"></i> Nominal vs Ultimate</a>
+                    <a href="nominal-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-n"></i> Nominal Loads</a>
+                    <a href="ultimate-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-u"></i> Ultimate Loads</a>
+                    <a href="directional-vs-non-directional-wind-loads.html" class="nav-subitem"><i class="fas fa-compass-drafting"></i> Directional Method</a>
+                    <a href="wind-directionality-factor-guide.html" class="nav-subitem"><i class="fas fa-k"></i> Kd Factor</a>
+                </div>
+            </div>
+
+            <!-- HVHZ / Florida submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-hurricane"></i> HVHZ / Florida
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="hvhz-florida-requirements.html" class="nav-subitem"><i class="fas fa-file-contract"></i> Florida FBC</a>
+                    <a href="miami-dade-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-certificate"></i> Miami-Dade NOA</a>
+                    <a href="broward-county-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-stamp"></i> Broward County</a>
+                    <a href="hvhz-product-approvals.html" class="nav-subitem"><i class="fas fa-check-circle"></i> Product Approvals</a>
+                    <a href="hvhz-vs-standard-wind-zones.html" class="nav-subitem"><i class="fas fa-balance-scale"></i> HVHZ vs Standard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+    <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+    <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+    <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+    <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+    <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<style>
+/* Navigation styles with CLICK dropdowns */
+.nav-section {
+    position: relative;
+}
+
+.nav-section-header {
+    display: block !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    color: #0018ff !important;
+    background: rgba(0, 24, 255, 0.05) !important;
+    padding: 1rem !important;
+    border-left: 4px solid #0018ff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-section-header i:first-child {
+    margin-right: 0.75rem;
+}
+
+.nav-arrow {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-section.active .nav-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-section.active .nav-section-content {
+    max-height: 2000px;
+}
+
+.nav-subsection {
+    position: relative;
+}
+
+.nav-subsection-header {
+    display: block !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    color: #1f2937 !important;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
+    border-left: 3px solid #d1d5db !important;
+    background: transparent !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-subsection-header:hover {
+    background: rgba(0, 24, 255, 0.08) !important;
+    border-left-color: #0018ff !important;
+}
+
+.nav-subsection-header i:first-child {
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.nav-subarrow {
+    font-size: 0.7rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-subsection.active .nav-subarrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.nav-subsection-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-subsection.active .nav-subsection-content {
+    max-height: 1000px;
+}
+
+.nav-subitem {
+    font-size: 0.95rem !important;
+    color: #6b7280 !important;
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.nav-subitem i {
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.nav-subitem:hover {
+    background: rgba(0, 24, 255, 0.05) !important;
+    color: #0018ff !important;
+    padding-left: 3rem !important;
+}
+
+.nav-subitem::before {
+    display: none !important;
+}
+
+/* Override default nav-links a styles */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links > a > i {
+    margin-right: 0.75rem;
+    color: #0018ff;
+    width: 1.25rem;
+    text-align: center;
+}
+</style>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div>
+                <span class="home-rule-badge"><i class="fas fa-landmark"></i> Home Rule State</span>
+                <a href="tornado-alley-wind-loads-safety.html" class="tornado-badge"><i class="fas fa-tornado"></i> Eastern Plains Tornado Risk</a>
+            </div>
+            <h1>Colorado Wind Load Requirements</h1>
+            <p>Complete guide to Colorado wind load requirements including jurisdiction-specific code adoption, ASCE 7-16/7-22 standards, the critical Ke elevation factor, Denver's 2024 IBC transition, and regional wind considerations.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Colorado Wind Load Calculator</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <div class="info-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left-color: #f59e0b; margin-bottom: 2rem;">
+                    <h4 style="color: #92400e;"><i class="fas fa-gavel"></i> <strong>No Mandatory Wind Load Permit Required</strong></h4>
+                    <p style="color: #78350f;"><strong>Colorado is one of 40 states where building departments do NOT require wind load calculations by law to obtain a building permit.</strong> However, you may still need wind load calculations for insurance requirements, manufacturer warranties, liability protection, or engineering best practices.</p>
+                    <p style="margin-top: 0.75rem;"><a href="other-states-wind-load-requirements.html" style="color: #92400e; font-weight: 600;">View all 40 states without mandatory wind load permits →</a></p>
+                </div>
+
+                <h2><i class="fas fa-landmark" style="color: #2563eb; margin-right: 0.5rem;"></i> Colorado Code Adoption - Home Rule State</h2>
+
+                <p>Colorado is a <strong>home rule state</strong>, meaning building codes are adopted at the <strong>local jurisdiction level</strong> rather than statewide. Each city, county, and municipality determines which edition of the International Building Code (IBC) and associated standards to adopt.</p>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> <strong>Important:</strong> Always Verify Local Requirements</h4>
+                    <p>Because Colorado lacks statewide code adoption, you must verify the adopted code edition with the local building department before beginning any project. Code editions can vary significantly between neighboring jurisdictions.</p>
+                </div>
+
+                <h3>Key Jurisdiction Code Adoption</h3>
+
+                <div class="jurisdiction-grid">
+                    <div class="jurisdiction-card">
+                        <h4><i class="fas fa-city"></i> Aurora</h4>
+                        <p><strong>Current Code:</strong> 2021 IBC</p>
+                        <p><strong>Wind Standard:</strong> ASCE 7-16</p>
+                        <p><strong>Updated:</strong> April 2023</p>
+                        <span class="code-badge">ASCE 7-16</span>
+                    </div>
+                    <div class="jurisdiction-card">
+                        <h4><i class="fas fa-mountain"></i> Denver</h4>
+                        <p><strong>Current Code:</strong> 2021 IBC</p>
+                        <p><strong>Transitioning to:</strong> 2024 IBC / ASCE 7-22</p>
+                        <p><strong>Effective:</strong> December 31, 2025</p>
+                        <span class="code-badge">ASCE 7-16</span>
+                        <span class="transition-badge">ASCE 7-22 Dec 2025</span>
+                    </div>
+                    <div class="jurisdiction-card">
+                        <h4><i class="fas fa-building"></i> Colorado Springs</h4>
+                        <p><strong>Current Code:</strong> 2021 IBC</p>
+                        <p><strong>Wind Standard:</strong> ASCE 7-16</p>
+                        <p><strong>Status:</strong> Verify locally</p>
+                        <span class="code-badge">ASCE 7-16</span>
+                    </div>
+                    <div class="jurisdiction-card">
+                        <h4><i class="fas fa-leaf"></i> Boulder</h4>
+                        <p><strong>Current Code:</strong> 2021 IBC</p>
+                        <p><strong>Wind Standard:</strong> ASCE 7-16</p>
+                        <p><strong>Status:</strong> Verify locally</p>
+                        <span class="code-badge">ASCE 7-16</span>
+                    </div>
+                </div>
+
+                <h3>Aurora Engineering Design Criteria</h3>
+                <p>The City of Aurora provides specific engineering design criteria that apply to wind load calculations:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ground Snow Load (Pg)</strong></td>
+                            <td>40 psf</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Basic Wind Speed (Risk Cat II)</strong></td>
+                            <td>105-110 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Basic Wind Speed (Risk Cat III)</strong></td>
+                            <td>110-115 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Basic Wind Speed (Risk Cat IV)</strong></td>
+                            <td>120-125 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Default Exposure Category</strong></td>
+                            <td>B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weathering</strong></td>
+                            <td>Severe</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum Frost Depth</strong></td>
+                            <td>36 inches</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Winter Design Temperature</strong></td>
+                            <td>1&deg;F</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ice Barrier Underlayment</strong></td>
+                            <td>Required</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mean Annual Temperature</strong></td>
+                            <td>50&deg;F</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-mountain" style="color: #10b981; margin-right: 0.5rem;"></i> Ground Elevation Factor (Ke) - Critical for Colorado</h2>
+
+                <div class="info-box elevation">
+                    <h4><i class="fas fa-chart-line"></i> <strong>Why Ke Matters in Colorado</strong></h4>
+                    <p>ASCE 7-16 introduced the <strong>Ground Elevation Factor (Ke)</strong> which adjusts velocity pressure for reduced air density at higher elevations. This is <strong>critical for Colorado projects</strong> where elevations range from 3,500 ft to over 14,000 ft.</p>
+                </div>
+
+                <p>At higher elevations, air density is lower, which reduces the force that wind exerts on structures. The Ke factor accounts for this physics-based reduction in wind pressure.</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Elevation</th>
+                            <th>Ke Factor</th>
+                            <th>Pressure Reduction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sea Level</td>
+                            <td>1.00</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td>3,000 ft</td>
+                            <td>0.94</td>
+                            <td>6%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5,280 ft (Denver)</strong></td>
+                            <td><strong>0.88</strong></td>
+                            <td><strong>12%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>6,000 ft</td>
+                            <td>0.86</td>
+                            <td>14%</td>
+                        </tr>
+                        <tr>
+                            <td>8,000 ft</td>
+                            <td>0.82</td>
+                            <td>18%</td>
+                        </tr>
+                        <tr>
+                            <td>10,000 ft</td>
+                            <td>0.78</td>
+                            <td>22%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="formula-box">
+                    <h4><i class="fas fa-calculator"></i> ASCE 7-16 Velocity Pressure Formula</h4>
+                    <div class="formula">qz = 0.00256 &times; Kz &times; Kzt &times; Kd &times; Ke &times; V&sup2;</div>
+                    <div class="formula-desc"><strong>qz</strong> = Velocity pressure at height z (psf)</div>
+                    <div class="formula-desc"><strong>Kz</strong> = Velocity pressure exposure coefficient</div>
+                    <div class="formula-desc"><strong>Kzt</strong> = Topographic factor (typically 1.0)</div>
+                    <div class="formula-desc"><strong>Kd</strong> = Wind directionality factor (0.85 for most buildings)</div>
+                    <div class="formula-desc"><strong>Ke</strong> = Ground elevation factor (critical for Colorado!)</div>
+                    <div class="formula-desc"><strong>V</strong> = Basic wind speed (mph)</div>
+                </div>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-lightbulb"></i> <strong>Denver Example (5,280 ft)</strong></h4>
+                    <p>At Denver's "Mile High" elevation, Ke = 0.88 approximately. This results in a <strong>~12% reduction</strong> in design wind pressures compared to an identical building at sea level. This can significantly impact product selection and structural design.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-calendar-alt" style="color: #f59e0b; margin-right: 0.5rem;"></i> Denver's Transition to ASCE 7-22</h2>
+
+                <p>The City and County of Denver is adopting the <strong>2025 Denver Building Code</strong> based on the <strong>2024 International Building Code</strong> series, which references ASCE 7-22 for wind loads.</p>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-clock"></i> <strong>Key Dates</strong></h4>
+                    <p><strong>July - December 2025:</strong> 6-month transition period</p>
+                    <p><strong>December 31, 2025:</strong> Full adoption effective date</p>
+                </div>
+
+                <h3>2024 IBC Code Package</h3>
+                <ul>
+                    <li>2024 International Building Code (IBC)</li>
+                    <li>2024 International Energy Conservation Code (IECC)</li>
+                    <li>2024 International Fuel Gas Code (IFGC)</li>
+                    <li>2024 International Mechanical Code (IMC)</li>
+                    <li>2024 International Plumbing Code (IPC)</li>
+                    <li>2024 International Existing Building Code (IEBC)</li>
+                    <li>2024 International Residential Code (IRC)</li>
+                    <li>2024 International Fire Code (IFC)</li>
+                </ul>
+
+                <h3>Key Changes: ASCE 7-16 vs ASCE 7-22</h3>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>ASCE 7-16</th>
+                            <th>ASCE 7-22</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Wind Directionality (Kd)</strong></td>
+                            <td>In qz equation</td>
+                            <td>Moved to pressure equations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tornado Loads</strong></td>
+                            <td>Commentary only</td>
+                            <td>New Chapter 32 (required)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C&C Roof Zones</strong></td>
+                            <td>Multiple zones</td>
+                            <td>Reduced to 3 zones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum EWA</strong></td>
+                            <td>Various</td>
+                            <td>10 sq ft minimum</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Simplified Methods (Part 2)</strong></td>
+                            <td>Available</td>
+                            <td>Removed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Elevated Buildings</strong></td>
+                            <td>Not addressed</td>
+                            <td>New Section 27.3.1.1</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground-Mounted Solar</strong></td>
+                            <td>Limited guidance</td>
+                            <td>New Section 29.4.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>For most Colorado projects, ASCE 7-22 generally produces <strong>same or slightly lower</strong> pressures than ASCE 7-16. However, tornado loads in Chapter 32 may apply to eastern Colorado for Risk Category III and IV structures.</p>
+            </div>
+        </section>
+
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-window-maximize" style="color: #2563eb; margin-right: 0.5rem;"></i> Windows, Doors & Fenestration Requirements</h2>
+
+                <p>Per IBC Chapter 16, buildings, structures, and parts thereof shall be designed to withstand minimum wind loads. Wind loads on fenestration (windows, doors, skylights) shall be determined in accordance with <strong>ASCE 7 Chapters 26-30</strong>.</p>
+
+                <h3>Design Pressure (DP) Ratings</h3>
+                <p><strong>Design Pressure (DP)</strong> equals the maximum wind pressure a window or door can resist:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>DP Rating</th>
+                            <th>Positive Pressure</th>
+                            <th>Negative Pressure</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DP 15</td>
+                            <td>+15 psf</td>
+                            <td>-15 psf</td>
+                        </tr>
+                        <tr>
+                            <td>DP 25</td>
+                            <td>+25 psf</td>
+                            <td>-25 psf</td>
+                        </tr>
+                        <tr>
+                            <td>DP 35</td>
+                            <td>+35 psf</td>
+                            <td>-35 psf</td>
+                        </tr>
+                        <tr>
+                            <td>DP 50</td>
+                            <td>+50 psf</td>
+                            <td>-50 psf</td>
+                        </tr>
+                        <tr>
+                            <td>DP 65</td>
+                            <td>+65 psf</td>
+                            <td>-65 psf</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-check-circle"></i> <strong>Selection Rule</strong></h4>
+                    <p>The product DP rating must <strong>exceed</strong> the calculated Component & Cladding (C&C) pressure for that location. Zone 5 corners require higher ratings than Zone 4 field areas.</p>
+                </div>
+
+                <h3>Impact Resistance - NOT Required in Colorado</h3>
+                <div class="info-box elevation">
+                    <h4><i class="fas fa-shield-alt"></i> <strong>Colorado is NOT within a wind-borne debris region</strong></h4>
+                    <p>Wind-borne debris regions are defined as areas within 1 mile of coastal mean high water line where V &ge; 130 mph, areas where V &ge; 140 mph, and Hawaii.</p>
+                    <p>Since Colorado is an inland state without hurricane exposure, <strong>impact-resistant glazing and hurricane shutters are NOT required</strong> by code. Standard wind load design provisions apply.</p>
+                </div>
+
+                <h3>Deflection Limits for Fenestration</h3>
+                <p>When framing members support glass:</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Span Length</th>
+                            <th>Maximum Deflection</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Up to 13'-6"</td>
+                            <td>L/175</td>
+                        </tr>
+                        <tr>
+                            <td>Over 13'-6"</td>
+                            <td>L/240 + 1/4"</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Applied at 0.6 times the C&C wind loads</em></p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-home" style="color: #2563eb; margin-right: 0.5rem;"></i> Roofing Requirements & Standards</h2>
+
+                <p>IBC Chapter 15 provides minimum requirements for the design and construction of roof assemblies and rooftop structures. The following ICC/IBC references apply to Colorado projects based on locally adopted code editions.</p>
+
+                <!-- IBC Section 1504 Code Requirements -->
+                <div class="info-box" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); margin: 2rem 0;">
+                    <h4><i class="fas fa-book"></i> <strong>IBC 2024 Chapter 15 - Section 1504 Performance Requirements</strong></h4>
+                    <p style="margin-bottom: 1rem;"><strong>Section 1504.1 General:</strong></p>
+                    <blockquote style="background: white; padding: 1rem; border-left: 4px solid #2563eb; margin: 0 0 1rem 0; font-style: italic; color: #1e40af;">
+                        "Roof decks and roof coverings shall be designed for wind loads in accordance with Chapter 16 and Sections 1504.2, 1504.3, and 1504.4."
+                    </blockquote>
+                    <p><strong>Section 1504.3 Wind Resistance of Non-ballasted Roofs:</strong></p>
+                    <p>Roof coverings mechanically attached or adhered to the roof deck shall be designed to resist the <strong>design wind load pressures for components and cladding</strong> per Section 1609.5.2.</p>
+                </div>
+
+                <h3>Asphalt Shingles (IBC Section 1504.2)</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Wind Speed</th>
+                            <th>Required Classification</th>
+                            <th>Test Standard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&le; 110 mph</td>
+                            <td>Class D</td>
+                            <td>ASTM D7158</td>
+                        </tr>
+                        <tr>
+                            <td>&gt; 110 mph to &le; 120 mph</td>
+                            <td>Class G or H</td>
+                            <td>ASTM D7158</td>
+                        </tr>
+                        <tr>
+                            <td>&gt; 120 mph</td>
+                            <td>Class H</td>
+                            <td>ASTM D7158</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.95rem; color: #6b7280; margin-top: 0.5rem;"><i class="fas fa-info-circle"></i> Standard calculations assume Exposure B or C, height &le; 60 ft. Additional calculations required for other conditions.</p>
+
+                <h3>Clay and Concrete Tile (IBC Section 1504.3)</h3>
+                <ul>
+                    <li>Wind loads per IBC Section 1609.6</li>
+                    <li>Testing per <strong>SBCCI SSTD 11</strong> or <strong>ASTM C1568</strong> (overturning resistance)</li>
+                    <li>Wind tunnel testing per <strong>ASTM C1569</strong> for tiles not meeting Chapter 16 limitations</li>
+                </ul>
+
+                <h3>Slate Shingles (IBC Section 1504.4.4) <span style="background: #10b981; color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.5rem;">NEW in IBC 2024</span></h3>
+                <ul>
+                    <li>Testing per <strong>ASTM D3161</strong> (Fan-Induced Method)</li>
+                    <li>Classification per IBC Table 1504.2</li>
+                </ul>
+
+                <h3>Metal Edge Systems</h3>
+                <ul>
+                    <li>Design per IBC Chapter 16</li>
+                    <li>Testing per <strong>ANSI/SPRI ES-1</strong> (Methods RE-1, RE-2, RE-3)</li>
+                </ul>
+
+                <h3>UL 580 - Roof Uplift Resistance Standard</h3>
+                <p><strong>UL 580</strong> (Standard for Tests for Uplift Resistance of Roof Assemblies) classifies roof assemblies by uplift resistance:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>UL 580 Class</th>
+                            <th>Uplift Pressure Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Class 15</td>
+                            <td>15 psf</td>
+                        </tr>
+                        <tr>
+                            <td>Class 30</td>
+                            <td>30 psf</td>
+                        </tr>
+                        <tr>
+                            <td>Class 60</td>
+                            <td>60 psf</td>
+                        </tr>
+                        <tr>
+                            <td>Class 90</td>
+                            <td>90 psf</td>
+                        </tr>
+                        <tr>
+                            <td>Class 120</td>
+                            <td>120 psf</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box" style="margin-top: 1.5rem;">
+                    <h4><i class="fas fa-flask"></i> <strong>UL 580 Test Procedure</strong></h4>
+                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
+                        <li><strong>Specimen Size:</strong> 10 ft &times; 10 ft (100 sq ft) test specimen</li>
+                        <li><strong>Loading:</strong> Static and dynamic (cyclic) pressure loading</li>
+                        <li><strong>Criteria:</strong> Assembly must maintain attachment integrity without excessive deflection</li>
+                    </ul>
+                </div>
+
+                <h3>Tornado Load Provisions (ASCE 7-22 Chapter 32)</h3>
+                <div class="info-box warning">
+                    <h4><i class="fas fa-tornado"></i> <strong>Eastern Colorado Tornado Considerations</strong></h4>
+                    <p>Chapter 32 of ASCE 7-22 introduces tornado load requirements:</p>
+                    <ul style="margin: 1rem 0 0 1.5rem; color: #1f2937;">
+                        <li>Design required where tornado speed (VT) &gt; 60 mph</li>
+                        <li>Applies to Risk Category III and IV structures</li>
+                        <li>Primarily affects areas <strong>east of the Rocky Mountains</strong></li>
+                        <li>Higher uplift classifications may be needed in tornado-prone regions</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>For Colorado:</strong> Most of Colorado west of the mountains is outside the primary tornado corridor, but <strong>eastern Colorado (plains region)</strong> may require tornado load consideration for certain building types.</p>
+                </div>
+
+                <!-- Reference Standards Summary -->
+                <h3 style="margin-top: 2rem;">Roofing Reference Standards Summary</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Standard</th>
+                            <th>Description</th>
+                            <th>Application</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ASTM D7158</strong></td>
+                            <td>Wind Resistance of Asphalt Shingles</td>
+                            <td>Shingle classification (D, G, H)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ASTM D3161</strong></td>
+                            <td>Wind-Resistance of Steep Slope Roofing (Fan-Induced)</td>
+                            <td>Slate shingles</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ASTM C1568</strong></td>
+                            <td>Concrete/Clay Roof Tile Wind Resistance</td>
+                            <td>Tile overturning resistance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ASTM C1569</strong></td>
+                            <td>Concrete/Clay Tile Wind Tunnel Testing</td>
+                            <td>Non-standard tile configurations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SBCCI SSTD 11</strong></td>
+                            <td>Wind Resistance of Concrete/Clay Tile</td>
+                            <td>Alternative to ASTM C1568</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ANSI/SPRI ES-1</strong></td>
+                            <td>Wind Design Standard for Edge Systems</td>
+                            <td>Metal edge, fascia, coping</td>
+                        </tr>
+                        <tr>
+                            <td><strong>UL 580</strong></td>
+                            <td>Tests for Uplift Resistance of Roof Assemblies</td>
+                            <td>Complete roof assembly classification</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-map-marked-alt" style="color: #2563eb; margin-right: 0.5rem;"></i> Colorado Exposure Categories</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Typical Colorado Application</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Exposure B</strong></td>
+                            <td>Urban/suburban, wooded areas</td>
+                            <td>Default for most Front Range cities</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exposure C</strong></td>
+                            <td>Open terrain, grasslands</td>
+                            <td>Eastern plains, mountain valleys</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exposure D</strong></td>
+                            <td>Flat, unobstructed coastal areas</td>
+                            <td>Not applicable in Colorado</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>High Wind Areas in Colorado</h3>
+                <p>Certain Colorado locations experience elevated wind speeds:</p>
+                <ul>
+                    <li><strong>Mountain passes and ridges</strong> - can experience extreme wind events</li>
+                    <li><strong>Foothill transitions</strong> (Boulder, Golden) - Chinook/downslope winds</li>
+                    <li><strong>Eastern plains</strong> - tornado potential and open exposure</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-tools"></i> <strong>Always Verify Site-Specific Wind Speeds</strong></h4>
+                    <p>Use ASCE 7 wind speed maps or the <a href="https://asce7hazardtool.online/" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a> to determine accurate wind speeds for your specific project location.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- City Links Section -->
+        <section class="city-links-section">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 2rem;"><i class="fas fa-city" style="color: #2563eb; margin-right: 0.5rem;"></i> Colorado City Wind Load Pages</h2>
+
+                <div class="jurisdiction-grid">
+                    <a href="cities/denver-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-mountain" style="color: #2563eb;"></i> Denver</h4>
+                        <p>105-115 mph | Mile High City | ASCE 7-22 Transition</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Need Colorado Wind Load Calculations?</h2>
+                <p>Our professional ASCE 7 wind load calculators account for Colorado's unique elevation factors, exposure categories, and jurisdiction-specific requirements.</p>
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Wind Load Calculator</a>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-link" style="color: #2563eb; margin-right: 0.5rem;"></i> Official Resources</h2>
+
+                <div class="external-links-grid">
+                    <a href="https://www.auroragov.org/business_services/building_division/adopted_building_codes" class="external-link" target="_blank" rel="noopener">City of Aurora Building Division</a>
+                    <a href="https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Building-Codes-Policies-and-Guides" class="external-link" target="_blank" rel="noopener">Denver Building Codes</a>
+                    <a href="https://dfpc.colorado.gov/" class="external-link" target="_blank" rel="noopener">Colorado Fire Prevention & Control</a>
+                    <a href="https://energyoffice.colorado.gov/building-energy-codes-toolkit" class="external-link" target="_blank" rel="noopener">Colorado Energy Office</a>
+                    <a href="https://up.codes/codes/colorado" class="external-link" target="_blank" rel="noopener">UpCodes - Colorado</a>
+                    <a href="https://asce7hazardtool.online/" class="external-link" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO-Enhanced Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>ASCE 7 Standards</h4>
+                    <ul>
+                        <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
+                        <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
+                        <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
+                        <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
+                        <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
+                        <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Top States</h4>
+                    <ul>
+                        <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
+                        <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
+                        <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
+                        <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
+                        <li><a href="colorado-wind-load-requirements.html">Colorado Wind Loads</a></li>
+                        <li><a href="state-requirements.html">All 50 States</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources & Tools</h4>
+                    <ul>
+                        <li><a href="resources.html">Free Resources</a></li>
+                        <li><a href="articles.html">Articles & Guides</a></li>
+                        <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                        <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
+                        <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                        <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
+                        <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
+                        <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+                <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+    .site-footer {
+        background: #1a202c;
+        color: #e5e7eb;
+        padding: 4rem 2rem 2rem;
+        margin-top: 4rem;
+    }
+
+    .footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .footer-column h4 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #0018ff;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-column li {
+        margin-bottom: 0.75rem;
+    }
+
+    .footer-column a {
+        color: #e5e7eb;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-column a:hover {
+        color: #60a5fa;
+        padding-left: 5px;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+        color: #9ca3af;
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+    }
+
+    .footer-tagline {
+        font-weight: 600;
+        color: #60a5fa;
+    }
+
+    @media (max-width: 768px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .site-footer {
+            padding: 3rem 1.5rem 1.5rem;
+        }
+    }
+    </style>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active') && !link.classList.contains('nav-section-header') && !link.classList.contains('nav-subsection-header')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Navigation toggle functions for click-to-expand
+        function toggleNavSection(element) {
+            const section = element.parentElement;
+            const wasActive = section.classList.contains('active');
+
+            // Close all other sections
+            document.querySelectorAll('.nav-section').forEach(s => {
+                if (s !== section) {
+                    s.classList.remove('active');
+                }
+            });
+
+            // Toggle this section
+            section.classList.toggle('active');
+        }
+
+        function toggleNavSubsection(element) {
+            const subsection = element.parentElement;
+            subsection.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

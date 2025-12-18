@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Belt Wind Load Requirements | ASCE 7 for Solar Farms & PV Systems</title>
+    <meta name="description" content="Comprehensive guide to wind load requirements for solar installations across America's Solar Belt. State-by-state ASCE 7-16/7-22 requirements, ground-mount Section 29.4.5, rooftop PV codes, and design pressure calculations for solar energy companies.">
+    <link rel="canonical" href="https://windload.solutions/solar-belt-wind-load-requirements">
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="keywords" content="solar belt wind load, solar farm wind requirements, ASCE 7 solar panels, ground mount solar wind load, rooftop PV wind pressure, Section 29.4.5, solar panel design pressure, utility scale solar wind load, solar installation requirements by state">
+
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="Solar Belt Wind Load Requirements | Complete Guide for Solar Energy Companies">
+    <meta property="og:description" content="State-by-state wind load requirements for solar installations. ASCE 7-16/7-22 standards, ground-mount and rooftop PV requirements, and professional calculation tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://windload.solutions/solar-belt-wind-load-requirements">
+
+    <!-- FAQ Schema for GEO/SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What ASCE 7 standard applies to solar panel wind load calculations?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Solar panel wind loads are calculated using ASCE 7-16 (current) or ASCE 7-22 (newest). For rooftop PV, use Chapter 30 with GCrn coefficients from Figure 30.7-3. For ground-mounted solar arrays, ASCE 7-22 introduced Section 29.4.5 specifically for ground-mounted PV systems."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is Section 29.4.5 in ASCE 7-22?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Section 29.4.5 is a new provision in ASCE 7-22 that provides specific wind load calculation methods for ground-mounted solar photovoltaic panel systems. It addresses the unique aerodynamic behavior of solar arrays installed at or near ground level, providing more accurate and often lower design pressures than the general open building provisions."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Which states have the most solar installations in America?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The top solar states by installed capacity are: California (39+ GW), Texas (20+ GW), Florida (11+ GW), North Carolina (9+ GW), Arizona (7+ GW), Nevada (6+ GW), Georgia (5+ GW), New Jersey (4+ GW), Virginia (4+ GW), and Massachusetts (4+ GW). These states form America's 'Solar Belt' and have varying wind load requirements."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do solar installations require wind load calculations in every state?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Only 10 states legally require wind load calculations for building permits (Florida, Texas, Louisiana, etc.). However, 40 states do not require them by law. Despite this, solar companies should always perform wind load calculations for: insurance requirements, manufacturer warranties, equipment financing, liability protection, and engineering best practices."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What wind speed should solar panels be designed for?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Solar panel wind design speeds depend on location and risk category. For Risk Category II (typical utility-scale): coastal areas may require 150-180 mph (ASCE 7-22), inland areas typically 95-120 mph, and Tornado Alley regions 90-115 mph. Always reference the ASCE 7 wind speed maps for your specific location."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Solar Belt Wind Load Requirements - Complete Guide for Solar Energy Companies",
+        "description": "Comprehensive state-by-state guide to wind load requirements for solar installations across America's Solar Belt.",
+        "author": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions",
+            "url": "https://windload.solutions"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Wind Load Solutions"
+        },
+        "datePublished": "2025-12-17",
+        "dateModified": "2025-12-17"
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0018ff;
+            --dark-blue: #181E57;
+            --solar-orange: #f59e0b;
+            --solar-gold: #d97706;
+            --solar-yellow: #fbbf24;
+            --solar-green: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #f59e0b;
+            padding-left: 1rem;
+        }
+
+        /* Hero - Solar Orange/Gold Gradient */
+        .hero {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="50" y1="5" x2="50" y2="25" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="50" y1="75" x2="50" y2="95" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="5" y1="50" x2="25" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><line x1="75" y1="50" x2="95" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>') repeat;
+            background-size: 150px;
+            animation: drift 60s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes drift {
+            from { transform: translateX(0) translateY(0); }
+            to { transform: translateX(-150px) translateY(-150px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3.5rem;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(255,255,255,0.2); }
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-cta-primary {
+            background: white;
+            color: #d97706;
+        }
+
+        .hero-cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Key Facts Box - GEO Optimized */
+        .key-facts {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 5px solid #f59e0b;
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 10px;
+        }
+
+        .key-facts h2 {
+            color: #92400e;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+        }
+
+        .key-facts ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-facts li {
+            color: #78350f;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            padding: 0.75rem 0 0.75rem 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .key-facts li:last-child {
+            border-bottom: none;
+        }
+
+        .key-facts li::before {
+            content: '\f185';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #f59e0b;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 5px solid var(--solar-orange);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--solar-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        /* Section Styling */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Solar States Section */
+        .solar-states-section {
+            padding: 4rem 2rem;
+            background: #f9fafb;
+        }
+
+        /* Quick State Navigation */
+        .state-quick-nav {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0 3rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .quick-nav-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .quick-nav-btn {
+            background: white;
+            color: #d97706;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            border: 2px solid #f59e0b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-nav-btn:hover {
+            background: #f59e0b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .quick-nav-btn i {
+            font-size: 0.9rem;
+        }
+
+        /* State Cards Grid */
+        .solar-states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .solar-state-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--solar-orange);
+            scroll-margin-top: 100px;
+        }
+
+        .solar-state-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .state-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .state-name a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .state-name a:hover {
+            color: #f59e0b;
+        }
+
+        .solar-icon {
+            color: var(--solar-orange);
+        }
+
+        .capacity-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .capacity-leader {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .capacity-high {
+            background: #fef3c7;
+            color: #d97706;
+            border: 2px solid #f59e0b;
+        }
+
+        .capacity-growing {
+            background: #ecfdf5;
+            color: #059669;
+            border: 2px solid #10b981;
+        }
+
+        .state-details {
+            margin-top: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .detail-icon {
+            color: var(--solar-orange);
+            font-size: 1rem;
+            margin-top: 0.2rem;
+            width: 1rem;
+            text-align: center;
+        }
+
+        .state-link-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .state-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* ASCE 7 Reference Section */
+        .asce-section {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .asce-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .asce-card {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #0284c7;
+        }
+
+        .asce-card h3 {
+            color: #0369a1;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .asce-card p {
+            color: #0c4a6e;
+            line-height: 1.8;
+        }
+
+        .asce-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .asce-card li {
+            color: #0c4a6e;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            position: relative;
+        }
+
+        .asce-card li::before {
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #0284c7;
+        }
+
+        /* Why Wind Load Section */
+        .why-section {
+            padding: 4rem 2rem;
+            background: #f9fafb;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .why-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .why-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .why-card h3 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .why-card h3 i {
+            color: var(--solar-orange);
+        }
+
+        .why-card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button-primary {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .cta-button-secondary {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tools Section */
+        .tools-section {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .tools-section h2 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .tools-section p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .tool-card h3 {
+            color: #d97706;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-card p {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-link {
+            display: inline-block;
+            color: #d97706;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .tool-link:hover {
+            color: #b45309;
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #1a202c;
+            color: #e5e7eb;
+            padding: 4rem 2rem 2rem;
+            margin-top: 0;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f59e0b;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-column a:hover {
+            color: #fbbf24;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .footer-tagline {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .solar-states-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .site-footer {
+                padding: 3rem 1.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="https://windloadcalc.com/shop/solar-panels.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="solar-panel-wind-load-guide.html" class="header-cta">Solar Guide</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+        <a href="https://windloadcalc.com/building-intelligence-platform.html" target="_blank" rel="noopener"><i class="fas fa-brain"></i> Building Intelligence Platform</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="solar-panel-wind-load-guide.html"><i class="fas fa-solar-panel"></i> Solar Panel Guide</a>
+        <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fas fa-solar-panel"></i>
+            </div>
+            <h1>Solar Belt Wind Load Requirements</h1>
+            <p class="hero-subtitle">The definitive guide to wind load requirements for solar installations across America's top solar-producing states</p>
+            <div class="hero-cta-group">
+                <a href="https://windloadcalc.com/shop/solar-panels.html" class="hero-cta hero-cta-primary" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Solar Panel Calculator</a>
+                <a href="https://windloadcalc.com/building-intelligence-platform.html" class="hero-cta hero-cta-secondary" target="_blank" rel="noopener"><i class="fas fa-brain"></i> Site Selection Tool (BIP)</a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <!-- Key Facts Box - GEO Optimized -->
+            <div class="key-facts">
+                <h2><i class="fas fa-bolt"></i> Key Facts for Solar Energy Companies</h2>
+                <ul>
+                    <li><strong>ASCE 7-16</strong> is the current standard for solar panel wind load calculations in most jurisdictions</li>
+                    <li><strong>ASCE 7-22 Section 29.4.5</strong> provides specific provisions for ground-mounted solar PV systems</li>
+                    <li><strong>Only 10 states</strong> legally require wind load calculations for building permits - but solar installations should ALWAYS have them</li>
+                    <li><strong>GCrn coefficients</strong> (Figure 30.7-3) are used to calculate rooftop solar wind pressures</li>
+                    <li><strong>Risk Category II</strong> applies to most utility-scale solar farms</li>
+                    <li><strong>Exposure Category C</strong> is typical for open-terrain solar installations</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>America's Solar Belt by the Numbers</h2>
+                    <p>The solar industry continues to grow at record pace across the United States</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">161+ GW</div>
+                        <div class="stat-label">Total US Solar Capacity (2024)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">39+ GW</div>
+                        <div class="stat-label">California - #1 Solar State</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">32+ GW</div>
+                        <div class="stat-label">New Capacity Added in 2024</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.5M+</div>
+                        <div class="stat-label">US Solar Installations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">180 mph</div>
+                        <div class="stat-label">Max Design Wind (FL Coast)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solar States Section -->
+        <section class="solar-states-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Solar Belt States - Wind Load Requirements by State</h2>
+                    <p>State-specific requirements for the top solar-producing states in America</p>
+                </div>
+
+                <!-- Quick State Navigation -->
+                <div class="state-quick-nav">
+                    <div class="quick-nav-title"><i class="fas fa-link"></i> Jump to State:</div>
+                    <div class="quick-nav-links">
+                        <a href="#california" class="quick-nav-btn"><i class="fas fa-sun"></i> California</a>
+                        <a href="#texas" class="quick-nav-btn"><i class="fas fa-sun"></i> Texas</a>
+                        <a href="#florida" class="quick-nav-btn"><i class="fas fa-sun"></i> Florida</a>
+                        <a href="#north-carolina" class="quick-nav-btn"><i class="fas fa-sun"></i> North Carolina</a>
+                        <a href="#arizona" class="quick-nav-btn"><i class="fas fa-sun"></i> Arizona</a>
+                        <a href="#nevada" class="quick-nav-btn"><i class="fas fa-sun"></i> Nevada</a>
+                        <a href="#georgia" class="quick-nav-btn"><i class="fas fa-sun"></i> Georgia</a>
+                        <a href="#new-jersey" class="quick-nav-btn"><i class="fas fa-sun"></i> New Jersey</a>
+                        <a href="#colorado" class="quick-nav-btn"><i class="fas fa-sun"></i> Colorado</a>
+                    </div>
+                </div>
+
+                <div class="solar-states-grid">
+                    <!-- California -->
+                    <div class="solar-state-card" id="california">
+                        <div class="state-name"><a href="california-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> California</a></div>
+                        <span class="capacity-badge capacity-leader">#1 - 39+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> 2022 California Building Code (CBC) / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 85-110 mph (inland) / up to 130 mph (coast)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial installations</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Title 24 solar mandates drive massive residential growth</span>
+                            </div>
+                        </div>
+                        <a href="california-wind-load-requirements.html" class="state-link-btn">California Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Texas -->
+                    <div class="solar-state-card" id="texas">
+                        <div class="state-name"><a href="texas-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> Texas</a></div>
+                        <span class="capacity-badge capacity-leader">#2 - 20+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> 2021 IBC / ASCE 7-16 (varies by jurisdiction)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 95 mph (inland) to 160 mph (Gulf Coast)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>TDI/TWIA:</strong> Required for coastal counties</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>ERCOT grid drives utility-scale solar expansion</span>
+                            </div>
+                        </div>
+                        <a href="texas-wind-load-requirements.html" class="state-link-btn">Texas Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Florida -->
+                    <div class="solar-state-card" id="florida">
+                        <div class="state-name"><a href="florida-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> Florida</a></div>
+                        <span class="capacity-badge capacity-leader">#3 - 11+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> Florida Building Code (8th Ed.) / ASCE 7-22</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 130-180 mph (highest in US)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>HVHZ:</strong> Miami-Dade/Broward require special approvals</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-exclamation-triangle detail-icon"></i>
+                                <span>Most stringent wind load requirements in the nation</span>
+                            </div>
+                        </div>
+                        <a href="florida-wind-load-requirements.html" class="state-link-btn">Florida Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- North Carolina -->
+                    <div class="solar-state-card" id="north-carolina">
+                        <div class="state-name"><a href="north-carolina-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> North Carolina</a></div>
+                        <span class="capacity-badge capacity-high">#4 - 9+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> NC Building Code / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 95 mph (west) to 150 mph (coast)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for utility-scale projects</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Leading Southeast utility-scale solar market</span>
+                            </div>
+                        </div>
+                        <a href="north-carolina-wind-load-requirements.html" class="state-link-btn">NC Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Arizona -->
+                    <div class="solar-state-card" id="arizona">
+                        <div class="state-name"><i class="fas fa-sun solar-icon"></i> Arizona</div>
+                        <span class="capacity-badge capacity-high">#5 - 7+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> 2018/2021 IBC / ASCE 7-16 (varies by jurisdiction)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 90-105 mph (most areas)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial systems</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Highest solar irradiance in continental US</span>
+                            </div>
+                        </div>
+                        <a href="other-states-wind-load-requirements.html" class="state-link-btn">Arizona Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Nevada -->
+                    <div class="solar-state-card" id="nevada">
+                        <div class="state-name"><i class="fas fa-sun solar-icon"></i> Nevada</div>
+                        <span class="capacity-badge capacity-high">#6 - 6+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> 2018 IBC / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 95-115 mph</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Varies by county</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Major utility-scale solar development in southern Nevada</span>
+                            </div>
+                        </div>
+                        <a href="other-states-wind-load-requirements.html" class="state-link-btn">Nevada Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Georgia -->
+                    <div class="solar-state-card" id="georgia">
+                        <div class="state-name"><a href="georgia-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> Georgia</a></div>
+                        <span class="capacity-badge capacity-high">#7 - 5+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> 2018 GA State Codes / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 95 mph (inland) to 140 mph (coast)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial installations</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Georgia Power driving utility-scale growth</span>
+                            </div>
+                        </div>
+                        <a href="georgia-wind-load-requirements.html" class="state-link-btn">Georgia Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- New Jersey -->
+                    <div class="solar-state-card" id="new-jersey">
+                        <div class="state-name"><i class="fas fa-sun solar-icon"></i> New Jersey</div>
+                        <span class="capacity-badge capacity-high">#8 - 4+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> NJ Uniform Construction Code / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 105-130 mph (coastal exposure)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial systems</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Leading per-capita solar state in the nation</span>
+                            </div>
+                        </div>
+                        <a href="other-states-wind-load-requirements.html" class="state-link-btn">New Jersey Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Virginia -->
+                    <div class="solar-state-card" id="virginia">
+                        <div class="state-name"><a href="virginia-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> Virginia</a></div>
+                        <span class="capacity-badge capacity-growing">#9 - 4+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> VA Uniform Statewide Building Code / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 95 mph (west) to 150 mph (coast)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial installations</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Virginia Clean Economy Act driving rapid expansion</span>
+                            </div>
+                        </div>
+                        <a href="virginia-wind-load-requirements.html" class="state-link-btn">Virginia Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Colorado -->
+                    <div class="solar-state-card" id="colorado">
+                        <div class="state-name"><a href="colorado-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> Colorado</a></div>
+                        <span class="capacity-badge capacity-growing">Growing - 2+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> Home Rule State / 2021 IBC / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 90-115 mph (eastern plains higher)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>Ke Factor:</strong> Critical for high-altitude installations</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Ground elevation factor reduces design pressures 12-22%</span>
+                            </div>
+                        </div>
+                        <a href="colorado-wind-load-requirements.html" class="state-link-btn">Colorado Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- Massachusetts -->
+                    <div class="solar-state-card" id="massachusetts">
+                        <div class="state-name"><i class="fas fa-sun solar-icon"></i> Massachusetts</div>
+                        <span class="capacity-badge capacity-growing">#10 - 4+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> MA State Building Code (10th Ed.) / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 110-130 mph (coastal exposure)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial systems</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>SMART program driving community solar growth</span>
+                            </div>
+                        </div>
+                        <a href="other-states-wind-load-requirements.html" class="state-link-btn">MA Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <!-- New York -->
+                    <div class="solar-state-card" id="new-york">
+                        <div class="state-name"><a href="new-york-wind-load-requirements.html"><i class="fas fa-sun solar-icon"></i> New York</a></div>
+                        <span class="capacity-badge capacity-growing">Growing - 5+ GW Installed</span>
+                        <div class="state-details">
+                            <div class="detail-item">
+                                <i class="fas fa-book detail-icon"></i>
+                                <span><strong>Code:</strong> NY Building Code / ASCE 7-16</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-wind detail-icon"></i>
+                                <span><strong>Wind Speed:</strong> 95 mph (upstate) to 130 mph (Long Island)</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-certificate detail-icon"></i>
+                                <span><strong>PE Seal:</strong> Required for commercial installations</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-info-circle detail-icon"></i>
+                                <span>Climate Leadership Act mandates 70% renewables by 2030</span>
+                            </div>
+                        </div>
+                        <a href="new-york-wind-load-requirements.html" class="state-link-btn">NY Requirements <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- View All States Link -->
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="state-requirements.html" class="hero-cta hero-cta-primary" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white;">
+                        <i class="fas fa-map-marked-alt"></i> View All 50 States Requirements
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ASCE 7 Reference Section -->
+        <section class="asce-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>ASCE 7 Solar Panel Wind Load Standards</h2>
+                    <p>Understanding the technical requirements for solar installation wind load calculations</p>
+                </div>
+
+                <div class="asce-grid">
+                    <div class="asce-card">
+                        <h3><i class="fas fa-building"></i> Rooftop Solar (ASCE 7 Chapter 30)</h3>
+                        <p>Rooftop PV systems are calculated as Components & Cladding using:</p>
+                        <ul>
+                            <li><strong>GCrn Coefficients</strong> from Figure 30.7-3</li>
+                            <li>Roof zone locations (1, 2, 3)</li>
+                            <li>Panel tilt angle effects</li>
+                            <li>Array edge factor considerations</li>
+                            <li>Effective wind area calculations</li>
+                        </ul>
+                    </div>
+
+                    <div class="asce-card">
+                        <h3><i class="fas fa-mountain"></i> Ground-Mount Solar (ASCE 7-22 Section 29.4.5)</h3>
+                        <p>New in ASCE 7-22 - specific provisions for ground-mounted PV:</p>
+                        <ul>
+                            <li><strong>Section 29.4.5</strong> - dedicated ground-mount PV section</li>
+                            <li>Panel height above ground considerations</li>
+                            <li>Row spacing effects on wind loads</li>
+                            <li>Array configuration factors</li>
+                            <li>Often results in lower design pressures vs. general provisions</li>
+                        </ul>
+                    </div>
+
+                    <div class="asce-card">
+                        <h3><i class="fas fa-calculator"></i> Wind Pressure Formula</h3>
+                        <p>The fundamental velocity pressure equation:</p>
+                        <ul>
+                            <li><strong>qz = 0.00256 × Kz × Kzt × Kd × Ke × V²</strong></li>
+                            <li>Kz = Velocity pressure exposure coefficient</li>
+                            <li>Kzt = Topographic factor</li>
+                            <li>Kd = Wind directionality factor (0.85)</li>
+                            <li>Ke = Ground elevation factor</li>
+                            <li>V = Basic wind speed (mph)</li>
+                        </ul>
+                    </div>
+
+                    <div class="asce-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Critical Considerations</h3>
+                        <p>Key factors solar engineers must address:</p>
+                        <ul>
+                            <li><strong>Exposure Category</strong> - C typical for open solar sites</li>
+                            <li><strong>Risk Category</strong> - II for most utility-scale</li>
+                            <li><strong>Parapet effects</strong> for rooftop installations</li>
+                            <li><strong>Ballast requirements</strong> for non-penetrating systems</li>
+                            <li><strong>Module and racking manufacturer limits</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Learn More Link -->
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="solar-panel-wind-load-guide.html" style="color: #0284c7; font-weight: 700; text-decoration: none;">
+                        <i class="fas fa-book-open"></i> Read Complete Solar Panel Wind Load Guide
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Wind Load Calculations Section -->
+        <section class="why-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Solar Installations Need Wind Load Calculations</h2>
+                    <p>Even in states without legal requirements, wind load analysis protects your investment</p>
+                </div>
+
+                <div class="why-grid">
+                    <div class="why-card">
+                        <h3><i class="fas fa-file-contract"></i> Insurance Requirements</h3>
+                        <p>Most insurance carriers require engineering documentation proving solar installations meet wind load standards. Without proper calculations, claims may be denied after storm damage.</p>
+                    </div>
+
+                    <div class="why-card">
+                        <h3><i class="fas fa-certificate"></i> Manufacturer Warranties</h3>
+                        <p>Solar panel and racking manufacturers typically void warranties if installations exceed their rated wind load limits. Proper calculations ensure warranty compliance.</p>
+                    </div>
+
+                    <div class="why-card">
+                        <h3><i class="fas fa-university"></i> Financing & PPA Requirements</h3>
+                        <p>Banks, investors, and Power Purchase Agreement (PPA) providers often require third-party engineering verification including wind load analysis before funding projects.</p>
+                    </div>
+
+                    <div class="why-card">
+                        <h3><i class="fas fa-shield-alt"></i> Liability Protection</h3>
+                        <p>Professional wind load calculations create a documented engineering record that protects installers, developers, and property owners from liability claims after wind events.</p>
+                    </div>
+
+                    <div class="why-card">
+                        <h3><i class="fas fa-handshake"></i> Commercial Lease Requirements</h3>
+                        <p>Property owners and landlords typically require engineering documentation before allowing rooftop solar installations. Wind load calculations are standard in commercial leases.</p>
+                    </div>
+
+                    <div class="why-card">
+                        <h3><i class="fas fa-check-double"></i> Engineering Best Practice</h3>
+                        <p>Professional solar installers perform wind load calculations as standard practice, regardless of local requirements. It's the industry standard for quality installations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools-section">
+            <div class="container">
+                <h2>Professional Solar Wind Load Tools</h2>
+                <p>Purpose-built calculators for solar energy professionals</p>
+
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <h3><i class="fas fa-solar-panel"></i> Solar Panel Wind Load Calculator</h3>
+                        <p>Calculate wind pressures for rooftop and ground-mount PV systems per ASCE 7-16 and ASCE 7-22. Includes GCrn coefficients, roof zones, and Section 29.4.5 provisions.</p>
+                        <a href="https://windloadcalc.com/shop/solar-panels.html" class="tool-link" target="_blank" rel="noopener">Calculate Solar Wind Loads <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3><i class="fas fa-brain"></i> Building Intelligence Platform (BIP)</h3>
+                        <p>Site selection tool for solar developers. Input any US address and instantly get wind speed, exposure category, risk factors, and design requirements for your solar project.</p>
+                        <a href="https://windloadcalc.com/building-intelligence-platform.html" class="tool-link" target="_blank" rel="noopener">Explore BIP Tool <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="tool-card">
+                        <h3><i class="fas fa-calculator"></i> Complete Calculator Suite</h3>
+                        <p>Access all wind load calculators for solar panels, carports, canopies, signs, roofing, and more. Professional ASCE 7 tools for every application.</p>
+                        <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="tool-link" target="_blank" rel="noopener">View All Calculators <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Calculate Solar Panel Wind Loads?</h2>
+                <p>Get professional ASCE 7-compliant wind load calculations for your solar installation in minutes, not hours.</p>
+                <div class="cta-buttons">
+                    <a href="https://windloadcalc.com/shop/solar-panels.html" class="cta-button cta-button-primary" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+                    <a href="solar-panel-wind-load-guide.html" class="cta-button cta-button-secondary"><i class="fas fa-book-open"></i> Read Solar Guide</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Solar Belt States</h4>
+                    <ul>
+                        <li><a href="california-wind-load-requirements.html">California</a></li>
+                        <li><a href="texas-wind-load-requirements.html">Texas</a></li>
+                        <li><a href="florida-wind-load-requirements.html">Florida</a></li>
+                        <li><a href="north-carolina-wind-load-requirements.html">North Carolina</a></li>
+                        <li><a href="georgia-wind-load-requirements.html">Georgia</a></li>
+                        <li><a href="colorado-wind-load-requirements.html">Colorado</a></li>
+                        <li><a href="state-requirements.html">All 50 States</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Solar Resources</h4>
+                    <ul>
+                        <li><a href="solar-panel-wind-load-guide.html">Solar Panel Wind Load Guide</a></li>
+                        <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                        <li><a href="asce-7-standards.html">ASCE 7 Standards</a></li>
+                        <li><a href="resources.html">Free Resources</a></li>
+                        <li><a href="articles.html">Articles & Guides</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Professional Tools</h4>
+                    <ul>
+                        <li><a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener">Solar Panel Calculator</a></li>
+                        <li><a href="https://windloadcalc.com/building-intelligence-platform.html" target="_blank" rel="noopener">Building Intelligence Platform</a></li>
+                        <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">All Wind Load Calculators</a></li>
+                        <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+                <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
