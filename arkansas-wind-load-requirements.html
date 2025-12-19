@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkansas Wind Load Requirements | Tornado Alley, ASCE 7-22, Little Rock Building Codes | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Arkansas wind load requirements including ASCE 7-22 tornado provisions, Little Rock and Fayetteville building codes, southern Tornado Alley design considerations.">
+    <link rel="canonical" href="https://windload.solutions/arkansas-wind-load-requirements">
+    <meta name="keywords" content="Arkansas wind load, Little Rock wind load, Fayetteville building code, ASCE 7-22 Arkansas, tornado wind load, Arkansas building codes, wind load calculator Arkansas, Tornado Alley">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/windloadsolutions-favicon.svg">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #9D2235;
+            background: rgba(157, 34, 53, 0.1);
+            border-color: rgba(157, 34, 53, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #9D2235 0%, #ffffff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #9D2235;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Arkansas Razorbacks Cardinal Red */
+        .hero {
+            background: linear-gradient(135deg, #9D2235 0%, #c41e3a 25%, #dc143c 50%, #f5f5f5 75%, #ffffff 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '\1F417';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.15;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tornado-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .tornado-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .tornado-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .voluntary-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            margin-left: 0.5rem;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .voluntary-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .voluntary-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #9D2235;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: #f5f5f5;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #9D2235;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #c41e3a;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #9D2235;
+            margin: 2rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left-color: #f59e0b;
+        }
+
+        .info-box.tornado {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border-left-color: #dc2626;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #9D2235;
+        }
+
+        .info-box.warning h4 strong {
+            color: #f59e0b;
+        }
+
+        .info-box.tornado h4 strong {
+            color: #dc2626;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #9D2235 0%, #c41e3a 100%);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #fef2f2;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* City Cards */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .city-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(157, 34, 53, 0.2);
+            border-color: #9D2235;
+        }
+
+        .city-card h4 {
+            color: #9D2235;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .city-card p {
+            color: #4b5563;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #9D2235;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: #9D2235;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            color: #1f2937;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .formula-desc {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin: 0.5rem 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #9D2235 0%, #c41e3a 50%, #1f2937 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .cta-button {
+            background: white;
+            color: #9D2235;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #f87171;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #f87171;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.8rem;
+            }
+
+            .header-container {
+                padding: 0 1.5rem;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+        }
+
+        /* Navigation Subsections */
+        .nav-subsection {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-subsection-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .nav-subsection-title i {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .nav-subsection.active .nav-subsection-title i {
+            transform: rotate(180deg);
+        }
+
+        .nav-subsection-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .nav-subsection.active .nav-subsection-content {
+            display: block;
+        }
+
+        .nav-subsection-content a {
+            font-size: 1rem;
+            padding: 0.6rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.png" alt="Wind Load Solutions Logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="header-cta" target="_blank" rel="noopener">Wind Load Calculators</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marked-alt"></i> State Requirements</a>
+        <div class="nav-subsection">
+            <div class="nav-subsection-title" onclick="toggleNavSubsection(this)">
+                <span><i class="fas fa-landmark"></i> Regional Hubs</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="nav-subsection-content">
+                <a href="mandatory-wind-load-states.html">Mandatory States (10)</a>
+                <a href="solar-belt-wind-load-requirements.html">Solar Belt States</a>
+                <a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a>
+            </div>
+        </div>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles</a>
+        <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Calculators</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div>
+                <a href="tornado-alley-wind-loads-safety.html" class="tornado-badge"><i class="fas fa-tornado"></i> Southern Tornado Alley</a>
+                <span class="voluntary-badge"><i class="fas fa-check-circle"></i> Voluntary State</span>
+            </div>
+            <h1>Arkansas Wind Load Requirements</h1>
+            <p>Complete guide to Arkansas wind load requirements including ASCE 7-22 tornado provisions, Little Rock and Fayetteville building codes, NW Arkansas growth corridor requirements, and southern Tornado Alley design considerations.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Arkansas Wind Load Calculator</a>
+        </div>
+    </section>
+
+    <main>
+        <!-- Key Info Section -->
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-exclamation-triangle" style="color: #dc2626; margin-right: 0.5rem;"></i> Arkansas Wind Load Overview</h2>
+
+                <div class="info-box tornado">
+                    <h4><i class="fas fa-tornado"></i> <strong>Southern Tornado Alley</strong></h4>
+                    <p>Arkansas sits in the southern extension of Tornado Alley, experiencing an average of <strong>39 tornadoes per year</strong>. The state's diverse terrain - from the Ozark Plateau to the Mississippi River delta - creates varied wind exposure conditions. Nocturnal tornadoes, which are particularly dangerous, occur more frequently in Arkansas than in states further north.</p>
+                </div>
+
+                <p>Arkansas is a <strong>voluntary wind load state</strong>, meaning PE-sealed wind load calculations are not legally required statewide. However, major cities and the rapidly growing Northwest Arkansas corridor have adopted building codes with wind load provisions.</p>
+
+                <h3>Quick Facts</h3>
+                <ul>
+                    <li><strong>State Requirement:</strong> Voluntary (not legally required statewide)</li>
+                    <li><strong>Adopted Code:</strong> 2018/2021 IBC with ASCE 7-16 (varies by jurisdiction)</li>
+                    <li><strong>Basic Wind Speed Range:</strong> 105-115 mph (Risk Category II)</li>
+                    <li><strong>Tornado Risk:</strong> High - especially nocturnal tornadoes</li>
+                    <li><strong>Special Provisions:</strong> Varied terrain exposure considerations</li>
+                    <li><strong>Local Amendments:</strong> Little Rock, Fayetteville, NW Arkansas have codes</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Terrain Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-mountain" style="color: #9D2235; margin-right: 0.5rem;"></i> Arkansas Terrain and Exposure</h2>
+
+                <p>Arkansas's diverse geography significantly impacts wind load design. The state transitions from the flat Mississippi River delta in the east to the Ozark and Ouachita mountains in the west and north.</p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-map"></i> <strong>Regional Exposure Variations</strong></h4>
+                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
+                        <li><strong>Delta Region (East):</strong> Exposure C - flat, open agricultural land</li>
+                        <li><strong>Central Arkansas:</strong> Mix of Exposure B and C depending on development</li>
+                        <li><strong>Ozark Plateau (NW):</strong> Topographic effects (Kzt) may apply</li>
+                        <li><strong>Ouachita Mountains:</strong> Complex terrain requires careful exposure analysis</li>
+                    </ul>
+                </div>
+
+                <h3>Historic Arkansas Tornadoes</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Rating</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vilonia-Mayflower</strong></td>
+                            <td>April 27, 2014</td>
+                            <td>EF4</td>
+                            <td>16 fatalities, significant damage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>February 2008 Outbreak</strong></td>
+                            <td>February 5, 2008</td>
+                            <td>EF4</td>
+                            <td>13 fatalities, Super Tuesday tornado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Jonesboro Tornado</strong></td>
+                            <td>March 28, 2020</td>
+                            <td>EF3</td>
+                            <td>22 injuries, hospital and airport damaged</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Little Rock Tornado</strong></td>
+                            <td>March 31, 2023</td>
+                            <td>EF3</td>
+                            <td>4 fatalities, extensive urban damage</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Building Code Section -->
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-building" style="color: #9D2235; margin-right: 0.5rem;"></i> Arkansas Building Code Framework</h2>
+
+                <p>Arkansas has no mandatory statewide building code. Each municipality determines whether to adopt building codes. The Northwest Arkansas corridor (Benton and Washington counties) has seen significant code adoption due to rapid growth.</p>
+
+                <h3>Major Jurisdiction Code Adoption</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Jurisdiction</th>
+                            <th>Adopted Code</th>
+                            <th>Wind Standard</th>
+                            <th>Special Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Little Rock</strong></td>
+                            <td>2021 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>State capital requirements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fayetteville</strong></td>
+                            <td>2021 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>University zone, rapid growth</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bentonville</strong></td>
+                            <td>2021 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>Walmart HQ, corporate campus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rogers</strong></td>
+                            <td>2018 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>NW Arkansas growth corridor</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fort Smith</strong></td>
+                            <td>2018 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>Western Arkansas hub</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-circle"></i> <strong>Rural Arkansas</strong></h4>
+                    <p>Many rural Arkansas counties have <strong>no building codes</strong>. The delta region in eastern Arkansas is particularly vulnerable, with little code enforcement despite significant tornado risk. Wind load analysis is voluntary but strongly recommended.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wind Speed Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-wind" style="color: #9D2235; margin-right: 0.5rem;"></i> Arkansas Wind Speed Zones</h2>
+
+                <p>Arkansas basic wind speeds per ASCE 7-16/7-22 range from <strong>105 mph to 115 mph</strong> for Risk Category II structures. The eastern delta region tends to have slightly higher wind speeds.</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Risk Cat II</th>
+                            <th>Risk Cat III</th>
+                            <th>Risk Cat IV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Little Rock Metro</strong></td>
+                            <td>110 mph</td>
+                            <td>115 mph</td>
+                            <td>120 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NW Arkansas (Fayetteville)</strong></td>
+                            <td>105 mph</td>
+                            <td>110 mph</td>
+                            <td>115 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Delta Region (East)</strong></td>
+                            <td>115 mph</td>
+                            <td>120 mph</td>
+                            <td>125 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Southwest Arkansas</strong></td>
+                            <td>110 mph</td>
+                            <td>115 mph</td>
+                            <td>120 mph</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>ASCE 7 Wind Load Formula</h3>
+                <div class="formula-box">
+                    <h4><i class="fas fa-calculator"></i> Velocity Pressure Equation</h4>
+                    <div class="formula">qz = 0.00256 × Kz × Kzt × Kd × Ke × V²</div>
+                    <div class="formula-desc"><strong>qz</strong> = Velocity pressure at height z (psf)</div>
+                    <div class="formula-desc"><strong>Kz</strong> = Velocity pressure exposure coefficient</div>
+                    <div class="formula-desc"><strong>Kzt</strong> = Topographic factor (important in Ozarks)</div>
+                    <div class="formula-desc"><strong>Kd</strong> = Wind directionality factor</div>
+                    <div class="formula-desc"><strong>Ke</strong> = Ground elevation factor</div>
+                    <div class="formula-desc"><strong>V</strong> = Basic wind speed (mph)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cities Section -->
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-city" style="color: #9D2235; margin-right: 0.5rem;"></i> Major Arkansas Cities</h2>
+
+                <div class="city-grid">
+                    <a href="cities/little-rock-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-landmark" style="color: #9D2235;"></i> Little Rock</h4>
+                        <p>110 mph | State Capital | 2023 EF3 damage</p>
+                    </a>
+                    <a href="cities/fayetteville-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-university" style="color: #9D2235;"></i> Fayetteville</h4>
+                        <p>105 mph | University of Arkansas | Ozarks terrain</p>
+                    </a>
+                    <a href="cities/bentonville-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-store" style="color: #9D2235;"></i> Bentonville</h4>
+                        <p>105 mph | Walmart HQ | Rapid growth</p>
+                    </a>
+                    <a href="cities/fort-smith-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-building" style="color: #9D2235;"></i> Fort Smith</h4>
+                        <p>110 mph | Western hub | River valley</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- When Required Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-clipboard-check" style="color: #9D2235; margin-right: 0.5rem;"></i> When Wind Load Calculations Are Needed</h2>
+
+                <p>Although Arkansas is a voluntary state, wind load calculations are recommended or required in several situations:</p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-list-check"></i> <strong>Recommended/Required Situations</strong></h4>
+                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
+                        <li><strong>Commercial buildings</strong> in Little Rock, NW Arkansas, and other cities</li>
+                        <li><strong>Risk Category III/IV structures</strong> (schools, hospitals, emergency facilities)</li>
+                        <li><strong>Corporate campus construction</strong> - Walmart, Tyson, JB Hunt facilities</li>
+                        <li><strong>Poultry industry structures</strong> - large span buildings</li>
+                        <li><strong>Insurance requirements</strong> - many insurers require engineering</li>
+                        <li><strong>Solar installations</strong> - ground-mount and rooftop systems</li>
+                        <li><strong>Agricultural structures</strong> - chicken houses, equipment buildings</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Need Arkansas Wind Load Calculations?</h2>
+                <p>Our professional ASCE 7 wind load calculators account for Arkansas's unique terrain variations, exposure conditions, and local jurisdiction requirements.</p>
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Wind Load Calculator</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Wind Load Solutions</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="state-requirements.html">State Requirements</a></li>
+                    <li><a href="asce-7-standards.html">ASCE 7 Standards</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Tornado Alley States</h4>
+                <ul>
+                    <li><a href="oklahoma-wind-load-requirements.html">Oklahoma</a></li>
+                    <li><a href="kansas-wind-load-requirements.html">Kansas</a></li>
+                    <li><a href="missouri-wind-load-requirements.html">Missouri</a></li>
+                    <li><a href="arkansas-wind-load-requirements.html">Arkansas</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Calculators</h4>
+                <ul>
+                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculators</a></li>
+                    <li><a href="asce-7-wind-load-calculator.html">ASCE 7 Calculator</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Wind Load Solutions. All rights reserved.</p>
+            <p>Professional ASCE 7 wind load calculation resources for engineers and building professionals.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const navOverlay = document.querySelector('.nav-overlay');
+            const logo = document.querySelector('.logo');
+
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function toggleNavSubsection(element) {
+            const subsection = element.parentElement;
+            subsection.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
