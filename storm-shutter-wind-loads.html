@@ -614,6 +614,49 @@
         </div>
     </header>
 
+    <!-- WLC Calculator CTA - Above the Fold -->
+    <style>
+        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
+        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
+        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
+        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
+        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
+        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
+        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
+        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
+        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
+        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
+        .wlc-inline-cta a.wlc-btn-inline { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-inline-cta a.wlc-btn-inline:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
+        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
+        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
+        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
+        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
+        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
+        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
+        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+        @media (max-width: 600px) {
+            .wlc-cta-banner h2 { font-size: 1.45rem; }
+            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
+            .wlc-cta-form input[type="text"] { text-align: center; }
+            .wlc-final-cta h2 { font-size: 1.65rem; }
+        }
+    </style>
+    <section class="wlc-cta-banner" aria-label="Calculate storm shutter loads">
+        <div class="wlc-cta-banner-inner">
+            <h2>Calculate Storm Shutter Wind Loads &rarr;</h2>
+            <p class="wlc-sub">ASCE 7-22 C&amp;C pressures for hurricane panels, accordion, roll-down, and Bahama shutters &mdash; ZIP-driven, with HVHZ &amp; Miami-Dade rules built in.</p>
+            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
+                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter ZIP (e.g. 33139)" aria-label="ZIP code" required>
+                <button type="submit">Calculate Loads</button>
+            </form>
+            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
+        </div>
+    </section>
+
     <!-- Navigation Overlay -->
     <div class="nav-overlay"></div>
 
@@ -659,12 +702,19 @@
                 <h2>Hurricane Protection Design</h2>
                 <p>Storm shutters and hurricane panels require precise wind load calculations to ensure adequate protection during severe weather events. Our calculator uses Components & Cladding (C&C) methodology per ASCE 7 to determine design pressures for shutters, panels, roll-downs, and accordion systems across all exposure categories and wind speeds.</p>
 
-                <p>For Florida and HVHZ applications, our calculations include enhanced requirements per the Florida Building Code, Miami-Dade NOA protocols, and TAS 201/202/203 testing standards. We account for both positive and negative pressures, edge zones, corner zones, and special geometries that affect shutter loading.</p>
+                <p>For Florida and HVHZ applications, our calculations include enhanced requirements per the Florida Building Code, Miami-Dade NOA protocols, and TAS 201/202/203 testing standards — for HVHZ shutter pressures, the <a href="https://windloadcalc.com/miami-dade-wind-load-calculator">Miami-Dade Wind Load Calculator</a> applies the 175 mph baseline and zone-specific C&C coefficients automatically. We account for both positive and negative pressures, edge zones, corner zones, and special geometries that affect shutter loading.</p>
 
                 <p>Professional calculations include fastener spacing analysis, attachment strength verification, structural adequacy assessment, and product selection guidance. All results are formatted for building permit submittals and include PE seal services when required by local jurisdictions.</p>
             </div>
         </div>
     </section>
+
+    <!-- WLC Inline CTA -->
+    <aside class="wlc-inline-cta" aria-label="Open the C&C shutter calculator">
+        <h3>Run the shutter calc with HVHZ rules built in</h3>
+        <p>WindLoadCalc handles Florida Building Code, Miami-Dade NOA protocol, and TAS 201/202/203 considerations automatically &mdash; including Collier 170, Miami-Dade 175, and Broward 170 mph overrides. Enter your ZIP on the next page.</p>
+        <a class="wlc-btn-inline" href="https://calc.windloadcalc.com/">Open WindLoadCalc &rarr;</a>
+    </aside>
 
     <!-- CTA Section -->
     <section class="cta-section">
@@ -672,6 +722,20 @@
             <h2>Calculate Storm Shutter Loads</h2>
             <p>Get accurate C&C wind pressures for your hurricane protection system</p>
             <a href="https://windloadcalc.com/components-and-cladding-wind-loads.html" class="cta-button" target="_blank" rel="noopener">Calculate Shutter Loads →</a>
+        </div>
+    </section>
+
+    <!-- WLC Final Conversion CTA -->
+    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc">
+        <div class="wlc-final-cta-inner">
+            <h2>Stop calculating wind loads by hand</h2>
+            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">Built by structural engineers, used by architects, contractors, and PEs nationwide.</p>
+            <ul>
+                <li>Instant ZIP &rarr; ASCE 7-22 wind speed for all 4 risk categories</li>
+                <li>Auto-applies HVHZ + county overrides (Collier 170, Miami-Dade 175, Broward 170, and more)</li>
+                <li>PE-stamped reports available for Florida projects up to 3 stories</li>
+            </ul>
+            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
         </div>
     </section>
 
