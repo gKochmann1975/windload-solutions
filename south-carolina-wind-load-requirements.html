@@ -730,6 +730,49 @@
         </div>
     </header>
 
+    <!-- WLC Calculator CTA - Above the Fold -->
+    <style>
+        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
+        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
+        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
+        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
+        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
+        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
+        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
+        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
+        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
+        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
+        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
+        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
+        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
+        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
+        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
+        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
+        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
+        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+        @media (max-width: 600px) {
+            .wlc-cta-banner h2 { font-size: 1.45rem; }
+            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
+            .wlc-cta-form input[type="text"] { text-align: center; }
+            .wlc-final-cta h2 { font-size: 1.65rem; }
+        }
+    </style>
+    <section class="wlc-cta-banner" aria-label="Try the South Carolina Wind Load Calculator">
+        <div class="wlc-cta-banner-inner">
+            <h2>Calculate South Carolina Wind Loads Instantly &rarr;</h2>
+            <p class="wlc-sub">Skip the manual math &mdash; get instant ASCE 7-16 results for any South Carolina ZIP code, with Charleston and Hilton Head 150-mph coastal exposure pre-applied.</p>
+            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
+                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter SC ZIP (e.g. 29401)" aria-label="South Carolina ZIP code" required>
+                <button type="submit">Start Calculation</button>
+            </form>
+            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
+        </div>
+    </section>
+
     <!-- Mobile Navigation with Hierarchical Structure -->
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
@@ -1114,7 +1157,14 @@
             <li><strong>Essential Facilities:</strong> Risk Category III and IV structures (hospitals, fire stations, emergency operations centers)</li>
         </ul>
 
-        <p>PE certification ensures that wind load calculations account for all relevant factors including building height, exposure category, topographic effects, internal pressure coefficients, and component effective wind areas. The PE's seal represents professional responsibility for design adequacy and code compliance.</p>
+        <p>PE certification ensures that wind load calculations account for all relevant factors including building height, exposure category, topographic effects, internal pressure coefficients, and component effective wind areas. The PE's seal represents professional responsibility for design adequacy and code compliance. Engineers and contractors typically prep the numbers in the <a href="https://windloadcalc.com/south-carolina-wind-load-calculator">South Carolina Wind Load Calculator</a> before handing the package off for seal.</p>
+
+        <!-- WLC Inline CTA -->
+        <aside class="wlc-inline-cta" aria-label="Open the South Carolina Wind Load Calculator">
+            <h3>Charleston to the Upstate, in one workflow</h3>
+            <p>WindLoadCalc pre-loads 2021 SC Building Code + ASCE 7-16, coastal 150-mph wind speeds for Charleston / Beaufort / Horry, and wind-borne debris flags for hurricane-corridor projects. One ZIP, full pressure schedule.</p>
+            <a class="wlc-btn" href="https://windloadcalc.com/south-carolina-wind-load-calculator">Open the South Carolina Wind Load Calculator &rarr;</a>
+        </aside>
 
         <h2>Wind-Borne Debris Protection</h2>
         <p>South Carolina coastal counties with design wind speeds of <strong>130+ mph</strong> are typically designated as <strong>wind-borne debris regions</strong>. In these areas, all openings (windows, doors, skylights) must be protected with one of the following:</p>
@@ -1209,8 +1259,22 @@
             <li><strong>SC Wind and Hail Underwriting Association:</strong> Insurance information for coastal properties</li>
         </ul>
 
-        <p>South Carolina's coastal building environment demands rigorous adherence to wind load requirements. By following the 2021 SC Building Code, consulting county-specific wind maps, and engaging qualified engineering professionals, builders and designers can create structures that safely withstand the state's hurricane-prone climate.</p>
+        <p>South Carolina's coastal building environment demands rigorous adherence to wind load requirements. By following the 2021 SC Building Code, consulting county-specific wind maps, engaging qualified engineering professionals, and verifying numbers in the <a href="https://windloadcalc.com/south-carolina-wind-load-calculator">South Carolina Wind Load Calculator</a>, builders and designers can create structures that safely withstand the state's hurricane-prone climate.</p>
     </main>
+
+    <!-- WLC Final Conversion CTA -->
+    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for South Carolina">
+        <div class="wlc-final-cta-inner">
+            <h2>Stop calculating South Carolina wind loads by hand</h2>
+            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">Built by hurricane-coast engineers since 2002 &mdash; Charleston, Hilton Head, Myrtle Beach, and every inland county handled in one calculator.</p>
+            <ul>
+                <li>Instant ZIP &rarr; ASCE 7-16 wind speed for all 4 risk categories</li>
+                <li>Coastal-county 150-mph values for Charleston, Beaufort, Horry pre-applied</li>
+                <li>Wind-borne debris flags + 2021 SC Building Code references in every report</li>
+            </ul>
+            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
+        </div>
+    </section>
 
     <!-- WindLoadCalc.com Promotional Section -->
     <section class="windloadcalc-promo">

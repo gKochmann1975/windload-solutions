@@ -730,6 +730,49 @@
         </div>
     </header>
 
+    <!-- WLC Calculator CTA - Above the Fold -->
+    <style>
+        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
+        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
+        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
+        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
+        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
+        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
+        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
+        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
+        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
+        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
+        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
+        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
+        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
+        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
+        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
+        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
+        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
+        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+        @media (max-width: 600px) {
+            .wlc-cta-banner h2 { font-size: 1.45rem; }
+            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
+            .wlc-cta-form input[type="text"] { text-align: center; }
+            .wlc-final-cta h2 { font-size: 1.65rem; }
+        }
+    </style>
+    <section class="wlc-cta-banner" aria-label="Try the North Carolina Wind Load Calculator">
+        <div class="wlc-cta-banner-inner">
+            <h2>Calculate North Carolina Wind Loads Instantly &rarr;</h2>
+            <p class="wlc-sub">Skip the manual math &mdash; get instant ASCE 7-16 results for any North Carolina ZIP code, including Outer Banks 150+ mph coastal exposure.</p>
+            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
+                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter NC ZIP (e.g. 27954)" aria-label="North Carolina ZIP code" required>
+                <button type="submit">Start Calculation</button>
+            </form>
+            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
+        </div>
+    </section>
+
     <!-- Mobile Navigation with Hierarchical Structure -->
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
@@ -1105,6 +1148,13 @@
 
         <p>PE-stamped plans provide assurance that the structure has been designed by a qualified professional and meets all applicable code requirements. The PE's seal signifies professional responsibility for the design and compliance with engineering standards.</p>
 
+        <!-- WLC Inline CTA -->
+        <aside class="wlc-inline-cta" aria-label="Open the North Carolina Wind Load Calculator">
+            <h3>Run NC numbers in under a minute</h3>
+            <p>From Asheville's mountains to the Outer Banks' 150-mph zone, WindLoadCalc pre-applies 2018 NC Residential Code + ASCE 7-16 logic the moment you enter a ZIP. No map tracing. No spreadsheets. Just permit-ready pressures.</p>
+            <a class="wlc-btn" href="https://windloadcalc.com/north-carolina-wind-load-calculator">Open the North Carolina Wind Load Calculator &rarr;</a>
+        </aside>
+
         <h2>North Carolina High Wind Counties</h2>
         <p>North Carolina's coastal counties are subject to the highest wind design requirements due to their exposure to Atlantic hurricanes. The following three counties are designated as <strong>Wind Zone III</strong> with design wind speeds of <strong>110+ mph</strong>:</p>
 
@@ -1178,7 +1228,7 @@
         </div>
 
         <h2>Resources and Professional Assistance</h2>
-        <p>For complex projects, high wind zones, or structures with unique design requirements, consulting with a North Carolina-licensed Professional Engineer is essential. A PE can provide accurate wind load calculations, structural design, and stamped plans that meet all state and local code requirements.</p>
+        <p>For complex projects, high wind zones, or structures with unique design requirements, consulting with a North Carolina-licensed Professional Engineer is essential. A PE can provide accurate wind load calculations, structural design, and stamped plans that meet all state and local code requirements. Most design teams pair that PE review with the <a href="https://windloadcalc.com/north-carolina-wind-load-calculator">North Carolina Wind Load Calculator</a> to handle the pressure math before the seal.</p>
 
         <p>Additional resources include:</p>
         <ul>
@@ -1188,7 +1238,7 @@
             <li><strong>Local Building Departments:</strong> Jurisdiction-specific requirements and permit information</li>
         </ul>
 
-        <p>Understanding and complying with North Carolina's wind load requirements is essential for safe, durable construction in one of the nation's most hurricane-prone regions. By following the 2018 NC Residential Code, ASCE 7-16 standards, and ICC 600 provisions, builders and designers can create structures that withstand the state's challenging wind environment.</p>
+        <p>Understanding and complying with North Carolina's wind load requirements is essential for safe, durable construction in one of the nation's most hurricane-prone regions. By following the 2018 NC Residential Code, ASCE 7-16 standards, and ICC 600 provisions &mdash; and verifying numbers in a dedicated <a href="https://windloadcalc.com/north-carolina-wind-load-calculator">North Carolina Wind Load Calculator</a> &mdash; builders and designers can create structures that withstand the state's challenging wind environment.</p>
     </main>
 
     <!-- North Carolina Solar Section -->
@@ -1214,6 +1264,20 @@
             <a href="solar-belt-wind-load-requirements.html" style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; color: #f59e0b; border: 2px solid #f59e0b; padding: 0.875rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
                 <i class="fas fa-sun"></i> Solar Belt Hub
             </a>
+        </div>
+    </section>
+
+    <!-- WLC Final Conversion CTA -->
+    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for North Carolina">
+        <div class="wlc-final-cta-inner">
+            <h2>Stop calculating North Carolina wind loads by hand</h2>
+            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">Built by hurricane-state engineers since 2002 &mdash; Outer Banks ready, Charlotte friendly, Asheville aware.</p>
+            <ul>
+                <li>Instant ZIP &rarr; ASCE 7-16 wind speed for all 4 risk categories</li>
+                <li>Coastal-county overrides for Dare, Hyde, Currituck, Carteret and Wind Zone III</li>
+                <li>2018 NC Residential Code + ICC 600 references built into every report</li>
+            </ul>
+            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
         </div>
     </section>
 

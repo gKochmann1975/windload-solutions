@@ -705,6 +705,49 @@
         </div>
     </header>
 
+    <!-- WLC Calculator CTA - Above the Fold -->
+    <style>
+        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
+        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
+        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
+        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
+        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
+        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
+        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
+        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
+        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
+        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
+        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
+        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
+        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
+        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
+        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
+        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
+        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
+        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+        @media (max-width: 600px) {
+            .wlc-cta-banner h2 { font-size: 1.45rem; }
+            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
+            .wlc-cta-form input[type="text"] { text-align: center; }
+            .wlc-final-cta h2 { font-size: 1.65rem; }
+        }
+    </style>
+    <section class="wlc-cta-banner" aria-label="Try the Hawaii Wind Load Calculator">
+        <div class="wlc-cta-banner-inner">
+            <h2>Calculate Hawaii Wind Loads Instantly &rarr;</h2>
+            <p class="wlc-sub">Skip the manual math &mdash; get instant ASCE 7-16 + Appendix W results for any Hawaii ZIP, with Pacific topographic effects and salt-spray exposure noted.</p>
+            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
+                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter HI ZIP (e.g. 96813)" aria-label="Hawaii ZIP code" required>
+                <button type="submit">Start Calculation</button>
+            </form>
+            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
+        </div>
+    </section>
+
     <!-- Mobile Navigation with Hierarchical Structure -->
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
@@ -1086,7 +1129,14 @@
             <li><strong>Elevated structures:</strong> Buildings on piles or elevated foundations</li>
         </ul>
 
-        <p>PE-stamped plans provide assurance that wind load calculations incorporate Appendix W provisions, account for Hawaii-specific topographic effects, and comply with all applicable building code requirements.</p>
+        <p>PE-stamped plans provide assurance that wind load calculations incorporate Appendix W provisions, account for Hawaii-specific topographic effects, and comply with all applicable building code requirements. Most island design teams pre-run the math in the <a href="https://windloadcalc.com/hawaii-wind-load-calculator">Hawaii Wind Load Calculator</a> before sending the package to a Hawaii-licensed PE for seal.</p>
+
+        <!-- WLC Inline CTA -->
+        <aside class="wlc-inline-cta" aria-label="Open the Hawaii Wind Load Calculator">
+            <h3>Built for the Pacific &mdash; trade winds, topographic Kzt, salt spray</h3>
+            <p>Hawaii is its own animal: ASCE 7-16 Appendix W, county-by-county adoptions, and topographic effects that make a Honolulu calc nothing like a Hilo one. WindLoadCalc handles the Appendix W speed regions and routes every ZIP to the right Kzt logic.</p>
+            <a class="wlc-btn" href="https://windloadcalc.com/hawaii-wind-load-calculator">Open the Hawaii Wind Load Calculator &rarr;</a>
+        </aside>
 
         <h2>Corrosion-Resistant Hardware Requirements</h2>
         <p>Hawaii's tropical marine environment is <strong>extremely corrosive</strong> to standard metal fasteners and connectors. Salt spray, high humidity, and warm temperatures accelerate corrosion, leading to rapid degradation of unprotected steel hardware. Hawaii's building code mandates <strong>corrosion-resistant hardware</strong> for all construction.</p>
@@ -1246,8 +1296,22 @@
             <li><strong>Hawaii Board of Professional Engineers:</strong> PE licensing and requirements</li>
         </ul>
 
-        <p>Understanding and complying with Hawaii's unique wind load requirements is essential for safe, durable construction in one of the nation's most challenging coastal environments. By following the 2018 Hawaii Building Code, ASCE 7-16 with Appendix W, and using corrosion-resistant materials throughout, builders and designers can create structures that withstand Hawaii's tropical Pacific climate for generations.</p>
+        <p>Understanding and complying with Hawaii's unique wind load requirements is essential for safe, durable construction in one of the nation's most challenging coastal environments. By following the 2018 Hawaii Building Code, ASCE 7-16 with Appendix W, using corrosion-resistant materials throughout, and verifying pressures in the dedicated <a href="https://windloadcalc.com/hawaii-wind-load-calculator">Hawaii Wind Load Calculator</a>, builders and designers can create structures that withstand Hawaii's tropical Pacific climate for generations.</p>
     </main>
+
+    <!-- WLC Final Conversion CTA -->
+    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for Hawaii">
+        <div class="wlc-final-cta-inner">
+            <h2>Stop calculating Hawaii wind loads by hand</h2>
+            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">Coastal wind specialists since 2002 &mdash; Appendix W, topographic Kzt, and salt-spray hardware notes built in.</p>
+            <ul>
+                <li>Instant ZIP &rarr; ASCE 7-16 + Appendix W wind speed for all 4 risk categories</li>
+                <li>County-by-county code adoption (Honolulu, Maui, Hawaii, Kauai) handled</li>
+                <li>Topographic Kzt and Type 316 SS hardware callouts in every report</li>
+            </ul>
+            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
+        </div>
+    </section>
 
     <!-- WindLoadCalc.com Promotional Section -->
     <section class="windloadcalc-promo">

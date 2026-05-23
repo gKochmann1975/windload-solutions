@@ -662,6 +662,49 @@
         </div>
     </header>
 
+    <!-- WLC Calculator CTA - Above the Fold -->
+    <style>
+        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
+        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
+        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
+        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
+        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
+        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; white-space: nowrap; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
+        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
+        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
+        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
+        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
+        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
+        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
+        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
+        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
+        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
+        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
+        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
+        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+        @media (max-width: 600px) {
+            .wlc-cta-banner h2 { font-size: 1.45rem; }
+            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
+            .wlc-cta-form input[type="text"] { text-align: center; }
+            .wlc-final-cta h2 { font-size: 1.65rem; }
+        }
+    </style>
+    <section class="wlc-cta-banner" aria-label="Try the California Wind Load Calculator">
+        <div class="wlc-cta-banner-inner">
+            <h2>Calculate California Wind Loads Instantly &rarr;</h2>
+            <p class="wlc-sub">Skip the manual math &mdash; get instant CBC 2022 + ASCE 7-16 results for any California ZIP, with special wind regions (Banning, Tehachapi, Cajon, Altamont) flagged automatically.</p>
+            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
+                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter CA ZIP (e.g. 90001)" aria-label="California ZIP code" required>
+                <button type="submit">Start Calculation</button>
+            </form>
+            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
+        </div>
+    </section>
+
     <!-- Mobile Navigation with Hierarchical Structure -->
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
@@ -1166,6 +1209,13 @@
 
             <a href="professional-engineer-sign-seal-wind-load-pressures.html" class="cta-button">Get PE Sealed Wind Load Report</a>
 
+            <!-- WLC Inline CTA -->
+            <aside class="wlc-inline-cta" aria-label="Open the California Wind Load Calculator">
+                <h3>Wind isn't usually CA's primary driver &mdash; but it still has to be right</h3>
+                <p>Seismic dominates most California structural design, yet wind still has to clear plan-check. The dedicated calculator pre-loads CBC 2022 + ASCE 7-16 wind speeds for every ZIP, flags special wind regions, and keeps seismic coordination notes attached to your report.</p>
+                <a class="wlc-btn" href="https://windloadcalc.com/california-wind-load-calculator">Open the California Wind Load Calculator &rarr;</a>
+            </aside>
+
             <h2>Topographic Effects in California</h2>
 
             <div class="info-card">
@@ -1218,7 +1268,7 @@
 
             <div class="highlight-box">
                 <h3>California Design Tip</h3>
-                <p>Many California developments are located in scenic hilltop and coastal bluff locations. Don't overlook topographic effects—Kzt values can increase design pressures by 30-50% for C&C elements in these locations. This is especially critical for solar panel mounting systems, which are required on most new residential construction per Title 24.</p>
+                <p>Many California developments are located in scenic hilltop and coastal bluff locations. Don't overlook topographic effects—Kzt values can increase design pressures by 30-50% for C&C elements in these locations. This is especially critical for solar panel mounting systems, which are required on most new residential construction per Title 24. Run a quick check in the <a href="https://windloadcalc.com/california-wind-load-calculator">California Wind Load Calculator</a> before finalizing the schedule.</p>
             </div>
 
             <a href="instructional-videos-asce-7-wind-load-calculator-wind-load-pressure-software-components-cladding-wind-load-pressures-asce-7.html" class="cta-button">Learn About Topographic Analysis</a>
@@ -1432,7 +1482,7 @@
 
             <div class="info-card">
                 <h3>Professional Wind Load Analysis Software</h3>
-                <p>Windload Solutions provides ASCE 7-16 compliant wind load calculators specifically designed for California projects. Our tools address the unique California requirements including seismic coordination, varied topography, and CBC compliance.</p>
+                <p>Windload Solutions provides ASCE 7-16 compliant wind load calculators specifically designed for California projects. Our tools address the unique California requirements including seismic coordination, varied topography, and CBC compliance &mdash; start with the dedicated <a href="https://windloadcalc.com/california-wind-load-calculator">California Wind Load Calculator</a> for a state-tuned interface.</p>
             </div>
 
             <h3>Available Calculators</h3>
@@ -1491,6 +1541,20 @@
                 <a href="contact-us-wind-load-calculators-for-components-and-cladding-cc-wind-load-pressures-per-the-asce-7-16-and-asce-7-22-publication-windloads-made-easy.html" class="cta-button" style="font-size: 1.2rem; padding: 1.5rem 3rem;">Contact Us for California Wind Load Analysis</a>
             </div>
     </main>
+
+    <!-- WLC Final Conversion CTA -->
+    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for California">
+        <div class="wlc-final-cta-inner">
+            <h2>Stop calculating California wind loads by hand</h2>
+            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">In business since 2002 &mdash; honest about CA being a seismic-first state, sharp on getting the wind numbers right anyway.</p>
+            <ul>
+                <li>Instant ZIP &rarr; CBC 2022 + ASCE 7-16 wind speed for all 4 risk categories</li>
+                <li>Special wind regions (Banning, Tehachapi, Cajon, Altamont) auto-flagged</li>
+                <li>Topographic Kzt and seismic-wind coordination notes in every report</li>
+            </ul>
+            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
+        </div>
+    </section>
 
     <!-- WindLoadCalc.com Promotional Section -->
     <section class="windloadcalc-promo" style="background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 4rem 0; text-align: center;">
