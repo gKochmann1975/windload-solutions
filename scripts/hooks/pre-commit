@@ -1,0 +1,24 @@
+#!/bin/sh
+# Pre-commit gate: block commits that introduce CRITICAL mobile-first violations.
+# Runs scripts/check-mobile.js on the staged *.html files only (fast).
+# Enable once per clone with:  git config core.hooksPath scripts/hooks
+#
+# Bypass in a genuine emergency with:  git commit --no-verify
+
+staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.html$' | grep -v '^backups/')
+[ -z "$staged" ] && exit 0
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node not found; skipping mobile-first lint." >&2
+  exit 0
+fi
+
+# shellcheck disable=SC2086
+node scripts/check-mobile.js $staged
+status=$?
+if [ "$status" -ne 0 ]; then
+  echo "" >&2
+  echo "pre-commit: CRITICAL mobile-first violation(s) in staged HTML — commit blocked." >&2
+  echo "Fix the findings above, or re-run with 'git commit --no-verify' to override." >&2
+fi
+exit $status
