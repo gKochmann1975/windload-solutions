@@ -204,6 +204,17 @@ for (const file of files) {
     scanStyle(m[1], lineOf(html, m.index), findings);
   }
   scanScripts(html, findings);
+
+  // RULE 7 — wide data table with no horizontal-scroll affordance. CRITICAL.
+  // A .comparison-table/.data-table/.edition-table/.tornado-table will exceed a
+  // 375px viewport; without overflow-x:auto (on the table or a wrapper) it forces
+  // a horizontal page scroll on phones. Satisfied by any overflow-x:auto|scroll.
+  const wide = html.match(/<table[^>]*class="[^"]*(?:comparison-table|data-table|edition-table|tornado-table)/i);
+  if (wide && !/overflow-x:\s*(auto|scroll)/i.test(html)) {
+    add(findings, 'CRITICAL', 'R7 table-no-scroll', lineOf(html, wide.index), 'table',
+      'wide table without overflow-x scroll — horizontal page scroll on phones');
+  }
+
   findings.sort((a, b) => a.line - b.line);
   results.push({ file, findings });
 }
