@@ -40,775 +40,245 @@
         });
     </script>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Mobile Navigation */
-        .nav-links {
-            position: fixed;
-            top: 0;
-            left: -320px;
-            width: 300px;
-            height: 100vh;
-            background: white;
-            z-index: 1000;
-            padding: 6rem 0 2rem 0;
-            transition: left 0.3s ease;
-            overflow-y: auto;
-            box-shadow: 5px 0 30px rgba(0,0,0,0.2);
-        }
-
-        .nav-links.active {
-            left: 0;
-        }
-
-        .nav-links a {
-            display: block;
-            padding: 1rem 2rem;
-            color: #1f2937;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-
-        .nav-links a:hover {
-            background: rgba(0, 24, 255, 0.05);
-            color: #0018ff;
-            border-left-color: #0018ff;
-        }
-
-        .nav-links a i {
-            margin-right: 0.75rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Hero Section with Video Background */
-        .hero {
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            padding: 8rem 2rem 4rem;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 24, 255, 0.85) 0%, rgba(24, 30, 87, 0.9) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: white;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.95);
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.4);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5);
-        }
-
-        /* Container */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Table of Contents */
-        .toc-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            padding: 3rem 0;
-            margin: 0;
-        }
-
-        .toc-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .toc-box h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .toc-box ol {
-            margin: 0;
-            padding-left: 1.5rem;
-        }
-
-        .toc-box li {
-            margin-bottom: 0.75rem;
-        }
-
-        .toc-box a {
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.05rem;
-            transition: color 0.3s ease;
-        }
-
-        .toc-box a:hover {
-            color: #ff6b35;
-            text-decoration: underline;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            padding-top: 1rem;
-            border-top: 3px solid #ff6b35;
-        }
-
-        .content-section h3 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem;
-        }
-
-        .content-section h4 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #374151;
-            margin: 2rem 0 1rem;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul, .content-section ol {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #ff6b35;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #ff8c42;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-        }
-
-        .formula-box h4 {
-            color: #ff6b35;
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .formula-box .formula {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-
-        .formula-box .formula-desc {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.8);
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #ff6b35;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #ff6b35;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Category Cards */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .category-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .category-card:hover {
-            border-color: #ff6b35;
-            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.15);
-        }
-
-        .category-card h5 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #ff6b35;
-            margin-bottom: 0.5rem;
-        }
-
-        .category-card p {
-            font-size: 0.95rem;
-            color: #4b5563;
-            margin-bottom: 0;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-            border: none;
-            padding-top: 0;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Links */
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 1.8rem;
-            }
-
-            .formula-box .formula {
-                font-size: 1.1rem;
-            }
-
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Complete Guide to Wind Load Calculations",
-        "description": "The definitive guide to wind load calculations per the latest ASCE 7 (ASCE 7-22). Learn Components & Cladding (C&C), MWFRS, exposure categories, risk categories, and state-specific requirements.",
-        "author": {
-            "@type": "Organization",
-            "name": "Wind Load Solutions"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Wind Load Solutions",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://windload.solutions/images/windloadsolutions-logo.svg"
-            }
-        },
-        "datePublished": "2025-01-01",
-        "dateModified": "2025-11-29",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://windload.solutions/complete-guide-wind-load-calculations"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Articles",
-                "item": "https://windload.solutions/articles.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Complete Guide to Wind Load Calculations",
-                "item": "https://windload.solutions/complete-guide-wind-load-calculations"
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -821,360 +291,363 @@
         <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<section class="sec sec-aurora hero"><div class="wrap">
+  <span class="eyebrow">Pillar Guide &middot; ASCE 7-22</span>
+  <h1>Wind load calculations,<br><span class="sweep">decoded end to end</span></h1>
+  <p class="sub">The force of wind on a structure, calculated per the latest ASCE 7 (ASCE 7-22) &mdash; from velocity pressure to Components &amp; Cladding (C&amp;C) and MWFRS, in scannable modules.</p>
+  <div class="hero-cta"><a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Try the calculator</a><a class="btn btn-ghost" href="#flow">See the 6-step flow</a></div>
+  <div class="stat-strip">
+    <div class="stat"><div class="num">7-22</div><div class="lbl">Latest ASCE 7</div></div>
+    <div class="stat"><div class="num">3-sec</div><div class="lbl">Gust wind speed</div></div>
+    <div class="stat"><div class="num">B/C/D</div><div class="lbl">Exposure</div></div>
+    <div class="stat"><div class="num">I&ndash;IV</div><div class="lbl">Risk categories</div></div>
+  </div>
+</div></section>
 
-    <div class="nav-overlay"></div>
+<hr class="divider">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="images/wind-video.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <span class="hero-badge">PILLAR GUIDE</span>
-            <h1>Complete Guide to Wind Load Calculations (<span class="current-year">2025</span>)</h1>
-            <p>Master wind load calculations per the latest ASCE 7 (ASCE 7-22). From basic concepts to advanced Components & Cladding (C&C) and MWFRS analysis, this guide covers everything you need to know.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Try Wind Load Calculator</a>
-        </div>
-    </section>
+<section class="sec"><div class="wrap">
+  <span class="eyebrow">Foundations</span>
+  <h2>What wind load actually is</h2>
+  <p class="lead">Wind striking a building creates pressure on windward faces and suction on leeward faces. Engineers must resist these forces &mdash; especially in coastal, hurricane, and severe-weather zones, where underdesign means envelope breach or collapse.</p>
+  <div class="grid" data-n="2" style="margin-top:34px">
+    <div class="glass" style="padding:1.6rem;text-align:center">
+      <svg viewBox="0 0 80 60" width="64" height="48" fill="none" stroke="var(--cyan-br)" stroke-width="3" stroke-linecap="round" aria-hidden="true" style="margin-bottom:10px">
+        <rect x="34" y="14" width="22" height="38" stroke="var(--ink-soft)"/>
+        <path d="M6 22h22M6 30h20M6 38h22"/><path d="M28 22l-6-4M28 22l-6 4"/><path d="M26 30l-6-4M26 30l-6 4"/><path d="M28 38l-6-4M28 38l-6 4"/>
+      </svg>
+      <h3 style="color:var(--ink);font-size:var(--h3);margin:.3rem 0">Wind Pressure (p)</h3>
+      <p style="color:var(--ink-soft);margin:0">Force per unit area, in pounds per square foot <strong>(psf)</strong>.</p>
+    </div>
+    <div class="glass" style="padding:1.6rem;text-align:center">
+      <svg viewBox="0 0 80 60" width="64" height="48" fill="none" stroke="var(--go-bright)" stroke-width="3" stroke-linecap="round" aria-hidden="true" style="margin-bottom:10px">
+        <rect x="30" y="14" width="26" height="38" stroke="var(--ink-soft)"/>
+        <path d="M58 33h16"/><path d="M68 28l8 5-8 5" stroke="var(--go-bright)"/>
+        <path d="M10 33h14M14 25h10M14 41h10"/>
+      </svg>
+      <h3 style="color:var(--ink);font-size:var(--h3);margin:.3rem 0">Wind Force (F)</h3>
+      <p style="color:var(--ink-soft);margin:0">Total force = pressure &times; area, in pounds <strong>(lb)</strong> or kips.</p>
+    </div>
+  </div>
+</div></section>
 
-    <!-- Table of Contents -->
-    <section class="toc-section">
-        <div class="container">
-            <div class="toc-box">
-                <h2><i class="fas fa-list"></i> Table of Contents</h2>
-                <ol>
-                    <li><a href="#what-is-wind-load">What Is Wind Load?</a></li>
-                    <li><a href="#asce-7-overview">ASCE 7 Overview: The Industry Standard</a></li>
-                    <li><a href="#wind-load-formula">The Wind Load Formula Explained</a></li>
-                    <li><a href="#basic-wind-speed">Basic Wind Speed (V)</a></li>
-                    <li><a href="#exposure-categories">Exposure Categories (B, C, D)</a></li>
-                    <li><a href="#risk-categories">Risk Categories (I, II, III, IV)</a></li>
-                    <li><a href="#cc-vs-mwfrs">Components & Cladding vs MWFRS</a></li>
-                    <li><a href="#topographic-effects">Topographic Effects (Kzt)</a></li>
-                    <li><a href="#state-requirements">State-Specific Requirements</a></li>
-                    <li><a href="#calculation-tools">Wind Load Calculation Tools</a></li>
-                </ol>
-            </div>
-        </div>
-    </section>
+<hr class="divider">
 
-    <!-- Main Content -->
-    <section class="content-section">
-        <div class="container">
-            <h2 id="what-is-wind-load">1. What Is Wind Load?</h2>
-            <p><strong>Wind load</strong> is the force exerted by wind on a building or structure. When wind strikes a building, it creates pressure on surfaces facing the wind (windward) and suction on surfaces away from the wind (leeward). These forces must be calculated and accounted for in structural design to ensure buildings can safely resist wind pressures during storms, hurricanes, and high-wind events.</p>
+<section class="sec sec-grid"><div class="wrap">
+  <span class="eyebrow">The Standard</span>
+  <h2>ASCE 7 &mdash; the industry benchmark</h2>
+  <p class="lead">ASCE 7, <em>"Minimum Design Loads and Associated Criteria for Buildings and Other Structures,"</em> is the authoritative U.S. wind-load standard. Building codes &mdash; the IBC and FBC &mdash; reference it for wind provisions.</p>
+  <div class="cmp-scroll glass" style="margin-top:34px;padding:.4rem">
+    <table class="cmp">
+      <thead><tr><th>Feature</th><th>ASCE 7-16</th><th class="ours">ASCE 7-22 (latest)</th></tr></thead>
+      <tbody>
+        <tr><td>Publication year</td><td>2016</td><td class="ours">2022</td></tr>
+        <tr><td>Referenced by</td><td>IBC 2018, IBC 2021</td><td class="ours">IBC 2024</td></tr>
+        <tr><td>Wind speed maps</td><td>Updated from 7-10</td><td class="ours">Further refinements</td></tr>
+        <tr><td>C&amp;C provisions</td><td>Chapter 30</td><td class="ours">Enhanced Chapter 30</td></tr>
+        <tr><td>MWFRS provisions</td><td>Chapters 27, 28</td><td class="ours">Chapters 27, 28 refined</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lead" style="margin-top:20px">Always verify your jurisdiction's adopted edition. <a href="florida-wind-load-requirements.html" style="color:var(--cyan-br)">Florida</a> adopted ASCE 7-22 via the FBC 8th Edition; other jurisdictions may still reference 7-16.</p>
+</div></section>
 
-            <p>Wind loads are among the most critical loads that structural engineers must consider, particularly in coastal regions, hurricane zones, and areas prone to severe weather. Inadequate wind load design can result in structural failure, envelope breaches, and catastrophic damage during high-wind events.</p>
+<hr class="divider">
 
-            <div class="info-box">
-                <h4><strong>Key Concept:</strong> Wind Pressure vs Wind Force</h4>
-                <p><strong>Wind Pressure (p):</strong> Force per unit area, measured in pounds per square foot (psf)</p>
-                <p><strong>Wind Force (F):</strong> Total force on a surface = Pressure × Area, measured in pounds (lb) or kips</p>
-            </div>
+<section class="sec sec-glow"><div class="wrap">
+  <span class="eyebrow">The Math</span>
+  <h2>The wind load formula</h2>
+  <p class="lead">Design wind pressure combines external and internal effects &mdash; driven by velocity pressure <strong>q</strong>.</p>
 
-            <h2 id="asce-7-overview">2. ASCE 7 Overview: The Industry Standard</h2>
-            <p>The <strong>American Society of Civil Engineers (ASCE) Standard 7</strong> titled "Minimum Design Loads and Associated Criteria for Buildings and Other Structures" is the authoritative standard for determining wind loads in the United States. Most building codes, including the International Building Code (IBC), reference ASCE 7 for wind load provisions.</p>
+  <div class="glass" style="max-width:760px;margin:34px auto 0;padding:1.8rem;text-align:center">
+    <div class="badge badge--method" style="margin-bottom:14px">Design Wind Pressure</div>
+    <div style="font-family:var(--mono);font-size:clamp(1.1rem,3.4vw,1.6rem);font-weight:800;color:var(--ink)">p = q&middot;G&middot;C<sub>p</sub> &minus; q<sub>i</sub>&middot;(GC<sub>pi</sub>)</div>
+    <p style="color:var(--ink-mute);font-size:.9rem;margin:14px 0 0">G = gust factor &middot; C<sub>p</sub> = external pressure coefficient &middot; GC<sub>pi</sub> = internal pressure coefficient</p>
+  </div>
 
-            <h3>ASCE 7-22 vs ASCE 7-16</h3>
-            <p>The two most commonly used editions are:</p>
+  <div class="glass" style="max-width:860px;margin:24px auto 0;padding:1.8rem;text-align:center">
+    <div class="badge badge--data" style="margin-bottom:14px">Velocity Pressure q<sub>z</sub></div>
+    <div style="font-family:var(--mono);font-size:clamp(1.05rem,3.6vw,1.55rem);font-weight:800;color:var(--ink)">q<sub>z</sub> = 0.00256&middot;K<sub>z</sub>&middot;K<sub>zt</sub>&middot;K<sub>d</sub>&middot;K<sub>e</sub>&middot;V<sup>2</sup></div>
+    <svg viewBox="0 0 600 60" width="100%" height="56" fill="none" aria-hidden="true" style="margin-top:18px;max-width:560px">
+      <g font-family="ui-monospace,monospace" font-size="13" font-weight="700">
+        <rect x="2" y="14" width="86" height="32" rx="8" stroke="var(--cyan)" stroke-width="1.5"/><text x="45" y="34" fill="var(--cyan-br)" text-anchor="middle">Kz · height</text>
+        <rect x="98" y="14" width="86" height="32" rx="8" stroke="var(--amber)" stroke-width="1.5"/><text x="141" y="34" fill="var(--amber-br)" text-anchor="middle">Kzt · terrain</text>
+        <rect x="194" y="14" width="86" height="32" rx="8" stroke="var(--violet)" stroke-width="1.5"/><text x="237" y="34" fill="var(--violet-br)" text-anchor="middle">Kd · 0.85</text>
+        <rect x="290" y="14" width="100" height="32" rx="8" stroke="var(--go)" stroke-width="1.5"/><text x="340" y="34" fill="var(--go-bright)" text-anchor="middle">Ke · elevation</text>
+        <rect x="400" y="14" width="96" height="32" rx="8" stroke="var(--blue-bright)" stroke-width="1.5"/><text x="448" y="34" fill="var(--blue-bright)" text-anchor="middle">V² · speed</text>
+      </g>
+    </svg>
+  </div>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>ASCE 7-16</th>
-                        <th>ASCE 7-22</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Publication Year</td>
-                        <td>2016</td>
-                        <td>2022</td>
-                    </tr>
-                    <tr>
-                        <td>Referenced by IBC</td>
-                        <td>IBC 2018, IBC 2021</td>
-                        <td>IBC 2024</td>
-                    </tr>
-                    <tr>
-                        <td>Wind Speed Maps</td>
-                        <td>Updated from 7-10</td>
-                        <td>Further refinements</td>
-                    </tr>
-                    <tr>
-                        <td>C&C Provisions</td>
-                        <td>Chapter 30</td>
-                        <td>Enhanced Chapter 30</td>
-                    </tr>
-                    <tr>
-                        <td>MWFRS Provisions</td>
-                        <td>Chapter 27, 28</td>
-                        <td>Chapters 27, 28 refined</td>
-                    </tr>
-                </tbody>
-            </table>
+  <div class="grid" data-n="5" style="margin-top:34px">
+    <div class="card" style="--cat:var(--cyan)"><div class="badge badge--data">K<sub>z</sub></div><h3>Exposure coefficient</h3><p>How wind speed rises with height; varies by exposure category.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">K<sub>zt</sub></div><h3>Topographic factor</h3><p>Speed-up over hills, ridges, and escarpments.</p></div>
+    <div class="card" style="--cat:var(--violet)"><div class="badge badge--method">K<sub>d</sub></div><h3>Directionality</h3><p>Typically <strong>0.85</strong> for buildings &mdash; max wind is unlikely from any single direction.</p></div>
+    <div class="card" style="--cat:var(--go)"><div class="badge badge--go">K<sub>e</sub></div><h3>Ground elevation</h3><p>Air-density change with elevation; new in ASCE 7-16.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)"><div class="badge badge--data">V</div><h3>Basic wind speed</h3><p>3-second gust from ASCE 7 wind speed maps.</p></div>
+  </div>
+</div></section>
 
-            <p>Always verify which edition your jurisdiction has adopted. States like <a href="florida-wind-load-requirements.html">Florida</a> have adopted ASCE 7-22 through the Florida Building Code 8th Edition, while other jurisdictions may still reference ASCE 7-16.</p>
+<hr class="divider">
 
-            <h2 id="wind-load-formula">3. The Wind Load Formula Explained</h2>
-            <p>The fundamental wind pressure equation in ASCE 7 is:</p>
+<section class="sec sec-well"><div class="wrap">
+  <span class="eyebrow">Wind Speed</span>
+  <h2>Basic wind speed (V)</h2>
+  <p class="lead">The 3-second gust at 33 ft (10 m) above ground in Exposure C terrain. Higher risk categories design to higher speeds &mdash; values vary widely by site, from inland speeds up to roughly 170&ndash;180 mph in coastal hurricane regions (for example, South Florida HVHZ).</p>
+  <div class="grid" data-n="4" style="margin-top:34px">
+    <div class="card" style="--cat:var(--cyan)"><div class="badge badge--data">Risk I</div><h3>Lowest speeds</h3><p>Agricultural, temporary structures.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)"><div class="badge badge--data">Risk II</div><h3>Standard speeds</h3><p>Most buildings.</p></div>
+    <div class="card" style="--cat:var(--violet)"><div class="badge badge--method">Risk III</div><h3>Higher speeds</h3><p>Assembly, schools.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">Risk IV</div><h3>Highest speeds</h3><p>Essential facilities.</p></div>
+  </div>
+  <p class="lead" style="margin-top:24px">Pull location-specific speeds from the <a href="asce-7-22-wind-speed-maps.html" style="color:var(--cyan-br)">ASCE 7-22 maps</a>, <a href="asce-7-16-wind-speed-maps.html" style="color:var(--cyan-br)">7-16 maps</a>, or the <a href="asce-7-wind-load-velocity-finder-wind-speed-by-zip-code.html" style="color:var(--cyan-br)">Wind Speed by Zip Code</a> tool.</p>
+</div></section>
 
-            <div class="formula-box">
-                <h4>Design Wind Pressure Formula</h4>
-                <div class="formula">p = q × G × Cp - qi × (GCpi)</div>
-                <div class="formula-desc">Where: q = velocity pressure, G = gust factor, Cp = external pressure coefficient, qi = internal pressure, GCpi = internal pressure coefficient</div>
-            </div>
+<hr class="divider">
 
-            <p>The <strong>velocity pressure (q)</strong> at height z is calculated as:</p>
+<section class="sec"><div class="wrap">
+  <span class="eyebrow">Terrain</span>
+  <h2>Exposure categories B / C / D</h2>
+  <p class="lead">Terrain roughness controls how fast wind moves near the ground. Rougher terrain slows it; smoother terrain lets it run faster &mdash; so Exposure D yields the highest pressures, B the lowest.</p>
 
-            <div class="formula-box">
-                <h4>Velocity Pressure Formula</h4>
-                <div class="formula">qz = 0.00256 × Kz × Kzt × Kd × Ke × V²</div>
-                <div class="formula-desc">Where: Kz = velocity pressure exposure coefficient, Kzt = topographic factor, Kd = directionality factor, Ke = ground elevation factor, V = basic wind speed (mph)</div>
-            </div>
+  <div class="glass" style="margin-top:34px;padding:1.4rem">
+    <svg viewBox="0 0 600 200" width="100%" height="auto" fill="none" aria-hidden="true">
+      <line x1="0" y1="170" x2="600" y2="170" stroke="var(--line-2)" stroke-width="1.5"/>
+      <!-- wind profile arrows -->
+      <g stroke="var(--cyan)" stroke-width="1.6" stroke-linecap="round">
+        <path d="M16 40h40M48 36l8 4-8 4"/><path d="M16 70h28M36 66l8 4-8 4"/><path d="M16 100h16M24 96l8 4-8 4"/>
+      </g>
+      <!-- B: city -->
+      <g stroke="var(--blue-bright)" stroke-width="2.5" stroke-linejoin="round" fill="none">
+        <rect x="78" y="120" width="22" height="50"/><rect x="104" y="100" width="20" height="70"/><rect x="128" y="130" width="22" height="40"/><rect x="154" y="110" width="18" height="60"/>
+      </g>
+      <text x="125" y="192" fill="var(--blue-bright)" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle">B</text>
+      <!-- C: open field -->
+      <g stroke="var(--go-bright)" stroke-width="2.5" stroke-linecap="round" fill="none">
+        <path d="M270 170v-16M270 158l-6-5M270 158l6-5"/><path d="M300 170v-12M300 162l-5-4M300 162l5-4"/><path d="M330 170v-16M330 158l-6-5M330 158l6-5"/>
+      </g>
+      <text x="300" y="192" fill="var(--go-bright)" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle">C</text>
+      <!-- D: shoreline / water -->
+      <g stroke="var(--cyan-br)" stroke-width="2.2" fill="none">
+        <path d="M440 170q12-8 24 0t24 0 24 0 24 0 24 0"/>
+      </g>
+      <text x="505" y="192" fill="var(--cyan-br)" font-family="Inter,sans-serif" font-size="15" font-weight="800" text-anchor="middle">D</text>
+    </svg>
+  </div>
 
-            <h3>Breaking Down Each Factor</h3>
-            <ul>
-                <li><strong>Kz (Velocity Pressure Exposure Coefficient):</strong> Accounts for how wind speed increases with height and varies by exposure category</li>
-                <li><strong>Kzt (Topographic Factor):</strong> Accounts for wind speed-up over hills, ridges, and escarpments</li>
-                <li><strong>Kd (Directionality Factor):</strong> Typically 0.85 for buildings, accounts for reduced probability of maximum wind from any single direction</li>
-                <li><strong>Ke (Ground Elevation Factor):</strong> Accounts for air density changes with elevation (new in ASCE 7-16)</li>
-                <li><strong>V (Basic Wind Speed):</strong> 3-second gust wind speed from ASCE 7 wind speed maps</li>
-            </ul>
+  <div class="grid" data-n="3" style="margin-top:34px">
+    <div class="card" style="--cat:var(--blue-bright)"><div class="badge badge--data">Exposure B</div><h3>Built-up terrain</h3><p>Urban, suburban, wooded.</p><p style="margin-top:.5rem;color:var(--ink-mute);font-size:.85rem">Lowest pressures &middot; residential / downtown</p></div>
+    <div class="card" style="--cat:var(--go)"><div class="badge badge--go">Exposure C</div><h3>Open terrain</h3><p>Scattered obstructions.</p><p style="margin-top:.5rem;color:var(--ink-mute);font-size:.85rem">Reference terrain &middot; farmland / airports</p></div>
+    <div class="card" style="--cat:var(--cyan)"><div class="badge badge--data">Exposure D</div><h3>Flat &amp; unobstructed</h3><p>Near open water.</p><p style="margin-top:.5rem;color:var(--ink-mute);font-size:.85rem">Highest pressures &middot; shorelines / large lakes</p></div>
+  </div>
+  <p class="lead" style="margin-top:24px"><a href="wind-exposure-categories-guide.html" style="color:var(--cyan-br)">Full Exposure Categories guide &rarr;</a></p>
+</div></section>
 
-            <h2 id="basic-wind-speed">4. Basic Wind Speed (V)</h2>
-            <p>The <strong>basic wind speed</strong> is the 3-second gust wind speed at 33 feet (10 meters) above ground in Exposure Category C terrain. ASCE 7 provides wind speed maps for each Risk Category, with higher-risk buildings requiring design for higher wind speeds.</p>
+<hr class="divider">
 
-            <div class="category-grid">
-                <div class="category-card">
-                    <h5>Risk Cat I</h5>
-                    <p>Lowest speeds<br>Agricultural, temporary</p>
-                </div>
-                <div class="category-card">
-                    <h5>Risk Cat II</h5>
-                    <p>Standard speeds<br>Most buildings</p>
-                </div>
-                <div class="category-card">
-                    <h5>Risk Cat III</h5>
-                    <p>Higher speeds<br>Assembly, schools</p>
-                </div>
-                <div class="category-card">
-                    <h5>Risk Cat IV</h5>
-                    <p>Highest speeds<br>Essential facilities</p>
-                </div>
-            </div>
+<section class="sec sec-grid"><div class="wrap">
+  <span class="eyebrow">Consequence of Failure</span>
+  <h2>Risk categories I &ndash; IV</h2>
+  <p class="lead">Buildings are classed by the risk to life if they fail. Higher categories design to higher wind speeds for added safety margin &mdash; per ASCE 7 Table 1.5-1.</p>
+  <div class="grid" data-n="4" style="margin-top:34px">
+    <div class="card" style="--cat:var(--cyan)">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--cyan-br)" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 40V20l16-10 16 10v20"/><path d="M14 40V26h20v14"/></svg>
+      <h3 style="margin-top:.7rem">Category I</h3><p>Agricultural, minor storage, temporary structures.</p><div class="badge badge--data" style="margin-top:.7rem">Low risk to life</div></div>
+    <div class="card" style="--cat:var(--blue-bright)">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--blue-bright)" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><rect x="12" y="8" width="24" height="32"/><path d="M18 16h4M26 16h4M18 24h4M26 24h4M18 32h12"/></svg>
+      <h3 style="margin-top:.7rem">Category II</h3><p>Residential, commercial, industrial &mdash; most buildings.</p><div class="badge badge--data" style="margin-top:.7rem">Standard</div></div>
+    <div class="card" style="--cat:var(--violet)">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--violet-br)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="16" cy="16" r="4"/><circle cx="32" cy="16" r="4"/><path d="M8 38c0-6 4-10 8-10s8 4 8 10M24 38c0-6 4-10 8-10s8 4 8 10"/></svg>
+      <h3 style="margin-top:.7rem">Category III</h3><p>Schools, assembly &gt;300, daycare, jails, power stations.</p><div class="badge badge--method" style="margin-top:.7rem">Substantial risk</div></div>
+    <div class="card" style="--cat:var(--amber)">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--amber-br)" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="10" width="28" height="30"/><path d="M24 18v10M19 23h10"/></svg>
+      <h3 style="margin-top:.7rem">Category IV</h3><p>Hospitals, fire stations, emergency shelters, EOCs.</p><div class="badge badge--hvhz" style="margin-top:.7rem">Essential facilities</div></div>
+  </div>
+  <p class="lead" style="margin-top:24px"><a href="risk-categories-wind-loads-guide.html" style="color:var(--cyan-br)">Full Risk Categories guide &rarr;</a></p>
+</div></section>
 
-            <p>Wind speeds range from approximately 95 mph in sheltered inland areas to over 180 mph in coastal hurricane regions. The <a href="asce-7-22-wind-speed-maps.html">ASCE 7-22 wind speed maps</a> and <a href="asce-7-16-wind-speed-maps.html">ASCE 7-16 wind speed maps</a> provide location-specific design wind speeds.</p>
+<hr class="divider">
 
-            <div class="info-box">
-                <h4><strong>Pro Tip:</strong> Find Wind Speed by Location</h4>
-                <p>Use our <a href="asce-7-wind-load-velocity-finder-wind-speed-by-zip-code.html">Wind Speed by Zip Code</a> tool or the <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> to automatically determine design wind speeds for any U.S. address.</p>
-            </div>
+<section class="sec"><div class="wrap">
+  <span class="eyebrow">Two Procedures</span>
+  <h2>Components &amp; Cladding vs MWFRS</h2>
+  <p class="lead">ASCE 7 splits wind design into two jobs: protecting the envelope, and bracing the frame. Same wind &mdash; different pressures and different chapters.</p>
 
-            <h2 id="exposure-categories">5. Exposure Categories (B, C, D)</h2>
-            <p><strong>Exposure Category</strong> describes the terrain roughness around your building site and significantly affects wind pressures. Rougher terrain (more obstructions) slows wind near the ground, while smoother terrain (open water, flat land) allows higher wind speeds at lower heights.</p>
+  <div class="glass" style="margin-top:34px;padding:1.4rem">
+    <svg viewBox="0 0 560 200" width="100%" height="auto" fill="none" aria-hidden="true">
+      <!-- C&C building -->
+      <g stroke="var(--violet-br)" stroke-width="2.5" stroke-linejoin="round">
+        <rect x="40" y="50" width="170" height="120"/>
+        <line x1="40" y1="50" x2="210" y2="50" stroke="var(--violet)"/>
+        <g stroke="var(--violet)" stroke-width="1.4"><rect x="58" y="70" width="30" height="30"/><rect x="98" y="70" width="30" height="30"/><rect x="138" y="70" width="30" height="30"/><rect x="58" y="115" width="30" height="40"/><rect x="138" y="115" width="30" height="40"/></g>
+        <rect x="40" y="50" width="26" height="26" stroke="var(--amber-br)" stroke-width="2"/>
+        <rect x="184" y="50" width="26" height="26" stroke="var(--amber-br)" stroke-width="2"/>
+      </g>
+      <text x="125" y="190" fill="var(--violet-br)" font-family="Inter,sans-serif" font-size="13" font-weight="800" text-anchor="middle">C&amp;C &middot; envelope + corner zones</text>
+      <!-- MWFRS building -->
+      <g stroke="var(--blue-bright)" stroke-width="2.5" stroke-linejoin="round">
+        <rect x="350" y="50" width="170" height="120"/>
+        <line x1="350" y1="110" x2="520" y2="110"/><line x1="435" y1="50" x2="435" y2="170"/>
+        <line x1="350" y1="50" x2="435" y2="110" stroke="var(--go-bright)" stroke-width="1.6"/><line x1="435" y1="50" x2="520" y2="110" stroke="var(--go-bright)" stroke-width="1.6"/><line x1="350" y1="110" x2="435" y2="170" stroke="var(--go-bright)" stroke-width="1.6"/><line x1="435" y1="110" x2="520" y2="170" stroke="var(--go-bright)" stroke-width="1.6"/>
+      </g>
+      <text x="435" y="190" fill="var(--blue-bright)" font-family="Inter,sans-serif" font-size="13" font-weight="800" text-anchor="middle">MWFRS &middot; frame + bracing</text>
+    </svg>
+  </div>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Exposure</th>
-                        <th>Terrain Description</th>
-                        <th>Examples</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>B</strong></td>
-                        <td>Urban, suburban, wooded areas</td>
-                        <td>Residential neighborhoods, downtown areas with buildings</td>
-                    </tr>
-                    <tr>
-                        <td><strong>C</strong></td>
-                        <td>Open terrain with scattered obstructions</td>
-                        <td>Flat farmland, grasslands, airports</td>
-                    </tr>
-                    <tr>
-                        <td><strong>D</strong></td>
-                        <td>Flat, unobstructed areas near water</td>
-                        <td>Shorelines, coastal areas, large lakes</td>
-                    </tr>
-                </tbody>
-            </table>
+  <div class="grid" data-n="2" style="margin-top:34px">
+    <div class="card" style="--cat:var(--violet)">
+      <div class="badge badge--method">Chapter 30</div>
+      <h3>Components &amp; Cladding (C&amp;C)</h3>
+      <p>Windows, doors, panels, shutters and their connections. Pressures run higher &mdash; small tributary areas, concentrated corner/edge zones, both positive and negative loads. Uses effective wind area + zone coefficients.</p>
+      <p style="margin-top:.7rem"><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html" style="color:var(--violet-br)">C&amp;C guide &rarr;</a></p>
+    </div>
+    <div class="card" style="--cat:var(--blue-bright)">
+      <div class="badge badge--data">Chapters 27 &amp; 28</div>
+      <h3>Main Wind Force Resisting System</h3>
+      <p>Columns, beams, bracing, shear walls, foundations. Pressures average over larger areas because the frame responds to whole-building forces, not local spikes.</p>
+      <p style="margin-top:.7rem"><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html" style="color:var(--blue-bright)">MWFRS guide &rarr;</a></p>
+    </div>
+  </div>
 
-            <p>Exposure D produces the highest wind pressures, while Exposure B produces the lowest. Proper exposure category selection is critical for accurate wind load calculations. Learn more in our <a href="wind-exposure-categories-guide.html">Exposure Categories Guide</a>.</p>
+  <div class="glass" style="max-width:820px;margin:24px auto 0;padding:1.4rem">
+    <div class="grid" data-n="2" style="gap:1rem">
+      <div><div class="badge badge--method">Use C&amp;C when</div><p style="color:var(--ink-soft);margin:.6rem 0 0">Selecting windows/doors, specifying cladding, designing envelope connections.</p></div>
+      <div><div class="badge badge--data">Use MWFRS when</div><p style="color:var(--ink-soft);margin:.6rem 0 0">Designing the structural frame, foundations, and lateral bracing.</p></div>
+    </div>
+  </div>
+</div></section>
 
-            <h2 id="risk-categories">6. Risk Categories (I, II, III, IV)</h2>
-            <p><strong>Risk Category</strong> classifies buildings based on the consequences of failure and the risk to human life. Higher risk categories require design for higher wind speeds to provide additional safety margins.</p>
+<hr class="divider">
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Cat</th>
-                        <th>Building Types</th>
-                        <th>Importance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>I</strong></td>
-                        <td>Agricultural facilities, minor storage, temporary structures</td>
-                        <td>Low risk to life</td>
-                    </tr>
-                    <tr>
-                        <td><strong>II</strong></td>
-                        <td>Residential, commercial, industrial (most buildings)</td>
-                        <td>Standard</td>
-                    </tr>
-                    <tr>
-                        <td><strong>III</strong></td>
-                        <td>Schools, assembly >300 people, daycare, jails, power stations</td>
-                        <td>Substantial risk</td>
-                    </tr>
-                    <tr>
-                        <td><strong>IV</strong></td>
-                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
-                        <td>Essential facilities</td>
-                    </tr>
-                </tbody>
-            </table>
+<section class="sec sec-hazard"><div class="wrap">
+  <span class="eyebrow" style="color:var(--amber-br)">Speed-Up Effects</span>
+  <h2>Topographic effects (K<sub>zt</sub>)</h2>
+  <p class="lead" style="color:#ffe9d3">Wind accelerates over hills, ridges, and escarpments. K<sub>zt</sub> captures that speed-up. Flat terrain: K<sub>zt</sub> = 1.0. On or near a feature, K<sub>zt</sub> rises above 1.0 at the crest and returns to 1.0 away from the feature &mdash; sharply raising design pressures where it applies.</p>
 
-            <p>See our detailed <a href="risk-categories-wind-loads-guide.html">Risk Categories Guide</a> for complete classification criteria per ASCE 7 Table 1.5-1.</p>
+  <div class="glass" style="margin-top:34px;padding:1.4rem">
+    <svg viewBox="0 0 600 170" width="100%" height="auto" fill="none" aria-hidden="true">
+      <g stroke="var(--amber-br)" stroke-width="1.6" stroke-linecap="round">
+        <path d="M14 30h40M46 26l8 4-8 4"/><path d="M14 50h40M46 46l8 4-8 4"/>
+      </g>
+      <!-- 2D ridge -->
+      <path d="M60 150 L110 60 L160 150" stroke="var(--amber-br)" stroke-width="2.5" fill="rgba(245,158,11,.10)"/>
+      <text x="110" y="166" fill="var(--amber-br)" font-family="Inter,sans-serif" font-size="12" font-weight="800" text-anchor="middle">2D ridge</text>
+      <!-- 2D escarpment -->
+      <path d="M230 150 L280 60 L360 60" stroke="var(--amber-br)" stroke-width="2.5" fill="rgba(245,158,11,.10)"/>
+      <line x1="360" y1="60" x2="360" y2="150" stroke="var(--amber-br)" stroke-width="2.5"/>
+      <text x="305" y="166" fill="var(--amber-br)" font-family="Inter,sans-serif" font-size="12" font-weight="800" text-anchor="middle">2D escarpment</text>
+      <!-- 3D hill -->
+      <path d="M430 150 Q500 40 570 150" stroke="var(--amber-br)" stroke-width="2.5" fill="rgba(245,158,11,.10)"/>
+      <text x="500" y="166" fill="var(--amber-br)" font-family="Inter,sans-serif" font-size="12" font-weight="800" text-anchor="middle">3D hill</text>
+      <!-- H / x markers on ridge -->
+      <line x1="110" y1="60" x2="110" y2="150" stroke="var(--ink-mute)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="120" y="105" fill="var(--ink-soft)" font-family="ui-monospace,monospace" font-size="12">H</text>
+    </svg>
+  </div>
 
-            <h2 id="cc-vs-mwfrs">7. Components & Cladding vs MWFRS</h2>
-            <p>ASCE 7 distinguishes between two types of wind load calculations, each serving a different purpose:</p>
+  <div class="grid" data-n="4" style="margin-top:34px">
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">H</div><h3>Feature height</h3><p>Height of the hill, ridge, or escarpment.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">L<sub>h</sub></div><h3>Crest distance</h3><p>Distance from crest to half the height.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">x</div><h3>Building offset</h3><p>Distance from crest to the building.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">Type</div><h3>Feature shape</h3><p>2D ridge, 2D escarpment, or 3D axisymmetric hill.</p></div>
+  </div>
+  <p class="lead" style="margin-top:24px;color:#ffe9d3"><a href="topographic-effects-wind-loads.html" style="color:var(--amber-br)">Full Topographic Effects guide &rarr;</a></p>
+</div></section>
 
-            <h3>Components & Cladding (C&C)</h3>
-            <p><strong>C&C calculations</strong> determine wind pressures for building envelope components: windows, doors, wall panels, roof panels, shutters, and their connections. C&C pressures are typically higher than MWFRS pressures because:</p>
-            <ul>
-                <li>Smaller tributary areas experience higher localized pressures</li>
-                <li>Corner and edge zones experience concentrated wind effects</li>
-                <li>Components must resist both positive (inward) and negative (outward) pressures</li>
-            </ul>
+<hr class="divider">
 
-            <p>C&C calculations use effective wind area and zone-based pressure coefficients from ASCE 7 Chapter 30. Learn more in our <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">Components & Cladding Guide</a>.</p>
+<section class="sec sec-glow" id="flow"><div class="wrap">
+  <span class="eyebrow">Workflow</span>
+  <h2>The 6-step calculation flow</h2>
+  <p class="lead">ASCE 7 by hand is a chain of lookups and interpolations. Here is the path from address to permit-ready report.</p>
+  <div class="grid" data-n="6" style="margin-top:34px">
+    <div class="card" style="--cat:var(--cyan)">
+      <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="var(--cyan-br)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4c-6 0-11 5-11 11 0 8 11 21 11 21s11-13 11-21c0-6-5-11-11-11z"/><circle cx="20" cy="15" r="4"/></svg>
+      <h3>1 &middot; Wind speed (V)</h3><p>Find the 3-second gust for the site and risk category.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)">
+      <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="var(--blue-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 30a14 14 0 1 1 28 0"/><path d="M20 30l8-8"/><circle cx="20" cy="30" r="2.5"/></svg>
+      <h3>2 &middot; Velocity pressure</h3><p>Compute q<sub>z</sub> with K<sub>z</sub>, K<sub>d</sub>, K<sub>e</sub>.</p></div>
+    <div class="card" style="--cat:var(--go)">
+      <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="var(--go-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 30l8-12 7 8 6-10 11 14z"/><path d="M4 34h32"/></svg>
+      <h3>3 &middot; Exposure &amp; K<sub>zt</sub></h3><p>Set exposure B/C/D and any topographic speed-up.</p></div>
+    <div class="card" style="--cat:var(--violet)">
+      <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="var(--violet-br)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4l13 5v9c0 8-6 14-13 18-7-4-13-10-13-18V9z"/></svg>
+      <h3>4 &middot; Risk &amp; coefficients</h3><p>Apply risk category, G, and pressure coefficients.</p></div>
+    <div class="card" style="--cat:var(--amber)">
+      <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="var(--amber-br)" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="6" width="24" height="28"/><path d="M14 12h6M14 18h6M14 24h6" stroke-linecap="round"/></svg>
+      <h3>5 &middot; C&amp;C + MWFRS</h3><p>Solve envelope and frame pressures separately.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)">
+      <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="var(--blue-bright)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4h14l8 8v24H10z"/><path d="M24 4v8h8"/><path d="M15 22l3 3 6-6" stroke="var(--go-bright)"/></svg>
+      <h3>6 &middot; PE-ready report</h3><p>Document results for permit submission.</p></div>
+  </div>
+</div></section>
 
-            <h3>Main Wind Force Resisting System (MWFRS)</h3>
-            <p><strong>MWFRS calculations</strong> determine wind forces on the structural frame: columns, beams, bracing, shear walls, and foundations. MWFRS pressures are averaged over larger areas because the structural system responds to overall building forces rather than localized pressures.</p>
+<hr class="divider">
 
-            <p>MWFRS calculations use ASCE 7 Chapters 27 and 28 depending on building type. See our <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a> for detailed procedures.</p>
+<section class="sec sec-hazard"><div class="wrap">
+  <span class="eyebrow" style="color:var(--amber-br)">Local Code</span>
+  <h2>State-specific requirements</h2>
+  <p class="lead" style="color:#ffe9d3">ASCE 7 gives the procedure; states adopt editions and add amendments. HVHZ applies to Florida (Miami-Dade &amp; Broward), the Texas coast, and Hawaii.</p>
+  <div class="grid" data-n="3" style="margin-top:34px">
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">HVHZ &middot; FL</div><h3>Florida</h3><p>FBC 8th Edition w/ ASCE 7-22. HVHZ for <a href="cities/miami-wind-load-requirements.html" style="color:var(--amber-br)">Miami-Dade</a>/<a href="cities/fort-lauderdale-wind-load-requirements.html" style="color:var(--amber-br)">Broward</a>, TAS impact testing.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">Coast &middot; TX</div><h3>Texas</h3><p>TDI WPI-8 for coastal counties (<a href="cities/houston-wind-load-requirements.html" style="color:var(--amber-br)">Houston</a>, <a href="cities/galveston-wind-load-requirements.html" style="color:var(--amber-br)">Galveston</a>), TWIA windstorm certification.</p></div>
+    <div class="card" style="--cat:var(--amber)"><div class="badge badge--hvhz">HVHZ &middot; HI</div><h3>Hawaii</h3><p>Appendix W high-wind provisions (<a href="cities/honolulu-wind-load-requirements.html" style="color:var(--amber-br)">Honolulu</a>), statewide wind geodatabase.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)"><div class="badge badge--data">Gulf Coast</div><h3>Louisiana</h3><p>Coastal parish rules (<a href="cities/new-orleans-wind-load-requirements.html" style="color:var(--cyan-br)">New Orleans</a>), Wind Zone III provisions.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)"><div class="badge badge--data">Atlantic</div><h3>North Carolina</h3><p>Coastal AHJ rules (<a href="cities/wilmington-wind-load-requirements.html" style="color:var(--cyan-br)">Wilmington</a>), ICC 600 for one- &amp; two-family dwellings.</p></div>
+    <div class="card" style="--cat:var(--blue-bright)"><div class="badge badge--data">Seismic + Wind</div><h3>California &middot; New York</h3><p>CBC 2022 seismic-wind interaction; NYC code amendments, PE/RA seal rules.</p></div>
+  </div>
+  <p class="lead" style="margin-top:24px;color:#ffe9d3"><a href="state-requirements.html" style="color:var(--amber-br)">All 50 states &rarr;</a></p>
+</div></section>
 
-            <div class="info-box">
-                <h4><strong>Key Difference:</strong> When to Use Each</h4>
-                <p><strong>Use C&C:</strong> Selecting windows/doors, specifying cladding, designing connections for envelope components</p>
-                <p><strong>Use MWFRS:</strong> Designing structural frame, foundations, lateral bracing systems</p>
-            </div>
+<hr class="divider">
 
-            <h2 id="topographic-effects">8. Topographic Effects (Kzt)</h2>
-            <p>Wind speed increases as it flows over hills, ridges, and escarpments due to acceleration effects. The <strong>Kzt factor</strong> accounts for this wind speed-up at sites with significant topographic features.</p>
+<section class="sec"><div class="wrap">
+  <span class="eyebrow">Automate It</span>
+  <h2>Calculation tools that do the lookups</h2>
+  <p class="lead">WindLoadCalc.com runs the full ASCE 7-22 chain for any U.S. address &mdash; no manual interpolation.</p>
+  <div class="grid" data-n="4" style="margin-top:34px">
+    <div class="glass" style="padding:1.4rem;text-align:center"><div class="badge badge--data">Lookup</div><h3 style="color:var(--ink);font-size:var(--h3);margin:.5rem 0">Wind speed by address</h3><p style="color:var(--ink-soft);margin:0">Zip or address &rarr; correct design speeds + exposure guidance.</p></div>
+    <div class="glass" style="padding:1.4rem;text-align:center"><div class="badge badge--method">Pressures</div><h3 style="color:var(--ink);font-size:var(--h3);margin:.5rem 0">C&amp;C + MWFRS</h3><p style="color:var(--ink-soft);margin:0">Zone-based component pressures and frame forces, all risk categories.</p></div>
+    <div class="glass" style="padding:1.4rem;text-align:center"><div class="badge badge--hvhz">K<sub>zt</sub> + Code</div><h3 style="color:var(--ink);font-size:var(--h3);margin:.5rem 0">Topo &amp; state compliance</h3><p style="color:var(--ink-soft);margin:0">Hillside K<sub>zt</sub>, Florida HVHZ, Texas TDI built in.</p></div>
+    <div class="glass" style="padding:1.4rem;text-align:center"><div class="badge badge--go">Output</div><h3 style="color:var(--ink);font-size:var(--h3);margin:.5rem 0">PE-ready reports</h3><p style="color:var(--ink-soft);margin:0">Comprehensive calc reports for permit submission.</p></div>
+  </div>
+</div></section>
 
-            <p>Kzt is determined based on:</p>
-            <ul>
-                <li><strong>H:</strong> Height of the topographic feature</li>
-                <li><strong>Lh:</strong> Distance from crest to half the height</li>
-                <li><strong>x:</strong> Distance from crest to building</li>
-                <li><strong>Feature Type:</strong> 2D ridge, 2D escarpment, or 3D axisymmetric hill</li>
-            </ul>
+<hr class="divider">
 
-            <p>For flat terrain, Kzt = 1.0. For sites on or near topographic features, Kzt can exceed 1.5, significantly increasing design wind pressures. Learn more about <a href="topographic-effects-wind-loads.html">Topographic Effects</a>.</p>
+<section class="sec sec-aurora" style="text-align:center"><div class="wrap">
+  <span class="eyebrow">Get Started</span>
+  <h2>Ready to calculate wind loads?</h2>
+  <p class="lead">WindLoadCalc.com automates wind load calculations per the latest ASCE 7 (ASCE 7-22) for any U.S. location &mdash; instant C&amp;C and MWFRS pressures, state compliance, and PE-ready reports.</p>
+  <div class="hero-cta" style="justify-content:center"><a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Try Wind Load Calculator</a><a class="btn btn-ghost" href="resources.html">Free Resources</a></div>
+</div></section>
 
-            <h2 id="state-requirements">9. State-Specific Requirements</h2>
-            <p>While ASCE 7 provides the technical procedures, individual states often adopt specific editions and add local amendments. Key variations include:</p>
-
-            <h3>High-Wind Coastal States</h3>
-            <ul>
-                <li><strong><a href="florida-wind-load-requirements.html">Florida:</a></strong> FBC 8th Edition with ASCE 7-22, HVHZ provisions for <a href="cities/miami-wind-load-requirements.html">Miami-Dade</a>/<a href="cities/fort-lauderdale-wind-load-requirements.html">Broward</a>, TAS impact testing</li>
-                <li><strong><a href="texas-wind-load-requirements.html">Texas:</a></strong> TDI WPI-8 for coastal counties (<a href="cities/houston-wind-load-requirements.html">Houston</a>, <a href="cities/galveston-wind-load-requirements.html">Galveston</a>), TWIA requirements, windstorm certification</li>
-                <li><strong><a href="louisiana-wind-load-requirements.html">Louisiana:</a></strong> Coastal parish requirements (<a href="cities/new-orleans-wind-load-requirements.html">New Orleans</a>), Wind Zone III provisions</li>
-                <li><strong><a href="north-carolina-wind-load-requirements.html">North Carolina:</a></strong> Coastal AHJ requirements (<a href="cities/wilmington-wind-load-requirements.html">Wilmington</a>, <a href="cities/charlotte-wind-load-requirements.html">Charlotte</a>), ICC 600 for one- and two-family dwellings</li>
-            </ul>
-
-            <h3>Other States with Notable Requirements</h3>
-            <ul>
-                <li><strong><a href="california-wind-load-requirements.html">California:</a></strong> CBC 2022 with seismic-wind interaction (<a href="cities/los-angeles-wind-load-requirements.html">Los Angeles</a>, <a href="cities/san-francisco-wind-load-requirements.html">San Francisco</a>)</li>
-                <li><strong><a href="new-york-wind-load-requirements.html">New York:</a></strong> NYC Building Code with local amendments (<a href="cities/new-york-city-wind-load-requirements.html">NYC</a>, <a href="cities/long-island-wind-load-requirements.html">Long Island</a>), PE/RA seal requirements</li>
-                <li><strong><a href="hawaii-wind-load-requirements.html">Hawaii:</a></strong> Appendix W high-wind provisions (<a href="cities/honolulu-wind-load-requirements.html">Honolulu</a>), wind geodatabase</li>
-            </ul>
-
-            <p>Visit our <a href="state-requirements.html">State Requirements</a> page for wind load provisions in all 50 states.</p>
-
-            <h2 id="calculation-tools">10. Wind Load Calculation Tools</h2>
-            <p>Manual wind load calculations following ASCE 7 procedures involve numerous steps, lookups, and interpolations. Professional tools can automate this process while ensuring accuracy and code compliance.</p>
-
-            <h3>WindLoadCalc.com Calculator Features</h3>
-            <ul>
-                <li><strong>Automatic Wind Speed Lookup:</strong> Enter zip code or address, get correct design wind speeds</li>
-                <li><strong>Exposure Category Guidance:</strong> Site-specific exposure determination</li>
-                <li><strong>All Risk Categories:</strong> Risk I, II, III, and IV calculations</li>
-                <li><strong>C&C Pressures:</strong> Zone-based component pressures for all building zones</li>
-                <li><strong>MWFRS Forces:</strong> Main wind force resisting system calculations</li>
-                <li><strong>Topographic Effects:</strong> Kzt factor calculations for hillside sites</li>
-                <li><strong>State Compliance:</strong> Florida HVHZ, Texas TDI, and other state-specific requirements</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports for permit submission</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to Calculate Wind Loads?</h2>
-            <p>WindLoadCalc.com automates wind load calculations per the latest ASCE 7 (ASCE 7-22) for any U.S. location. Get instant C&C and MWFRS pressures, state-specific compliance, and PE-ready reports.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Try Wind Load Calculator</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h2>Related Resources</h2>
-            <div class="external-links-grid">
-                <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html" class="external-link">
-                    <i class="fas fa-th"></i> Components & Cladding Guide
-                </a>
-                <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html" class="external-link">
-                    <i class="fas fa-building"></i> MWFRS Complete Guide
-                </a>
-                <a href="hvhz-high-velocity-hurricane-zone-guide.html" class="external-link">
-                    <i class="fas fa-hurricane"></i> HVHZ Ultimate Guide
-                </a>
-                <a href="wind-exposure-categories-guide.html" class="external-link">
-                    <i class="fas fa-layer-group"></i> Exposure Categories
-                </a>
-                <a href="risk-categories-wind-loads-guide.html" class="external-link">
-                    <i class="fas fa-shield-alt"></i> Risk Categories
-                </a>
-                <a href="state-requirements.html" class="external-link">
-                    <i class="fas fa-map"></i> State Requirements
-                </a>
-            </div>
-
-            <h3>Official Standards & References</h3>
-            <div class="external-links-grid">
-                <a href="https://www.asce.org/publications-and-news/asce-7" target="_blank" rel="noopener" class="external-link">
-                    ASCE 7 Official Page
-                </a>
-                <a href="https://hazards.atcouncil.org/" target="_blank" rel="noopener" class="external-link">
-                    ATC Hazards by Location
-                </a>
-                <a href="https://codes.iccsafe.org/" target="_blank" rel="noopener" class="external-link">
-                    ICC Building Codes
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEO-Enhanced Footer -->
-    <footer class="site-footer" style="background: #1f2937; color: white; padding: 3rem 0;">
-        <div class="container" style="text-align: center;">
-            <p>&copy; <span class="current-year">2025</span> WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem; color: rgba(255,255,255,0.8);">Professional ASCE 7 Wind Load Resources and Education</p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+<section class="sec sec-grid"><div class="wrap">
+  <span class="eyebrow">Go Deeper</span>
+  <h2>Related guides &amp; references</h2>
+  <div class="grid" data-n="6" style="margin-top:34px">
+    <a class="card" style="--cat:var(--violet)" href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><div class="badge badge--method">C&amp;C</div><h3>Components &amp; Cladding</h3><p>Zone pressures &amp; effective wind area.</p></a>
+    <a class="card" style="--cat:var(--blue-bright)" href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><div class="badge badge--data">MWFRS</div><h3>MWFRS Complete Guide</h3><p>Frame forces, Chapters 27 &amp; 28.</p></a>
+    <a class="card" style="--cat:var(--amber)" href="hvhz-high-velocity-hurricane-zone-guide.html"><div class="badge badge--hvhz">HVHZ</div><h3>HVHZ Ultimate Guide</h3><p>Miami-Dade, Broward, TAS testing.</p></a>
+    <a class="card" style="--cat:var(--cyan)" href="wind-exposure-categories-guide.html"><div class="badge badge--data">Terrain</div><h3>Exposure Categories</h3><p>B / C / D selection.</p></a>
+    <a class="card" style="--cat:var(--violet)" href="risk-categories-wind-loads-guide.html"><div class="badge badge--method">Risk</div><h3>Risk Categories</h3><p>I&ndash;IV per Table 1.5-1.</p></a>
+    <a class="card" style="--cat:var(--blue-bright)" href="state-requirements.html"><div class="badge badge--data">Maps</div><h3>State Requirements</h3><p>All 50 states.</p></a>
+  </div>
+  <div class="grid" data-n="3" style="margin-top:24px">
+    <a class="card" style="--cat:var(--cyan)" href="https://www.asce.org/publications-and-news/asce-7" target="_blank" rel="noopener"><div class="badge badge--data">Official</div><h3>ASCE 7 page</h3><p>asce.org</p></a>
+    <a class="card" style="--cat:var(--cyan)" href="https://hazards.atcouncil.org/" target="_blank" rel="noopener"><div class="badge badge--data">Official</div><h3>ATC Hazards by Location</h3><p>hazards.atcouncil.org</p></a>
+    <a class="card" style="--cat:var(--cyan)" href="https://codes.iccsafe.org/" target="_blank" rel="noopener"><div class="badge badge--data">Official</div><h3>ICC Building Codes</h3><p>codes.iccsafe.org</p></a>
+  </div>
+</div></section>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1226,5 +699,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
