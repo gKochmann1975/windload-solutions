@@ -29,736 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Boston Navy/Red specific colors */
-        .hero {
-            background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 25%, #3b82f6 50%, #dc2626 75%, #b91c1c 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '🏛️⚾';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #1e40af;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #1e40af;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #3b82f6;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #1e40af;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #1e40af;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(30, 64, 175, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Boston Card */
-        .boston-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(30, 64, 175, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .boston-card h4 {
-            color: #1e40af;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .boston-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Boston",
-                "item": "https://windload.solutions/cities/boston-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-<!-- FAQ Schema for Featured Snippets -->    <script type="application/ld+json">    {        "@context": "https://schema.org",        "@type": "FAQPage",        "mainEntity": [            {                "@type": "Question",                "name": "What is the design wind speed for Boston?",                "acceptedAnswer": {                    "@type": "Answer",                    "text": "Boston design wind speeds range from 110-130 mph (3-second gust) for Risk Category II structures per ASCE 7-16. The coastal location exposes Boston to noreasters and occasional hurricanes tracking up the Atlantic coast."                }            },            {                "@type": "Question",                "name": "What building code does Boston use for wind loads?",                "acceptedAnswer": {                    "@type": "Answer",                    "text": "Boston follows the Massachusetts State Building Code (9th Edition), which adopts the IBC with state amendments and ASCE 7-16 for wind load calculations. The Boston ISD enforces these requirements."                }            },            {                "@type": "Question",                "name": "What exposure category is used in Boston?",                "acceptedAnswer": {                    "@type": "Answer",                    "text": "Most Boston projects use Exposure Category B due to urban development. Harbor waterfront, airport vicinity, and coastal areas may require Exposure Category C or D analysis."                }            },            {                "@type": "Question",                "name": "Do I need a PE seal for wind load calculations in Massachusetts?",                "acceptedAnswer": {                    "@type": "Answer",                    "text": "Yes, Massachusetts requires PE-sealed structural calculations for commercial buildings, multi-family projects, and buildings over 35 feet in height. Simpler residential projects may use prescriptive code methods."                }            }        ]    }    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -770,285 +286,315 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Boston Wind Load Requirements</h1>
-            <p>Suffolk County Massachusetts | 120-130 mph Design Wind Speed | Massachusetts State Building Code (780 CMR) | Exposure Category B/C | ASCE 7-22</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Boston Wind Loads Now →</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">MASSACHUSETTS · SUFFOLK COUNTY</p>
+    <h1>Where Boston Harbor Meets the <span class="sweep">Nor'easter Belt</span>, Wind Loads Get Serious</h1>
+    <p class="lead">From the Seaport waterfront to Beacon Hill's sheltered brick, Boston design wind speeds run 120-130 mph under the Massachusetts State Building Code (780 CMR) and ASCE 7-22.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">120-130</span><span class="lbl">MPH DESIGN SPEED · RISK CAT II</span></div>
+      <div class="stat"><span class="num">Suffolk</span><span class="lbl">COUNTY</span></div>
+      <div class="stat"><span class="num">780 CMR</span><span class="lbl">MA CODE · ASCE 7-22</span></div>
+      <div class="stat"><span class="num">B / C</span><span class="lbl">EXPOSURE · CORE vs HARBOR</span></div>
+    </div>
 
-    <section class="content-section">
-        <div class="container">
+    <!-- Custom inline SVG: harbor coastline + wind sweep motif (no state silhouette) -->
+    <svg viewBox="0 0 640 200" width="100%" style="max-width:640px;margin:2.5rem auto 0;display:block" role="img" aria-label="Boston Harbor coastline with wind sweeping off the Atlantic toward the downtown skyline">
+      <defs>
+        <linearGradient id="bosWind" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#22d3ee" stop-opacity="0"/>
+          <stop offset="0.5" stop-color="#22d3ee" stop-opacity="0.9"/>
+          <stop offset="1" stop-color="#f59e0b" stop-opacity="0.9"/>
+        </linearGradient>
+        <linearGradient id="bosWater" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0e7490" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#0e7490" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- harbor water -->
+      <path d="M0 150 Q160 132 320 150 T640 150 L640 200 L0 200 Z" fill="url(#bosWater)"/>
+      <!-- skyline (downtown / Back Bay towers) -->
+      <g fill="#e2e8f0" opacity="0.92">
+        <rect x="360" y="92" width="20" height="58"/>
+        <rect x="386" y="64" width="26" height="86"/>
+        <rect x="418" y="104" width="16" height="46"/>
+        <rect x="440" y="78" width="22" height="72"/>
+        <rect x="468" y="110" width="18" height="40"/>
+        <rect x="492" y="58" width="14" height="92"/>
+        <rect x="512" y="98" width="20" height="52"/>
+      </g>
+      <!-- harbor wave ticks -->
+      <g stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.5">
+        <path d="M40 168 q10 -8 20 0 t20 0"/>
+        <path d="M120 176 q10 -8 20 0 t20 0"/>
+        <path d="M220 168 q10 -8 20 0 t20 0"/>
+      </g>
+      <!-- onshore nor'easter wind streamlines -->
+      <g fill="none" stroke="url(#bosWind)" stroke-width="4" stroke-linecap="round">
+        <path d="M10 50 Q200 30 360 60">
+          <animate attributeName="stroke-dasharray" values="0 400;400 0" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <path d="M10 84 Q210 70 350 96">
+          <animate attributeName="stroke-dasharray" values="0 380;380 0" dur="3.6s" repeatCount="indefinite"/>
+        </path>
+        <path d="M10 118 Q190 110 340 126">
+          <animate attributeName="stroke-dasharray" values="0 360;360 0" dur="4.2s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg>
+  </div></section>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">120-130</span>
-                    <span class="stat-label">Design Wind Speed (Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">B/C</span>
-                    <span class="stat-label">Exposure Category</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">780 CMR</span>
-                    <span class="stat-label">MA Building Code</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">HIGH</span>
-                    <span class="stat-label">Nor'easter Risk</span>
-                </div>
-            </div>
+  <div class="divider"></div>
 
-            <h2>Boston: Urban Core with Harbor Exposure Wind Load Requirements</h2>
-            <p>Boston, the capital and largest city of Massachusetts located in <strong>Suffolk County</strong>, presents unique wind load challenges due to its dense urban core, Boston Harbor waterfront exposure, and vulnerability to nor'easters. Boston requires a design wind speed of approximately <strong>120-130 mph</strong> (3-second gust) for Risk Category II structures, based on ASCE 7-22 wind speed maps. The city's position on Massachusetts Bay, extensive waterfront development, high-rise downtown district, and exposure to severe extratropical storms necessitate careful wind load analysis.</p>
+  <!-- WIND & EXPOSURE — city-specific framing -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">ATLANTIC FETCH · URBAN SHIELD</p>
+    <h2>Reading the Wind Off <span class="sweep">Massachusetts Bay</span></h2>
+    <p class="lead">Boston's number isn't one figure. The harbor's open water drives the high end; the dense downtown grid pulls sheltered blocks back down.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 30 Q18 22 30 30 T44 30"/><path d="M8 38 Q20 32 32 38"/><circle cx="40" cy="14" r="6"/><path d="M40 8v-3M40 23v3M31 14h-3M52 14h-3"/></svg>
+        <h3>Harbor Front, 125-130 mph</h3>
+        <p>Seaport, East Boston, Charlestown Navy Yard face open water with no upwind cover — Exposure C and the top of the range.</p>
+        <span class="badge badge--data">EXPOSURE C</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="10" height="28"/><rect x="20" y="8" width="10" height="34"/><rect x="32" y="18" width="8" height="24"/></svg>
+        <h3>Downtown Canyons, 120-125 mph</h3>
+        <p>Back Bay, Beacon Hill, the Financial District sit in tight rows of mid- and high-rise — Exposure B sheltering trims the design speed.</p>
+        <span class="badge badge--data">EXPOSURE B</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 34 H42"/><path d="M10 34 V22 Q24 12 38 22 V34"/><path d="M14 28 Q24 22 34 28"/></svg>
+        <h3>Charles River Reach</h3>
+        <p>Storrow Drive, Allston, and Brighton frontage pick up open-water fetch off the basin — a B-to-C judgment call per site.</p>
+        <span class="badge badge--data">B / C EDGE</span>
+      </div>
+    </div>
+  </div></section>
 
-            <p>Boston is governed by the <strong>Massachusetts State Building Code (780 CMR)</strong>, which adopts the International Building Code (IBC) and references ASCE 7-22 for wind load calculations. The city's combination of historic neighborhoods, modern high-rise construction, harbor exposure, and vulnerability to nor'easters creates diverse structural engineering requirements. Engineers must account for urban vs. waterfront exposure categories, topographic effects from harbor locations, and the specific wind climate of coastal New England.</p>
+  <div class="divider"></div>
 
-            <div class="info-box">
-                <h4><strong>🏛️</strong> Boston Quick Facts</h4>
-                <p><strong>County:</strong> Suffolk County</p>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 120-130 mph (3-second gust, varies by location)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~135-145 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~145-155 mph</p>
-                <p><strong>Exposure Category:</strong> B (urban core), C (harbor/waterfront areas)</p>
-                <p><strong>Building Code:</strong> Massachusetts State Building Code (780 CMR, adopts IBC)</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
-                <p><strong>Notable Features:</strong> Boston Harbor, historic buildings, high-rise downtown, Freedom Trail, Fenway Park</p>
-            </div>
+  <!-- NOR'EASTER vs HURRICANE — Boston's twin threats -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">WHY THE NUMBER LANDS HERE</p>
+    <h2>Two Storm Tracks Shape <span class="sweep">Beantown's Loads</span></h2>
+    <p class="lead">The 120-130 mph map reflects a coast hit far more often by winter cyclones than by tropical ones.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6 Q12 14 12 26 a12 12 0 1 0 24 0 Q36 14 24 6Z"/><path d="M18 28 l6 6 l8 -12"/></svg>
+        <h3>Nor'easters: The Frequent Foe</h3>
+        <p>The 2018 bomb cyclone gusted past 70 mph and flooded the Seaport; Blizzard Nemo (2013) hit 83 mph at Logan. Winter cyclones, not hurricanes, are Boston's recurring wind driver.</p>
+        <span class="badge badge--hvhz">PRIMARY THREAT</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 24 m-14 0 a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0" opacity="0.5"/><path d="M24 10 Q34 12 34 24 M24 38 Q14 36 14 24"/><circle cx="24" cy="24" r="3"/></svg>
+        <h3>Tropical Tracks Up the Coast</h3>
+        <p>The 1938 New England Hurricane, Carol (1954), and Bob (1991) all proved tropical systems can reach the harbor — the map carries that tail risk even though hits are rarer.</p>
+        <span class="badge badge--hvhz">TAIL RISK</span>
+      </div>
+    </div>
+  </div></section>
 
-            <h3>Why Boston Has 120-130 mph Wind Speed Requirements</h3>
-            <p>Boston's design wind speeds of 120-130 mph are derived from ASCE 7-22 wind speed maps for the coastal Massachusetts region. This velocity range reflects Boston's position as a major urban center on Massachusetts Bay with significant exposure to nor'easters and occasional tropical systems, while being somewhat sheltered compared to more exposed Cape Cod or coastal Maine locations. The wind speeds are higher than interior New England areas but lower than exposed coastal peninsulas.</p>
+  <div class="divider"></div>
 
-            <p>The exact wind speed for a specific Boston project depends on precise location. Waterfront areas along Boston Harbor, East Boston, Charlestown Navy Yard, and Seaport District typically require the higher end of the range (125-130 mph) due to harbor exposure with minimal wind protection. Interior urban neighborhoods like Back Bay, Beacon Hill, South End, and Roxbury may use the lower end (120-125 mph) due to dense urban development providing Exposure Category B conditions. The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> automatically determines the correct velocity based on your project's zip code or address.</p>
+  <!-- VELOCITY PRESSURE — Boston worked numbers -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">qz = 0.00256 · Kz · Kzt · Kd · Ke · V²</p>
+    <h2>What the Seaport Actually <span class="sweep">Feels at the Wall</span></h2>
+    <p class="lead">A waterfront low-rise on open harbor exposure runs hotter than a sheltered Back Bay block — same code, different terrain.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40 H40 M12 40 V20 H28 V40 M16 26 h8 M16 32 h8"/><path d="M30 40 V12 H40 V40"/><path d="M44 16 q-6 4 0 8" stroke="#f59e0b"/></svg>
+        <h3>Seaport Waterfront, Exposure C</h3>
+        <p>V = 125 mph · Kz = 0.90 (15 ft) · Kzt = 1.0 · Kd = 0.85 · Ke = 1.0 lands near <strong>qz ≈ 30.6 psf</strong> — full open-harbor pressure.</p>
+        <span class="badge badge--data">~30.6 PSF</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="10" width="12" height="30"/><rect x="26" y="6" width="12" height="34"/><path d="M6 40 H42"/></svg>
+        <h3>Back Bay Core, Exposure B</h3>
+        <p>Drop V to 120 mph and Kz to 0.70 (B, &lt;30 ft) and the same wall sees roughly <strong>qz ≈ 21-22 psf</strong> — the urban shield earning its keep.</p>
+        <span class="badge badge--data">~21 PSF</span>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:1.5rem">Enter a real address and let the calculator pull the exact Kz, exposure, and velocity. <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Run a Boston address →</a></p>
+  </div></section>
 
-            <h3>Boston Geographic and Urban Considerations</h3>
-            <p>Boston's geography and urban form significantly influence wind load requirements:</p>
+  <div class="divider"></div>
 
-            <ul>
-                <li><strong>Boston Harbor Exposure:</strong> Extensive waterfront along Boston Harbor, including Seaport District, East Boston, and Charlestown, faces direct water exposure requiring Exposure Category C and higher wind speeds</li>
-                <li><strong>Dense Urban Core:</strong> Downtown Boston, Back Bay, and surrounding neighborhoods have substantial high-rise and mid-rise development creating urban canyon effects and providing Exposure Category B sheltering for many structures</li>
-                <li><strong>High-Rise Downtown:</strong> The Financial District and Back Bay contain numerous tall buildings (Prudential Tower, 200 Clarendon/John Hancock Tower, etc.) requiring sophisticated wind tunnel testing and analysis for both wind loads and pedestrian-level wind comfort</li>
-                <li><strong>Historic Districts:</strong> Beacon Hill, North End, and Freedom Trail areas contain historic buildings requiring preservation-sensitive wind load retrofitting and protection measures</li>
-                <li><strong>Charles River Basin:</strong> Buildings along the Charles River face additional wind exposure from the water surface, affecting structures in Back Bay, Cambridge side, and along Storrow Drive</li>
-                <li><strong>Logan Airport Proximity:</strong> East Boston and harbor areas near Logan International Airport require coordination with airport wind and safety requirements</li>
-            </ul>
+  <!-- RISK CATEGORY — which map you read -->
+  <section class="sec sec-glow"><div class="wrap">
+    <p class="eyebrow">ASCE 7-22 TABLE 1.5-1</p>
+    <h2>From a Storage Shed to <span class="sweep">Mass General</span>: Which Map You Read</h2>
+    <p class="lead">Risk category doesn't multiply your speed — it sends you to a different return-period map. Higher stakes, longer return period, higher V.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Risk Category</th><th>Return Period</th><th>Boston Examples</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td>300-yr MRI (lowest)</td><td>Minor storage, ag-type, temporary structures</td></tr>
+        <tr><td>II</td><td>700-yr MRI</td><td>Homes, hotels, retail — the 120-130 mph standard map</td></tr>
+        <tr><td>III</td><td>1,700-yr MRI</td><td>Schools, assembly &gt;300, large public buildings</td></tr>
+        <tr><td>IV</td><td>3,000-yr MRI</td><td>MGH, BMC, fire/police, emergency shelters</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
 
-            <h3>Boston Wind Load Calculations: Step by Step</h3>
-            <p>Calculating wind loads for Boston projects requires following ASCE 7-22 methodology with Massachusetts State Building Code requirements. The fundamental velocity pressure equation is:</p>
+  <div class="divider"></div>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #1e40af; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+  <!-- COMPLY CARD GRID — Boston permit-ready -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">FILING WITH BOSTON ISD</p>
+    <h2>What Gets a Wind Package <span class="sweep">Through Inspectional Services</span></h2>
+    <p class="lead">A Massachusetts PE seal plus the exposure call are where Boston submittals live or die.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="18" r="10"/><path d="M16 40 q8 -10 16 0" /><path d="M20 18 l3 3 l6 -7"/></svg>
+        <h3>MA PE Seal</h3>
+        <p>Sealed calcs by a Massachusetts-licensed PE for commercial, multifamily, and anything over 35 ft.</p>
+        <span class="badge">REQUIRED</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 36 H40"/><path d="M14 36 V18 l10 -8 l10 8 V36"/><path d="M22 36 v-8 h4 v8"/></svg>
+        <h3>The B-vs-C Call</h3>
+        <p>Justify Exposure B or C with fetch — the wrong pick swings pressures 20-30% on harbor-edge sites.</p>
+        <span class="badge badge--data">CRITICAL</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6 Q14 12 14 24 a10 10 0 1 0 20 0 Q34 12 24 6Z"/><path d="M24 6 v36" opacity="0.5"/></svg>
+        <h3>Both Storm Modes</h3>
+        <p>Document nor'easter and tropical wind events, not hurricanes alone — ISD reviewers expect both.</p>
+        <span class="badge badge--method">ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8 H30 l8 8 V40 H10 Z"/><path d="M30 8 V16 H38"/><path d="M16 24 h16 M16 30 h16 M16 36 h10"/></svg>
+        <h3>C&amp;C + MWFRS</h3>
+        <p>Component pressures for cladding, windows, and roof panels plus the main system, ready for permit upload.</p>
+        <span class="badge badge--go">PERMIT-READY</span>
+      </div>
+    </div>
+  </div></section>
 
-            <p>For a typical Boston waterfront project with V = 125 mph and Exposure C conditions (harbor), the resulting pressures require careful structural design. A Seaport District waterfront project with:</p>
-            <ul>
-                <li><strong>V = 125 mph</strong> (waterfront velocity)</li>
-                <li><strong>Kz = 0.90</strong> (15 ft height, Exposure C)</li>
-                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (sea level)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 36.0 psf</strong>—moderate to high pressures typical of coastal New England urban locations.</p>
+  <div class="divider"></div>
 
-            <p>For urban core locations with Exposure B (e.g., Back Bay residential), wind speeds of 120 mph and lower Kz values result in pressures around 28-32 psf, demonstrating the significant impact of urban sheltering on Boston wind loads.</p>
+  <!-- HISTORIC FABRIC — Boston-only module -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">LANDMARKS & RETROFIT</p>
+    <h2>Wind Loads Meet <span class="sweep">Three Centuries of Brick</span></h2>
+    <p class="lead">Federal-style row houses and Freedom Trail landmarks can't be assumed to meet today's loads — they need assessment, not assumption.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40 H40 M12 40 V18 H20 V40 M28 40 V18 H36 V40"/><path d="M10 18 L24 8 L38 18"/></svg>
+        <h3>Beacon Hill Row Houses</h3>
+        <p>Federal brick townhomes need real capacity checks before strengthening — and Landmarks Commission sign-off.</p>
+        <span class="badge">PRESERVE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6 v8 M24 14 L14 22 V40 H34 V22 Z"/><path d="M20 40 v-8 h8 v8"/></svg>
+        <h3>Freedom Trail Landmarks</h3>
+        <p>Colonial and Revolutionary-era structures get preservation-sensitive retrofits that keep their character.</p>
+        <span class="badge">HISTORIC</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="12" width="32" height="24" rx="2"/><path d="M14 36 V40 M34 36 V40 M8 22 h32"/></svg>
+        <h3>Fenway &amp; Back Bay</h3>
+        <p>Fenway Park crowds and Victorian brownstones demand specialized analysis for safety and fabric alike.</p>
+        <span class="badge">ASSESS</span>
+      </div>
+    </div>
+  </div></section>
 
-            <h3>Nor'easters: Boston's Primary Wind Threat</h3>
-            <p>Boston's wind load requirements are primarily driven by nor'easters—powerful extratropical cyclones that develop along the East Coast and can produce hurricane-force winds, heavy precipitation, and coastal flooding. Nor'easters are more frequent and often more impactful to Boston than hurricanes:</p>
+  <div class="divider"></div>
 
-            <ul>
-                <li><strong>February 2013 Blizzard (Nemo):</strong> Historic nor'easter produced sustained winds of 50-60 mph with gusts to 83 mph at Boston Logan Airport, caused widespread power outages and coastal flooding</li>
-                <li><strong>January 2018 Bomb Cyclone:</strong> Explosive cyclogenesis event brought sustained winds near 50 mph and gusts exceeding 70 mph, caused historic coastal flooding in Boston Harbor and Seaport District</li>
-                <li><strong>December 1992 Nor'easter:</strong> Intense storm produced 60+ mph sustained winds and gusts to 81 mph, demonstrated the severe wind potential of extratropical systems</li>
-                <li><strong>March 2018 Nor'easters:</strong> Series of four powerful storms in three weeks brought repeated high winds and coastal flooding, testing building resilience and infrastructure</li>
-                <li><strong>Patriots' Day Storm (2007):</strong> Slow-moving nor'easter produced sustained gale-force winds for over 24 hours, caused extensive urban tree damage and power outages</li>
-            </ul>
+  <!-- NEARBY + STATEWIDE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">NEW ENGLAND CONTEXT</p>
+    <h2>Compare Boston Across the <span class="sweep">Regional Coastline</span></h2>
+    <p class="lead">Step out to the Cape's harder exposure or up the Massachusetts adoption picture.</p>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="cape-cod-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 30 Q20 20 32 28 q6 4 8 -2"/><path d="M10 38 Q24 30 40 36"/></svg>
+        <h3>Cape Cod</h3>
+        <p>The exposed peninsula that reads higher than the harbor.</p>
+        <span class="badge badge--data">NEARBY CITY</span>
+      </a>
+      <a class="card glass" href="providence-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="14" width="10" height="26"/><rect x="26" y="8" width="10" height="32"/><path d="M8 40 H40"/></svg>
+        <h3>Providence</h3>
+        <p>Narragansett Bay's parallel coastal-urban case.</p>
+        <span class="badge badge--data">NEARBY CITY</span>
+      </a>
+      <a class="card glass" href="hartford-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 38 H40 M14 38 V20 H26 V38 M30 38 V14 H38 V38"/></svg>
+        <h3>Hartford</h3>
+        <p>Inland New England, away from the salt-water fetch.</p>
+        <span class="badge badge--data">NEARBY CITY</span>
+      </a>
+      <a class="card glass" href="../massachusetts-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6 v36 M6 24 h36" opacity="0.4"/><circle cx="24" cy="24" r="16"/></svg>
+        <h3>Massachusetts Statewide</h3>
+        <p>The full 780 CMR picture across the Commonwealth.</p>
+        <span class="badge badge--method">STATEWIDE</span>
+      </a>
+    </div>
+    <div class="hero-cta" style="margin-top:2rem">
+      <a class="btn-ghost" href="../state-requirements.html">All State Requirements</a>
+      <a class="btn-ghost" href="../wind-speed-by-location.html">Wind Speed by Location</a>
+    </div>
+  </div></section>
 
-            <h3>Hurricane History and Tropical Cyclone Risk</h3>
-            <p>While nor'easters are more frequent, Boston has experienced significant hurricane impacts that inform wind load requirements:</p>
+  <div class="divider"></div>
 
-            <ul>
-                <li><strong>1938 New England Hurricane:</strong> The most devastating hurricane in New England history. Category 3 at landfall in Long Island, brought sustained hurricane-force winds to Boston, caused catastrophic damage and established the historical understanding of tropical cyclone risk in the region</li>
-                <li><strong>Hurricane Carol (1954):</strong> Category 3 hurricane made landfall in eastern Long Island, brought sustained winds near 100 mph and gusts to 125 mph to Boston area, caused severe damage to buildings and infrastructure</li>
-                <li><strong>Hurricane Bob (1991):</strong> Category 2 hurricane made landfall in Rhode Island, brought sustained winds of 60-70 mph and gusts to 100 mph to Boston, caused widespread power outages and structural damage</li>
-                <li><strong>Hurricane Gloria (1985):</strong> Category 2 hurricane tracked through New England, brought tropical storm force winds and demonstrated Boston's vulnerability to fast-moving tropical systems</li>
-                <li><strong>Tropical Storm Irene (2011):</strong> Downgraded to tropical storm, still produced sustained winds of 40-50 mph and widespread rainfall, demonstrated flooding and wind risks</li>
-            </ul>
+  <!-- OFFICIAL RESOURCES -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">CITE THE SOURCE</p>
+    <h2>Official Boston &amp; <span class="sweep">Commonwealth References</span></h2>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="https://www.boston.gov/departments/inspectional-services" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40 H40 M12 40 V20 H36 V40"/><path d="M10 20 L24 8 L38 20"/><path d="M22 40 v-8 h4 v8"/></svg>
+        <h3>Boston Inspectional Services</h3>
+        <p>The ISD office that reviews and permits city wind packages.</p>
+        <span class="badge badge--data">BOSTON.GOV</span>
+      </a>
+      <a class="card glass" href="https://www.mass.gov/orgs/board-of-building-regulations-and-standards" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 8 H30 l8 8 V40 H10 Z"/><path d="M30 8 V16 H38"/><path d="M16 24 h16 M16 30 h16"/></svg>
+        <h3>MA Building Code (780 CMR)</h3>
+        <p>Board of Building Regulations and Standards — the governing code.</p>
+        <span class="badge badge--data">MASS.GOV</span>
+      </a>
+      <a class="card glass" href="https://www.mass.gov/orgs/board-of-registration-of-professional-engineers-and-land-surveyors" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="16" r="9"/><path d="M14 40 q10 -12 20 0"/><path d="M20 16 l3 3 l6 -6"/></svg>
+        <h3>Massachusetts PE Licensing</h3>
+        <p>The board behind every seal on a Boston wind submittal.</p>
+        <span class="badge badge--data">MASS.GOV</span>
+      </a>
+    </div>
+  </div></section>
 
-            <p>These historic storms demonstrate that Boston faces real hurricane risk, though nor'easters are the more frequent severe wind threat requiring proper structural design consideration.</p>
+  <div class="divider"></div>
 
-            <div class="boston-card">
-                <h4>Boston Waterfront vs. Urban Core: Understanding Wind Speed and Exposure Variation</h4>
-                <p><strong>Waterfront Areas (Seaport, East Boston, Charlestown):</strong> Design wind speed 125-130 mph, Exposure Category C required, direct Boston Harbor exposure</p>
-                <p><strong>Downtown/Back Bay High-Rise:</strong> Design wind speed 120-125 mph, Exposure Category B/C, requires wind tunnel testing for tall buildings, significant shielding effects</p>
-                <p><strong>Urban Core (Beacon Hill, South End, Roxbury):</strong> Design wind speed 120-125 mph, Exposure Category B typical, substantial urban sheltering from dense development</p>
-                <p><strong>Key Takeaway:</strong> Boston projects require careful exposure category determination based on proximity to Boston Harbor and surrounding urban development density</p>
-            </div>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">SINCE 2002 · 100% PERMIT-APPROVAL TRACK RECORD</p>
+    <h2>Drop in a Boston Address, Get <span class="sweep">Harbor-Accurate Loads</span></h2>
+    <p class="lead">The calculator resolves your 120-130 mph velocity, Exposure B vs C off the harbor, risk-category map, and C&amp;C pressures into a PE-ready report.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Boston Wind Loads</a>
+      <a class="btn-ghost" href="../massachusetts-wind-load-requirements.html">Massachusetts Overview</a>
+    </div>
+  </div></section>
 
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>Boston projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+</main>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>Boston Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~115-125 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>120-130 mph</td>
-                        <td>Residential, commercial, hotels, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~135-145 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials, government buildings</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~145-155 mph</td>
-                        <td>Hospitals (MGH, BMC, etc.), fire stations, police stations, emergency shelters, critical infrastructure</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Exposure Categories: Urban Sheltering vs. Harbor Exposure</h3>
-            <p>Boston projects require careful exposure category determination based on location and surrounding development:</p>
-
-            <ul>
-                <li><strong>Exposure Category C (Waterfront/Harbor):</strong> Required for structures along Boston Harbor, Seaport District, East Boston waterfront, Charlestown Navy Yard, and Charles River basin. Open terrain with scattered obstructions less than 30 feet, water surface exposure</li>
-                <li><strong>Exposure Category B (Urban Core):</strong> Applicable to most downtown Boston, Back Bay, South End, Beacon Hill, and dense urban neighborhoods. Urban/suburban terrain with numerous closely spaced obstructions providing substantial wind sheltering</li>
-                <li><strong>Mixed Exposure Considerations:</strong> Many Boston sites are near transitions between urban core (Exposure B) and waterfront (Exposure C). Engineers must carefully evaluate fetch distances and apply directional exposure procedures per ASCE 7-22 Section 26.7.3</li>
-            </ul>
-
-            <p>Engineers must carefully evaluate exposure categories for Boston projects, particularly for sites in transitional locations. The city's dense urban development provides significant wind sheltering in many areas, but waterfront locations have substantially different exposure conditions. Improper exposure category selection can significantly affect calculated wind pressures.</p>
-
-            <h3>Boston Zip Codes and Wind Speed Reference</h3>
-            <p>Boston uses zip codes in the 02108-02297 range. Wind speeds vary slightly by location:</p>
-
-            <ul>
-                <li><strong>02110, 02109, 02113:</strong> Downtown, Financial District, North End - typically 120-125 mph, Exposure B, dense urban core</li>
-                <li><strong>02116, 02115, 02199:</strong> Back Bay, Prudential Center - 120-125 mph, Exposure B, high-rise urban with some Charles River exposure</li>
-                <li><strong>02108, 02114:</strong> Beacon Hill, West End - 120-125 mph, Exposure B, historic urban core</li>
-                <li><strong>02118, 02119, 02120:</strong> South End, Roxbury, Mission Hill - 120-125 mph, Exposure B, urban neighborhoods</li>
-                <li><strong>02210, 02127:</strong> Seaport District, South Boston - typically 125-130 mph, Exposure C, direct Boston Harbor waterfront</li>
-                <li><strong>02128, 02129:</strong> East Boston, Charlestown - 125-130 mph, Exposure C, harbor and water exposure</li>
-                <li><strong>02134, 02135, 02163:</strong> Allston, Brighton, Cambridge side - 120-125 mph, Exposure B/C, Charles River exposure</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct wind speed and exposure category recommendations when you enter any Boston zip code or address, using ASCE 7-22 wind speed maps and local terrain analysis.</p>
-
-            <h3>Historic Building Preservation and Wind Load Retrofitting</h3>
-            <p>Boston has extensive historic districts and buildings requiring special consideration for wind load compliance:</p>
-
-            <ul>
-                <li><strong>Freedom Trail Buildings:</strong> Colonial-era and Revolutionary War period structures require preservation-sensitive wind load retrofitting, structural assessments, and protection measures that maintain historic character</li>
-                <li><strong>Beacon Hill Historic District:</strong> Federal-style row houses and brick townhomes require careful evaluation of existing structural capacity and appropriate strengthening measures</li>
-                <li><strong>North End:</strong> Oldest residential neighborhood in Boston with narrow streets and historic Italian-American architecture requiring preservation coordination</li>
-                <li><strong>Fenway-Kenmore:</strong> Historic Fenway Park and surrounding buildings require specialized wind load analysis for crowd safety and structural preservation</li>
-                <li><strong>Back Bay Victorian District:</strong> Victorian-era brownstones and buildings require assessment of original construction quality and wind load capacity</li>
-            </ul>
-
-            <p>Historic preservation projects must coordinate wind load requirements with the Boston Landmarks Commission and Massachusetts Historical Commission to ensure both structural safety and preservation of historic character.</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Boston Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all Boston requirements including location-specific wind velocities (120-130 mph range), appropriate Exposure Category recommendations (B urban core, C waterfront), Risk Category adjustments, and component pressure coefficients. Simply enter your Boston project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Boston Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Professional Engineer (PE) Requirements in Boston</h3>
-            <p>All wind load calculations for Boston building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in Massachusetts</strong>. The sealed calculations must include:</p>
-
-            <ul>
-                <li>Project address and zip code with wind speed determination</li>
-                <li>Design wind speed (120-130 mph range for Risk Category II)</li>
-                <li>Exposure Category determination with supporting justification (B vs. C critical decision)</li>
-                <li>Risk Category determination with supporting documentation</li>
-                <li>Complete ASCE 7-22 calculation methodology</li>
-                <li>Component and Cladding (C&C) pressures for all building elements</li>
-                <li>Main Wind Force Resisting System (MWFRS) pressures if applicable</li>
-                <li>Consideration of both nor'easter and hurricane wind events</li>
-                <li>For high-rise buildings: wind tunnel testing results and peer review documentation</li>
-                <li>For historic buildings: coordination with preservation requirements and capacity assessments</li>
-            </ul>
-
-            <h3>Official Boston & Massachusetts Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Boston wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.boston.gov/departments/inspectional-services" target="_blank" rel="noopener" class="external-link">
-                    Boston Inspectional Services
-                </a>
-                <a href="https://www.mass.gov/orgs/board-of-building-regulations-and-standards" target="_blank" rel="noopener" class="external-link">
-                    MA Building Code (780 CMR)
-                </a>
-                <a href="https://www.mass.gov/orgs/board-of-registration-of-professional-engineers-and-land-surveyors" target="_blank" rel="noopener" class="external-link">
-                    Massachusetts PE Licensing
-                </a>
-            </div>
-
-            <h3>Common Boston Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Using wrong wind speed:</strong> Boston requires 120-130 mph depending on location, higher than interior Massachusetts but lower than Cape Cod</li>
-                <li><strong>Incorrect exposure category:</strong> Critical distinction between Exposure B (urban core) and Exposure C (waterfront)—using wrong category can result in 20-30% pressure differences</li>
-                <li><strong>Ignoring nor'easter risk:</strong> Extratropical storms are Boston's primary wind threat and must be considered in design (not just hurricanes)</li>
-                <li><strong>Neglecting directional exposure:</strong> Sites near waterfront/urban transitions require directional exposure analysis per ASC 7-22 Section 26.7.3</li>
-                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals (MGH, BMC), government buildings require higher categories</li>
-                <li><strong>Outdated calculations:</strong> Must use ASCE 7-22 per Massachusetts State Building Code current edition</li>
-                <li><strong>High-rise oversimplification:</strong> Tall buildings require wind tunnel testing and cannot rely solely on code-prescribed methods</li>
-                <li><strong>Historic building assumptions:</strong> Cannot assume historic structures meet current wind load requirements without structural assessment</li>
-            </ul>
-
-            <h3>How WindLoadCalc.com Handles Boston Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Boston-specific requirements:</p>
-
-            <ul>
-                <li><strong>Location-Specific Wind Speed:</strong> Enter any Boston zip code and the system automatically applies the correct 120-130 mph velocity based on ASCE 7-22 maps and proximity to Boston Harbor</li>
-                <li><strong>Exposure Category Guidance:</strong> Provides appropriate exposure recommendations based on urban core vs. waterfront location</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Directional Exposure Analysis:</strong> Accounts for mixed exposure conditions typical of Boston transitional sites</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Massachusetts State Building Code requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission to Boston Inspectional Services</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Boston-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Boston projects. Our software automatically handles location-specific wind velocities (120-130 mph), appropriate Exposure Category recommendations (B/C), and generates PE-ready reports for building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Boston Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1086,5 +632,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

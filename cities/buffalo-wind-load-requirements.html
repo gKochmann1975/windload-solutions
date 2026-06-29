@@ -29,782 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Buffalo specific colors (blue and red) */
-        .hero {
-            background: linear-gradient(135deg, #00338D 0%, #0055CC 25%, #0077FF 50%, #C60C30 75%, #E8102E 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '🦬❄️';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #00338D;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #00338D;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #0055CC;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #EBF4FF 0%, #D6E8FF 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #00338D;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #00338D;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #00338D 0%, #C60C30 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 51, 141, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #00338D 0%, #0055CC 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Weather Card */
-        .weather-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(0, 51, 141, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .weather-card h4 {
-            color: #00338D;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .weather-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0055CC 0%, #0077FF 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #C60C30 0%, #E8102E 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(198, 12, 48, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #A00A28 0%, #C60C30 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(198, 12, 48, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "New York",
-                "item": "https://windload.solutions/new-york-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Buffalo",
-                "item": "https://windload.solutions/cities/buffalo-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What is the design wind speed for Buffalo, New York?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Buffalo design wind speeds range from 105-115 mph (3-second gust) for Risk Category II structures per ASCE 7-22. Higher Risk Categories (III and IV) require elevated wind speeds. Always verify with Erie County building department for locally adopted values."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What building code governs wind loads in Buffalo?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Buffalo follows the New York state building code which references ASCE 7 for wind load calculations. Erie County may have local amendments that affect design requirements. Check with the local building department for the currently adopted code edition."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What exposure category applies to most Buffalo buildings?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most Buffalo buildings fall under Exposure Category C depending on surrounding terrain and surface roughness. Urban and suburban areas typically qualify for Exposure B, while open terrain or Lake Erie wind exposure may require Exposure C. Site-specific analysis per ASCE 7 Section 26.7 determines the actual exposure."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are there special wind load considerations for Buffalo?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Buffalo has Lake Erie wind exposure that may affect wind load design. Additionally, local terrain, building height, and occupancy type influence required wind pressures. Projects should consider these factors along with Erie County specific requirements for permit approval."
-            }
-        }
-    ]
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
 }
-    </script>
-</head>
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -817,305 +287,404 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Buffalo Wind Load Requirements</h1>
-            <p>Erie County | 100-115 mph Design Wind Speed | Lake Erie Exposure | Lake Effect Snow & Wind | New York State Building Code</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Buffalo Wind Loads Now</a>
-        </div>
-    </section>
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">NEW YORK · ERIE COUNTY</p>
+    <h1>Where Lake Erie's Fetch <span class="sweep">Meets Buffalo's Skyline</span></h1>
+    <p class="lead">Wind loads on the Niagara frontier are written by 240 miles of open water, lake-effect snow bands, and the sustained winter gales that scream off the lake all season.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">100–115</span><span class="lbl">MPH DESIGN WIND · RISK CAT II</span></div>
+      <div class="stat"><span class="num">B / C</span><span class="lbl">EXPOSURE · URBAN vs. WATERFRONT</span></div>
+      <div class="stat"><span class="num">240 mi</span><span class="lbl">LAKE ERIE FETCH OF OPEN WATER</span></div>
+      <div class="stat"><span class="num">7-22</span><span class="lbl">ASCE EDITION · NY STATE CODE</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Buffalo Wind Loads</a>
+      <a class="btn-ghost" href="../new-york-wind-load-requirements.html">New York Requirements</a>
+    </div>
+  </div></section>
 
-    <section class="content-section">
-        <div class="container">
+  <div class="divider"></div>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">100-115</span>
-                    <span class="stat-label">mph Design Wind Speed (Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">B/C</span>
-                    <span class="stat-label">Exposure Category (Urban/Waterfront)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">LAKE<br>ERIE</span>
-                    <span class="stat-label">Great Lakes Wind Exposure</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">ASCE<br>7-22</span>
-                    <span class="stat-label">Current Wind Load Standard</span>
-                </div>
-            </div>
+  <!-- ============ CUSTOM LAKE / WIND MOTIF ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">THE FETCH EFFECT</p>
+    <h2>How Open Water Sharpens <span class="sweep">the Wind That Reaches Shore</span></h2>
+    <p class="lead">Wind crossing Lake Erie meets almost no friction, so it arrives at the eastern shoreline faster and steadier than over land. This is the engine behind Buffalo's exposure split.</p>
 
-            <h2>Buffalo: Great Lakes Wind and Combined Snow/Wind Loads</h2>
-            <p>Buffalo, located in <strong>Erie County, New York</strong>, requires design wind speeds of <strong>100-115 mph</strong> (3-second gust) for Risk Category II structures per ASCE 7-22 maps. Buffalo's wind load requirements reflect the city's unique position on the eastern shore of <strong>Lake Erie</strong>, one of the Great Lakes, which creates distinctive wind exposure patterns and combined wind and snow loading conditions.</p>
+    <div class="info-box glass" style="max-width:900px;margin:2.5rem auto 0;">
+      <svg viewBox="0 0 760 230" width="100%" height="auto" role="img" aria-label="Wind accelerating across Lake Erie fetch toward the Buffalo shoreline" style="display:block">
+        <defs>
+          <linearGradient id="lakeg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#06b6d4" stop-opacity="0.15"/>
+            <stop offset="1" stop-color="#22d3ee" stop-opacity="0.55"/>
+          </linearGradient>
+          <linearGradient id="windg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#22d3ee" stop-opacity="0"/>
+            <stop offset="1" stop-color="#67e8f9" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <!-- lake surface -->
+        <rect x="0" y="150" width="600" height="80" fill="url(#lakeg)"/>
+        <path d="M0 152 Q40 144 80 152 T160 152 T240 152 T320 152 T400 152 T480 152 T560 152 T640 152" fill="none" stroke="#67e8f9" stroke-opacity="0.5" stroke-width="2">
+          <animate attributeName="d" dur="4s" repeatCount="indefinite"
+            values="M0 152 Q40 144 80 152 T160 152 T240 152 T320 152 T400 152 T480 152 T560 152 T640 152;
+                    M0 152 Q40 160 80 152 T160 152 T240 152 T320 152 T400 152 T480 152 T560 152 T640 152;
+                    M0 152 Q40 144 80 152 T160 152 T240 152 T320 152 T400 152 T480 152 T560 152 T640 152"/>
+        </path>
+        <!-- accelerating wind streaks -->
+        <g stroke="url(#windg)" stroke-width="4" stroke-linecap="round" fill="none">
+          <line x1="20" y1="60" x2="180" y2="60"><animate attributeName="x2" values="120;620;120" dur="3s" repeatCount="indefinite"/></line>
+          <line x1="20" y1="92" x2="240" y2="92"><animate attributeName="x2" values="180;640;180" dur="2.4s" repeatCount="indefinite"/></line>
+          <line x1="20" y1="124" x2="200" y2="124"><animate attributeName="x2" values="140;610;140" dur="3.4s" repeatCount="indefinite"/></line>
+        </g>
+        <!-- shoreline skyline (Buffalo) -->
+        <g fill="#0e7490" fill-opacity="0.9">
+          <rect x="608" y="70" width="22" height="160"/>
+          <rect x="636" y="44" width="30" height="186"/>
+          <rect x="672" y="96" width="20" height="134"/>
+          <rect x="698" y="60" width="26" height="170"/>
+          <rect x="730" y="110" width="18" height="120"/>
+        </g>
+        <!-- grain-elevator silos nod -->
+        <g fill="#155e75" fill-opacity="0.85">
+          <circle cx="620" cy="200" r="11"/><circle cx="644" cy="200" r="11"/><circle cx="668" cy="200" r="11"/>
+        </g>
+        <text x="290" y="200" fill="#67e8f9" font-size="15" font-weight="700" text-anchor="middle" opacity="0.9">~240 MILE FETCH →</text>
+        <text x="690" y="222" fill="#a5f3fc" font-size="13" font-weight="700" text-anchor="middle">BUFFALO</text>
+      </svg>
+    </div>
 
-            <p>Unlike coastal cities that face hurricane threats, Buffalo's wind load challenges stem from Great Lakes wind effects, severe winter storms, and the famous <strong>lake effect snow</strong> phenomenon that produces some of the heaviest snowfalls in the United States. Buffalo's proximity to <strong>Niagara Falls</strong> and the Canadian border, combined with Lake Erie's fetch (open water distance), creates wind exposure conditions that require careful engineering analysis. All building permits in Buffalo must comply with the <strong>New York State Uniform Fire Prevention and Building Code</strong>, which adopts the International Building Code (IBC) with New York State amendments.</p>
+    <div class="grid" data-n="3" style="margin-top:2.5rem">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 9h13a3 3 0 1 0-3-3"/><path d="M3 14h16a3 3 0 1 1-3 3"/><path d="M3 19h9"/></svg>
+        <h3>Open-Water Acceleration</h3>
+        <p>Up to 240 miles of unobstructed Lake Erie fetch lets gusts build before they hit the waterfront.</p>
+        <span class="badge badge--data">240-MILE FETCH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18"/><path d="M12 7l4-3"/><path d="M12 7l-4-3"/><path d="M12 13l5-3"/><path d="M12 13l-5-3"/></svg>
+        <h3>Prevailing Southwesterlies</h3>
+        <p>Dominant west and southwest winds carry the lake's longest fetch straight onto Buffalo's outer harbor.</p>
+        <span class="badge badge--data">WSW DOMINANT</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 17l4-7 4 5 3-6 4 8"/><path d="M3 21h18"/></svg>
+        <h3>Autumn–Winter Peak</h3>
+        <p>The sharpest gusts arrive when fall and winter temperature contrasts over the lake run highest.</p>
+        <span class="badge badge--data">SEASONAL SURGE</span>
+      </div>
+    </div>
+  </div></section>
 
-            <div class="info-box">
-                <h4><strong>🦬</strong> Buffalo / Erie County Quick Facts</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 100-115 mph (3-second gust)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~110-125 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~115-130 mph</p>
-                <p><strong>Exposure Category:</strong> C (near Lake Erie waterfront), B (urban areas)</p>
-                <p><strong>Building Code:</strong> New York State Uniform Fire Prevention and Building Code (adopts IBC)</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
-                <p><strong>Great Lakes Location:</strong> Eastern shore of Lake Erie</p>
-                <p><strong>Special Considerations:</strong> Lake effect snow, combined wind/snow loads, winter storms</p>
-                <p><strong>County:</strong> Erie County, New York</p>
-            </div>
+  <div class="divider"></div>
 
-            <h3>Why Buffalo Has 100-115 mph Wind Speed Requirements</h3>
-            <p>Buffalo's 100-115 mph design wind speed reflects the city's exposure to Great Lakes wind systems, severe winter storms, and occasional severe thunderstorm outbreaks. While Buffalo does not face hurricane threats like coastal cities, the combination of Lake Erie's influence and continental weather systems creates significant wind loading scenarios.</p>
+  <!-- ============ CITY-SPECIFIC WIND / EXPOSURE MODULE ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">SHORELINE TO STREETWALL</p>
+    <h2>Buffalo's Exposure Flips <span class="sweep">Within a Few Blocks of the Lake</span></h2>
+    <p class="lead">The same project can sit in open Exposure C or sheltered Exposure B depending on how close it is to Lake Erie, the Buffalo River, or the Niagara frontier.</p>
 
-            <p>Lake Erie, despite being the shallowest of the Great Lakes, has a maximum fetch of approximately 240 miles in the southwest-to-northeast direction. When strong winds blow across this open water expanse, they accelerate and intensify before reaching Buffalo's waterfront. Winter nor'easters and severe thunderstorms can produce sustained winds exceeding 60 mph with gusts well above 80 mph, particularly along the immediate Lake Erie shoreline.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 18c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M12 3v8"/><path d="M9 6l3-3 3 3"/></svg>
+        <h3>Lakefront & River Edge: Exposure C</h3>
+        <p>Within roughly 1,500 ft of the Lake Erie shoreline, Buffalo River, Niagara River, and outer harbor — open terrain that captures the full fetch.</p>
+        <span class="badge badge--data">EXPOSURE C</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="9" width="5" height="11"/><rect x="10" y="4" width="5" height="16"/><rect x="17" y="11" width="4" height="9"/></svg>
+        <h3>Downtown & Inland Wards: Exposure B</h3>
+        <p>Dense streetwalls and mature canopy across downtown, Allentown, Elmwood Village, and the suburbs shelter most inland sites.</p>
+        <span class="badge badge--data">EXPOSURE B</span>
+      </div>
+    </div>
 
-            <p>Buffalo's industrial heritage, with its historic grain elevators, steel mills, and port facilities, demonstrates the importance of wind-resistant design. The city has experienced numerous significant wind events, including the <strong>October Surprise Storm of 2006</strong>, which produced 70+ mph winds and brought down thousands of trees and caused widespread structural damage, and the <strong>Blizzard of 1977</strong>, which combined extreme winds with heavy snow to create catastrophic conditions.</p>
+    <h2 style="margin-top:3rem">Velocity Pressure on the <span class="sweep">Buffalo Waterfront</span></h2>
+    <p class="lead">Worked from ASCE 7-22 at a representative waterfront site — moderate against coastal hurricane zones, but it rides alongside heavy combined snow.</p>
 
-            <h3>Lake Erie Wind Exposure and Fetch Effects</h3>
-            <div class="weather-card">
-                <h4>Great Lakes Wind Characteristics</h4>
-                <p><strong>Lake Erie Fetch:</strong> Up to 240 miles (southwest to northeast), allowing winds to accelerate over open water before reaching Buffalo</p>
-                <p><strong>Waterfront Exposure:</strong> Areas within 1,500 feet of Lake Erie shoreline experience Exposure Category C conditions with minimal obstructions</p>
-                <p><strong>Wind Direction:</strong> Prevailing westerly and southwesterly winds bring strongest gusts from across Lake Erie</p>
-                <p><strong>Seasonal Variation:</strong> Strongest winds typically occur during fall and winter months when temperature contrasts are greatest</p>
-                <p><strong>Combined Loading:</strong> Winter storms often produce simultaneous high wind and heavy snow loads, requiring combined load analysis</p>
-            </div>
+    <div class="info-box glass" style="max-width:820px;margin:0 auto;text-align:center">
+      <p style="font-family:'Courier New',monospace;font-size:1.35rem;font-weight:800;letter-spacing:.5px;margin:0 0 1rem">q<sub>z</sub> = 0.00256 · K<sub>z</sub> · K<sub>zt</sub> · K<sub>d</sub> · K<sub>e</sub> · V²</p>
+      <div class="cmp-scroll">
+        <table class="cmp">
+          <thead><tr><th>Factor</th><th>Value</th><th>Basis at this site</th></tr></thead>
+          <tbody>
+            <tr><td>V</td><td>110 mph</td><td>Lake Erie waterfront, ASCE 7-22, Risk Cat II</td></tr>
+            <tr><td>K<sub>z</sub></td><td>0.85</td><td>15 ft, Exposure C (Table 26.10-1)</td></tr>
+            <tr><td>K<sub>zt</sub></td><td>1.0</td><td>Flat shoreline terrain</td></tr>
+            <tr><td>K<sub>d</sub></td><td>0.85</td><td>Buildings (Table 26.6-1)</td></tr>
+            <tr><td>K<sub>e</sub></td><td>1.0</td><td>Ground elevation ~600 ft</td></tr>
+            <tr><td><strong>q<sub>z</sub></strong></td><td><strong>≈ 22.4 psf</strong></td><td>Velocity pressure before snow combination</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-            <div class="weather-card">
-                <h4>Lake Effect Snow and Wind</h4>
-                <p><strong>Annual Snowfall:</strong> Buffalo averages 95+ inches of snow annually, with lake effect contributing the majority</p>
-                <p><strong>Wind-Driven Snow:</strong> Lake effect snow bands are often accompanied by strong winds (30-50 mph), creating combined wind and snow loads</p>
-                <p><strong>Drift Loading:</strong> Wind-driven snow creates significant drift loads on roofs, particularly on leeward sides and in corners</p>
-                <p><strong>Ice Accumulation:</strong> Freezing rain and ice storms create additional loading when combined with wind pressure</p>
-                <p><strong>Design Implication:</strong> Engineers must consider simultaneous wind and snow loads per ASCE 7-22 load combination requirements</p>
-            </div>
+    <h2 style="margin-top:3rem">Risk Category Climbs <span class="sweep">the Niagara Frontier Wind Map</span></h2>
+    <p class="lead">Higher risk categories read a longer-return-period map, so design speeds step up across the Buffalo band.</p>
+    <div class="cmp-scroll">
+      <table class="cmp">
+        <thead><tr><th>Risk Category</th><th>Buffalo Design Wind</th><th>Typical structures</th></tr></thead>
+        <tbody>
+          <tr><td>Risk Cat I</td><td>~90–105 mph</td><td>Agricultural, temporary, minor storage</td></tr>
+          <tr><td>Risk Cat II</td><td>100–115 mph</td><td>Homes, commercial, most occupancies</td></tr>
+          <tr><td>Risk Cat III</td><td>~110–125 mph</td><td>Schools, assembly &gt;300, hazardous materials</td></tr>
+          <tr><td>Risk Cat IV</td><td>~115–130 mph</td><td>Hospitals, fire stations, emergency shelters</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div></section>
 
-            <h3>Buffalo Wind Load Calculations: Step by Step</h3>
-            <p>Calculating wind loads for Buffalo projects requires following ASCE 7-22 methodology while accounting for Great Lakes exposure and combined wind/snow loading. The fundamental velocity pressure equation is:</p>
+  <div class="divider"></div>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #00338D; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+  <!-- ============ LAKE-EFFECT / COMBINED LOAD MODULE ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">SNOW BANDS MEET GUSTS</p>
+    <h2>Lake-Effect Storms Stack <span class="sweep">Snow and Wind in One Load Case</span></h2>
+    <p class="lead">Buffalo's defining design challenge is not a single peak gust — it's wind and snow arriving together, day after day, off the lake.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+        <h3>95+ in. Annual Snow</h3>
+        <p>Lake-effect bands deliver most of Buffalo's heavy yearly snowfall.</p>
+        <span class="badge badge--data">SNOWBELT</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 18c3-1 6-4 9-4s6 3 9 4"/><path d="M3 13c3-1 6-4 9-4s6 3 9 4"/></svg>
+        <h3>Wind-Driven Drift</h3>
+        <p>30–50 mph band winds pile drift loads on leeward roofs and corners.</p>
+        <span class="badge badge--data">DRIFT LOADS</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v6M12 16v6M4 12H2M22 12h-2M6 6L4.5 4.5M19.5 19.5 18 18"/><circle cx="12" cy="12" r="3"/></svg>
+        <h3>Ice Accretion</h3>
+        <p>Freezing rain adds gravity load that NY code weighs per ASCE 7-22 Ch. 10.</p>
+        <span class="badge badge--data">CH. 10 ICE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 20V6M4 6l8-3 8 3M20 6v14M4 20h16M9 20v-6h6v6"/></svg>
+        <h3>Combined Combos</h3>
+        <p>1.0W + 0.5S and 1.0S + 0.5W must both be checked per ASCE 7-22.</p>
+        <span class="badge badge--data">LOAD COMBOS</span>
+      </div>
+    </div>
 
-            <p>For a Buffalo waterfront project with V = 110 mph (typical ASCE 7-22 value for Lake Erie exposure) and Exposure Category C conditions:</p>
-            <ul>
-                <li><strong>V = 110 mph</strong> (Buffalo Lake Erie waterfront velocity per ASCE 7-22)</li>
-                <li><strong>Kz = 0.85</strong> (15 ft height, Exposure C)</li>
-                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (elevation ~600 feet above sea level)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 22.4 psf</strong>—moderate compared to coastal hurricane regions, but significant when combined with heavy snow loads that can exceed 40-50 psf.</p>
+    <div class="info-box glass" style="max-width:880px;margin:2.5rem auto 0">
+      <h4 style="margin-top:0">Erie County Snow & Wind Quick Reference</h4>
+      <p>Ground snow load typically <strong>50 psf</strong> (ASCE 7-22 Fig. 7.2-1); wind-driven drifts can exceed <strong>100 psf</strong> in valleys and leeward corners. Lake-effect events often drop 2–4 ft of snow in 24–48 hours under sustained 30–40 mph winds — the case that drives Buffalo roof design.</p>
+    </div>
+  </div></section>
 
-            <h3>Exposure Categories in Buffalo</h3>
-            <p>Buffalo projects must carefully evaluate Exposure Category based on proximity to Lake Erie and surrounding urban development. The city's dense urban core contrasts sharply with the open waterfront:</p>
+  <div class="divider"></div>
 
-            <ul>
-                <li><strong>Exposure C (Lake Erie Waterfront):</strong> Required for structures within approximately 1,500 feet of Lake Erie shoreline, Buffalo River, and Niagara River waterfront. Exposure C assumes open terrain with scattered obstructions and captures the full wind acceleration effects from the lake fetch.</li>
-                <li><strong>Exposure B (Urban/Suburban):</strong> Appropriate for most inland Buffalo neighborhoods with dense urban development, mature trees, and multiple buildings providing wind obstructions. Downtown Buffalo, Elmwood Village, and residential neighborhoods typically qualify for Exposure B.</li>
-            </ul>
+  <!-- ============ STORM-HISTORY MODULE ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">EVENTS THAT SET THE BAR</p>
+    <h2>Winter Storms That <span class="sweep">Proved Buffalo's Design Speeds</span></h2>
+    <p class="lead">Each landmark storm validates the 100–115 mph band the city designs to.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2v20M2 12h20"/><path d="m6 6 12 12M18 6 6 18"/></svg>
+        <h3>Blizzard of 1977</h3>
+        <p>46 mph sustained, gusts to 69; drifts 20–30 ft high in zero visibility.</p>
+        <span class="badge">JAN 1977</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 22V12M12 12c-3 0-5-2-5-5M12 12c3 0 5-2 5-4M9 7c0-2 1-4 3-5"/></svg>
+        <h3>October Surprise 2006</h3>
+        <p>70+ mph gusts hit trees still in leaf, toppling thousands across the region.</p>
+        <span class="badge">OCT 2006</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 19h14M7 19l-2-9 4 3 3-7 3 7 4-3-2 9"/></svg>
+        <h3>November 2014 Snow</h3>
+        <p>7+ ft of lake-effect snow with 30–40 mph winds caused roof collapses.</p>
+        <span class="badge">NOV 2014</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 12h18M3 12l4-4M3 12l4 4M21 6l-3 3 3 3"/></svg>
+        <h3>December 2022 Blizzard</h3>
+        <p>Gusts to 79 mph at Buffalo Airport — squarely inside the design band.</p>
+        <span class="badge">DEC 2022</span>
+      </div>
+    </div>
+  </div></section>
 
-            <p>The transition from Exposure C (waterfront) to Exposure B (urban) can occur within a few blocks of the Lake Erie shoreline, significantly affecting wind pressure calculations. Engineers should document exposure determinations with site photos and maps showing surrounding terrain.</p>
+  <div class="divider"></div>
 
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>Buffalo projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+  <!-- ============ CITY-SPECIFIC COMPLY GRID (no-orphan, 6) ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">PERMIT-READY ON THE NIAGARA FRONTIER</p>
+    <h2>What a Sealed Buffalo <span class="sweep">Submittal Has to Carry</span></h2>
+    <p class="lead">Erie County reviewers expect every Buffalo wind package to close these out before stamping.</p>
+    <div class="grid" data-n="6">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 3h14v18l-7-4-7 4z"/></svg>
+        <h3>NY State Building Code</h3>
+        <p>NY Uniform Fire Prevention & Building Code adopts the IBC referencing ASCE 7-22.</p>
+        <span class="badge badge--method">ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3>Verified Design Speed</h3>
+        <p>Pin V at 100–115 mph for Risk Cat II from the current ASCE 7-22 maps.</p>
+        <span class="badge badge--data">100–115 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 20l5-5 4 3 9-9"/><path d="M3 20h18"/></svg>
+        <h3>Documented Exposure</h3>
+        <p>Justify C vs. B with site photos and terrain maps — the lakefront line matters.</p>
+        <span class="badge badge--data">B / C PROOF</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 20V8l8-5 8 5v12M4 20h16M10 20v-5h4v5"/></svg>
+        <h3>Combined Snow Cases</h3>
+        <p>Run wind-plus-snow combinations and drift analysis for Buffalo's roofs.</p>
+        <span class="badge badge--method">DRIFT + COMBO</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2l3 6 6 1-4.5 4 1 6-5.5-3-5.5 3 1-6L3 9l6-1z"/></svg>
+        <h3>MWFRS + C&C Pressures</h3>
+        <p>Resolve both main-frame and component & cladding pressures for every element.</p>
+        <span class="badge badge--method">MWFRS / C&C</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/><path d="m16 11 2 2 3-3"/></svg>
+        <h3>New York PE Seal</h3>
+        <p>Calculations must be sealed by a Professional Engineer licensed in New York State.</p>
+        <span class="badge badge--method">PE STAMP</span>
+      </div>
+    </div>
+  </div></section>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>Buffalo Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~90-105 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>100-115 mph</td>
-                        <td>Residential, commercial, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~110-125 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~115-130 mph</td>
-                        <td>Hospitals, fire stations, emergency shelters, essential facilities</td>
-                    </tr>
-                </tbody>
-            </table>
+  <div class="divider"></div>
 
-            <h3>Combined Wind and Snow Loads</h3>
-            <p>One of Buffalo's most critical design considerations is the potential for <strong>simultaneous wind and snow loads</strong> during winter storms. ASCE 7-22 requires engineers to consider load combinations that include both wind and snow:</p>
+  <!-- ============ NIAGARA / RIVER + ZIP MODULE ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">RIVERS, GORGE & ZIP MAP</p>
+    <h2>Niagara Channeling and the <span class="sweep">Waterways Around Buffalo</span></h2>
+    <p class="lead">River gorges and harbor mouths re-channel wind — these corridors lean toward Exposure C.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3v8c0 4 12 2 12 7v3M6 11c0 4 12 2 12 7"/></svg>
+        <h3>Niagara River Gorge</h3>
+        <p>Gorge channeling accelerates winds; sites within ~1,500 ft use Exposure C.</p>
+        <span class="badge badge--data">GORGE EFFECT</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 12c3-3 6 3 9 0s6-3 9 0M3 17c3-3 6 3 9 0s6-3 9 0"/></svg>
+        <h3>Buffalo River & Inner Harbor</h3>
+        <p>Open water along the river and inner harbor pushes waterfront sites to Exposure C.</p>
+        <span class="badge badge--data">OPEN WATER</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 18h18M5 18V9M19 18V9M5 9l7-5 7 5M9 18v-5M15 18v-5"/></svg>
+        <h3>Peace Bridge Crossing</h3>
+        <p>The international crossing sits in open river exposure with minimal obstruction.</p>
+        <span class="badge badge--data">BORDER SPAN</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 20c4-2 4-4 9-4s5 2 9 4"/><path d="M12 3v9"/><path d="m8 7 4-4 4 4"/></svg>
+        <h3>Outer Harbor</h3>
+        <p>Lakefront redevelopment faces direct Lake Erie wind — full Exposure C.</p>
+        <span class="badge badge--data">LAKE-FACING</span>
+      </div>
+    </div>
 
-            <ul>
-                <li><strong>Load Combination:</strong> 1.2D + 1.0W + 0.5L + 0.5S (wind as main variable load with reduced snow)</li>
-                <li><strong>Load Combination:</strong> 1.2D + 1.0S + 0.5L + 0.5W (snow as main variable load with reduced wind)</li>
-                <li><strong>Snow Load:</strong> Buffalo ground snow load is typically 50 psf (flat roof snow load varies by Risk Category)</li>
-                <li><strong>Snow Drift:</strong> Wind-driven snow creates drift loads that can exceed 100 psf in valleys, corners, and leeward areas</li>
-                <li><strong>Ice Loading:</strong> Freezing rain and ice accumulation adds additional gravity load during winter wind events</li>
-            </ul>
+    <div class="info-box glass" style="max-width:900px;margin:2.5rem auto 0">
+      <h4 style="margin-top:0">Buffalo & Erie County ZIP Reference (all within the 100–115 mph Risk Cat II band)</h4>
+      <p><strong>14201–14213:</strong> Downtown, Waterfront, Central Business District, Allentown, Elmwood Village</p>
+      <p><strong>14214–14228:</strong> North Buffalo, University Heights, Parkside, Kenmore, Tonawanda</p>
+      <p><strong>14301–14305:</strong> Niagara Falls area (gorge effects raise local speeds)</p>
+      <p><strong>14221–14226:</strong> Amherst, Williamsville, Clarence (suburban, typically Exposure B)</p>
+      <p><strong>14067–14075:</strong> Hamburg, Orchard Park, southern Erie County (inland, lower end)</p>
+      <p style="margin-bottom:0">The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com calculator</a> resolves the exact speed and exposure from any Buffalo address or ZIP against the ASCE 7-22 maps.</p>
+    </div>
+  </div></section>
 
-            <p>Buffalo's lake effect snow storms often produce 2-4 feet of snow accumulation in 24-48 hours, with sustained winds of 30-40 mph creating significant drift patterns. Engineers must analyze roof configurations for drift potential and combined loading scenarios.</p>
+  <div class="divider"></div>
 
-            <h3>New York State Building Code</h3>
-            <p>Buffalo building permits must comply with the <strong>New York State Uniform Fire Prevention and Building Code</strong>, which adopts the International Building Code (IBC) with New York State-specific amendments. The current New York State Code adopts the 2020 IBC which references <strong>ASCE 7-22</strong> for wind load calculations.</p>
+  <!-- ============ NEARBY / STATEWIDE + RESOURCES ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">STATEWIDE & OFFICIAL DESKS</p>
+    <h2>Beyond Buffalo: <span class="sweep">New York Context & Code Offices</span></h2>
+    <p class="lead">Zoom out to statewide requirements, then go straight to the desks that review Erie County permits.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="../new-york-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 21V8l8-5 8 5v13M4 21h16M9 21v-6h6v6"/></svg>
+        <h3>New York Wind Requirements</h3>
+        <p>Statewide ASCE 7-22 adoption, maps, and code basis across New York.</p>
+        <span class="badge badge--go">STATEWIDE</span>
+      </a>
+      <a class="card glass" href="../state-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>
+        <h3>All State Requirements</h3>
+        <p>Compare wind load rules and adopted editions across every U.S. state.</p>
+        <span class="badge badge--go">50 STATES</span>
+      </a>
+      <a class="card glass" href="../wind-speed-by-location.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5 8 12 8 12s8-7 8-12a8 8 0 0 0-8-8z"/></svg>
+        <h3>Wind Speed by Location</h3>
+        <p>Look up design wind speeds for any city or address nationwide.</p>
+        <span class="badge badge--data">SPEED LOOKUP</span>
+      </a>
+    </div>
 
-            <p>Key New York State code provisions affecting Buffalo wind loads:</p>
-            <ul>
-                <li><strong>ASCE 7-22 Mandatory:</strong> All wind load calculations must use ASCE 7-22 methodology and wind speed maps</li>
-                <li><strong>Ice Loading:</strong> New York requires consideration of ice accumulation on structures per ASCE 7-22 Chapter 10</li>
-                <li><strong>Risk Category IV:</strong> Hospitals, emergency facilities, and fire stations must meet enhanced wind and snow load requirements</li>
-                <li><strong>Local Amendments:</strong> Erie County and City of Buffalo may have additional local amendments—verify with building department</li>
-                <li><strong>Snow Load Maps:</strong> Buffalo ground snow load must be determined from ASCE 7-22 Figure 7.2-1 (typically 50 psf)</li>
-            </ul>
+    <h2 style="margin-top:3rem">Official Buffalo & <span class="sweep">New York Permit Desks</span></h2>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="https://www.buffalony.gov/346/Permits-Inspections" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-5h6v5"/></svg>
+        <h3>City of Buffalo Permits</h3>
+        <p>Permits & Inspections desk for City of Buffalo projects.</p>
+        <span class="badge">BUFFALO, NY</span>
+      </a>
+      <a class="card glass" href="https://dos.ny.gov/building-codes" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+        <h3>NY State Building Codes</h3>
+        <p>Department of State code adoptions and amendments.</p>
+        <span class="badge">NY DOS</span>
+      </a>
+      <a class="card glass" href="http://www.op.nysed.gov/prof/pe/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg>
+        <h3>NY PE Licensing Board</h3>
+        <p>Office of the Professions — Professional Engineer licensure.</p>
+        <span class="badge">NYSED</span>
+      </a>
+      <a class="card glass" href="https://www2.erie.gov/environment/index.php?q=building-development" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 21V7l8-4 8 4v14M4 21h16M10 21v-6h4v6M8 11h.01M16 11h.01"/></svg>
+        <h3>Erie County Development</h3>
+        <p>Erie County Building & Development resources.</p>
+        <span class="badge">ERIE COUNTY</span>
+      </a>
+    </div>
+  </div></section>
 
-            <h3>Buffalo Zip Codes and Wind Speed Reference</h3>
-            <p>Buffalo zip codes in Erie County fall within the 100-115 mph design wind speed range for Risk Category II per ASCE 7-22, with waterfront areas typically at the higher end. Common Buffalo zip codes include:</p>
+  <div class="divider"></div>
 
-            <ul>
-                <li><strong>14201-14213:</strong> Downtown Buffalo, Waterfront, Central Business District, Allentown, Elmwood Village</li>
-                <li><strong>14214-14228:</strong> North Buffalo, University Heights, Parkside, Kenmore, Tonawanda areas</li>
-                <li><strong>14301-14305:</strong> Niagara Falls area (higher wind speeds due to Niagara River gorge effects)</li>
-                <li><strong>14221-14226:</strong> Amherst, Williamsville, Clarence (suburban areas, typically Exposure B)</li>
-                <li><strong>14067-14075:</strong> Hamburg, Orchard Park, southern Erie County (inland, lower wind speeds)</li>
-            </ul>
+  <!-- ============ CTA ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">RUN THE NUMBERS</p>
+    <h2>Calculate Buffalo Wind Loads <span class="sweep">Off the Lake Erie Maps</span></h2>
+    <p class="lead">Enter any Buffalo or Erie County address and the software resolves the 100–115 mph design speed, the lakefront-vs-urban exposure split, risk category, and combined wind-plus-snow combinations into a PE-ready report.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Try the Buffalo Calculator</a>
+      <a class="btn-ghost" href="../new-york-wind-load-requirements.html">New York Requirements</a>
+    </div>
+  </div></section>
 
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct design wind speed and exposure category when you enter any Buffalo zip code or street address by referencing ASCE 7-22 wind speed maps and site-specific terrain characteristics.</p>
-        </div>
-    </section>
+</main>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Buffalo Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all Buffalo requirements including the 100-115 mph design velocity, appropriate Exposure Category determination for Lake Erie waterfront vs. urban locations, Risk Category adjustments, and combined wind/snow load analysis. Simply enter your Buffalo project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Buffalo Wind Loads Now</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Professional Engineer (PE) Requirements in New York</h3>
-            <p>All structural calculations for Buffalo building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) licensed in New York State</strong>. Wind load calculations are considered structural engineering work requiring PE licensure. The sealed calculations must include:</p>
-
-            <ul>
-                <li>Project address and zip code with ASCE 7-22 wind speed determination</li>
-                <li>Design wind speed (100-115 mph range for Risk Category II)</li>
-                <li>Exposure Category determination with supporting documentation (photos, maps, terrain analysis)</li>
-                <li>Risk Category determination per ASCE 7-22 Table 1.5-1</li>
-                <li>Complete ASCE 7-22 calculation methodology</li>
-                <li>Component and Cladding (C&C) pressures for all building elements</li>
-                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
-                <li>Snow load calculations and combined wind/snow load combinations</li>
-                <li>Snow drift analysis for roof configurations</li>
-                <li>PE stamp and signature with New York license number</li>
-            </ul>
-
-            <p>New York State requires professional engineering licensure through the <strong>New York State Education Department - Office of the Professions</strong>. Only PEs licensed in New York may seal engineering documents submitted to Buffalo building officials.</p>
-
-            <h3>Official Buffalo and New York State Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Buffalo wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.buffalony.gov/346/Permits-Inspections" target="_blank" rel="noopener" class="external-link">
-                    City of Buffalo Permits & Inspections
-                </a>
-                <a href="https://dos.ny.gov/building-codes" target="_blank" rel="noopener" class="external-link">
-                    New York State Building Codes
-                </a>
-                <a href="http://www.op.nysed.gov/prof/pe/" target="_blank" rel="noopener" class="external-link">
-                    New York State Professional Engineering Board
-                </a>
-                <a href="https://www2.erie.gov/environment/index.php?q=building-development" target="_blank" rel="noopener" class="external-link">
-                    Erie County Building & Development
-                </a>
-            </div>
-
-            <h3>Common Buffalo Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Using outdated wind speeds:</strong> Must use ASCE 7-22 maps showing 100-115 mph for Buffalo, not older ASCE 7-10 or 7-16 values</li>
-                <li><strong>Incorrect Exposure Category:</strong> Waterfront projects near Lake Erie require Exposure C, while inland urban areas use Exposure B—verify with site analysis</li>
-                <li><strong>Ignoring combined loads:</strong> Buffalo's heavy snow loads must be combined with wind loads per ASCE 7-22 load combinations</li>
-                <li><strong>Neglecting snow drift:</strong> Wind-driven snow creates significant drift loads that can exceed uniform snow load by 2-3 times</li>
-                <li><strong>Using coastal hurricane methods:</strong> Buffalo is not a hurricane zone—Great Lakes wind exposure is fundamentally different from coastal conditions</li>
-                <li><strong>Forgetting ice loads:</strong> Freezing rain and ice accumulation create additional loading during winter wind events</li>
-                <li><strong>Ignoring Risk Category:</strong> Schools, hospitals, and assembly buildings require Risk Category III or IV with higher wind speeds</li>
-            </ul>
-
-            <h3>How WindLoadCalc.com Handles Buffalo Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Buffalo-specific requirements:</p>
-
-            <ul>
-                <li><strong>Automatic Wind Speed Lookup:</strong> Enter any Buffalo zip code and the system applies the correct 100-115 mph velocity from ASCE 7-22 maps</li>
-                <li><strong>Exposure Category Guidance:</strong> Provides recommendations for Exposure C (waterfront) vs. Exposure B (urban) based on project location and terrain</li>
-                <li><strong>Great Lakes Considerations:</strong> Accounts for Lake Erie fetch effects and waterfront exposure characteristics</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Combined Load Analysis:</strong> Generates load combinations including simultaneous wind and snow loads per ASCE 7-22</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current New York State Building Code requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for New York PE review and Buffalo building permit submission</li>
-            </ul>
-
-            <h3>Niagara Falls and Buffalo River Considerations</h3>
-            <p>Projects located near <strong>Niagara Falls</strong> (approximately 20 miles north of Buffalo) or along the <strong>Buffalo River</strong> waterfront may experience enhanced wind exposure due to river gorge effects and open water exposure:</p>
-
-            <ul>
-                <li><strong>Niagara River Gorge:</strong> The Niagara River gorge creates channeling effects that can accelerate winds—projects within 1,500 feet should use Exposure C</li>
-                <li><strong>Buffalo River:</strong> The Buffalo River and inner harbor area provides open water exposure requiring Exposure C for waterfront projects</li>
-                <li><strong>Peace Bridge:</strong> The international border crossing area experiences open river exposure with minimal wind obstructions</li>
-                <li><strong>Outer Harbor:</strong> Buffalo's outer harbor development on Lake Erie experiences direct lake exposure with Exposure C conditions</li>
-            </ul>
-
-            <h3>Buffalo's Industrial Heritage and Wind Resistance</h3>
-            <p>Buffalo's history as a major industrial and shipping center has produced numerous examples of wind-resistant design:</p>
-
-            <ul>
-                <li><strong>Grain Elevators:</strong> Buffalo's iconic concrete grain elevators were designed to resist high winds and snow loads from Lake Erie storms</li>
-                <li><strong>Steel Mills:</strong> Historic steel mill structures demonstrate the importance of wind bracing systems for large industrial buildings</li>
-                <li><strong>Port Facilities:</strong> Buffalo's shipping terminals and port infrastructure are designed for Lake Erie wind exposure</li>
-                <li><strong>High-Rise Buildings:</strong> Downtown Buffalo's skyscrapers (including the Art Deco City Hall) incorporate wind resistance in their structural systems</li>
-            </ul>
-
-            <h3>Winter Storm Wind Events in Buffalo History</h3>
-            <p>Buffalo has experienced numerous significant wind events that validate current design wind speeds:</p>
-
-            <ul>
-                <li><strong>Blizzard of 1977 (January 28, 1977):</strong> Sustained winds of 46 mph with gusts to 69 mph combined with heavy snow to create zero visibility and catastrophic conditions. Wind-driven snow created drifts 20-30 feet high.</li>
-                <li><strong>October Surprise Storm (October 12-13, 2006):</strong> Early-season storm produced 70+ mph wind gusts while trees still had leaves, causing widespread tree failures and structural damage throughout Western New York.</li>
-                <li><strong>November 2014 Snowstorm:</strong> Lake effect snow event dropped 7+ feet of snow with sustained winds of 30-40 mph, causing numerous roof collapses from combined snow and wind loads.</li>
-                <li><strong>December 2022 Blizzard:</strong> Extreme winter storm produced wind gusts to 79 mph at Buffalo Airport, demonstrating the validity of 100-115 mph design wind speeds.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Buffalo-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Buffalo and Erie County projects. Our software automatically handles the 100-115 mph Great Lakes velocity, Lake Erie exposure categories, combined wind/snow loads, and generates PE-ready reports for New York State building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Buffalo Wind Load Calculator</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../new-york-wind-load-requirements.html" style="color: #60a5fa;">New York Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1153,5 +722,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

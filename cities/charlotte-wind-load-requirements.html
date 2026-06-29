@@ -29,782 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Charlotte Panthers colors (Teal/Black) */
-        .hero {
-            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 25%, #22d3ee 50%, #1f2937 75%, #111827 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '🏦🐆';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #0891b2;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #06b6d4;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #22d3ee;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #06b6d4;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #06b6d4;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Charlotte Card */
-        .charlotte-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(6, 182, 212, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .charlotte-card h4 {
-            color: #06b6d4;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .charlotte-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "North Carolina",
-                "item": "https://windload.solutions/north-carolina-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Charlotte",
-                "item": "https://windload.solutions/cities/charlotte-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What is the design wind speed for Charlotte, North Carolina?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Charlotte design wind speeds range from 105-115 mph (3-second gust) for Risk Category II structures per ASCE 7-22. Higher Risk Categories (III and IV) require elevated wind speeds. Always verify with Mecklenburg County building department for locally adopted values."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What building code governs wind loads in Charlotte?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Charlotte follows the North Carolina state building code which references ASCE 7 for wind load calculations. Mecklenburg County may have local amendments that affect design requirements. Check with the local building department for the currently adopted code edition."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What exposure category applies to most Charlotte buildings?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most Charlotte buildings fall under Exposure Category B/C depending on surrounding terrain and surface roughness. Urban and suburban areas typically qualify for Exposure B, while open terrain or Piedmont region location may require Exposure C. Site-specific analysis per ASCE 7 Section 26.7 determines the actual exposure."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are there special wind load considerations for Charlotte?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Charlotte has Piedmont region location that may affect wind load design. Additionally, local terrain, building height, and occupancy type influence required wind pressures. Projects should consider these factors along with Mecklenburg County specific requirements for permit approval."
-            }
-        }
-    ]
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
 }
-    </script>
-</head>
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -814,313 +284,271 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Charlotte Wind Load Requirements</h1>
-            <p>Mecklenburg County, NC | 110-120 mph Design Wind Speed | North Carolina Building Code (IBC) | Banking Hub | Tropical Remnants | Exposure B</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Charlotte Wind Loads Now →</a>
-        </div>
-    </section>
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">NORTH CAROLINA · MECKLENBURG COUNTY</p>
+    <h1>Charlotte sits in the Piedmont, where <span class="sweep">spent hurricanes still arrive with teeth</span></h1>
+    <p class="lead">Two-hundred miles from the Atlantic, the Queen City designs for inland gusts, not surf — 110-120 mph under North Carolina's ASCE 7-10 code.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">110-120</span><span class="lbl">MPH 3-SEC GUST · RISK II</span></div>
+      <div class="stat"><span class="num">B</span><span class="lbl">EXPOSURE · BUILT-UP METRO</span></div>
+      <div class="stat"><span class="num">7-10</span><span class="lbl">ASCE EDITION · NC CODE</span></div>
+      <div class="stat"><span class="num">Meck.</span><span class="lbl">COUNTY JURISDICTION</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Charlotte Loads</a>
+      <a class="btn-ghost" href="../north-carolina-wind-load-requirements.html">North Carolina Overview</a>
+    </div>
+  </div></section>
 
-    <section class="content-section">
-        <div class="container">
+  <div class="divider"></div>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">110-120</span>
-                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">B</span>
-                    <span class="stat-label">Exposure Category<br>(Urban)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">NC</span>
-                    <span class="stat-label">NC Building Code<br>(ASCE 7-22)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">MOD</span>
-                    <span class="stat-label">Moderate Wind<br>Risk</span>
-                </div>
-            </div>
+  <!-- ============ PIEDMONT WIND MOTIF (custom SVG) ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">GEOGRAPHY · INLAND PIEDMONT</p>
+    <h2>How the coast hands its storms <span class="sweep">to the rolling Piedmont</span></h2>
+    <p class="lead">A landfalling system weakens crossing the coastal plain, then spends its last fury over Mecklenburg's low ridges.</p>
+    <div class="info-box glass" style="max-width:760px;margin:1.5rem auto 0;">
+      <svg viewBox="0 0 760 220" width="100%" height="auto" role="img" aria-label="Wind weakening from Atlantic coast across coastal plain into the Charlotte Piedmont" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="clt-sky" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#06b6d4"/>
+            <stop offset="0.55" stop-color="#22d3ee"/>
+            <stop offset="1" stop-color="#34d399"/>
+          </linearGradient>
+        </defs>
+        <!-- terrain rising from sea (left) to Piedmont ridges (right) -->
+        <path d="M0 180 L120 178 L260 168 Q360 150 470 148 Q560 146 640 124 Q700 108 760 116 L760 220 L0 220 Z" fill="rgba(255,255,255,0.06)" stroke="rgba(52,211,153,0.5)" stroke-width="1.5"/>
+        <!-- decaying wind streams: thick/fast at coast, thin near Charlotte -->
+        <path d="M10 60 Q200 50 380 78 T740 110" stroke="url(#clt-sky)" stroke-width="6" stroke-linecap="round" opacity="0.9"/>
+        <path d="M10 92 Q210 86 400 104 T740 132" stroke="url(#clt-sky)" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+        <path d="M10 124 Q220 122 410 132 T740 150" stroke="url(#clt-sky)" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+        <!-- coast marker -->
+        <circle cx="40" cy="178" r="5" fill="#22d3ee"/>
+        <text x="40" y="206" fill="#9fb3c8" font-size="13" text-anchor="middle" font-family="Inter,sans-serif">ATLANTIC COAST</text>
+        <!-- Charlotte skyline marker on the ridge -->
+        <g transform="translate(642,86)">
+          <rect x="0" y="14" width="9" height="30" fill="#34d399"/>
+          <rect x="12" y="2" width="11" height="42" fill="#22d3ee"/>
+          <rect x="26" y="20" width="9" height="24" fill="#34d399"/>
+        </g>
+        <text x="666" y="206" fill="#9fb3c8" font-size="13" text-anchor="middle" font-family="Inter,sans-serif">CHARLOTTE PIEDMONT</text>
+      </svg>
+    </div>
+  </div></section>
 
-            <h2>Charlotte, North Carolina: Growing Metro Wind Load Requirements</h2>
-            <p>Charlotte, located in <strong>Mecklenburg County, North Carolina</strong>, has moderate wind load requirements that account for its inland piedmont location and exposure to severe thunderstorm systems and tropical storm remnants. North Carolina has adopted the <strong>North Carolina State Building Code</strong> which incorporates the International Building Code (IBC) with state-specific amendments. Design wind speeds for Risk Category II structures typically range from <strong>110-120 mph</strong> (3-second gust) based on ASCE 7-22 wind speed maps.</p>
+  <div class="divider"></div>
 
-            <p>These requirements exist because Charlotte experiences severe weather including severe thunderstorms with damaging straight-line winds, occasional tornadoes, and frequent impacts from tropical systems that make landfall along the North Carolina coast and track inland through the piedmont region. The city's rapid growth as a major banking and business center has led to extensive high-rise construction requiring careful wind load analysis.</p>
+  <!-- ============ WIND / EXPOSURE MODULE (city-specific) ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">DESIGN WIND · EXPOSURE B</p>
+    <h2>What a 115 mph Mecklenburg gust <span class="sweep">does to a low-rise wall</span></h2>
+    <p class="lead">Charlotte's dense, tree-and-rooftop terrain reads as Exposure B almost everywhere — far gentler than open coastal sand.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h13a3 3 0 1 0-3-3"/><path d="M3 14h17a3 3 0 1 1-3 3"/><path d="M3 11h9"/></svg>
+        <h3>Basic Speed V</h3>
+        <p>110-120 mph 3-second gust for Risk Category II across Mecklenburg.</p>
+        <span class="badge badge--data">RISK II</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="5" height="11"/><rect x="10" y="5" width="5" height="15"/><rect x="17" y="11" width="4" height="9"/></svg>
+        <h3>Why Exposure B Holds</h3>
+        <p>Uptown towers, South End rooftops and tree canopy shelter nearly every site.</p>
+        <span class="badge badge--data">URBAN ROUGHNESS</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M5 14l7-5 7 5"/></svg>
+        <h3>Piedmont Kzt Watch</h3>
+        <p>Rolling ridges and bluffs can push the topographic factor above 1.0 on exposed crests.</p>
+        <span class="badge badge--method">KZT &gt; 1.0</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 3 7-8"/><path d="M16 7h4v4"/></svg>
+        <h3>Velocity Pressure</h3>
+        <p>At V=115, Kz=0.70 (Exp B, 15 ft), the result is a moderate ~24 psf — well below coastal demand.</p>
+        <span class="badge badge--data">~24 PSF</span>
+      </div>
+    </div>
+  </div></section>
 
-            <div class="info-box">
-                <h4><strong>🏦</strong> Charlotte Wind Load Quick Facts</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 110-120 mph (3-second gust, varies by location)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~125-135 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~135-145 mph</p>
-                <p><strong>Exposure Category:</strong> B (urban areas)</p>
-                <p><strong>Building Code:</strong> North Carolina State Building Code (adopts IBC)</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
-                <p><strong>County:</strong> Mecklenburg County</p>
-                <p><strong>Weather Risks:</strong> Severe thunderstorms, tropical system remnants, tornadoes, straight-line winds</p>
-            </div>
+  <div class="divider"></div>
 
-            <h3>Why Charlotte Has 110-120 mph Wind Speed Requirements</h3>
-            <p>Charlotte's design wind speed of 110-120 mph for Risk Category II structures reflects the city's piedmont location and exposure to both convective weather systems and tropical storm remnants. Charlotte wind speed requirements account for:</p>
+  <!-- ============ STORM HISTORY (city-specific) ============ -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">STORM RECORD · INLAND IMPACTS</p>
+    <h2>When Hugo proved <span class="sweep">a hurricane can still bite 200 miles ashore</span></h2>
+    <p class="lead">Charlotte's hazard is not surge or debris — it is the weakened-but-violent core of tropical systems and Piedmont convective wind.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 4 7 13 7 13s7-9 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <h3>Hugo's 1989 Inland Blow</h3>
+        <p>Sustained 60-70 mph and gusts past 85 mph flattened canopy across the metro overnight.</p>
+        <span class="badge badge--hvhz">SEPT 22, 1989</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a4 4 0 1 1 4-5h11a3 3 0 1 1-1 6"/><path d="M3 17h12a2 2 0 1 1-1 4"/></svg>
+        <h3>The Remnant Parade</h3>
+        <p>Florence, Irma, Michael and Ian each tracked tropical-storm-force wind through the Piedmont.</p>
+        <span class="badge badge--hvhz">RECENT DECADE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>
+        <h3>Spring Derecho Lines</h3>
+        <p>Organized thunderstorm complexes drive straight-line gusts and the odd tornado across Mecklenburg.</p>
+        <span class="badge badge--hvhz">CONVECTIVE</span>
+      </div>
+    </div>
+  </div></section>
 
-            <ul>
-                <li><strong>Severe Thunderstorms:</strong> Frequent severe thunderstorms produce damaging straight-line winds, particularly during spring and summer months</li>
-                <li><strong>Tropical System Remnants:</strong> Hurricanes and tropical storms making landfall along the North Carolina coast often track inland through Charlotte bringing sustained high winds and heavy rainfall</li>
-                <li><strong>Tornado Risk:</strong> Charlotte experiences occasional tornadoes from severe thunderstorm complexes and landfalling tropical systems</li>
-                <li><strong>Banking Hub Development:</strong> Charlotte's role as a major financial center with numerous high-rise buildings requires careful wind load design for tall structures</li>
-                <li><strong>Piedmont Location:</strong> Charlotte's location in North Carolina's piedmont region with rolling terrain requires consideration of topographic effects</li>
-            </ul>
+  <div class="divider"></div>
 
-            <p>Tropical system remnants pose a significant wind risk for Charlotte. When hurricanes make landfall along the North Carolina coast (such as Hurricane Hugo in 1989, Florence in 2018, or Ian in 2022), they often track inland through the Charlotte area while still maintaining tropical storm-force winds. Hugo was particularly devastating, causing widespread wind damage throughout Charlotte as an inland tropical storm with sustained winds of 60+ mph and gusts exceeding 85 mph.</p>
+  <!-- ============ RISK CATEGORY TABLE ============ -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">RISK CATEGORY · MAP SELECTION</p>
+    <h2>How occupancy lifts the speed map <span class="sweep">a Charlotte project must read</span></h2>
+    <p class="lead">Higher risk classes pull from longer-return-period maps, so the design speed climbs with consequence — not by any fixed multiplier.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Risk Category</th><th>Charlotte Design Speed</th><th>Typical Buildings</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I</strong></td><td>~105-110 mph</td><td>Ag facilities, temporary &amp; minor storage</td></tr>
+        <tr><td><strong>II</strong></td><td>110-120 mph</td><td>Homes, retail, most standard occupancy</td></tr>
+        <tr><td><strong>III</strong></td><td>~125-135 mph</td><td>Schools, assembly &gt;300, hazardous materials</td></tr>
+        <tr><td><strong>IV</strong></td><td>~135-145 mph</td><td>Hospitals, fire stations, shelters, EOCs</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
 
-            <h3>Charlotte Wind Load Calculations: Step by Step</h3>
-            <p>Calculating wind loads for Charlotte projects requires following ASCE 7-22 methodology as adopted by the North Carolina Building Code. The fundamental velocity pressure equation is:</p>
+  <div class="divider"></div>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #06b6d4; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+  <!-- ============ COMPLY GRID (city-specific, no-orphan) ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">PERMITTING · QUEEN CITY WORKFLOW</p>
+    <h2>The path from calc to <span class="sweep">a stamped Mecklenburg permit</span></h2>
+    <p class="lead">North Carolina runs code through NCDOI and ASCE 7-10; the city and county split the counter work.</p>
+    <div class="grid" data-n="6">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <h3>Set V to 110-120</h3>
+        <p>Pull the site speed for the Mecklenburg address before sizing anything.</p>
+        <span class="badge badge--data">STEP 1</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><rect x="6" y="9" width="4" height="8"/><rect x="14" y="5" width="4" height="12"/></svg>
+        <h3>Confirm Exposure B</h3>
+        <p>Document built-up roughness; reserve C for cleared sites near the airport.</p>
+        <span class="badge badge--data">STEP 2</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V9l7-5 7 5v12"/><path d="M5 13h14"/></svg>
+        <h3>Check Ridge Kzt</h3>
+        <p>Run topographic factor where a lot crowns a Piedmont bluff or escarpment.</p>
+        <span class="badge badge--method">STEP 3</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <h3>Seal If Required</h3>
+        <p>Commercial work needs an NC-licensed PE seal through NCBELS.</p>
+        <span class="badge badge--method">STEP 4</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        <h3>File With Charlotte</h3>
+        <p>City of Charlotte Code Enforcement handles permits inside city limits.</p>
+        <span class="badge badge--go">STEP 5</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#34d399" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>
+        <h3>Or County LUESA</h3>
+        <p>Mecklenburg Land Use &amp; Environmental Services covers unincorporated areas.</p>
+        <span class="badge badge--go">STEP 6</span>
+      </div>
+    </div>
+    <div class="hero-cta" style="margin-top:1.75rem;">
+      <a class="btn-ghost" href="https://charlottenc.gov/code" target="_blank" rel="noopener">City of Charlotte Code Enforcement</a>
+      <a class="btn-ghost" href="https://www.mecknc.gov/LUESA/CodeEnforcement/Pages/Home.aspx" target="_blank" rel="noopener">Mecklenburg County LUESA</a>
+      <a class="btn-ghost" href="https://www.ncbels.org/" target="_blank" rel="noopener">NC Engineering Licensing Board</a>
+      <a class="btn-ghost" href="https://www.ncdoi.gov/osfm/engineering-and-codes" target="_blank" rel="noopener">NC Dept. of Insurance Codes</a>
+    </div>
+  </div></section>
 
-            <p>For Charlotte with V = 115 mph (typical central Charlotte) and standard conditions, the resulting pressures are moderate. A Charlotte project with:</p>
-            <ul>
-                <li><strong>V = 115 mph</strong> (Charlotte typical velocity)</li>
-                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
-                <li><strong>Kzt = 1.0</strong> (flat terrain, may vary in piedmont areas)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (~600-800 ft elevation, near standard conditions)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 24.4 psf</strong>—moderate compared to coastal hurricane zones but higher than many inland regions with less severe weather exposure.</p>
+  <div class="divider"></div>
 
-            <p>For areas with significant topographic features (hills, ridges in the piedmont region), the topographic factor Kzt may exceed 1.0, requiring detailed topographic analysis per ASCE 7-22 Section 26.8.</p>
+  <!-- ============ INLAND vs COAST CONTRAST ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">CONTRAST · PIEDMONT VS SHORE</p>
+    <h2>Why a Charlotte detail would be <span class="sweep">under-built on the Outer Banks</span></h2>
+    <p class="lead">Same state, two worlds: inland Mecklenburg skips the debris and impact rules that define coastal NC.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Requirement</th><th>Charlotte (Inland)</th><th>Coastal North Carolina</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Design Wind Speed</strong></td><td>110-120 mph</td><td>140-170 mph</td></tr>
+        <tr><td><strong>Exposure Category</strong></td><td>Primarily B (urban)</td><td>C or D required</td></tr>
+        <tr><td><strong>Wind-Borne Debris</strong></td><td>Not required</td><td>Impact protection required</td></tr>
+        <tr><td><strong>Hurricane Impact Zone</strong></td><td>Not applicable</td><td>Required compliance</td></tr>
+        <tr><td><strong>Primary Risk</strong></td><td>Severe thunderstorms, tropical remnants</td><td>Direct hurricane impacts</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
 
-            <h3>North Carolina Building Code and Mecklenburg County Permitting</h3>
-            <p>North Carolina has adopted the <strong>North Carolina State Building Code</strong> which incorporates the International Building Code (IBC) with state-specific amendments. The North Carolina Department of Insurance oversees building code administration.</p>
+  <div class="divider"></div>
 
-            <p>Key Charlotte building code considerations:</p>
+  <!-- ============ NEARBY METRO + STATEWIDE ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">REGION · CHARLOTTE METRO &amp; BEYOND</p>
+    <h2>The counties that share <span class="sweep">Mecklenburg's wind picture</span></h2>
+    <p class="lead">The surrounding Piedmont rings hold near-identical 110-120 mph, Exposure B conditions.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="../north-carolina-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>
+        <h3>North Carolina Statewide</h3>
+        <p>How the coast, Piedmont and mountains split across NC's ASCE 7-10 maps.</p>
+        <span class="badge badge--data">STATE GUIDE</span>
+      </a>
+      <a class="card glass" href="../state-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8z"/></svg>
+        <h3>Every State's Rules</h3>
+        <p>Jump to the wind code, speed and exposure basis for any U.S. jurisdiction.</p>
+        <span class="badge badge--data">ALL STATES</span>
+      </a>
+      <a class="card glass" href="../wind-speed-by-location.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <h3>Look Up Any Address</h3>
+        <p>Find the 3-second-gust speed for a precise Mecklenburg or metro site.</p>
+        <span class="badge badge--data">SPEED MAP</span>
+      </a>
+    </div>
+    <div class="info-box glass" style="max-width:820px;margin:1.75rem auto 0;text-align:center;">
+      <p>Cabarrus, Gaston, Union, Iredell and York County (SC) ring Charlotte with consistent 110-120 mph, Exposure B design — verify each site, but the regional picture holds.</p>
+    </div>
+  </div></section>
 
-            <ul>
-                <li><strong>Building Code Adoption:</strong> North Carolina uses IBC with state amendments through NC State Building Code</li>
-                <li><strong>NCDOI Oversight:</strong> North Carolina Department of Insurance provides statewide code administration</li>
-                <li><strong>Local Jurisdiction:</strong> City of Charlotte Code Enforcement handles permits within city limits</li>
-                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by IBC</li>
-                <li><strong>Permit Authority:</strong> Charlotte-Mecklenburg Planning Department coordinates development review</li>
-                <li><strong>County Permits:</strong> Mecklenburg County handles permits in unincorporated areas</li>
-            </ul>
+  <div class="divider"></div>
 
-            <p>You can access Charlotte building permits and requirements through the <a href="https://charlottenc.gov/code" target="_blank" rel="noopener">City of Charlotte Code Enforcement</a> or <a href="https://www.mecknc.gov/LUESA/CodeEnforcement/Pages/Home.aspx" target="_blank" rel="noopener">Mecklenburg County Land Use and Environmental Services</a>.</p>
+  <!-- ============ CTA ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">START · CHARLOTTE CALCULATION</p>
+    <h2>Turn 110-120 mph into <span class="sweep">a PE-ready Charlotte report</span></h2>
+    <p class="lead">Enter a Mecklenburg address and get the velocity, Exposure B basis and component pressures in minutes.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Charlotte Wind Loads</a>
+      <a class="btn-ghost" href="../state-requirements.html">Browse State Requirements</a>
+    </div>
+  </div></section>
 
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>Charlotte projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+</main>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>Charlotte Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~105-110 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>110-120 mph</td>
-                        <td>Residential, commercial, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~125-135 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~135-145 mph</td>
-                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Exposure Category: B (Urban Charlotte)</h3>
-            <p>Most of Charlotte qualifies as Exposure Category B due to extensive urban and suburban development:</p>
-
-            <div class="charlotte-card">
-                <h4>Exposure Category Selection for Charlotte</h4>
-                <p><strong>Exposure Category B (Urban/Suburban):</strong> The vast majority of Charlotte qualifies as Exposure B due to extensive urban and suburban development with numerous buildings, tree coverage, and other obstructions. Exposure B assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind. This applies to Uptown Charlotte, South End, University area, and virtually all established neighborhoods throughout the metro area.</p>
-                <p><strong>Charlotte's Urban Development:</strong> Charlotte's rapid growth over the past several decades has created dense urban and suburban development with extensive building coverage. The city's numerous high-rise buildings in the banking district also create sheltering effects that support Exposure B classification.</p>
-                <p><strong>Engineering Judgment Required:</strong> In rare cases such as large cleared sites, Charlotte Douglas International Airport areas, or major hilltops with exposed terrain, Exposure C may apply. Professional engineering judgment is required for unusual conditions.</p>
-            </div>
-
-            <h3>Charlotte Tropical System and Severe Weather Considerations</h3>
-            <p>Charlotte's wind load requirements are significantly influenced by the city's exposure to tropical system remnants and severe thunderstorms:</p>
-
-            <p><strong>Hurricane Hugo (1989):</strong> The most significant wind event in Charlotte's modern history occurred on September 22, 1989, when Hurricane Hugo tracked inland through the Charlotte area as a strong tropical storm. Hugo maintained sustained winds of 60-70 mph with gusts exceeding 85 mph, causing catastrophic damage throughout the Charlotte metro area. Tens of thousands of trees were toppled, power was lost for weeks, and significant structural damage occurred to buildings throughout the region. Hugo demonstrated that tropical systems can maintain destructive wind speeds hundreds of miles inland.</p>
-
-            <p><strong>Recent Tropical Impacts:</strong> Charlotte continues to experience impacts from tropical systems. Hurricane Florence (2018), while primarily a flooding event, brought tropical storm-force winds to Charlotte. Hurricane Ian (2022) tracked inland through Charlotte bringing sustained winds of 40-50 mph and wind gusts exceeding 60 mph. Hurricane Irma (2017) and Hurricane Michael (2018) also impacted Charlotte with tropical storm-force winds.</p>
-
-            <p><strong>Severe Thunderstorm Straight-Line Winds:</strong> Charlotte experiences frequent severe thunderstorms, particularly during spring and early summer. These storms produce damaging straight-line winds, large hail, and occasional tornadoes. Derecho events (organized lines of severe thunderstorms) can produce sustained high winds and widespread damage across the entire metropolitan area.</p>
-
-            <h3>Charlotte Zip Codes and Wind Speed Reference</h3>
-            <p>Charlotte zip codes span a large metropolitan area with relatively consistent wind speed requirements. Common Charlotte zip codes include:</p>
-
-            <ul>
-                <li><strong>28202-28206:</strong> Uptown Charlotte, Central Business District</li>
-                <li><strong>28207-28212:</strong> East Charlotte, Plaza-Midwood, University area</li>
-                <li><strong>28213-28217:</strong> North Charlotte, South Charlotte</li>
-                <li><strong>28226-28227:</strong> Southeast Charlotte, Ballantyne area</li>
-                <li><strong>28269-28278:</strong> University Research Park, North suburbs</li>
-                <li><strong>Neighboring Areas:</strong> Huntersville, Cornelius, Matthews, Pineville, Mint Hill</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Charlotte wind speed based on your specific zip code or street address, accounting for local terrain conditions and exposure.</p>
-
-            <h3>Professional Engineer (PE) Requirements in North Carolina</h3>
-            <p>Wind load calculations for Charlotte building permits have specific PE requirements depending on building type and complexity:</p>
-
-            <ul>
-                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a North Carolina-licensed Professional Engineer</li>
-                <li><strong>Residential Structures:</strong> Single-family and small residential projects may not require PE seal for standard designs</li>
-                <li><strong>Complex Structures:</strong> Any building with unusual geometry, height, or occupancy requires PE involvement</li>
-                <li><strong>North Carolina PE License:</strong> Professional Engineers must be licensed through the North Carolina Board of Examiners for Engineers and Surveyors</li>
-                <li><strong>Best Practice:</strong> Even when not required, PE-sealed calculations provide liability protection and ensure code compliance</li>
-            </ul>
-
-            <p>North Carolina Professional Engineers must be licensed through the <a href="https://www.ncbels.org/" target="_blank" rel="noopener">North Carolina Board of Examiners for Engineers and Surveyors</a>.</p>
-
-            <h3>Official Charlotte Building Department Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Charlotte wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://charlottenc.gov/code" target="_blank" rel="noopener" class="external-link">
-                    City of Charlotte Code Enforcement
-                </a>
-                <a href="https://www.mecknc.gov/LUESA/CodeEnforcement/Pages/Home.aspx" target="_blank" rel="noopener" class="external-link">
-                    Mecklenburg County Code Enforcement
-                </a>
-                <a href="https://www.ncbels.org/" target="_blank" rel="noopener" class="external-link">
-                    NC Engineering Licensing Board
-                </a>
-                <a href="https://www.ncdoi.gov/osfm/engineering-and-codes" target="_blank" rel="noopener" class="external-link">
-                    NC Department of Insurance Building Codes
-                </a>
-            </div>
-
-            <h3>Common Charlotte Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Using outdated wind speed maps:</strong> Charlotte wind speeds have been updated in recent ASCE 7 editions</li>
-                <li><strong>Incorrect Exposure Category:</strong> Assuming Exposure C—most of Charlotte is firmly Exposure B due to dense urban development</li>
-                <li><strong>Ignoring topographic effects:</strong> Charlotte's piedmont location has rolling terrain that may require Kzt > 1.0 in some areas</li>
-                <li><strong>Underestimating tropical system risk:</strong> Hurricane Hugo demonstrated that tropical systems can maintain destructive winds hundreds of miles inland</li>
-                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher wind speeds</li>
-                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current IBC adoption</li>
-            </ul>
-
-            <h3>How WindLoadCalc.com Handles Charlotte Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Charlotte-specific requirements:</p>
-
-            <ul>
-                <li><strong>Automatic Velocity Determination:</strong> Enter any Charlotte zip code or address and the system automatically applies 110-120 mph based on location</li>
-                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B based on Charlotte's urban characteristics</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current North Carolina Building Code-adopted ASCE 7-22 requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
-                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Charlotte Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all Charlotte-specific requirements including the 110-120 mph design velocity, Exposure Category B assignment, Risk Category adjustments, and component pressure coefficients. Simply enter your Charlotte project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Charlotte Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Charlotte vs Coastal North Carolina Wind Load Requirements</h3>
-            <p>Charlotte's wind load requirements differ significantly from coastal North Carolina hurricane zones:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Requirement</th>
-                        <th>Charlotte (Inland)</th>
-                        <th>Coastal North Carolina</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Design Wind Speed</strong></td>
-                        <td>110-120 mph</td>
-                        <td>140-170 mph</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Exposure Category</strong></td>
-                        <td>Primarily B (urban)</td>
-                        <td>C or D required</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Wind-Borne Debris</strong></td>
-                        <td>Not required</td>
-                        <td>Impact protection required</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Hurricane Impact Zone</strong></td>
-                        <td>Not applicable</td>
-                        <td>Required compliance</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Primary Risk</strong></td>
-                        <td>Severe thunderstorms, tropical remnants</td>
-                        <td>Direct hurricane impacts</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>While Charlotte does not face direct hurricane impacts like coastal North Carolina, the city's exposure to tropical system remnants (as demonstrated by Hurricane Hugo) and severe thunderstorms requires rigorous wind load design appropriate for North Carolina's piedmont severe weather environment.</p>
-
-            <h3>Metro Charlotte Regional Considerations</h3>
-            <p>Charlotte is the center of a large metropolitan area spanning multiple counties. Wind load requirements for the broader Charlotte metro region are generally consistent with Charlotte proper:</p>
-
-            <ul>
-                <li><strong>Mecklenburg County:</strong> Includes Charlotte proper and numerous suburbs with consistent 110-120 mph wind speeds</li>
-                <li><strong>Cabarrus County:</strong> Northeast metro (Concord, Kannapolis) with similar wind speed requirements</li>
-                <li><strong>Gaston County:</strong> West metro (Gastonia, Belmont) with similar requirements</li>
-                <li><strong>Union County:</strong> Southeast metro (Monroe, Weddington) with similar wind speeds</li>
-                <li><strong>Iredell County:</strong> North metro (Mooresville, Davidson) with consistent requirements</li>
-                <li><strong>York County, SC:</strong> South of Charlotte with similar inland wind load requirements</li>
-            </ul>
-
-            <p>Engineers working across the Charlotte metropolitan area should verify specific wind speeds and exposure categories for each project location, though most of the region maintains consistent 110-120 mph design velocities and Exposure B conditions.</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Charlotte-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Charlotte projects. Our software automatically handles the 110-120 mph velocity range, Exposure B determination, and generates PE-ready reports for building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Charlotte Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../north-carolina-wind-load-requirements.html" style="color: #60a5fa;">North Carolina Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1158,5 +586,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
