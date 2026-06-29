@@ -29,833 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #059669;
-            background: rgba(5, 150, 105, 0.1);
-            border-color: rgba(5, 150, 105, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
-            position: relative;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 2px;
-            background: white;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-            background: #1f2937;
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-            background: #1f2937;
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: -1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 0;
-            background: #059669;
-            border-radius: 2px;
-            transition: height 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            height: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #059669;
-            padding-left: 0.5rem;
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-
-        /* Hero Section - Green Theme for Signs */
-        .hero {
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            padding: 10rem 3rem 5rem;
-            background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: white;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 700px;
-            margin-bottom: 2rem;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            color: #059669;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        /* Main Content */
-        .content-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 5rem 2rem;
-        }
-
-        .content-section h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .content-section h2 .icon {
-            color: #059669;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #374151;
-            margin: 2rem 0 1rem;
-        }
-
-        .content-section h4 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #4b5563;
-            margin: 1.5rem 0 0.75rem;
-        }
-
-        .content-section p {
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .content-section ul, .content-section ol {
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        .content-section li {
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
-        }
-
-        /* Info Cards */
-        .info-card {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border-left: 4px solid #059669;
-            padding: 1.5rem 2rem;
-            border-radius: 0 12px 12px 0;
-            margin: 2rem 0;
-        }
-
-        .info-card h4 {
-            color: #047857;
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-
-        .info-card p {
-            margin-bottom: 0;
-            color: #065f46;
-        }
-
-        /* Warning Card */
-        .warning-card {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            border-left: 4px solid #ef4444;
-            padding: 1.5rem 2rem;
-            border-radius: 0 12px 12px 0;
-            margin: 2rem 0;
-        }
-
-        .warning-card h4 {
-            color: #b91c1c;
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-
-        .warning-card p {
-            margin-bottom: 0;
-            color: #991b1b;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: #1f2937;
-            color: #f9fafb;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .formula-box .formula {
-            font-size: 1.3rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: #34d399;
-        }
-
-        .formula-box .formula-description {
-            font-size: 0.95rem;
-            color: #9ca3af;
-            margin-top: 1rem;
-        }
-
-        .formula-box .formula-description strong {
-            color: #34d399;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .comparison-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-            background: white;
-        }
-
-        .comparison-table tr:hover td {
-            background: #ecfdf5;
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Case Cards */
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .case-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .case-card:hover {
-            border-color: #059669;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.15);
-        }
-
-        .case-card.case-a {
-            border-top: 4px solid #3b82f6;
-        }
-
-        .case-card.case-b {
-            border-top: 4px solid #f59e0b;
-        }
-
-        .case-card.case-c {
-            border-top: 4px solid #ef4444;
-        }
-
-        .case-card h4 {
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .case-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .case-a .case-badge {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-
-        .case-b .case-badge {
-            background: #fef3c7;
-            color: #b45309;
-        }
-
-        .case-c .case-badge {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            margin: 3rem 0;
-            border-radius: 20px;
-        }
-
-        .cta-section h2 {
-            color: white;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            color: #059669;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Related Links */
-        .related-section {
-            background: #f8fafc;
-            padding: 4rem 2rem;
-            margin-top: 3rem;
-        }
-
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .related-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .related-card:hover {
-            border-color: #059669;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.15);
-        }
-
-        .related-card h4 {
-            color: #1f2937;
-            margin: 0 0 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .related-card p {
-            color: #6b7280;
-            margin: 0;
-            font-size: 0.95rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: #9ca3af;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        footer a {
-            color: #059669;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 8rem 1.5rem 3rem;
-            }
-
-            .header-container {
-                padding: 0 1.5rem;
-            }
-
-            .content-section {
-                padding: 3rem 1.5rem;
-            }
-
-            .comparison-table {
-                font-size: 0.85rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem 0.5rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <!-- Schema.org FAQPage -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What ASCE 7 section covers sign and billboard wind loads?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "ASCE 7-16 and ASCE 7-22 Section 29.3 covers wind loads on solid freestanding walls and solid signs. This section provides force coefficients (Cf) from Figure 29.3-1 for calculating design wind forces on signs, billboards, and freestanding walls."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the design wind force formula for signs?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The design wind force for signs is F = qh × G × Cf × As, where qh is velocity pressure at height h, G is the gust-effect factor (typically 0.85 for rigid signs), Cf is the force coefficient from Figure 29.3-1, and As is the gross area of the sign."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the difference between Case A, B, and C for sign wind loads?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Case A applies uniform pressure across the sign face. Case B applies the same total force but with eccentricity (offset 0.2B from center) to account for torsion. Case C applies only when B/s >= 2 and creates two zones with different force coefficients (Cf = 2.25 for zone 0-s and Cf = 1.5 for zone s-2s)."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is considered a solid sign vs open sign per ASCE 7?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A sign is considered solid if openings comprise less than 30% of the gross area. For signs with openings less than 30%, a porosity reduction factor can be applied: Factor = 1 - (1-epsilon)^1.5, where epsilon is the ratio of solid area to gross area. Signs with 30% or more openings use different provisions."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How does clearance ratio affect sign wind loads?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The clearance ratio (s/h) where s is the sign height and h is the clearance from ground to bottom of sign, affects the force coefficient Cf. Lower clearance ratios (sign closer to ground) generally result in lower force coefficients due to ground effect reducing wind exposure."
-                }
-            }
-        ]
-    }
-    </script>
-
-    <!-- Schema.org Article -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Sign & Billboard Wind Load Guide: ASCE 7-22 Calculations",
-        "description": "Complete guide to sign and billboard wind load calculations per the latest ASCE 7 (ASCE 7-22), covering force coefficients, load cases, and design formulas.",
-        "author": {
-            "@type": "Organization",
-            "name": "WindLoad Solutions"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "WindLoad Solutions",
-            "url": "https://windload.solutions"
-        },
-        "datePublished": "2025-11-30",
-        "dateModified": "2025-11-30"
-    }
-    </script>
-
-    <!-- Schema.org BreadcrumbList -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Articles",
-                "item": "https://windload.solutions/articles"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Sign & Billboard Wind Load Guide",
-                "item": "https://windload.solutions/sign-billboard-wind-load-guide"
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/shop/specialty.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-sign"></i> Sign/Billboard Calculator</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/shop/specialty.html" target="_blank" rel="noopener"><i class="fas fa-sign"></i> Sign/Billboard Calculator</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -865,445 +284,256 @@
         <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Guide</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span>&#128681;</span> Latest ASCE 7 (ASCE 7-22) Section 29.3
-            </div>
-            <h1>Sign & Billboard Wind Load Calculations</h1>
-            <p class="hero-subtitle">Complete guide to calculating wind loads on freestanding signs, billboards, and walls per the latest ASCE 7 (ASCE 7-22), including force coefficients (Cf), load cases A/B/C, and porosity effects.</p>
-            <a href="https://windloadcalc.com/shop/specialty.html" class="hero-cta">
-                Calculate Sign Wind Loads <span>&rarr;</span>
-            </a>
-        </div>
-    </section>
+  <!-- HERO + STAT STRIP -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">ASCE 7-22 · CHAPTER 29 · SIGNS &amp; BILLBOARDS</p>
+    <h1>Wind Loads on Signs &amp; <span class="sweep">Billboards</span></h1>
+    <p class="lead">Large face area, elevated, fully exposed &mdash; signs catch wind like a sail. ASCE 7-22 Chapter 29 sets the force.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">Ch&nbsp;29</span><span class="lbl">SIGNS &amp; FREESTANDING WALLS</span></div>
+      <div class="stat"><span class="num">0.85</span><span class="lbl">K<sub>d</sub> DIRECTIONALITY</span></div>
+      <div class="stat"><span class="num">F = q<sub>h</sub>GC<sub>f</sub>A<sub>s</sub></span><span class="lbl">DESIGN WIND FORCE</span></div>
+    </div>
+  </div></section>
 
-    <!-- Main Content -->
-    <main>
-        <section class="content-section">
-            <h2><span class="icon">&#128681;</span> Introduction to Sign Wind Loads</h2>
+  <div class="divider"></div>
 
-            <p>Signs, billboards, and freestanding walls are subject to significant wind forces due to their large surface areas and elevated positions. ASCE 7 provides specific provisions in <strong>Section 29.3</strong> for calculating design wind loads on these structures.</p>
+  <!-- CUSTOM SVG: wind force on a billboard -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">THE PICTURE</p>
+    <h2>Wind pushes on the <span class="sweep">whole sign face</span></h2>
+    <p class="lead">The full panel area A<sub>s</sub> resists the flow; the resultant force acts at the centroid, well above the ground.</p>
+    <div class="info-box glass" style="max-width:680px;margin:0 auto;">
+      <svg viewBox="0 0 480 300" width="100%" height="auto" role="img" aria-label="Wind force acting on an elevated billboard panel of area As" style="display:block">
+        <defs>
+          <linearGradient id="panelG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#22d3ee" stop-opacity="0.22"/>
+            <stop offset="1" stop-color="#a78bfa" stop-opacity="0.22"/>
+          </linearGradient>
+          <marker id="arrowC" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/>
+          </marker>
+          <linearGradient id="windG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#22d3ee" stop-opacity="0"/>
+            <stop offset="1" stop-color="#22d3ee" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
 
-            <p>This guide covers wind load calculations for both <strong>solid signs</strong> (less than 30% open) and considerations for <strong>open/porous signs</strong>, explaining the force coefficient (Cf) determination, the three load cases (A, B, and C), and step-by-step calculation procedures per the latest ASCE 7 (ASCE 7-22).</p>
+        <!-- ground -->
+        <line x1="20" y1="262" x2="460" y2="262" stroke="#64748b" stroke-width="2"/>
+        <g stroke="#64748b" stroke-width="1.4" opacity="0.6">
+          <line x1="40" y1="262" x2="28" y2="274"/><line x1="80" y1="262" x2="68" y2="274"/>
+          <line x1="120" y1="262" x2="108" y2="274"/><line x1="160" y1="262" x2="148" y2="274"/>
+          <line x1="200" y1="262" x2="188" y2="274"/><line x1="240" y1="262" x2="228" y2="274"/>
+        </g>
 
-            <div class="info-card">
-                <h4>&#9432; Sign Types Covered</h4>
-                <p>Section 29.3 applies to freestanding signs (ground signs, monument signs, pole signs), billboards, and solid freestanding walls. For wall-attached signs with specific conditions, different provisions may apply.</p>
-            </div>
+        <!-- support pole -->
+        <rect x="232" y="120" width="14" height="142" rx="3" fill="#475569"/>
 
-            <h2><span class="icon">&#128290;</span> Design Wind Force Formula</h2>
+        <!-- sign panel (area As) -->
+        <rect x="150" y="60" width="178" height="100" rx="6" fill="url(#panelG)" stroke="#a78bfa" stroke-width="2"/>
+        <text x="239" y="106" text-anchor="middle" fill="#e2e8f0" font-family="Inter,sans-serif" font-size="15" font-weight="700">A<tspan baseline-shift="sub" font-size="10">s</tspan></text>
+        <text x="239" y="126" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">sign area</text>
 
-            <p>The design wind force for solid freestanding walls and solid signs per ASCE 7 is calculated using:</p>
+        <!-- wind streamlines -->
+        <g stroke-width="3" fill="none">
+          <line x1="20" y1="85"  x2="135" y2="85"  stroke="url(#windG)" marker-end="url(#arrowC)"/>
+          <line x1="20" y1="110" x2="135" y2="110" stroke="url(#windG)" marker-end="url(#arrowC)"/>
+          <line x1="20" y1="135" x2="135" y2="135" stroke="url(#windG)" marker-end="url(#arrowC)"/>
+        </g>
 
-            <div class="formula-box">
-                <div class="formula">F = q<sub>h</sub> &times; G &times; C<sub>f</sub> &times; A<sub>s</sub></div>
-                <div class="formula-description">
-                    <strong>F</strong> = design wind force (lb)<br>
-                    <strong>q<sub>h</sub></strong> = velocity pressure at height h (psf)<br>
-                    <strong>G</strong> = gust-effect factor (0.85 for rigid structures)<br>
-                    <strong>C<sub>f</sub></strong> = force coefficient from Figure 29.3-1<br>
-                    <strong>A<sub>s</sub></strong> = gross area of the sign (ft<sup>2</sup>)
-                </div>
-            </div>
+        <!-- resultant force arrow at centroid -->
+        <line x1="328" y1="110" x2="430" y2="110" stroke="#22d3ee" stroke-width="5" marker-end="url(#arrowC)"/>
+        <text x="395" y="98" text-anchor="middle" fill="#22d3ee" font-family="Inter,sans-serif" font-size="15" font-weight="800">F</text>
+        <circle cx="328" cy="110" r="4" fill="#22d3ee"/>
+        <text x="360" y="138" text-anchor="middle" fill="#94a3b8" font-family="Inter,sans-serif" font-size="10">acts at centroid</text>
 
-            <h3>Velocity Pressure (q<sub>h</sub>)</h3>
+        <!-- clearance dimension -->
+        <line x1="100" y1="160" x2="100" y2="262" stroke="#64748b" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text x="92" y="215" text-anchor="end" fill="#94a3b8" font-family="Inter,sans-serif" font-size="11">clearance</text>
+      </svg>
+    </div>
+  </div></section>
 
-            <p>The velocity pressure is calculated at the centroid height (h) of the sign:</p>
+  <div class="divider"></div>
 
-            <div class="formula-box">
-                <div class="formula">q<sub>h</sub> = 0.00256 &times; K<sub>h</sub> &times; K<sub>zt</sub> &times; K<sub>d</sub> &times; K<sub>e</sub> &times; V<sup>2</sup></div>
-                <div class="formula-description">
-                    <strong>K<sub>h</sub></strong> = velocity pressure exposure coefficient at height h<br>
-                    <strong>K<sub>zt</sub></strong> = topographic factor<br>
-                    <strong>K<sub>d</sub></strong> = wind directionality factor (0.85 for signs)<br>
-                    <strong>K<sub>e</sub></strong> = ground elevation factor<br>
-                    <strong>V</strong> = basic wind speed (mph)
-                </div>
-            </div>
+  <!-- THE SIGN FORCE EQUATION MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">THE EQUATION</p>
+    <h2>The sign force <span class="sweep">equation</span></h2>
+    <div class="info-box glass" style="max-width:620px;margin:1rem auto;text-align:center;">
+      <p style="font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;letter-spacing:.5px;">
+        F = q<sub>h</sub> &middot; G &middot; C<sub>f</sub> &middot; A<sub>s</sub>
+      </p>
+    </div>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <h3>q<sub>h</sub></h3>
+        <p>Velocity pressure at sign height: 0.00256&middot;K<sub>z</sub>K<sub>zt</sub>K<sub>d</sub>K<sub>e</sub>V&sup2;.</p>
+        <span class="badge badge--data">K<sub>d</sub> = 0.85</span>
+      </div>
+      <div class="card glass">
+        <h3>G</h3>
+        <p>Gust-effect factor for a rigid sign structure.</p>
+        <span class="badge badge--data">G = 0.85</span>
+      </div>
+      <div class="card glass">
+        <h3>C<sub>f</sub></h3>
+        <p>Force coefficient from Fig 29.3-1 &mdash; set by aspect ratio and clearance to ground.</p>
+        <span class="badge badge--method">QUALITATIVE</span>
+      </div>
+      <div class="card glass">
+        <h3>A<sub>s</sub></h3>
+        <p>Gross area of the sign face the wind acts on.</p>
+        <span class="badge badge--data">SIGN AREA</span>
+      </div>
+    </div>
+  </div></section>
 
-            <div class="info-card">
-                <h4>&#9432; ASCE 7-22 Change</h4>
-                <p>In ASCE 7-22, the directionality factor (K<sub>d</sub>) was removed from the velocity pressure equation and incorporated directly into individual force and pressure equations. The net effect is the same, but the calculation sequence differs slightly from ASCE 7-16.</p>
-            </div>
+  <div class="divider"></div>
 
-            <h2><span class="icon">&#128200;</span> Solid vs. Open Signs</h2>
+  <!-- SOLID vs OPEN 2-CARD -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">TWO FAMILIES</p>
+    <h2>Solid signs vs <span class="sweep">open signs</span></h2>
+    <p class="lead">How much wind a sign sheds depends on how much of its face is actually solid.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.6" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="13" rx="1.5"/>
+          <line x1="3" y1="8" x2="21" y2="8"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <h3>Solid signs</h3>
+        <p>A full, closed face (billboards, monument and panel signs). The force coefficient applies to the entire area A<sub>s</sub> &mdash; governed by Fig 29.3-1 for solid attached and freestanding signs.</p>
+        <span class="badge badge--data">FIG 29.3-1</span>
+      </div>
+      <div class="card glass">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="13" rx="1.5"/>
+          <line x1="8" y1="4" x2="8" y2="17"/><line x1="13" y1="4" x2="13" y2="17"/><line x1="18" y1="4" x2="18" y2="17"/>
+          <line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <h3>Open / lattice signs</h3>
+        <p>Slats, frames, and see-through lattice. Wind passes between members, so the load is reduced by the solidity ratio &mdash; open signs and single-plane open frames follow Fig 29.4-2.</p>
+        <span class="badge badge--method">FIG 29.4-2</span>
+      </div>
+    </div>
+  </div></section>
 
-            <p>ASCE 7 distinguishes between solid and open signs based on the percentage of openings:</p>
+  <div class="divider"></div>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Sign Type</th>
-                        <th>Openings</th>
-                        <th>ASCE 7 Treatment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Solid Sign</strong></td>
-                        <td>&lt; 30% of gross area</td>
-                        <td>Use Section 29.3 with porosity reduction factor permitted</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Open Sign</strong></td>
-                        <td>&ge; 30% of gross area</td>
-                        <td>Use visual (see-through) porosity calculation</td>
-                    </tr>
-                </tbody>
-            </table>
+  <!-- WHAT AFFECTS THE LOAD (card grid, no-orphan) -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">DRIVERS</p>
+    <h2>What actually <span class="sweep">moves the load</span></h2>
+    <p class="lead">Four geometry factors feed q<sub>h</sub>, C<sub>f</sub>, and A<sub>s</sub> &mdash; change one and the force shifts.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.6" aria-hidden="true">
+          <line x1="12" y1="3" x2="12" y2="21"/><polyline points="7,8 12,3 17,8"/><line x1="5" y1="21" x2="19" y2="21"/>
+        </svg>
+        <h3>Height</h3>
+        <p>Taller centroids see a higher K<sub>z</sub>, raising q<sub>h</sub> and the design force.</p>
+        <span class="badge badge--data">q<sub>h</sub></span>
+      </div>
+      <div class="card glass">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.6" aria-hidden="true">
+          <rect x="4" y="4" width="16" height="16" rx="1.5"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="4" x2="12" y2="20"/>
+        </svg>
+        <h3>Area</h3>
+        <p>Force scales directly with A<sub>s</sub> &mdash; double the panel, double the load.</p>
+        <span class="badge badge--data">A<sub>s</sub></span>
+      </div>
+      <div class="card glass">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6" aria-hidden="true">
+          <rect x="3" y="7" width="18" height="10" rx="1.5"/><line x1="3" y1="12" x2="21" y2="12" stroke-dasharray="2 2"/>
+        </svg>
+        <h3>Aspect ratio</h3>
+        <p>Width-to-height shapes C<sub>f</sub> in Fig 29.3-1 &mdash; long signs behave differently.</p>
+        <span class="badge badge--method">C<sub>f</sub></span>
+      </div>
+      <div class="card glass">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6" aria-hidden="true">
+          <rect x="6" y="3" width="12" height="9" rx="1"/><line x1="12" y1="12" x2="12" y2="20"/><line x1="4" y1="20" x2="20" y2="20"/>
+        </svg>
+        <h3>Clearance to ground</h3>
+        <p>The gap below the panel changes C<sub>f</sub>; ground effect modifies how the flow loads the face.</p>
+        <span class="badge badge--method">C<sub>f</sub></span>
+      </div>
+    </div>
+  </div></section>
 
-            <h3>Porosity Reduction Factor for Solid Signs</h3>
+  <div class="divider"></div>
 
-            <p>For solid signs with some openings (less than 30%), the force coefficient may be multiplied by a porosity reduction factor:</p>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">RUN THE NUMBERS</p>
+    <h2>Size your <span class="sweep">sign &amp; billboard</span> loads</h2>
+    <p class="lead">Get the Chapter 29 force F = q<sub>h</sub>GC<sub>f</sub>A<sub>s</sub> for your panel, height, and exposure.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/shop/specialty.html" target="_blank" rel="noopener">Sign / Billboard Calculator</a>
+      <a class="btn-ghost" href="resources.html">Free Resources</a>
+    </div>
+  </div></section>
 
-            <div class="formula-box">
-                <div class="formula">Reduction Factor = 1 - (1 - &epsilon;)<sup>1.5</sup></div>
-                <div class="formula-description">
-                    <strong>&epsilon;</strong> = ratio of solid area to gross area (solidity ratio)<br><br>
-                    <strong>Example:</strong> For a sign that is 75% solid (25% open):<br>
-                    Factor = 1 - (1 - 0.75)<sup>1.5</sup> = 1 - 0.125 = 0.875<br>
-                    This means the wind force is 87.5% of a fully solid sign.
-                </div>
-            </div>
+  <div class="divider"></div>
 
-            <h2><span class="icon">&#128506;</span> Force Coefficient (C<sub>f</sub>) from Figure 29.3-1</h2>
+  <!-- RELATED LINKS + REFERENCES -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">KEEP READING</p>
+    <h2>Related <span class="sweep">guides</span></h2>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="specialty-structures-wind-loads.html">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.6" aria-hidden="true">
+          <path d="M3 21h18"/><path d="M6 21V9l6-4 6 4v12"/><line x1="10" y1="13" x2="14" y2="13"/>
+        </svg>
+        <h3>Specialty Structures Wind Loads</h3>
+        <p>Chapter 29 loads on signs, walls, towers, and other structures.</p>
+        <span class="badge badge--data">CHAPTER 29</span>
+      </a>
+      <a class="card glass" href="design-methods-asce-7-guide.html">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6" aria-hidden="true">
+          <path d="M4 19V5a1 1 0 011-1h14"/><path d="M8 8h8M8 12h8M8 16h5"/>
+        </svg>
+        <h3>Design Methods (ASCE 7)</h3>
+        <p>How the directional procedures and load paths fit together.</p>
+        <span class="badge badge--method">METHODS</span>
+      </a>
+      <a class="card glass" href="wind-directionality-factor-guide.html">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><polyline points="12,5 15,12 12,11 9,12 12,5"/>
+        </svg>
+        <h3>Wind Directionality Factor</h3>
+        <p>What K<sub>d</sub> = 0.85 means and why signs use it.</p>
+        <span class="badge badge--data">K<sub>d</sub></span>
+      </a>
+    </div>
 
-            <p>The force coefficient C<sub>f</sub> is determined from ASCE 7 Figure 29.3-1 based on two key ratios:</p>
+    <div class="divider"></div>
 
-            <ul>
-                <li><strong>B/s</strong> = ratio of sign width (B) to sign height (s)</li>
-                <li><strong>s/h</strong> = ratio of sign height (s) to clearance from ground (h)</li>
-            </ul>
+    <p class="eyebrow">REFERENCES</p>
+    <div class="info-box glass" style="max-width:680px;margin:0 auto;text-align:left;">
+      <ul style="margin:0;padding-left:1.2rem;line-height:2;">
+        <li><a href="https://asce7hazardtool.online/" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a> &mdash; site-specific wind speeds</li>
+        <li><a href="https://www.asce.org/publications-and-news/asce-7" target="_blank" rel="noopener">ASCE/SEI 7-22 Standard</a> &mdash; official publication</li>
+        <li><a href="https://codes.iccsafe.org/" target="_blank" rel="noopener">ICC Digital Codes</a> &mdash; building code reference</li>
+      </ul>
+    </div>
+  </div></section>
 
-            <p>Figure 29.3-1 provides C<sub>f</sub> values for up to three different load cases depending on the sign geometry:</p>
+</main>
 
-            <h3>Sign Geometry Parameters</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Definition</th>
-                        <th>Impact on C<sub>f</sub></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>B</strong></td>
-                        <td>Horizontal dimension (width) of sign</td>
-                        <td>Wider signs require Case C analysis</td>
-                    </tr>
-                    <tr>
-                        <td><strong>s</strong></td>
-                        <td>Vertical dimension (height) of sign</td>
-                        <td>Used in aspect ratio calculations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>h</strong></td>
-                        <td>Height from ground to bottom of sign</td>
-                        <td>Higher clearance = higher C<sub>f</sub></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2><span class="icon">&#127919;</span> Load Cases A, B, and C</h2>
-
-            <p>ASCE 7 Figure 29.3-1 defines three load cases that may need to be considered depending on sign geometry:</p>
-
-            <div class="case-grid">
-                <div class="case-card case-a">
-                    <h4><span class="case-badge">Case A</span> Uniform Load</h4>
-                    <p><strong>Applies:</strong> All signs (always required)</p>
-                    <p><strong>Load Pattern:</strong> Uniform pressure across entire sign face</p>
-                    <p><strong>Force Location:</strong> Applied at geometric center of sign</p>
-                    <p><strong>Purpose:</strong> Maximum total force on sign and foundation</p>
-                </div>
-                <div class="case-card case-b">
-                    <h4><span class="case-badge">Case B</span> Eccentric Load</h4>
-                    <p><strong>Applies:</strong> All signs (always required)</p>
-                    <p><strong>Load Pattern:</strong> Same total force as Case A, but offset from center</p>
-                    <p><strong>Eccentricity:</strong> D<sub>x</sub> = 0.2 &times; B (20% of sign width)</p>
-                    <p><strong>Purpose:</strong> Maximum torsion on support structure</p>
-                </div>
-                <div class="case-card case-c">
-                    <h4><span class="case-badge">Case C</span> Two-Zone Load</h4>
-                    <p><strong>Applies:</strong> Only when B/s &ge; 2</p>
-                    <p><strong>Load Pattern:</strong> Two zones with different C<sub>f</sub> values</p>
-                    <p><strong>Zone 1 (0 to s):</strong> C<sub>f</sub> = 2.25</p>
-                    <p><strong>Zone 2 (s to 2s):</strong> C<sub>f</sub> = 1.50</p>
-                    <p><strong>Purpose:</strong> Maximum localized pressure on wide signs</p>
-                </div>
-            </div>
-
-            <div class="warning-card">
-                <h4>&#9888; All Applicable Cases Must Be Checked</h4>
-                <p>The sign and its support structure must be designed for the maximum effects from all applicable load cases. For most signs, both Case A and Case B are required. For wide signs (B/s &ge; 2), Case C must also be considered.</p>
-            </div>
-
-            <h2><span class="icon">&#128208;</span> Typical Force Coefficient Values</h2>
-
-            <p>The following table provides representative C<sub>f</sub> values from Figure 29.3-1 for common sign configurations:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>B/s Ratio</th>
-                        <th>s/h &le; 0.8</th>
-                        <th>s/h = 1</th>
-                        <th>s/h &ge; 2</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>&le; 1</strong></td>
-                        <td>1.80</td>
-                        <td>1.70</td>
-                        <td>1.55</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2</strong></td>
-                        <td>1.70</td>
-                        <td>1.65</td>
-                        <td>1.50</td>
-                    </tr>
-                    <tr>
-                        <td><strong>5</strong></td>
-                        <td>1.60</td>
-                        <td>1.55</td>
-                        <td>1.40</td>
-                    </tr>
-                    <tr>
-                        <td><strong>&ge; 10</strong></td>
-                        <td>1.55</td>
-                        <td>1.50</td>
-                        <td>1.35</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p><em>Note: These are approximate values for Case A. Always refer to ASCE 7 Figure 29.3-1 for exact coefficients. Values vary based on interpolation between listed ratios.</em></p>
-
-            <h2><span class="icon">&#128736;</span> Support Column Wind Loads</h2>
-
-            <p>In addition to the sign face, wind loads on <strong>support columns</strong> (poles, posts) must be calculated separately. ASCE 7 treats cylindrical supports using provisions similar to chimneys and other structures:</p>
-
-            <h3>Cylindrical Support Force Coefficient</h3>
-
-            <p>For round pole supports, the force coefficient depends on:</p>
-
-            <ul>
-                <li><strong>Surface roughness</strong> - Smooth vs. rough (moderately smooth for most steel poles)</li>
-                <li><strong>Reynolds number effects</strong> - Related to D&times;q<sub>h</sub><sup>0.5</sup></li>
-                <li><strong>Aspect ratio</strong> - h/D ratio of the pole</li>
-            </ul>
-
-            <p>Typical C<sub>f</sub> values for cylindrical supports range from <strong>0.5 to 1.2</strong> depending on conditions. Square or rectangular supports use higher coefficients (typically 1.3 to 2.0).</p>
-
-            <h2><span class="icon">&#127981;</span> Wall-Attached Signs</h2>
-
-            <p>Signs attached to building walls have special provisions:</p>
-
-            <ul>
-                <li><strong>Gap Condition:</strong> When gap between sign and wall &le; 3 ft AND sign edge is &ge; 3 ft from wall free edges</li>
-                <li><strong>Internal Pressure:</strong> GC<sub>pi</sub> = 0 (no internal pressure consideration)</li>
-                <li><strong>Design Pressure:</strong> Use wall C&C pressures from Chapter 30 for the sign location zone</li>
-            </ul>
-
-            <div class="info-card">
-                <h4>&#9432; Wall-Attached vs. Freestanding</h4>
-                <p>Wall-attached signs that meet the gap and edge criteria are designed using building wall pressures, which are typically lower than freestanding sign forces. Signs that don't meet these criteria should be designed as freestanding structures.</p>
-            </div>
-
-            <h2><span class="icon">&#128221;</span> Example Calculation</h2>
-
-            <p>The following example demonstrates a billboard wind load calculation:</p>
-
-            <h4>Given Parameters:</h4>
-            <ul>
-                <li>Location: Tulsa, Oklahoma</li>
-                <li>Design wind speed (V): 115 mph (Risk Category II)</li>
-                <li>Exposure Category: C</li>
-                <li>Sign dimensions: 14 ft wide (B) &times; 48 ft high panel (s)</li>
-                <li>Height to bottom of sign (h): 20 ft</li>
-                <li>Solid sign (no openings)</li>
-            </ul>
-
-            <h4>Step-by-Step Calculation:</h4>
-
-            <ol>
-                <li><strong>Calculate geometric ratios:</strong><br>
-                    B/s = 48/14 = 3.43<br>
-                    s/h = 14/20 = 0.70</li>
-                <li><strong>Determine height to centroid:</strong><br>
-                    h<sub>centroid</sub> = 20 + 14/2 = 27 ft</li>
-                <li><strong>Calculate velocity pressure (q<sub>h</sub>):</strong><br>
-                    K<sub>h</sub> at 27 ft (Exposure C) = 0.94<br>
-                    K<sub>zt</sub> = 1.0 (flat terrain)<br>
-                    K<sub>d</sub> = 0.85 (signs)<br>
-                    K<sub>e</sub> = 1.0<br>
-                    q<sub>h</sub> = 0.00256 &times; 0.94 &times; 1.0 &times; 0.85 &times; 1.0 &times; 115<sup>2</sup> = <strong>27.0 psf</strong></li>
-                <li><strong>Determine C<sub>f</sub> from Figure 29.3-1:</strong><br>
-                    For B/s = 3.43 and s/h = 0.70, interpolate: C<sub>f</sub> &asymp; 1.63</li>
-                <li><strong>Calculate sign area:</strong><br>
-                    A<sub>s</sub> = 14 &times; 48 = 672 ft<sup>2</sup></li>
-                <li><strong>Calculate design wind force (Case A):</strong><br>
-                    F = 27.0 &times; 0.85 &times; 1.63 &times; 672 = <strong>25,140 lb</strong></li>
-                <li><strong>Check Case C (since B/s &ge; 2):</strong><br>
-                    Zone 1 force (C<sub>f</sub> = 2.25): F<sub>1</sub> = 27.0 &times; 0.85 &times; 2.25 &times; (14 &times; 14) = 10,120 lb<br>
-                    Zone 2 force (C<sub>f</sub> = 1.50): F<sub>2</sub> = 27.0 &times; 0.85 &times; 1.50 &times; (14 &times; 34) = 16,400 lb</li>
-            </ol>
-
-            <div class="info-card">
-                <h4>&#9432; Design Considerations</h4>
-                <p>The sign structure must be designed for Case A (maximum total force of 25,140 lb), Case B (same force with 9.6 ft eccentricity for torsion), and Case C zone forces for localized member design. Support columns and foundation must resist overturning moment from the applied force at the centroid height.</p>
-            </div>
-
-            <h2><span class="icon">&#128260;</span> ASCE 7-16 vs. ASCE 7-22 for Signs</h2>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>ASCE 7-16</th>
-                        <th>ASCE 7-22</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Section Reference</td>
-                        <td>29.3</td>
-                        <td>29.3</td>
-                    </tr>
-                    <tr>
-                        <td>Force Coefficient Figure</td>
-                        <td>29.3-1</td>
-                        <td>29.3-1</td>
-                    </tr>
-                    <tr>
-                        <td>K<sub>d</sub> Location</td>
-                        <td>In velocity pressure equation</td>
-                        <td>In force equation</td>
-                    </tr>
-                    <tr>
-                        <td>Porosity Reduction</td>
-                        <td>Note 2 of Figure 29.3-1</td>
-                        <td>Note 2 of Figure 29.3-1</td>
-                    </tr>
-                    <tr>
-                        <td>Load Cases A, B, C</td>
-                        <td>Required per Figure 29.3-1</td>
-                        <td>Required per Figure 29.3-1</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="info-card">
-                <h4>&#9432; Minimal Changes for Signs</h4>
-                <p>Unlike some other provisions, sign wind load calculations are largely unchanged between ASCE 7-16 and ASCE 7-22. The main difference is the repositioning of K<sub>d</sub> from the velocity pressure equation to individual force equations, but the final results are identical.</p>
-            </div>
-
-            <h2><span class="icon">&#128736;</span> Design Considerations</h2>
-
-            <h3>Foundation Design</h3>
-            <ul>
-                <li><strong>Overturning moment:</strong> M = F &times; (h + s/2)</li>
-                <li><strong>Soil bearing capacity</strong> must resist foundation reactions</li>
-                <li><strong>Anchor bolts</strong> must resist combined shear and tension</li>
-            </ul>
-
-            <h3>Support Structure</h3>
-            <ul>
-                <li><strong>Bending moment</strong> in columns from wind force</li>
-                <li><strong>Torsion</strong> from Case B eccentric loading</li>
-                <li><strong>Combined stresses</strong> from dead load + wind</li>
-            </ul>
-
-            <h3>Connection Design</h3>
-            <ul>
-                <li><strong>Sign-to-structure connections</strong> must transfer wind forces</li>
-                <li><strong>Base plate connections</strong> sized for overturning moment</li>
-                <li><strong>Fatigue considerations</strong> for repeated wind loading</li>
-            </ul>
-
-            <div class="warning-card">
-                <h4>&#9888; Professional Engineering Required</h4>
-                <p>Sign structures, especially billboards and large freestanding signs, typically require design by a licensed Professional Engineer. Many jurisdictions require PE-stamped drawings and calculations for sign permits.</p>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="content-section">
-            <div class="cta-section">
-                <h2>Calculate Your Sign Wind Loads</h2>
-                <p>Use our professional wind load calculator to determine design forces for your sign or billboard per the latest ASCE 7 (ASCE 7-22).</p>
-                <a href="https://windloadcalc.com/shop/specialty.html" class="cta-button">
-                    Get Wind Load Calculator <span>&rarr;</span>
-                </a>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2><span class="icon">&#128279;</span> Resources and References</h2>
-
-            <ul>
-                <li><a href="https://asce7hazardtool.online/" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a> - Official tool for site-specific wind speeds</li>
-                <li><a href="https://www.asce.org/publications-and-news/asce-7" target="_blank" rel="noopener">ASCE/SEI 7-22 Standard</a> - Official ASCE 7-22 publication</li>
-                <li><a href="https://codes.iccsafe.org/" target="_blank" rel="noopener">ICC Digital Codes</a> - International Building Code reference</li>
-            </ul>
-        </section>
-
-        <!-- Related Articles -->
-        <section class="related-section">
-            <div class="content-section" style="padding-top: 0;">
-                <h2><span class="icon">&#128220;</span> Related Guides</h2>
-            </div>
-            <div class="related-grid">
-                <a href="/wind-exposure-categories-guide" class="related-card">
-                    <h4>Exposure Categories Guide</h4>
-                    <p>Exposure B, C, and D definitions and selection criteria.</p>
-                </a>
-                <a href="/risk-categories-wind-loads-guide" class="related-card">
-                    <h4>Risk Categories Guide</h4>
-                    <p>Risk Category I-IV definitions for wind load design.</p>
-                </a>
-                <a href="/topographic-effects-wind-loads" class="related-card">
-                    <h4>Topographic Effects Guide</h4>
-                    <p>Kzt factor calculations for hills, ridges, and escarpments.</p>
-                </a>
-                <a href="/cc-vs-mwfrs-guide" class="related-card">
-                    <h4>C&C vs. MWFRS Guide</h4>
-                    <p>Components & Cladding vs. Main Wind Force Resisting System.</p>
-                </a>
-                <a href="/solar-panel-wind-load-guide" class="related-card">
-                    <h4>Solar Panel Wind Loads</h4>
-                    <p>ASCE 7 provisions for rooftop and ground-mount PV systems.</p>
-                </a>
-                <a href="/complete-guide-wind-load-calculations" class="related-card">
-                    <h4>Complete Wind Load Guide</h4>
-                    <p>Comprehensive overview of all ASCE 7 wind load methods.</p>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 WindLoad Solutions. All rights reserved.</p>
-        <p style="margin-top: 1rem;">
-            <a href="/about">About</a> &nbsp;|&nbsp;
-            <a href="/contact">Contact</a> &nbsp;|&nbsp;
-            <a href="/articles">Articles</a> &nbsp;|&nbsp;
-            <a href="https://windloadcalc.com/shop/specialty.html">Sign/Billboard Calculator</a>
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: #6b7280;">
-            Reference: ASCE/SEI 7-16 and ASCE/SEI 7-22, Minimum Design Loads and Associated Criteria for Buildings and Other Structures
-        </p>
-    </footer>
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         const header = document.querySelector('.main-header');
         window.addEventListener('scroll', () => {
@@ -1341,6 +571,8 @@
             });
         });
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

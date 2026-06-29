@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Panel Wind Load Guide | ASCE 7-22 | Rooftop & Ground-Mount PV</title>
+    <meta name="description" content="Complete guide to solar panel wind load calculations per the latest ASCE 7 (ASCE 7-22). Learn GCrn coefficients, roof zones, ground-mount provisions (Section 29.4.5), and design wind pressures for PV systems.">
+    <link rel="canonical" href="https://windload.solutions/solar-panel-wind-load-guide">
+    <meta name="keywords" content="solar panel wind load, ASCE 7 solar panels, GCrn coefficient, rooftop PV wind pressure, ground mount solar wind load, Section 29.4.5, solar panel design pressure, PV racking wind load">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+            background: #1f2937;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+            background: #1f2937;
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 0;
+            background: #f59e0b;
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            height: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #f59e0b;
+            padding-left: 0.5rem;
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+
+        /* Hero Section - Solar Orange Theme */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 10rem 3rem 5rem;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: #d97706;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content */
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .content-section h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .content-section h2 .icon {
+            color: #f59e0b;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #374151;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .content-section p {
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .content-section ul, .content-section ol {
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+        }
+
+        /* Info Cards */
+        .info-card {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+        }
+
+        .info-card h4 {
+            color: #b45309;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            margin-bottom: 0;
+            color: #92400e;
+        }
+
+        /* Warning Card */
+        .warning-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+        }
+
+        .warning-card h4 {
+            color: #b91c1c;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .warning-card p {
+            margin-bottom: 0;
+            color: #991b1b;
+        }
+
+        /* Success Card */
+        .success-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+        }
+
+        .success-card h4 {
+            color: #047857;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .success-card p {
+            margin-bottom: 0;
+            color: #065f46;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .formula-box .formula {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #fbbf24;
+        }
+
+        .formula-box .formula-description {
+            font-size: 0.95rem;
+            color: #9ca3af;
+            margin-top: 1rem;
+        }
+
+        .formula-box .formula-description strong {
+            color: #fbbf24;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .comparison-table tr:hover td {
+            background: #fffbeb;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Zone Grid */
+        .zone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .zone-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .zone-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+        }
+
+        .zone-card.zone-1 {
+            border-top: 4px solid #10b981;
+        }
+
+        .zone-card.zone-2 {
+            border-top: 4px solid #f59e0b;
+        }
+
+        .zone-card.zone-3 {
+            border-top: 4px solid #ef4444;
+        }
+
+        .zone-card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .zone-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .zone-1 .zone-badge {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .zone-2 .zone-badge {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .zone-3 .zone-badge {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* Factor Cards */
+        .factor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .factor-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .factor-card h4 {
+            color: #f59e0b;
+            margin-top: 0;
+            font-size: 1rem;
+        }
+
+        .factor-card .symbol {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            border-radius: 20px;
+        }
+
+        .cta-section h2 {
+            color: white;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: #d97706;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Related Links */
+        .related-section {
+            background: #f8fafc;
+            padding: 4rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .related-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .related-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+        }
+
+        .related-card h4 {
+            color: #1f2937;
+            margin: 0 0 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .related-card p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: #9ca3af;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: #f59e0b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 8rem 1.5rem 3rem;
+            }
+
+            .header-container {
+                padding: 0 1.5rem;
+            }
+
+            .content-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+            /* batch3: mobile table scroll */
+        @media (max-width: 768px) {
+            .comparison-table, .data-table, .edition-table, .tornado-table, table {
+                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+            }
+        }
+</style>
+
+    <!-- Schema.org FAQPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What ASCE 7 section covers solar panel wind loads?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7-16 and ASCE 7-22 Chapter 29 covers solar panel wind loads. Section 29.4.3 addresses rooftop panels on low-slope roofs (less than 7 degrees), Section 29.4.4 covers tilted panels on steeper roofs, and ASCE 7-22 added Section 29.4.5 specifically for ground-mounted solar arrays."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the design wind pressure formula for solar panels?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The design wind pressure for rooftop solar panels is p = qh × GCrn, where qh is the velocity pressure at mean roof height and GCrn is the net pressure coefficient. GCrn is calculated as GCrn = γp × γc × γE × GCrn,nom, incorporating parapet, chord length, and exposure factors."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between ASCE 7-16 and ASCE 7-22 for solar panels?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ASCE 7-22 added Section 29.4.5 for ground-mounted solar arrays, which was not in ASCE 7-16. It also incorporated the directionality factor (Kd) into all force and pressure calculations, refined roof zone designations, and added requirements that solar panels cannot be part of the structural load path unless specifically tested."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the edge factor (γE) for solar panels?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The edge factor γE equals 1.5 for uplift loads on panels that are exposed and within a distance of 1.5×Lp from the end of a row at an exposed edge of an array. γE equals 1.0 elsewhere and for all downward loads. This accounts for increased wind pressures at array edges."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do roof zones affect solar panel wind loads?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Solar panels in Zone 3 (corners) experience the highest wind pressures, followed by Zone 2 (edges), and Zone 1 (interior field). Panel location relative to roof edges determines the applicable GCrn,nom coefficient from Figure 29.4-7, which directly affects design wind pressure."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Schema.org Article -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Solar Panel Wind Load Guide: ASCE 7-22 Calculations",
+        "description": "Complete guide to solar panel wind load calculations per the latest ASCE 7 (ASCE 7-22), covering rooftop PV systems and ground-mounted arrays.",
+        "author": {
+            "@type": "Organization",
+            "name": "WindLoad Solutions"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "WindLoad Solutions",
+            "url": "https://windload.solutions"
+        },
+        "datePublished": "2025-11-30",
+        "dateModified": "2025-11-30"
+    }
+    </script>
+
+    <!-- Schema.org BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Articles",
+                "item": "https://windload.solutions/articles"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Solar Panel Wind Load Guide",
+                "item": "https://windload.solutions/solar-panel-wind-load-guide"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+
+            <div class="header-right">
+                <a href="https://windloadcalc.com/shop/solar-panels.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation -->
+    <nav class="nav-links">
+        <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+        <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+        <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Guide</a>
+        <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>&#9728;</span> Latest ASCE 7 (ASCE 7-22) Chapter 29
+            </div>
+            <h1>Solar Panel Wind Load Calculations</h1>
+            <p class="hero-subtitle">Complete guide to designing rooftop and ground-mounted PV systems for wind loads per the latest ASCE 7 (ASCE 7-22), including GCrn coefficients, roof zones, and the new Section 29.4.5 provisions.</p>
+            <a href="https://windloadcalc.com/shop/solar-panels.html" class="hero-cta">
+                Get Solar Panel Calculator <span>&rarr;</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <section class="content-section">
+            <h2><span class="icon">&#9728;</span> Introduction to Solar Panel Wind Loads</h2>
+
+            <p>Solar photovoltaic (PV) systems must be designed to resist wind loads per ASCE 7 (Minimum Design Loads and Associated Criteria for Buildings and Other Structures). With the rapid growth of solar installations, ASCE 7-16 introduced dedicated provisions for solar panels, and ASCE 7-22 expanded these requirements further.</p>
+
+            <p>This guide covers wind load calculations for both <strong>rooftop-mounted PV systems</strong> and <strong>ground-mounted solar arrays</strong>, explaining the differences between ASCE 7-16 and ASCE 7-22, the applicable sections, and step-by-step calculation procedures.</p>
+
+            <div class="info-card">
+                <h4>&#9432; Why Solar Panel Wind Loads Matter</h4>
+                <p>Solar panels create unique aerodynamic conditions on rooftops. They can experience significant uplift forces, and their mounting systems must resist both uplift and sliding. Improper design can lead to panel damage, roof damage, or even panels becoming windborne debris during high-wind events.</p>
+            </div>
+
+            <h2><span class="icon">&#128214;</span> ASCE 7 Sections for Solar Panels</h2>
+
+            <p>Both ASCE 7-16 and ASCE 7-22 address solar panel wind loads in Chapter 29 (Wind Loads on Building Appurtenances and Other Structures). The key sections are:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Application</th>
+                        <th>ASCE 7-16</th>
+                        <th>ASCE 7-22</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>29.4.3</strong></td>
+                        <td>Rooftop panels on flat or low-slope roofs (&lt; 7&deg;)</td>
+                        <td>&#10004;</td>
+                        <td>&#10004;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>29.4.4</strong></td>
+                        <td>Rooftop panels on steeper roofs (&ge; 7&deg;)</td>
+                        <td>&#10004;</td>
+                        <td>&#10004;</td>
+                    </tr>
+                    <tr>
+                        <td><strong>29.4.5</strong></td>
+                        <td>Ground-mounted solar arrays (fixed-tilt)</td>
+                        <td>&#10008;</td>
+                        <td>&#10004; (NEW)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-card">
+                <h4>&#10004; ASCE 7-22 Adoption Status</h4>
+                <p>ASCE 7-22 is referenced in the 2024 International Building Code (IBC) and International Residential Code (IRC). Florida has already adopted ASCE 7-22, and other states are expected to follow as they adopt the 2024 codes.</p>
+            </div>
+
+            <h2><span class="icon">&#128290;</span> Design Wind Pressure Formula</h2>
+
+            <p>The design wind pressure for rooftop solar panels per ASCE 7 is calculated using:</p>
+
+            <div class="formula-box">
+                <div class="formula">p = q<sub>h</sub> &times; GC<sub>rn</sub></div>
+                <div class="formula-description">
+                    <strong>p</strong> = design wind pressure (psf)<br>
+                    <strong>q<sub>h</sub></strong> = velocity pressure at mean roof height (psf)<br>
+                    <strong>GC<sub>rn</sub></strong> = net pressure coefficient for solar panels
+                </div>
+            </div>
+
+            <p>The net pressure coefficient GC<sub>rn</sub> is the product of several gamma (γ) factors:</p>
+
+            <div class="formula-box">
+                <div class="formula">GC<sub>rn</sub> = γ<sub>p</sub> &times; γ<sub>c</sub> &times; γ<sub>E</sub> &times; GC<sub>rn,nom</sub></div>
+                <div class="formula-description">
+                    <strong>γ<sub>p</sub></strong> = parapet factor<br>
+                    <strong>γ<sub>c</sub></strong> = chord length (configuration) factor<br>
+                    <strong>γ<sub>E</sub></strong> = edge/exposure factor<br>
+                    <strong>GC<sub>rn,nom</sub></strong> = nominal net pressure coefficient from Figure 29.4-7
+                </div>
+            </div>
+
+            <h3>Gamma Factor Details</h3>
+
+            <div class="factor-grid">
+                <div class="factor-card">
+                    <div class="symbol">γ<sub>p</sub></div>
+                    <h4>Parapet Factor</h4>
+                    <p>γ<sub>p</sub> = min(1.2, 0.9 + h<sub>pt</sub>/h)</p>
+                    <p>Where h<sub>pt</sub> is parapet height and h is building height. For buildings without parapets, γ<sub>p</sub> = 0.9</p>
+                </div>
+                <div class="factor-card">
+                    <div class="symbol">γ<sub>c</sub></div>
+                    <h4>Chord Length Factor</h4>
+                    <p>γ<sub>c</sub> = max(0.6 + 0.06×L<sub>p</sub>, 0.8)</p>
+                    <p>Where L<sub>p</sub> is the panel chord length (ft). Accounts for panel size effects.</p>
+                </div>
+                <div class="factor-card">
+                    <div class="symbol">γ<sub>E</sub></div>
+                    <h4>Edge Factor</h4>
+                    <p>γ<sub>E</sub> = 1.5 for exposed panels within 1.5×L<sub>p</sub> from array edge (uplift only)</p>
+                    <p>γ<sub>E</sub> = 1.0 elsewhere and for all downward loads</p>
+                </div>
+                <div class="factor-card">
+                    <div class="symbol">GC<sub>rn,nom</sub></div>
+                    <h4>Nominal Coefficient</h4>
+                    <p>From Figure 29.4-7 based on:</p>
+                    <p>- Normalized wind area (A<sub>n</sub>)<br>- Roof zone (1, 2, or 3)<br>- Panel tilt angle</p>
+                </div>
+            </div>
+
+            <h2><span class="icon">&#128506;</span> Roof Zones for Solar Panels</h2>
+
+            <p>Solar panel location on the roof determines which zone applies. Panels near edges and corners experience higher wind pressures than those in the interior field.</p>
+
+            <div class="zone-grid">
+                <div class="zone-card zone-1">
+                    <h4><span class="zone-badge">Zone 1</span> Interior Field</h4>
+                    <p>Panels located in the interior of the roof, away from edges. These experience the <strong>lowest wind pressures</strong> and have the lowest GC<sub>rn,nom</sub> values.</p>
+                </div>
+                <div class="zone-card zone-2">
+                    <h4><span class="zone-badge">Zone 2</span> Roof Edges</h4>
+                    <p>Panels located near roof edges (excluding corners). Wind accelerates over edges, creating <strong>moderate wind pressures</strong> higher than Zone 1.</p>
+                </div>
+                <div class="zone-card zone-3">
+                    <h4><span class="zone-badge">Zone 3</span> Roof Corners</h4>
+                    <p>Panels located at roof corners experience the <strong>highest wind pressures</strong> due to wind vortex formation. Highest GC<sub>rn,nom</sub> values apply.</p>
+                </div>
+            </div>
+
+            <div class="warning-card">
+                <h4>&#9888; Zone Boundaries per Figure 29.4-7</h4>
+                <p>Zone boundaries are defined based on building height (h) and minimum building dimension. The edge zone width is typically calculated as 0.1 × min(building length, building width), but not less than 0.4h. Consult ASCE 7 Figure 29.4-7 for exact zone boundary definitions.</p>
+            </div>
+
+            <h2><span class="icon">&#128208;</span> Panel Tilt Angle Categories</h2>
+
+            <p>The tilt angle (ω) of solar panels affects the applicable GC<sub>rn,nom</sub> values. ASCE 7 provides coefficients for different tilt angle ranges:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Tilt Angle Range</th>
+                        <th>Typical Application</th>
+                        <th>Wind Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>0&deg; - 5&deg;</strong></td>
+                        <td>Flush-mounted panels on flat roofs</td>
+                        <td>Minimal uplift, acts similar to roof surface</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5&deg; - 15&deg;</strong></td>
+                        <td>Low-tilt arrays, ballasted systems</td>
+                        <td>Moderate uplift forces begin</td>
+                    </tr>
+                    <tr>
+                        <td><strong>15&deg; - 35&deg;</strong></td>
+                        <td>Typical tilted arrays for optimal solar gain</td>
+                        <td>Significant uplift and sliding forces</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&gt; 35&deg;</strong></td>
+                        <td>Steep-angle installations</td>
+                        <td>High uplift, may need special analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>The tilt angle is calculated as: <strong>ω = arctan[(h<sub>2</sub> - h<sub>1</sub>) / L<sub>p</sub>]</strong>, where h<sub>2</sub> is the high edge height, h<sub>1</sub> is the low edge height, and L<sub>p</sub> is the panel chord length.</p>
+
+            <h2><span class="icon">&#128200;</span> Normalized Wind Area</h2>
+
+            <p>The normalized wind area (A<sub>n</sub>) is used to determine GC<sub>rn,nom</sub> from Figure 29.4-7:</p>
+
+            <div class="formula-box">
+                <div class="formula">A<sub>n</sub> = (1000 / [max(L<sub>b</sub>, 15)]<sup>2</sup>) &times; A</div>
+                <div class="formula-description">
+                    <strong>A</strong> = effective wind area of panel (L<sub>p</sub> × W<sub>p</sub>) in ft<sup>2</sup><br>
+                    <strong>L<sub>b</sub></strong> = characteristic length = min(0.4 × √(h × W<sub>L</sub>), h, W<sub>s</sub>)<br>
+                    <strong>h</strong> = mean roof height<br>
+                    <strong>W<sub>L</sub></strong> = building width perpendicular to wind<br>
+                    <strong>W<sub>s</sub></strong> = building width parallel to wind
+                </div>
+            </div>
+
+            <h2><span class="icon">&#127981;</span> Exposed Panel Criteria</h2>
+
+            <p>A panel is considered "exposed" (requiring γ<sub>E</sub> = 1.5 for edge panels) when:</p>
+
+            <ol>
+                <li><strong>d<sub>1</sub> &gt; 0.5 × h</strong> (setback from roof edge exceeds half the building height)</li>
+            </ol>
+
+            <p>AND either:</p>
+
+            <ul>
+                <li>Distance to adjacent array exceeds max(4 × h<sub>2</sub>, 4 ft)</li>
+                <li>Distance to next panel in row exceeds max(4 × h<sub>2</sub>, 4 ft)</li>
+            </ul>
+
+            <div class="info-card">
+                <h4>&#9432; 24-Inch Height Threshold</h4>
+                <p>Per ASCE 7-16 and 7-22, rooftop solar panel systems mounted 24 inches or less above a low-slope roof surface do not require live load modeling as a separate structure. This simplifies analysis for typical flush-mount installations.</p>
+            </div>
+
+            <h2><span class="icon">&#127759;</span> ASCE 7-22: New Ground-Mount Provisions (Section 29.4.5)</h2>
+
+            <p>ASCE 7-22 introduced <strong>Section 29.4.5</strong> specifically for <strong>fixed-tilt ground-mounted solar arrays</strong>. This section did not exist in ASCE 7-16, which only addressed rooftop installations.</p>
+
+            <h3>Key Features of Section 29.4.5</h3>
+
+            <ul>
+                <li><strong>Dedicated methodology</strong> for ground-mount solar farms and utility-scale installations</li>
+                <li><strong>Force coefficients</strong> specific to ground-mounted array configurations</li>
+                <li><strong>Directionality factor (K<sub>d</sub>)</strong> incorporated into all pressure calculations</li>
+                <li><strong>Array spacing</strong> considerations for multi-row installations</li>
+                <li><strong>Foundation design</strong> requirements for resisting overturning and sliding</li>
+            </ul>
+
+            <div class="success-card">
+                <h4>&#10004; Ground-Mount vs. Rooftop</h4>
+                <p>Ground-mounted systems typically experience different wind flow patterns than rooftop installations because they're not influenced by building aerodynamics. Section 29.4.5 accounts for these differences with specific force coefficients.</p>
+            </div>
+
+            <h2><span class="icon">&#128260;</span> ASCE 7-16 vs. ASCE 7-22 Comparison</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>ASCE 7-16</th>
+                        <th>ASCE 7-22</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rooftop Solar (29.4.3, 29.4.4)</td>
+                        <td>&#10004; Included</td>
+                        <td>&#10004; Included (refined)</td>
+                    </tr>
+                    <tr>
+                        <td>Ground-Mount Solar (29.4.5)</td>
+                        <td>&#10008; Not included</td>
+                        <td>&#10004; NEW section</td>
+                    </tr>
+                    <tr>
+                        <td>Directionality Factor (K<sub>d</sub>)</td>
+                        <td>Applied separately</td>
+                        <td>Incorporated into calculations</td>
+                    </tr>
+                    <tr>
+                        <td>Roof Zone Definitions</td>
+                        <td>Standard zones</td>
+                        <td>Simplified zone designations</td>
+                    </tr>
+                    <tr>
+                        <td>Structural Load Path</td>
+                        <td>General requirements</td>
+                        <td>Panels cannot be load path unless tested</td>
+                    </tr>
+                    <tr>
+                        <td>Tornado Loads (Chapter 32)</td>
+                        <td>&#10008; Not included</td>
+                        <td>&#10004; NEW (Risk Cat III/IV)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-card">
+                <h4>&#9888; ASCE 7-22 Load Path Requirement</h4>
+                <p>ASCE 7-22 specifies that "solar panels shall not be considered as part of the load path that resists the interconnection force unless panels have been evaluated or tested." This is an important change affecting structural design of PV mounting systems.</p>
+            </div>
+
+            <h2><span class="icon">&#128221;</span> Example Calculation</h2>
+
+            <p>The following example demonstrates a solar panel wind load calculation for a rooftop installation:</p>
+
+            <h4>Given Parameters:</h4>
+            <ul>
+                <li>Building location: Broken Arrow, Oklahoma</li>
+                <li>Design wind speed (V): 115 mph (Risk Category II)</li>
+                <li>Building height (h): 30 ft</li>
+                <li>Exposure Category: C</li>
+                <li>Panel dimensions: 65" × 39" (L<sub>p</sub> × W<sub>p</sub>)</li>
+                <li>Panel tilt: 20°</li>
+                <li>No parapet</li>
+                <li>Panels in Zone 3 (corner)</li>
+            </ul>
+
+            <h4>Step-by-Step Calculation:</h4>
+
+            <ol>
+                <li><strong>Calculate velocity pressure (q<sub>h</sub>):</strong> q<sub>h</sub> = 32.28 psf (from ASCE 7 velocity pressure tables)</li>
+                <li><strong>Determine γ<sub>p</sub>:</strong> No parapet, so γ<sub>p</sub> = 0.9</li>
+                <li><strong>Calculate γ<sub>c</sub>:</strong> L<sub>p</sub> = 65"/12 = 5.42 ft<br>
+                    γ<sub>c</sub> = max(0.6 + 0.06 × 5.42, 0.8) = max(0.925, 0.8) = 0.925</li>
+                <li><strong>Determine γ<sub>E</sub>:</strong> Assume interior panel (not at array edge), γ<sub>E</sub> = 1.0</li>
+                <li><strong>Calculate normalized wind area and find GC<sub>rn,nom</sub>:</strong><br>
+                    A<sub>n</sub> = 78.24 ft² → GC<sub>rn,nom</sub> = 1.607 (from Figure 29.4-7 for Zone 3, 15-35° tilt)</li>
+                <li><strong>Calculate GC<sub>rn</sub>:</strong><br>
+                    GC<sub>rn</sub> = 0.9 × 0.925 × 1.0 × 1.607 = 1.338</li>
+                <li><strong>Calculate design wind pressure:</strong><br>
+                    p = 32.28 × 1.338 = <strong>43.2 psf</strong></li>
+            </ol>
+
+            <div class="info-card">
+                <h4>&#9432; Interpretation</h4>
+                <p>The design wind pressure of 43.2 psf applies to both uplift and downward loading. The mounting system and attachments must be designed to resist these forces with appropriate safety factors per the applicable building code.</p>
+            </div>
+
+            <h2><span class="icon">&#128736;</span> Design Considerations</h2>
+
+            <h3>Ballasted vs. Attached Systems</h3>
+
+            <p>Rooftop solar systems are typically either <strong>ballasted</strong> (held in place by weight) or <strong>mechanically attached</strong> to the roof structure:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>System Type</th>
+                        <th>Advantages</th>
+                        <th>Considerations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ballasted</strong></td>
+                        <td>No roof penetrations, easier installation</td>
+                        <td>Heavy weight on roof, limited to low-slope roofs, specific seismic requirements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Attached</strong></td>
+                        <td>Lower weight, suitable for all roof slopes</td>
+                        <td>Roof penetrations required, waterproofing concerns</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-card">
+                <h4>&#9432; Ballasted System Requirements</h4>
+                <p>Per ASCE 7, ballasted systems must meet seven specific conditions for seismic compliance. The ballast weight must be sufficient to resist both uplift and sliding forces from wind loads.</p>
+            </div>
+
+            <h3>Special Considerations for High-Wind Regions</h3>
+
+            <ul>
+                <li><strong>Hurricane-prone regions:</strong> Higher wind speeds require increased ballast or stronger attachments</li>
+                <li><strong>Windborne debris regions:</strong> Consider impact-resistant panel options</li>
+                <li><strong>HVHZ (Florida):</strong> May require Florida Product Approval for PV systems</li>
+                <li><strong>Tornado-prone regions:</strong> Risk Category III/IV buildings now require Chapter 32 tornado load analysis per ASCE 7-22</li>
+            </ul>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="content-section">
+            <div class="cta-section">
+                <h2>Calculate Your Solar Panel Wind Loads</h2>
+                <p>Use our professional wind load calculator to determine design pressures for your solar installation per the latest ASCE 7 (ASCE 7-22).</p>
+                <a href="https://windloadcalc.com/shop/solar-panels.html" class="cta-button">
+                    Get Solar Panel Calculator <span>&rarr;</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="icon">&#128279;</span> Resources and References</h2>
+
+            <ul>
+                <li><a href="https://asce7hazardtool.online/" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a> - Official tool for determining site-specific wind speeds</li>
+                <li><a href="https://www.asce.org/publications-and-news/asce-7" target="_blank" rel="noopener">ASCE/SEI 7-22 Standard</a> - Official ASCE 7-22 publication</li>
+                <li><a href="https://codes.iccsafe.org/" target="_blank" rel="noopener">ICC Digital Codes</a> - International Building Code reference</li>
+                <li><a href="https://www.nrel.gov/" target="_blank" rel="noopener">NREL (National Renewable Energy Laboratory)</a> - Solar energy research and data</li>
+            </ul>
+
+            <div class="info-card">
+                <h4>&#9432; Professional Engineering Note</h4>
+                <p>Solar panel wind load calculations should be performed or reviewed by a licensed Professional Engineer (PE). Local jurisdictions may require stamped calculations for building permit approval. Always verify requirements with your local building department.</p>
+            </div>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="related-section">
+            <div class="content-section" style="padding-top: 0;">
+                <h2><span class="icon">&#128220;</span> Related Guides</h2>
+            </div>
+            <div class="related-grid">
+                <a href="/roof-wind-uplift-guide" class="related-card">
+                    <h4>Roof Wind Uplift Guide</h4>
+                    <p>C&C roof pressures, zones 1/2/3, and roof-to-wall connections.</p>
+                </a>
+                <a href="/cc-vs-mwfrs-guide" class="related-card">
+                    <h4>C&C vs. MWFRS Guide</h4>
+                    <p>Understanding Components & Cladding vs. Main Wind Force Resisting System.</p>
+                </a>
+                <a href="/building-envelope-wind-loads-guide" class="related-card">
+                    <h4>Building Envelope Guide</h4>
+                    <p>Wall zones, DP ratings, and cladding selection for wind resistance.</p>
+                </a>
+                <a href="/wind-exposure-categories-guide" class="related-card">
+                    <h4>Exposure Categories Guide</h4>
+                    <p>Exposure B, C, and D definitions and selection criteria.</p>
+                </a>
+                <a href="/asce-7-22-tornado-loads-chapter-32-guide" class="related-card">
+                    <h4>Chapter 32: Tornado Loads</h4>
+                    <p>New ASCE 7-22 tornado provisions for Risk Category III/IV buildings.</p>
+                </a>
+                <a href="solar-belt-wind-load-requirements.html" class="related-card">
+                    <h4>Solar Belt Requirements</h4>
+                    <p>State-by-state wind load requirements for America's top solar-producing states.</p>
+                </a>
+                <a href="/complete-guide-wind-load-calculations" class="related-card">
+                    <h4>Complete Wind Load Guide</h4>
+                    <p>Comprehensive overview of all ASCE 7 wind load calculation methods.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 WindLoad Solutions. All rights reserved.</p>
+        <p style="margin-top: 1rem;">
+            <a href="/about">About</a> &nbsp;|&nbsp;
+            <a href="/contact">Contact</a> &nbsp;|&nbsp;
+            <a href="/articles">Articles</a> &nbsp;|&nbsp;
+            <a href="https://windloadcalc.com/shop/solar-panels.html">Solar Panel Calculator</a>
+        </p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #6b7280;">
+            Reference: ASCE/SEI 7-16 and ASCE/SEI 7-22, Minimum Design Loads and Associated Criteria for Buildings and Other Structures
+        </p>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.querySelector('.main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking nav links
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</body>
+</html>

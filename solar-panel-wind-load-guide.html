@@ -29,882 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #f59e0b;
-            background: rgba(245, 158, 11, 0.1);
-            border-color: rgba(245, 158, 11, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
-            position: relative;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 2px;
-            background: white;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-            background: #1f2937;
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-            background: #1f2937;
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: -1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 0;
-            background: #f59e0b;
-            border-radius: 2px;
-            transition: height 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            height: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #f59e0b;
-            padding-left: 0.5rem;
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-
-        /* Hero Section - Solar Orange Theme */
-        .hero {
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            padding: 10rem 3rem 5rem;
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: white;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 700px;
-            margin-bottom: 2rem;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            color: #d97706;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .hero-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        /* Main Content */
-        .content-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 5rem 2rem;
-        }
-
-        .content-section h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .content-section h2 .icon {
-            color: #f59e0b;
-        }
-
-        .content-section h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #374151;
-            margin: 2rem 0 1rem;
-        }
-
-        .content-section h4 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #4b5563;
-            margin: 1.5rem 0 0.75rem;
-        }
-
-        .content-section p {
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .content-section ul, .content-section ol {
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-        }
-
-        .content-section li {
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
-        }
-
-        /* Info Cards */
-        .info-card {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border-left: 4px solid #f59e0b;
-            padding: 1.5rem 2rem;
-            border-radius: 0 12px 12px 0;
-            margin: 2rem 0;
-        }
-
-        .info-card h4 {
-            color: #b45309;
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-
-        .info-card p {
-            margin-bottom: 0;
-            color: #92400e;
-        }
-
-        /* Warning Card */
-        .warning-card {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            border-left: 4px solid #ef4444;
-            padding: 1.5rem 2rem;
-            border-radius: 0 12px 12px 0;
-            margin: 2rem 0;
-        }
-
-        .warning-card h4 {
-            color: #b91c1c;
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-
-        .warning-card p {
-            margin-bottom: 0;
-            color: #991b1b;
-        }
-
-        /* Success Card */
-        .success-card {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border-left: 4px solid #10b981;
-            padding: 1.5rem 2rem;
-            border-radius: 0 12px 12px 0;
-            margin: 2rem 0;
-        }
-
-        .success-card h4 {
-            color: #047857;
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-
-        .success-card p {
-            margin-bottom: 0;
-            color: #065f46;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: #1f2937;
-            color: #f9fafb;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .formula-box .formula {
-            font-size: 1.3rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: #fbbf24;
-        }
-
-        .formula-box .formula-description {
-            font-size: 0.95rem;
-            color: #9ca3af;
-            margin-top: 1rem;
-        }
-
-        .formula-box .formula-description strong {
-            color: #fbbf24;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .comparison-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-            background: white;
-        }
-
-        .comparison-table tr:hover td {
-            background: #fffbeb;
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Zone Grid */
-        .zone-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .zone-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .zone-card:hover {
-            border-color: #f59e0b;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
-        }
-
-        .zone-card.zone-1 {
-            border-top: 4px solid #10b981;
-        }
-
-        .zone-card.zone-2 {
-            border-top: 4px solid #f59e0b;
-        }
-
-        .zone-card.zone-3 {
-            border-top: 4px solid #ef4444;
-        }
-
-        .zone-card h4 {
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .zone-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .zone-1 .zone-badge {
-            background: #d1fae5;
-            color: #047857;
-        }
-
-        .zone-2 .zone-badge {
-            background: #fef3c7;
-            color: #b45309;
-        }
-
-        .zone-3 .zone-badge {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        /* Factor Cards */
-        .factor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .factor-card {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid #e2e8f0;
-        }
-
-        .factor-card h4 {
-            color: #f59e0b;
-            margin-top: 0;
-            font-size: 1rem;
-        }
-
-        .factor-card .symbol {
-            font-family: 'Times New Roman', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            margin: 3rem 0;
-            border-radius: 20px;
-        }
-
-        .cta-section h2 {
-            color: white;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            color: #d97706;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Related Links */
-        .related-section {
-            background: #f8fafc;
-            padding: 4rem 2rem;
-            margin-top: 3rem;
-        }
-
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .related-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .related-card:hover {
-            border-color: #f59e0b;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
-        }
-
-        .related-card h4 {
-            color: #1f2937;
-            margin: 0 0 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .related-card p {
-            color: #6b7280;
-            margin: 0;
-            font-size: 0.95rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: #9ca3af;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        footer a {
-            color: #f59e0b;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 8rem 1.5rem 3rem;
-            }
-
-            .header-container {
-                padding: 0 1.5rem;
-            }
-
-            .content-section {
-                padding: 3rem 1.5rem;
-            }
-
-            .comparison-table {
-                font-size: 0.85rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem 0.5rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <!-- Schema.org FAQPage -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What ASCE 7 section covers solar panel wind loads?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "ASCE 7-16 and ASCE 7-22 Chapter 29 covers solar panel wind loads. Section 29.4.3 addresses rooftop panels on low-slope roofs (less than 7 degrees), Section 29.4.4 covers tilted panels on steeper roofs, and ASCE 7-22 added Section 29.4.5 specifically for ground-mounted solar arrays."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the design wind pressure formula for solar panels?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The design wind pressure for rooftop solar panels is p = qh × GCrn, where qh is the velocity pressure at mean roof height and GCrn is the net pressure coefficient. GCrn is calculated as GCrn = γp × γc × γE × GCrn,nom, incorporating parapet, chord length, and exposure factors."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the difference between ASCE 7-16 and ASCE 7-22 for solar panels?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "ASCE 7-22 added Section 29.4.5 for ground-mounted solar arrays, which was not in ASCE 7-16. It also incorporated the directionality factor (Kd) into all force and pressure calculations, refined roof zone designations, and added requirements that solar panels cannot be part of the structural load path unless specifically tested."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the edge factor (γE) for solar panels?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The edge factor γE equals 1.5 for uplift loads on panels that are exposed and within a distance of 1.5×Lp from the end of a row at an exposed edge of an array. γE equals 1.0 elsewhere and for all downward loads. This accounts for increased wind pressures at array edges."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How do roof zones affect solar panel wind loads?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Solar panels in Zone 3 (corners) experience the highest wind pressures, followed by Zone 2 (edges), and Zone 1 (interior field). Panel location relative to roof edges determines the applicable GCrn,nom coefficient from Figure 29.4-7, which directly affects design wind pressure."
-                }
-            }
-        ]
-    }
-    </script>
-
-    <!-- Schema.org Article -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Solar Panel Wind Load Guide: ASCE 7-22 Calculations",
-        "description": "Complete guide to solar panel wind load calculations per the latest ASCE 7 (ASCE 7-22), covering rooftop PV systems and ground-mounted arrays.",
-        "author": {
-            "@type": "Organization",
-            "name": "WindLoad Solutions"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "WindLoad Solutions",
-            "url": "https://windload.solutions"
-        },
-        "datePublished": "2025-11-30",
-        "dateModified": "2025-11-30"
-    }
-    </script>
-
-    <!-- Schema.org BreadcrumbList -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Articles",
-                "item": "https://windload.solutions/articles"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Solar Panel Wind Load Guide",
-                "item": "https://windload.solutions/solar-panel-wind-load-guide"
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/shop/solar-panels.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener"><i class="fas fa-solar-panel"></i> Solar Panel Calculator</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -914,454 +284,260 @@
         <a href="complete-guide-wind-load-calculations.html"><i class="fas fa-graduation-cap"></i> Complete Guide</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span>&#9728;</span> Latest ASCE 7 (ASCE 7-22) Chapter 29
-            </div>
-            <h1>Solar Panel Wind Load Calculations</h1>
-            <p class="hero-subtitle">Complete guide to designing rooftop and ground-mounted PV systems for wind loads per the latest ASCE 7 (ASCE 7-22), including GCrn coefficients, roof zones, and the new Section 29.4.5 provisions.</p>
-            <a href="https://windloadcalc.com/shop/solar-panels.html" class="hero-cta">
-                Get Solar Panel Calculator <span>&rarr;</span>
-            </a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">ASCE 7-22 · CHAPTER 29 · SOLAR PV</p>
+    <h1>Solar Panel <span class="sweep">Wind Loads</span></h1>
+    <p class="lead">Rooftop arrays and ground mounts both fight the wind &mdash; uplift at the leading edge, down-force across the field. ASCE 7-22 Chapter 29 sets the approach.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">Ch&nbsp;29</span><span class="lbl">ASCE 7-22 SOLAR PROVISIONS</span></div>
+      <div class="stat"><span class="num">Uplift + Down-force</span><span class="lbl">WIND ACTS BOTH WAYS</span></div>
+      <div class="stat"><span class="num">Tilt &amp; Edge</span><span class="lbl">DRIVE PEAK ZONES</span></div>
+    </div>
+  </div></section>
 
-    <!-- Main Content -->
-    <main>
-        <section class="content-section">
-            <h2><span class="icon">&#9728;</span> Introduction to Solar Panel Wind Loads</h2>
+  <div class="divider"></div>
 
-            <p>Solar photovoltaic (PV) systems must be designed to resist wind loads per ASCE 7 (Minimum Design Loads and Associated Criteria for Buildings and Other Structures). With the rapid growth of solar installations, ASCE 7-16 introduced dedicated provisions for solar panels, and ASCE 7-22 expanded these requirements further.</p>
+  <!-- CUSTOM SVG: wind over a tilted rooftop array -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">HOW WIND HITS THE ARRAY</p>
+    <h2>Uplift peaks at the <span class="sweep">leading edge</span></h2>
+    <p class="lead">Wind sweeping up a low-slope roof accelerates over the first row of tilted panels. The leading edge and array corners see the strongest suction; interior panels are sheltered.</p>
+    <div class="info-box glass" style="max-width:760px;margin:2rem auto 0;">
+      <svg viewBox="0 0 760 360" width="100%" role="img" aria-label="Wind flowing over a tilted rooftop solar array, with uplift arrows at the leading edge and down-force across the field" style="display:block">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#06b6d4" stop-opacity="0.10"/>
+            <stop offset="1" stop-color="#06b6d4" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#22d3ee"/>
+            <stop offset="1" stop-color="#0e7490"/>
+          </linearGradient>
+          <marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#22d3ee"/>
+          </marker>
+          <marker id="ahu" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#67e8f9"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="760" height="360" fill="url(#sky)"/>
 
-            <p>This guide covers wind load calculations for both <strong>rooftop-mounted PV systems</strong> and <strong>ground-mounted solar arrays</strong>, explaining the differences between ASCE 7-16 and ASCE 7-22, the applicable sections, and step-by-step calculation procedures.</p>
+        <!-- roof deck -->
+        <rect x="40" y="250" width="680" height="70" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+        <!-- parapet (low edge wall) -->
+        <rect x="40" y="210" width="14" height="44" rx="2" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+        <text x="61" y="206" fill="#94a3b8" font-family="Inter,sans-serif" font-size="12">parapet</text>
 
-            <div class="info-card">
-                <h4>&#9432; Why Solar Panel Wind Loads Matter</h4>
-                <p>Solar panels create unique aerodynamic conditions on rooftops. They can experience significant uplift forces, and their mounting systems must resist both uplift and sliding. Improper design can lead to panel damage, roof damage, or even panels becoming windborne debris during high-wind events.</p>
-            </div>
+        <!-- incoming wind streamlines -->
+        <g stroke="#22d3ee" stroke-width="2" fill="none" opacity="0.8">
+          <path d="M70,150 H300" marker-end="url(#ah)"/>
+          <path d="M70,185 H280" marker-end="url(#ah)"/>
+        </g>
+        <text x="78" y="138" fill="#22d3ee" font-family="Inter,sans-serif" font-size="13" font-weight="600">WIND</text>
 
-            <h2><span class="icon">&#128214;</span> ASCE 7 Sections for Solar Panels</h2>
+        <!-- tilted panels (4), low edge to high edge -->
+        <g stroke="#0e7490" stroke-width="1.5">
+          <polygon points="150,250 220,250 235,200 165,200" fill="url(#panel)"/>
+          <polygon points="270,250 340,250 355,200 285,200" fill="url(#panel)"/>
+          <polygon points="390,250 460,250 475,200 405,200" fill="url(#panel)"/>
+          <polygon points="510,250 580,250 595,200 525,200" fill="url(#panel)"/>
+        </g>
 
-            <p>Both ASCE 7-16 and ASCE 7-22 address solar panel wind loads in Chapter 29 (Wind Loads on Building Appurtenances and Other Structures). The key sections are:</p>
+        <!-- uplift arrows over leading-edge panel (strong) -->
+        <g stroke="#67e8f9" stroke-width="2.5" fill="none">
+          <path d="M180,200 L165,150" marker-end="url(#ahu)"/>
+          <path d="M205,200 L195,158" marker-end="url(#ahu)"/>
+        </g>
+        <text x="150" y="138" fill="#67e8f9" font-family="Inter,sans-serif" font-size="12" font-weight="700">UPLIFT (peak)</text>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Section</th>
-                        <th>Application</th>
-                        <th>ASCE 7-16</th>
-                        <th>ASCE 7-22</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>29.4.3</strong></td>
-                        <td>Rooftop panels on flat or low-slope roofs (&lt; 7&deg;)</td>
-                        <td>&#10004;</td>
-                        <td>&#10004;</td>
-                    </tr>
-                    <tr>
-                        <td><strong>29.4.4</strong></td>
-                        <td>Rooftop panels on steeper roofs (&ge; 7&deg;)</td>
-                        <td>&#10004;</td>
-                        <td>&#10004;</td>
-                    </tr>
-                    <tr>
-                        <td><strong>29.4.5</strong></td>
-                        <td>Ground-mounted solar arrays (fixed-tilt)</td>
-                        <td>&#10008;</td>
-                        <td>&#10004; (NEW)</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- lighter uplift over interior -->
+        <g stroke="#67e8f9" stroke-width="1.5" fill="none" opacity="0.55">
+          <path d="M300,200 L292,168" marker-end="url(#ahu)"/>
+          <path d="M420,200 L413,170" marker-end="url(#ahu)"/>
+        </g>
 
-            <div class="success-card">
-                <h4>&#10004; ASCE 7-22 Adoption Status</h4>
-                <p>ASCE 7-22 is referenced in the 2024 International Building Code (IBC) and International Residential Code (IRC). Florida has already adopted ASCE 7-22, and other states are expected to follow as they adopt the 2024 codes.</p>
-            </div>
+        <!-- down-force arrow on a panel face -->
+        <g stroke="#38bdf8" stroke-width="2" fill="none">
+          <path d="M545,180 L555,212" marker-end="url(#ah)"/>
+        </g>
+        <text x="515" y="172" fill="#38bdf8" font-family="Inter,sans-serif" font-size="12" font-weight="600">down-force</text>
 
-            <h2><span class="icon">&#128290;</span> Design Wind Pressure Formula</h2>
+        <!-- tilt angle marker -->
+        <path d="M150,250 A40,40 0 0,0 162,222" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="168" y="244" fill="#94a3b8" font-family="Inter,sans-serif" font-size="12">tilt &omega;</text>
 
-            <p>The design wind pressure for rooftop solar panels per ASCE 7 is calculated using:</p>
+        <!-- labels -->
+        <text x="175" y="338" fill="#67e8f9" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle">leading edge</text>
+        <text x="545" y="338" fill="#94a3b8" font-family="Inter,sans-serif" font-size="12" text-anchor="middle">sheltered interior</text>
+      </svg>
+    </div>
+  </div></section>
 
-            <div class="formula-box">
-                <div class="formula">p = q<sub>h</sub> &times; GC<sub>rn</sub></div>
-                <div class="formula-description">
-                    <strong>p</strong> = design wind pressure (psf)<br>
-                    <strong>q<sub>h</sub></strong> = velocity pressure at mean roof height (psf)<br>
-                    <strong>GC<sub>rn</sub></strong> = net pressure coefficient for solar panels
-                </div>
-            </div>
+  <div class="divider"></div>
 
-            <p>The net pressure coefficient GC<sub>rn</sub> is the product of several gamma (γ) factors:</p>
+  <!-- WHAT DRIVES SOLAR WIND LOAD -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">WHAT DRIVES THE LOAD</p>
+    <h2>Four things move the <span class="sweep">pressure</span></h2>
+    <p class="lead">ASCE 7-22 Chapter 29 builds rooftop solar pressures from the array's geometry and position &mdash; not a single flat number.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 38 L40 38"/><path d="M8 38 L34 22"/><path d="M8 38 L8 28"/><path d="M8 33 A18 18 0 0 1 14 25"/>
+        </svg>
+        <h3>Tilt angle (&omega;)</h3>
+        <p>Steeper panels catch more wind &mdash; uplift and sliding force climb with tilt.</p>
+        <span class="badge badge--data">GEOMETRY</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="7" width="34" height="34" rx="3"/><rect x="29" y="29" width="12" height="12" rx="1.5" fill="#22d3ee" fill-opacity="0.25"/>
+        </svg>
+        <h3>Roof zone / edge</h3>
+        <p>Corners and edges see higher suction than the sheltered interior field.</p>
+        <span class="badge badge--data">ZONE 1/2/3</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 40 L8 14"/><path d="M8 14 L24 14"/><path d="M14 40 L40 40"/><path d="M40 40 L40 22"/>
+        </svg>
+        <h3>Parapet height</h3>
+        <p>A taller parapet reshapes the flow over the roof and shifts panel pressures.</p>
+        <span class="badge badge--data">FLOW SHAPE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="6" y="14" width="9" height="9"/><rect x="19" y="14" width="9" height="9"/><rect x="6" y="27" width="9" height="9"/><circle cx="36" cy="18" r="6" stroke="#67e8f9"/>
+        </svg>
+        <h3>Array position</h3>
+        <p>Exposed leading rows and isolated arrays draw the strongest edge effects.</p>
+        <span class="badge badge--data">EXPOSURE</span>
+      </div>
+    </div>
+  </div></section>
 
-            <div class="formula-box">
-                <div class="formula">GC<sub>rn</sub> = γ<sub>p</sub> &times; γ<sub>c</sub> &times; γ<sub>E</sub> &times; GC<sub>rn,nom</sub></div>
-                <div class="formula-description">
-                    <strong>γ<sub>p</sub></strong> = parapet factor<br>
-                    <strong>γ<sub>c</sub></strong> = chord length (configuration) factor<br>
-                    <strong>γ<sub>E</sub></strong> = edge/exposure factor<br>
-                    <strong>GC<sub>rn,nom</sub></strong> = nominal net pressure coefficient from Figure 29.4-7
-                </div>
-            </div>
+  <div class="divider"></div>
 
-            <h3>Gamma Factor Details</h3>
+  <!-- ROOFTOP VS GROUND-MOUNT -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">TWO SYSTEMS, TWO FLOW PATTERNS</p>
+    <h2>Rooftop vs. <span class="sweep">ground-mount</span></h2>
+    <p class="lead">Where the array sits changes how the wind reaches it &mdash; and which ASCE 7-22 provisions govern.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 26 L24 12 L42 26"/><path d="M10 24 L10 40 L38 40 L38 24"/><path d="M16 32 L24 26 L26 30"/>
+        </svg>
+        <h3>Rooftop arrays</h3>
+        <p>Governed by ASCE 7-22 Chapter 29 solar provisions. Building aerodynamics, roof zone, parapet height and panel tilt all shape the pressure &mdash; array edges and corners drive the peaks.</p>
+        <span class="badge badge--data">CH 29.4.3 / FIG 29.4-7</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 30 L30 18"/><path d="M14 30 L14 40"/><path d="M26 23 L26 40"/><path d="M6 40 L42 40"/>
+        </svg>
+        <h3>Ground mounts</h3>
+        <p>Act like open, elevated structures &mdash; wind flows above and below the tilted plane, with no enclosed interior. Tilt, height and row spacing govern uplift and down-force on the racking.</p>
+        <span class="badge badge--data">OPEN STRUCTURE · GCpi N/A</span>
+      </div>
+    </div>
+  </div></section>
 
-            <div class="factor-grid">
-                <div class="factor-card">
-                    <div class="symbol">γ<sub>p</sub></div>
-                    <h4>Parapet Factor</h4>
-                    <p>γ<sub>p</sub> = min(1.2, 0.9 + h<sub>pt</sub>/h)</p>
-                    <p>Where h<sub>pt</sub> is parapet height and h is building height. For buildings without parapets, γ<sub>p</sub> = 0.9</p>
-                </div>
-                <div class="factor-card">
-                    <div class="symbol">γ<sub>c</sub></div>
-                    <h4>Chord Length Factor</h4>
-                    <p>γ<sub>c</sub> = max(0.6 + 0.06×L<sub>p</sub>, 0.8)</p>
-                    <p>Where L<sub>p</sub> is the panel chord length (ft). Accounts for panel size effects.</p>
-                </div>
-                <div class="factor-card">
-                    <div class="symbol">γ<sub>E</sub></div>
-                    <h4>Edge Factor</h4>
-                    <p>γ<sub>E</sub> = 1.5 for exposed panels within 1.5×L<sub>p</sub> from array edge (uplift only)</p>
-                    <p>γ<sub>E</sub> = 1.0 elsewhere and for all downward loads</p>
-                </div>
-                <div class="factor-card">
-                    <div class="symbol">GC<sub>rn,nom</sub></div>
-                    <h4>Nominal Coefficient</h4>
-                    <p>From Figure 29.4-7 based on:</p>
-                    <p>- Normalized wind area (A<sub>n</sub>)<br>- Roof zone (1, 2, or 3)<br>- Panel tilt angle</p>
-                </div>
-            </div>
+  <div class="divider"></div>
 
-            <h2><span class="icon">&#128506;</span> Roof Zones for Solar Panels</h2>
+  <!-- ATTACHMENT & BALLAST CALLOUT -->
+  <section class="sec sec-glow"><div class="wrap">
+    <p class="eyebrow">THE DESIGN-CRITICAL TAKEAWAY</p>
+    <h2>Attachments &amp; ballast must resist <span class="sweep">uplift</span></h2>
+    <div class="info-box glass" style="max-width:720px;margin:1.5rem auto 0;text-align:center;">
+      <svg viewBox="0 0 48 48" width="52" height="52" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin:0 auto 1rem;display:block">
+        <path d="M24 6 L24 22"/><path d="M16 14 L24 6 L32 14"/><rect x="10" y="26" width="28" height="8" rx="2"/><path d="M16 34 L16 42"/><path d="M32 34 L32 42"/>
+      </svg>
+      <p class="lead" style="margin:0 auto;">Wind drives both <strong>uplift</strong> and <strong>down-force</strong> on a PV array. Fasteners, racking and ballast must hold the panels down against suction <em>and</em> carry pressure into the structure &mdash; sized for the worst case, not the average.</p>
+    </div>
+    <div class="stat-strip" style="margin-top:2rem;">
+      <div class="stat"><span class="num">K<sub>d</sub> = 0.85</span><span class="lbl">DIRECTIONALITY FACTOR</span></div>
+      <div class="stat"><span class="num">q<sub>h</sub></span><span class="lbl">VELOCITY PRESSURE AT ROOF HT</span></div>
+      <div class="stat"><span class="num">Both ways</span><span class="lbl">RESIST UPLIFT + DOWN-FORCE</span></div>
+    </div>
+  </div></section>
 
-            <p>Solar panel location on the roof determines which zone applies. Panels near edges and corners experience higher wind pressures than those in the interior field.</p>
+  <div class="divider"></div>
 
-            <div class="zone-grid">
-                <div class="zone-card zone-1">
-                    <h4><span class="zone-badge">Zone 1</span> Interior Field</h4>
-                    <p>Panels located in the interior of the roof, away from edges. These experience the <strong>lowest wind pressures</strong> and have the lowest GC<sub>rn,nom</sub> values.</p>
-                </div>
-                <div class="zone-card zone-2">
-                    <h4><span class="zone-badge">Zone 2</span> Roof Edges</h4>
-                    <p>Panels located near roof edges (excluding corners). Wind accelerates over edges, creating <strong>moderate wind pressures</strong> higher than Zone 1.</p>
-                </div>
-                <div class="zone-card zone-3">
-                    <h4><span class="zone-badge">Zone 3</span> Roof Corners</h4>
-                    <p>Panels located at roof corners experience the <strong>highest wind pressures</strong> due to wind vortex formation. Highest GC<sub>rn,nom</sub> values apply.</p>
-                </div>
-            </div>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">RUN YOUR NUMBERS</p>
+    <h2>Calculate your <span class="sweep">solar wind loads</span></h2>
+    <p class="lead">Site-specific design pressures for rooftop and ground-mount PV per the latest ASCE 7 (ASCE 7-22).</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/shop/solar-panels.html">Solar Panel Calculator</a>
+      <a class="btn-ghost" href="solar-belt-wind-load-requirements.html">Solar Belt Requirements</a>
+    </div>
+  </div></section>
 
-            <div class="warning-card">
-                <h4>&#9888; Zone Boundaries per Figure 29.4-7</h4>
-                <p>Zone boundaries are defined based on building height (h) and minimum building dimension. The edge zone width is typically calculated as 0.1 × min(building length, building width), but not less than 0.4h. Consult ASCE 7 Figure 29.4-7 for exact zone boundary definitions.</p>
-            </div>
+  <div class="divider"></div>
 
-            <h2><span class="icon">&#128208;</span> Panel Tilt Angle Categories</h2>
+  <!-- RELATED LINKS -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">KEEP READING</p>
+    <h2>Related <span class="sweep">guides</span></h2>
+    <div class="grid" data-n="6">
+      <a class="card glass" href="/roof-wind-uplift-guide">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 24 L24 10 L42 24"/><path d="M24 10 L24 30"/><path d="M18 16 L24 10 L30 16"/></svg>
+        <h3>Roof Wind Uplift Guide</h3>
+        <p>C&amp;C roof pressures, zones 1/2/3, and roof-to-wall connections.</p>
+        <span class="badge badge--data">UPLIFT</span>
+      </a>
+      <a class="card glass" href="solar-belt-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="16"/><path d="M8 24 H40"/><path d="M24 8 C30 14 30 34 24 40 C18 34 18 14 24 8"/></svg>
+        <h3>Solar Belt Requirements</h3>
+        <p>State-by-state wind load requirements for top solar-producing states.</p>
+        <span class="badge badge--data">BY STATE</span>
+      </a>
+      <a class="card glass" href="/cc-vs-mwfrs-guide">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="14" height="34" rx="2"/><rect x="27" y="7" width="14" height="34" rx="2"/></svg>
+        <h3>C&amp;C vs. MWFRS</h3>
+        <p>Components &amp; Cladding vs. Main Wind Force Resisting System.</p>
+        <span class="badge badge--data">METHODS</span>
+      </a>
+      <a class="card glass" href="/building-envelope-wind-loads-guide">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="30" height="30" rx="2"/><path d="M9 19 H39"/><path d="M19 19 V39"/></svg>
+        <h3>Building Envelope Guide</h3>
+        <p>Wall zones, DP ratings, and cladding selection for wind resistance.</p>
+        <span class="badge badge--data">ENVELOPE</span>
+      </a>
+      <a class="card glass" href="/wind-exposure-categories-guide">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 34 H40"/><path d="M12 34 V24"/><path d="M22 34 V16"/><path d="M32 34 V20"/></svg>
+        <h3>Exposure Categories</h3>
+        <p>Exposure B, C, and D definitions and selection criteria.</p>
+        <span class="badge badge--data">EXPOSURE</span>
+      </a>
+      <a class="card glass" href="/complete-guide-wind-load-calculations">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 8 H32 L38 14 V40 H10 Z"/><path d="M32 8 V14 H38"/><path d="M16 24 H30"/><path d="M16 31 H30"/></svg>
+        <h3>Complete Wind Load Guide</h3>
+        <p>Comprehensive overview of all ASCE 7 wind load calculation methods.</p>
+        <span class="badge badge--data">OVERVIEW</span>
+      </a>
+    </div>
+    <div class="info-box glass" style="max-width:720px;margin:2.5rem auto 0;text-align:center;">
+      <p class="lead" style="margin:0 auto;">Solar wind load calculations should be performed or reviewed by a licensed PE. Many jurisdictions require stamped calculations for permit approval &mdash; verify with your local building department.</p>
+    </div>
+  </div></section>
 
-            <p>The tilt angle (ω) of solar panels affects the applicable GC<sub>rn,nom</sub> values. ASCE 7 provides coefficients for different tilt angle ranges:</p>
+</main>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Tilt Angle Range</th>
-                        <th>Typical Application</th>
-                        <th>Wind Effect</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>0&deg; - 5&deg;</strong></td>
-                        <td>Flush-mounted panels on flat roofs</td>
-                        <td>Minimal uplift, acts similar to roof surface</td>
-                    </tr>
-                    <tr>
-                        <td><strong>5&deg; - 15&deg;</strong></td>
-                        <td>Low-tilt arrays, ballasted systems</td>
-                        <td>Moderate uplift forces begin</td>
-                    </tr>
-                    <tr>
-                        <td><strong>15&deg; - 35&deg;</strong></td>
-                        <td>Typical tilted arrays for optimal solar gain</td>
-                        <td>Significant uplift and sliding forces</td>
-                    </tr>
-                    <tr>
-                        <td><strong>&gt; 35&deg;</strong></td>
-                        <td>Steep-angle installations</td>
-                        <td>High uplift, may need special analysis</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>The tilt angle is calculated as: <strong>ω = arctan[(h<sub>2</sub> - h<sub>1</sub>) / L<sub>p</sub>]</strong>, where h<sub>2</sub> is the high edge height, h<sub>1</sub> is the low edge height, and L<sub>p</sub> is the panel chord length.</p>
-
-            <h2><span class="icon">&#128200;</span> Normalized Wind Area</h2>
-
-            <p>The normalized wind area (A<sub>n</sub>) is used to determine GC<sub>rn,nom</sub> from Figure 29.4-7:</p>
-
-            <div class="formula-box">
-                <div class="formula">A<sub>n</sub> = (1000 / [max(L<sub>b</sub>, 15)]<sup>2</sup>) &times; A</div>
-                <div class="formula-description">
-                    <strong>A</strong> = effective wind area of panel (L<sub>p</sub> × W<sub>p</sub>) in ft<sup>2</sup><br>
-                    <strong>L<sub>b</sub></strong> = characteristic length = min(0.4 × √(h × W<sub>L</sub>), h, W<sub>s</sub>)<br>
-                    <strong>h</strong> = mean roof height<br>
-                    <strong>W<sub>L</sub></strong> = building width perpendicular to wind<br>
-                    <strong>W<sub>s</sub></strong> = building width parallel to wind
-                </div>
-            </div>
-
-            <h2><span class="icon">&#127981;</span> Exposed Panel Criteria</h2>
-
-            <p>A panel is considered "exposed" (requiring γ<sub>E</sub> = 1.5 for edge panels) when:</p>
-
-            <ol>
-                <li><strong>d<sub>1</sub> &gt; 0.5 × h</strong> (setback from roof edge exceeds half the building height)</li>
-            </ol>
-
-            <p>AND either:</p>
-
-            <ul>
-                <li>Distance to adjacent array exceeds max(4 × h<sub>2</sub>, 4 ft)</li>
-                <li>Distance to next panel in row exceeds max(4 × h<sub>2</sub>, 4 ft)</li>
-            </ul>
-
-            <div class="info-card">
-                <h4>&#9432; 24-Inch Height Threshold</h4>
-                <p>Per ASCE 7-16 and 7-22, rooftop solar panel systems mounted 24 inches or less above a low-slope roof surface do not require live load modeling as a separate structure. This simplifies analysis for typical flush-mount installations.</p>
-            </div>
-
-            <h2><span class="icon">&#127759;</span> ASCE 7-22: New Ground-Mount Provisions (Section 29.4.5)</h2>
-
-            <p>ASCE 7-22 introduced <strong>Section 29.4.5</strong> specifically for <strong>fixed-tilt ground-mounted solar arrays</strong>. This section did not exist in ASCE 7-16, which only addressed rooftop installations.</p>
-
-            <h3>Key Features of Section 29.4.5</h3>
-
-            <ul>
-                <li><strong>Dedicated methodology</strong> for ground-mount solar farms and utility-scale installations</li>
-                <li><strong>Force coefficients</strong> specific to ground-mounted array configurations</li>
-                <li><strong>Directionality factor (K<sub>d</sub>)</strong> incorporated into all pressure calculations</li>
-                <li><strong>Array spacing</strong> considerations for multi-row installations</li>
-                <li><strong>Foundation design</strong> requirements for resisting overturning and sliding</li>
-            </ul>
-
-            <div class="success-card">
-                <h4>&#10004; Ground-Mount vs. Rooftop</h4>
-                <p>Ground-mounted systems typically experience different wind flow patterns than rooftop installations because they're not influenced by building aerodynamics. Section 29.4.5 accounts for these differences with specific force coefficients.</p>
-            </div>
-
-            <h2><span class="icon">&#128260;</span> ASCE 7-16 vs. ASCE 7-22 Comparison</h2>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>ASCE 7-16</th>
-                        <th>ASCE 7-22</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Rooftop Solar (29.4.3, 29.4.4)</td>
-                        <td>&#10004; Included</td>
-                        <td>&#10004; Included (refined)</td>
-                    </tr>
-                    <tr>
-                        <td>Ground-Mount Solar (29.4.5)</td>
-                        <td>&#10008; Not included</td>
-                        <td>&#10004; NEW section</td>
-                    </tr>
-                    <tr>
-                        <td>Directionality Factor (K<sub>d</sub>)</td>
-                        <td>Applied separately</td>
-                        <td>Incorporated into calculations</td>
-                    </tr>
-                    <tr>
-                        <td>Roof Zone Definitions</td>
-                        <td>Standard zones</td>
-                        <td>Simplified zone designations</td>
-                    </tr>
-                    <tr>
-                        <td>Structural Load Path</td>
-                        <td>General requirements</td>
-                        <td>Panels cannot be load path unless tested</td>
-                    </tr>
-                    <tr>
-                        <td>Tornado Loads (Chapter 32)</td>
-                        <td>&#10008; Not included</td>
-                        <td>&#10004; NEW (Risk Cat III/IV)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="warning-card">
-                <h4>&#9888; ASCE 7-22 Load Path Requirement</h4>
-                <p>ASCE 7-22 specifies that "solar panels shall not be considered as part of the load path that resists the interconnection force unless panels have been evaluated or tested." This is an important change affecting structural design of PV mounting systems.</p>
-            </div>
-
-            <h2><span class="icon">&#128221;</span> Example Calculation</h2>
-
-            <p>The following example demonstrates a solar panel wind load calculation for a rooftop installation:</p>
-
-            <h4>Given Parameters:</h4>
-            <ul>
-                <li>Building location: Broken Arrow, Oklahoma</li>
-                <li>Design wind speed (V): 115 mph (Risk Category II)</li>
-                <li>Building height (h): 30 ft</li>
-                <li>Exposure Category: C</li>
-                <li>Panel dimensions: 65" × 39" (L<sub>p</sub> × W<sub>p</sub>)</li>
-                <li>Panel tilt: 20°</li>
-                <li>No parapet</li>
-                <li>Panels in Zone 3 (corner)</li>
-            </ul>
-
-            <h4>Step-by-Step Calculation:</h4>
-
-            <ol>
-                <li><strong>Calculate velocity pressure (q<sub>h</sub>):</strong> q<sub>h</sub> = 32.28 psf (from ASCE 7 velocity pressure tables)</li>
-                <li><strong>Determine γ<sub>p</sub>:</strong> No parapet, so γ<sub>p</sub> = 0.9</li>
-                <li><strong>Calculate γ<sub>c</sub>:</strong> L<sub>p</sub> = 65"/12 = 5.42 ft<br>
-                    γ<sub>c</sub> = max(0.6 + 0.06 × 5.42, 0.8) = max(0.925, 0.8) = 0.925</li>
-                <li><strong>Determine γ<sub>E</sub>:</strong> Assume interior panel (not at array edge), γ<sub>E</sub> = 1.0</li>
-                <li><strong>Calculate normalized wind area and find GC<sub>rn,nom</sub>:</strong><br>
-                    A<sub>n</sub> = 78.24 ft² → GC<sub>rn,nom</sub> = 1.607 (from Figure 29.4-7 for Zone 3, 15-35° tilt)</li>
-                <li><strong>Calculate GC<sub>rn</sub>:</strong><br>
-                    GC<sub>rn</sub> = 0.9 × 0.925 × 1.0 × 1.607 = 1.338</li>
-                <li><strong>Calculate design wind pressure:</strong><br>
-                    p = 32.28 × 1.338 = <strong>43.2 psf</strong></li>
-            </ol>
-
-            <div class="info-card">
-                <h4>&#9432; Interpretation</h4>
-                <p>The design wind pressure of 43.2 psf applies to both uplift and downward loading. The mounting system and attachments must be designed to resist these forces with appropriate safety factors per the applicable building code.</p>
-            </div>
-
-            <h2><span class="icon">&#128736;</span> Design Considerations</h2>
-
-            <h3>Ballasted vs. Attached Systems</h3>
-
-            <p>Rooftop solar systems are typically either <strong>ballasted</strong> (held in place by weight) or <strong>mechanically attached</strong> to the roof structure:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>System Type</th>
-                        <th>Advantages</th>
-                        <th>Considerations</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Ballasted</strong></td>
-                        <td>No roof penetrations, easier installation</td>
-                        <td>Heavy weight on roof, limited to low-slope roofs, specific seismic requirements</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Attached</strong></td>
-                        <td>Lower weight, suitable for all roof slopes</td>
-                        <td>Roof penetrations required, waterproofing concerns</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="info-card">
-                <h4>&#9432; Ballasted System Requirements</h4>
-                <p>Per ASCE 7, ballasted systems must meet seven specific conditions for seismic compliance. The ballast weight must be sufficient to resist both uplift and sliding forces from wind loads.</p>
-            </div>
-
-            <h3>Special Considerations for High-Wind Regions</h3>
-
-            <ul>
-                <li><strong>Hurricane-prone regions:</strong> Higher wind speeds require increased ballast or stronger attachments</li>
-                <li><strong>Windborne debris regions:</strong> Consider impact-resistant panel options</li>
-                <li><strong>HVHZ (Florida):</strong> May require Florida Product Approval for PV systems</li>
-                <li><strong>Tornado-prone regions:</strong> Risk Category III/IV buildings now require Chapter 32 tornado load analysis per ASCE 7-22</li>
-            </ul>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="content-section">
-            <div class="cta-section">
-                <h2>Calculate Your Solar Panel Wind Loads</h2>
-                <p>Use our professional wind load calculator to determine design pressures for your solar installation per the latest ASCE 7 (ASCE 7-22).</p>
-                <a href="https://windloadcalc.com/shop/solar-panels.html" class="cta-button">
-                    Get Solar Panel Calculator <span>&rarr;</span>
-                </a>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2><span class="icon">&#128279;</span> Resources and References</h2>
-
-            <ul>
-                <li><a href="https://asce7hazardtool.online/" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a> - Official tool for determining site-specific wind speeds</li>
-                <li><a href="https://www.asce.org/publications-and-news/asce-7" target="_blank" rel="noopener">ASCE/SEI 7-22 Standard</a> - Official ASCE 7-22 publication</li>
-                <li><a href="https://codes.iccsafe.org/" target="_blank" rel="noopener">ICC Digital Codes</a> - International Building Code reference</li>
-                <li><a href="https://www.nrel.gov/" target="_blank" rel="noopener">NREL (National Renewable Energy Laboratory)</a> - Solar energy research and data</li>
-            </ul>
-
-            <div class="info-card">
-                <h4>&#9432; Professional Engineering Note</h4>
-                <p>Solar panel wind load calculations should be performed or reviewed by a licensed Professional Engineer (PE). Local jurisdictions may require stamped calculations for building permit approval. Always verify requirements with your local building department.</p>
-            </div>
-        </section>
-
-        <!-- Related Articles -->
-        <section class="related-section">
-            <div class="content-section" style="padding-top: 0;">
-                <h2><span class="icon">&#128220;</span> Related Guides</h2>
-            </div>
-            <div class="related-grid">
-                <a href="/roof-wind-uplift-guide" class="related-card">
-                    <h4>Roof Wind Uplift Guide</h4>
-                    <p>C&C roof pressures, zones 1/2/3, and roof-to-wall connections.</p>
-                </a>
-                <a href="/cc-vs-mwfrs-guide" class="related-card">
-                    <h4>C&C vs. MWFRS Guide</h4>
-                    <p>Understanding Components & Cladding vs. Main Wind Force Resisting System.</p>
-                </a>
-                <a href="/building-envelope-wind-loads-guide" class="related-card">
-                    <h4>Building Envelope Guide</h4>
-                    <p>Wall zones, DP ratings, and cladding selection for wind resistance.</p>
-                </a>
-                <a href="/wind-exposure-categories-guide" class="related-card">
-                    <h4>Exposure Categories Guide</h4>
-                    <p>Exposure B, C, and D definitions and selection criteria.</p>
-                </a>
-                <a href="/asce-7-22-tornado-loads-chapter-32-guide" class="related-card">
-                    <h4>Chapter 32: Tornado Loads</h4>
-                    <p>New ASCE 7-22 tornado provisions for Risk Category III/IV buildings.</p>
-                </a>
-                <a href="solar-belt-wind-load-requirements.html" class="related-card">
-                    <h4>Solar Belt Requirements</h4>
-                    <p>State-by-state wind load requirements for America's top solar-producing states.</p>
-                </a>
-                <a href="/complete-guide-wind-load-calculations" class="related-card">
-                    <h4>Complete Wind Load Guide</h4>
-                    <p>Comprehensive overview of all ASCE 7 wind load calculation methods.</p>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 WindLoad Solutions. All rights reserved.</p>
-        <p style="margin-top: 1rem;">
-            <a href="/about">About</a> &nbsp;|&nbsp;
-            <a href="/contact">Contact</a> &nbsp;|&nbsp;
-            <a href="/articles">Articles</a> &nbsp;|&nbsp;
-            <a href="https://windloadcalc.com/shop/solar-panels.html">Solar Panel Calculator</a>
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: #6b7280;">
-            Reference: ASCE/SEI 7-16 and ASCE/SEI 7-22, Minimum Design Loads and Associated Criteria for Buildings and Other Structures
-        </p>
-    </footer>
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         const header = document.querySelector('.main-header');
         window.addEventListener('scroll', () => {
@@ -1399,6 +575,8 @@
             });
         });
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
