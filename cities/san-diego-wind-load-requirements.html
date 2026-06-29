@@ -29,782 +29,263 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #1e40af;
-            background: rgba(30, 64, 175, 0.1);
-            border-color: rgba(30, 64, 175, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #1e40af 0%, #fbbf24 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #1e40af;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - San Diego Navy/Gold colors */
-        .hero {
-            background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 25%, #3b82f6 50%, #fbbf24 75%, #f59e0b 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '⚓🌅';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #1e40af;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #1e40af;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #3b82f6;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #1e40af;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #1e40af;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(30, 64, 175, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* San Diego Card */
-        .san-diego-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(30, 64, 175, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .san-diego-card h4 {
-            color: #1e40af;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .san-diego-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "California",
-                "item": "https://windload.solutions/california-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "San Diego",
-                "item": "https://windload.solutions/cities/san-diego-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What is the design wind speed for San Diego, California?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "San Diego design wind speeds range from 95-100 mph (3-second gust) for Risk Category II structures per ASCE 7-22. Higher Risk Categories (III and IV) require elevated wind speeds. Always verify with San Diego County building department for locally adopted values."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What building code governs wind loads in San Diego?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "San Diego follows the California state building code which references ASCE 7 for wind load calculations. San Diego County may have local amendments that affect design requirements. Check with the local building department for the currently adopted code edition."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What exposure category applies to most San Diego buildings?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most San Diego buildings fall under Exposure Category B/C depending on surrounding terrain and surface roughness. Urban and suburban areas typically qualify for Exposure B, while open terrain or Pacific coastal location may require Exposure C. Site-specific analysis per ASCE 7 Section 26.7 determines the actual exposure."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are there special wind load considerations for San Diego?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, San Diego has Pacific coastal location that may affect wind load design. Additionally, local terrain, building height, and occupancy type influence required wind pressures. Projects should consider these factors along with San Diego County specific requirements for permit approval."
-            }
-        }
-    ]
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
 }
-    </script>
-</head>
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+
+/*CENTERFIX-v1*/
+h1{text-align:center}
+.sec h1,.sec h2{text-align:center}
+.eyebrow{display:block;text-align:center;margin:0 auto 12px}
+.lead,.sub,.section-subtitle{text-align:center;margin-left:auto;margin-right:auto}
+.hero-cta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin:30px auto 0}
+.grid{gap:1.6rem}
+.stat-strip{margin-left:auto;margin-right:auto}
+.divider{margin-left:auto;margin-right:auto}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -817,330 +298,225 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>San Diego Wind Load Requirements</h1>
-            <p>San Diego County, CA | 95-110 mph Design Wind Speed | California Building Code (CBC) | Naval Station | Exposure B/C | Seismic Dominates</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate San Diego Wind Loads Now →</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">CALIFORNIA · SAN DIEGO COUNTY</p>
+    <h1>Where the Pacific Meets the Border: <span class="sweep">San Diego Wind Loads</span></h1>
+    <p class="lead">A marine-mild coast where seismic, not wind, sets the structural pace &mdash; yet Santa Ana gusts and open ocean exposure still shape every cladding decision.</p>
 
-    <section class="content-section">
-        <div class="container">
+    <!-- custom inline coast/wind motif (NOT a state silhouette) -->
+    <svg viewBox="0 0 240 120" width="240" height="120" role="img" aria-label="Pacific coastline with onshore marine flow and offshore Santa Ana gusts" style="max-width:100%;height:auto;margin:1.5rem auto 0;display:block;">
+      <defs>
+        <linearGradient id="sd-sea" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#0ea5e9"/>
+        </linearGradient>
+        <linearGradient id="sd-land" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/>
+        </linearGradient>
+      </defs>
+      <!-- ocean -->
+      <path d="M0 70 Q60 60 120 70 T240 70 V120 H0 Z" fill="url(#sd-sea)" opacity="0.85"/>
+      <!-- coastline / mesa -->
+      <path d="M120 70 Q150 52 190 56 Q220 58 240 50 V120 H120 Z" fill="url(#sd-land)" opacity="0.9"/>
+      <!-- onshore marine flow arrows -->
+      <g stroke="#67e8f9" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9">
+        <path d="M10 40 q25 -8 50 0"><animate attributeName="stroke-dasharray" values="0 60;60 0" dur="2.6s" repeatCount="indefinite"/></path>
+        <path d="M14 54 q25 -8 50 0"><animate attributeName="stroke-dasharray" values="0 60;60 0" dur="3.1s" repeatCount="indefinite"/></path>
+      </g>
+      <!-- offshore Santa Ana gust -->
+      <g stroke="#f59e0b" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.95">
+        <path d="M230 28 q-30 -6 -55 4"><animate attributeName="stroke-dasharray" values="0 64;64 0" dur="2.2s" repeatCount="indefinite"/></path>
+      </g>
+      <!-- compass star at the border -->
+      <circle cx="120" cy="70" r="5" fill="#fff"/>
+      <circle cx="120" cy="70" r="11" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.7"><animate attributeName="r" values="6;16;6" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0;0.7" dur="3s" repeatCount="indefinite"/></circle>
+    </svg>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">95-110</span>
-                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">B/C</span>
-                    <span class="stat-label">Exposure Category</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">CBC</span>
-                    <span class="stat-label">California Building Code</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">LOW</span>
-                    <span class="stat-label">Wind Risk<br>(Seismic Dominates)</span>
-                </div>
-            </div>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">95&ndash;110</span><span class="lbl">MPH RISK II (3-SEC GUST, VARIES BY SITE)</span></div>
+      <div class="stat"><span class="num">SD</span><span class="lbl">SAN DIEGO COUNTY</span></div>
+      <div class="stat"><span class="num">CBC</span><span class="lbl">TITLE 24 · ASCE 7-22</span></div>
+      <div class="stat"><span class="num">B/C</span><span class="lbl">EXPOSURE CATEGORY</span></div>
+    </div>
+  </div></section>
 
-            <h2>San Diego, California: Mild Climate with Coastal Wind Considerations</h2>
-            <p>San Diego, located in <strong>San Diego County, California</strong>, has relatively moderate wind load requirements due to its mild coastal climate and low risk of extreme wind events. California uses the <strong>California Building Code (CBC), also known as Title 24</strong>, which is based on the International Building Code (IBC) with California-specific amendments. Design wind speeds for Risk Category II structures typically range from <strong>95-110 mph</strong> (3-second gust) depending on location and coastal exposure, with urban areas generally at the lower end and exposed coastal areas at the higher end.</p>
+  <div class="divider"></div>
 
-            <p>These requirements reflect San Diego's temperate Mediterranean climate and relatively low risk for hurricanes, tornadoes, or severe wind events compared to other major U.S. cities. However, San Diego is home to <strong>Naval Station San Diego</strong>, the largest naval base on the West Coast, which requires careful attention to wind loads for military infrastructure and high-occupancy structures. In San Diego, <strong>seismic design typically governs</strong> structural requirements rather than wind loads, as the region is located in a high seismic zone near major fault lines.</p>
+  <!-- WIND & EXPOSURE MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">MARINE LAYER · SANTA ANA · OPEN COAST</p>
+    <h2>Two Wind Regimes on <span class="sweep">One Quiet Coastline</span></h2>
+    <p class="lead">Cold Pacific currents hold hurricanes offshore and keep base speeds low, but the city still answers to onshore marine flow and dry, downslope Santa Ana events.</p>
 
-            <div class="info-box">
-                <h4><strong>⚓</strong> San Diego Wind Load Quick Facts</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 95-110 mph (3-second gust, varies by location)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~110-125 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~120-135 mph</p>
-                <p><strong>Exposure Category:</strong> B (urban/suburban) or C (coastal exposed areas)</p>
-                <p><strong>Building Code:</strong> California Building Code (CBC, Title 24)</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
-                <p><strong>County:</strong> San Diego County</p>
-                <p><strong>Special Considerations:</strong> Naval Station San Diego, seismic design typically governs, mild climate advantages</p>
-            </div>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 20h26a5 5 0 1 0-5-5"/><path d="M6 28h32a5 5 0 1 1-5 5"/><path d="M6 36h18"/></svg>
+        <h3>Onshore Marine Layer</h3>
+        <p>Steady, moisture-laden Pacific flow off San Diego Bay and La Jolla drives the open-coast end of the speed range.</p>
+        <span class="badge badge--data">EXPOSURE C COAST</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M24 6v8M24 34v8M6 24h8M34 24h8"/><path d="M12 12l5 5M31 31l5 5M36 12l-5 5M17 31l-5 5"/></svg>
+        <h3>Santa Ana Downslope Gusts</h3>
+        <p>Hot, dry offshore winds spill through inland canyons in fall and winter &mdash; sharpest in the wildland-urban interface, milder than counties to the north.</p>
+        <span class="badge badge--hvhz">FALL / WINTER EVENT</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M24 4l16 8v10c0 11-7 18-16 22-9-4-16-11-16-22V12z"/><path d="M24 20v8M24 32h.01"/></svg>
+        <h3>Seismic Sets the Pace</h3>
+        <p>Near the Rose Canyon, Elsinore and San Andreas systems, lateral design is seismic-driven (SDC D/E); wind governs cladding and components.</p>
+        <span class="badge badge--method">SDC D / E</span>
+      </div>
+    </div>
 
-            <h3>Why San Diego Has 95-110 mph Wind Speed Requirements</h3>
-            <p>San Diego's design wind speed of 95-110 mph for Risk Category II structures reflects the city's favorable climate and low risk of extreme wind events. Unlike Gulf Coast and Atlantic coastal cities, San Diego is protected from hurricanes by cold Pacific Ocean currents and does not experience tornado activity common in the central United States. The wind speed requirements account for occasional Santa Ana wind events and coastal exposure, but are significantly lower than hurricane-prone regions.</p>
+    <div class="info-box glass">
+      <p>Across most inland neighborhoods <strong>Exposure B</strong> applies; open frontage along the Pacific, Mission Bay and San Diego Bay can push a site to <strong>Exposure C</strong>. The boundary is a per-direction engineering judgment, not a citywide default.</p>
+    </div>
+  </div></section>
 
-            <p>San Diego's mild coastal climate means wind loads are rarely the governing factor in structural design. Instead, <strong>seismic considerations dominate</strong> due to the region's proximity to the Rose Canyon Fault, Elsinore Fault, and the larger San Andreas Fault system. Engineers designing for San Diego must balance both wind and seismic requirements, with seismic forces typically controlling structural system design while wind loads influence cladding, roofing, and component design.</p>
+  <div class="divider"></div>
 
-            <h3>San Diego Wind Load Calculations: Step by Step</h3>
-            <p>Calculating wind loads for San Diego projects requires following ASCE 7-22 methodology as adopted by the California Building Code (CBC). The fundamental velocity pressure equation is:</p>
+  <!-- WHAT YOU NEED TO COMPLY -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">PERMIT-READY CHECKLIST</p>
+    <h2>What Clears a <span class="sweep">San Diego Plan Review</span></h2>
+    <p class="lead">Six inputs the City and County reviewers expect locked down before a structural set moves.</p>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #1e40af; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+    <div class="grid" data-n="6">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M24 6v36M10 18l14-12 14 12"/></svg>
+        <h3>Site Wind Speed</h3>
+        <p>Pull V from the 95&ndash;110 mph Risk II band for the exact address &mdash; never one fixed mph citywide.</p>
+        <span class="badge badge--data">3-SEC GUST</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="8" y="14" width="32" height="22" rx="3"/><path d="M8 22h32M18 30h6"/></svg>
+        <h3>Exposure Call</h3>
+        <p>Justify B vs C from upwind terrain per ASCE 7-22 &sect;26.7, direction by direction near the water.</p>
+        <span class="badge badge--data">B OR C</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M24 4l18 9v13c0 12-8 20-18 22C14 46 6 38 6 26V13z"/></svg>
+        <h3>Risk Category</h3>
+        <p>Set I&ndash;IV per Table 1.5-1; each tier reads a longer-return-period map and a higher speed.</p>
+        <span class="badge badge--method">TABLE 1.5-1</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M10 38V10h20l8 8v20z"/><path d="M30 10v8h8M16 26h16M16 32h16"/></svg>
+        <h3>CBC + ASCE 7-22</h3>
+        <p>California Building Code (Title 24) adopts ASCE 7-22 with statewide seismic, energy and CALGreen amendments.</p>
+        <span class="badge">TITLE 24</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="18" r="9"/><path d="M24 27v9M19 36h10M21 16l3 3 5-5"/></svg>
+        <h3>PE Seal</h3>
+        <p>A California-licensed PE must sign and seal wind and seismic calcs for commercial and engineered work.</p>
+        <span class="badge badge--method">CA LICENSED</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M24 6c8 0 14 6 14 14 0 10-14 22-14 22S10 30 10 20C10 12 16 6 24 6z"/><circle cx="24" cy="20" r="5"/></svg>
+        <h3>Right Jurisdiction</h3>
+        <p>City of San Diego Development Services in the city; San Diego County Building Division in unincorporated areas.</p>
+        <span class="badge badge--data">CITY / COUNTY</span>
+      </div>
+    </div>
+  </div></section>
 
-            <p>For San Diego with V = 100 mph (typical urban San Diego) and standard conditions, the resulting pressures are moderate. A San Diego project with:</p>
-            <ul>
-                <li><strong>V = 100 mph</strong> (San Diego typical velocity)</li>
-                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B suburban)</li>
-                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (sea level)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 18.2 psf</strong>—significantly lower than hurricane-prone regions and even lower than many inland cities prone to severe thunderstorm winds.</p>
+  <div class="divider"></div>
 
-            <p>For coastal San Diego areas along the Pacific Ocean using Exposure C, the pressures increase due to the higher velocity pressure coefficient for open terrain exposure, but still remain moderate compared to Atlantic and Gulf Coast locations.</p>
+  <!-- RISK CATEGORY TABLE -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">RETURN PERIOD MAPS</p>
+    <h2>How Occupancy <span class="sweep">Lifts the Speed</span></h2>
+    <p class="lead">Higher risk category means a longer-return-period map and a higher design speed &mdash; not a fixed multiplier.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Risk Category</th><th>Map / Return Period</th><th>Typical San Diego Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I</strong></td><td>300-yr MRI (lowest)</td><td>Minor ag, storage, temporary structures</td></tr>
+        <tr><td><strong>II</strong></td><td>700-yr MRI (95&ndash;110 mph here)</td><td>Homes, retail, most occupancies</td></tr>
+        <tr><td><strong>III</strong></td><td>1,700-yr MRI</td><td>Schools, assembly &gt;300, hazardous materials</td></tr>
+        <tr><td><strong>IV</strong></td><td>3,000-yr MRI (highest)</td><td>Hospitals, fire/EOC, essential facilities</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box glass">
+      <p>San Diego's Risk II band runs <strong>95&ndash;110 mph (3-second gust)</strong> and varies by site; the exact mph depends on location and coastal exposure, so always confirm V against the address.</p>
+    </div>
+  </div></section>
 
-            <h3>California Building Code (CBC) and San Diego Permitting</h3>
-            <p>California has a statewide building code—the <strong>California Building Code (CBC, Title 24)</strong>—which is based on the International Building Code (IBC) with extensive California-specific amendments addressing seismic design, energy efficiency, and accessibility. San Diego City and County adopt the CBC with minimal local amendments.</p>
+  <div class="divider"></div>
 
-            <p>Key San Diego building code considerations:</p>
+  <!-- NEARBY / STATEWIDE LINKS -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">EXPAND YOUR SCOPE</p>
+    <h2>Statewide Context &amp; <span class="sweep">Official Sources</span></h2>
+    <p class="lead">From the California overview to the desks that stamp San Diego permits.</p>
 
-            <ul>
-                <li><strong>Building Code Adoption:</strong> San Diego uses the California Building Code (CBC, Title 24) updated triennially</li>
-                <li><strong>California Amendments:</strong> Extensive seismic requirements, energy efficiency (Title 24 Part 6), green building standards (CALGreen)</li>
-                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by CBC</li>
-                <li><strong>Permit Authority:</strong> City of San Diego Development Services Department handles building permits within city limits</li>
-                <li><strong>County Jurisdiction:</strong> San Diego County Building Division oversees permits in unincorporated areas</li>
-                <li><strong>PE Seal Required:</strong> California requires Professional Engineer (PE) seal for structural calculations on most commercial and complex residential structures</li>
-            </ul>
+    <div class="grid" data-n="6">
+      <a class="card glass" href="../california-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M14 6l6 10-4 12 8 14 4-16 8-6-6-10z"/></svg>
+        <h3>California Requirements</h3>
+        <p>Statewide CBC and ASCE 7-22 wind-load picture.</p>
+        <span class="badge badge--data">STATE GUIDE</span>
+      </a>
+      <a class="card glass" href="../state-requirements.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="7" y="11" width="34" height="26" rx="3"/><path d="M7 19h34M19 11v26"/></svg>
+        <h3>All State Requirements</h3>
+        <p>Compare adopted editions and speeds across the U.S.</p>
+        <span class="badge badge--data">50-STATE MAP</span>
+      </a>
+      <a class="card glass" href="https://www.sandiego.gov/development-services" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 40V20l16-10 16 10v20z"/><path d="M18 40V28h12v12"/></svg>
+        <h3>City Development Services</h3>
+        <p>Permits and building requirements inside city limits.</p>
+        <span class="badge badge--go">OFFICIAL</span>
+      </a>
+      <a class="card glass" href="https://www.sandiegocounty.gov/content/sdc/pds.html" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 42V14l18-8 18 8v28z"/><path d="M16 42V26h16v16"/></svg>
+        <h3>County Building Division</h3>
+        <p>Permitting for unincorporated San Diego County.</p>
+        <span class="badge badge--go">OFFICIAL</span>
+      </a>
+      <a class="card glass" href="https://www.dgs.ca.gov/BSC" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M10 38V12l14-6 14 6v26z"/><path d="M16 22h16M16 30h16"/></svg>
+        <h3>CA Building Standards</h3>
+        <p>The commission that publishes Title 24.</p>
+        <span class="badge badge--method">TITLE 24</span>
+      </a>
+      <a class="card glass" href="https://www.bpelsg.ca.gov/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="24" cy="16" r="9"/><path d="M24 25v11M18 36h12M22 14l2 2 4-4"/></svg>
+        <h3>CA PE Licensing Board</h3>
+        <p>Verify the engineer sealing your calcs.</p>
+        <span class="badge badge--method">LICENSING</span>
+      </a>
+    </div>
+  </div></section>
 
-            <p>You can access San Diego building permits and requirements through the <a href="https://www.sandiego.gov/development-services" target="_blank" rel="noopener">City of San Diego Development Services Department</a>.</p>
+  <div class="divider"></div>
 
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>San Diego projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">RUN THE NUMBERS</p>
+    <h2>Price San Diego Loads <span class="sweep">by Address, Not Guesswork</span></h2>
+    <p class="lead">Drop in a San Diego zip or street address and get site-correct V, Exposure B/C, risk-category speeds and PE-ready ASCE 7-22 output.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Open the Wind Load Calculator</a>
+      <a class="btn-ghost" href="../california-wind-load-requirements.html">Back to California</a>
+    </div>
+  </div></section>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>San Diego Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~85-100 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>95-110 mph</td>
-                        <td>Residential, commercial, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~110-125 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~120-135 mph</td>
-                        <td>Hospitals, fire stations, emergency shelters, naval facilities</td>
-                    </tr>
-                </tbody>
-            </table>
+</main>
 
-            <h3>Exposure Category: B (Urban) vs C (Coastal)</h3>
-            <p>San Diego projects require careful Exposure Category determination based on surrounding terrain and proximity to the Pacific Ocean:</p>
-
-            <div class="san-diego-card">
-                <h4>Exposure Category Selection for San Diego</h4>
-                <p><strong>Exposure Category B (Urban/Suburban):</strong> Most of inland San Diego qualifies as Exposure B due to dense urban and suburban development with numerous buildings, trees, and other obstructions. Exposure B assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind.</p>
-                <p><strong>Exposure Category C (Coastal/Open):</strong> Areas immediately along the Pacific Ocean coastline, Mission Bay, San Diego Bay, and open coastal bluffs may qualify as Exposure C. This includes coastal areas with open terrain and scattered obstructions having heights generally less than 30 feet. Exposure C produces significantly higher wind pressures than Exposure B.</p>
-                <p><strong>Engineering Judgment Required:</strong> The transition between Exposure B and C in San Diego's coastal areas requires professional engineering judgment. Coastal projects should carefully evaluate upwind terrain characteristics for each wind direction.</p>
-            </div>
-
-            <h3>Naval Station San Diego and Military Infrastructure</h3>
-            <p>San Diego is home to <strong>Naval Station San Diego</strong>, the principal homeport of the Pacific Fleet and the largest naval base on the West Coast of the United States. Military facilities at Naval Station San Diego and other Department of Defense installations in the San Diego area have unique wind load requirements:</p>
-
-            <ul>
-                <li><strong>Unified Facilities Criteria (UFC):</strong> DoD facilities follow UFC 1-200-01 and UFC 3-301-01 for structural design</li>
-                <li><strong>Higher Risk Categories:</strong> Many naval facilities are classified as Risk Category III or IV requiring increased wind speeds</li>
-                <li><strong>Security Considerations:</strong> Critical infrastructure may have enhanced design requirements beyond civilian standards</li>
-                <li><strong>Pier and Wharf Structures:</strong> Naval piers require specialized wind load analysis for berthed vessels and crane systems</li>
-                <li><strong>Aircraft Hangars:</strong> Naval Air Station North Island has stringent requirements for hangar door systems and large-span structures</li>
-            </ul>
-
-            <p>Contractors and engineers working on military projects in San Diego should consult DoD Unified Facilities Criteria in addition to California Building Code requirements.</p>
-
-            <h3>Seismic Design Dominates in San Diego</h3>
-            <p>While this page focuses on wind loads, it is critical to understand that <strong>seismic design typically governs</strong> structural requirements in San Diego. The region is located in a high seismic zone with several active fault systems:</p>
-
-            <ul>
-                <li><strong>Rose Canyon Fault:</strong> Runs directly through San Diego, capable of magnitude 6.9 earthquake</li>
-                <li><strong>Elsinore Fault:</strong> Major fault system east of San Diego</li>
-                <li><strong>San Andreas Fault:</strong> While farther away, capable of producing significant ground motion in San Diego</li>
-                <li><strong>Seismic Design Category:</strong> Most of San Diego is classified as Seismic Design Category D or E, requiring stringent seismic detailing</li>
-            </ul>
-
-            <p>In most San Diego projects, seismic forces control the design of the main lateral force resisting system (MWFRS), while wind loads govern cladding and component design. Engineers must evaluate both wind and seismic load cases and design for the most critical conditions.</p>
-
-            <h3>San Diego Zip Codes and Wind Speed Reference</h3>
-            <p>San Diego zip codes span from coastal areas to inland valleys with varying wind speed requirements based on terrain and exposure. Common San Diego zip codes include:</p>
-
-            <ul>
-                <li><strong>92101-92199:</strong> Central San Diego including Downtown, Gaslamp Quarter, Little Italy</li>
-                <li><strong>92037:</strong> La Jolla (coastal, may require Exposure C)</li>
-                <li><strong>92106, 92107:</strong> Point Loma, Ocean Beach (coastal exposure)</li>
-                <li><strong>92109:</strong> Pacific Beach, Mission Beach (coastal)</li>
-                <li><strong>92110, 92113:</strong> San Diego Bay areas (waterfront exposure)</li>
-                <li><strong>92111, 92123, 92128:</strong> Inland communities (typically Exposure B)</li>
-                <li><strong>92126, 92129:</strong> Mira Mesa, Rancho Penasquitos (inland, lower wind speeds)</li>
-                <li><strong>92131, 92139:</strong> Scripps Ranch, Eastlake (inland valleys)</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate San Diego wind speed based on your specific zip code or street address, accounting for coastal proximity and local terrain conditions.</p>
-
-            <h3>Professional Engineer (PE) Requirements in California</h3>
-            <p>California has stringent Professional Engineer licensing requirements for structural design:</p>
-
-            <ul>
-                <li><strong>Commercial Buildings:</strong> Require PE-sealed calculations from a California-licensed Professional Engineer</li>
-                <li><strong>Residential Structures:</strong> Single-family dwellings may use prescriptive code provisions, but engineered designs require PE seal</li>
-                <li><strong>Structural Plans:</strong> Must be prepared under the supervision of a California-licensed Civil or Structural Engineer</li>
-                <li><strong>Seismic and Wind Calculations:</strong> Must be signed and sealed by licensed PE</li>
-                <li><strong>Plan Review:</strong> Building departments conduct thorough review of PE-sealed calculations</li>
-                <li><strong>Special Inspection:</strong> California requires special inspection programs for structural elements</li>
-            </ul>
-
-            <p>California's PE requirements are among the most stringent in the United States, reflecting the state's high seismic risk and emphasis on life safety.</p>
-
-            <h3>Official San Diego Building Department Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for San Diego wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.sandiego.gov/development-services" target="_blank" rel="noopener" class="external-link">
-                    San Diego Development Services
-                </a>
-                <a href="https://www.sandiegocounty.gov/content/sdc/pds.html" target="_blank" rel="noopener" class="external-link">
-                    San Diego County Building Division
-                </a>
-                <a href="https://www.dgs.ca.gov/BSC" target="_blank" rel="noopener" class="external-link">
-                    California Building Standards Commission
-                </a>
-                <a href="https://www.bpelsg.ca.gov/" target="_blank" rel="noopener" class="external-link">
-                    California PE Licensing Board
-                </a>
-            </div>
-
-            <h3>Common San Diego Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Ignoring seismic-wind interaction:</strong> Must evaluate both seismic and wind load cases and design for worst case</li>
-                <li><strong>Incorrect Exposure Category:</strong> Assuming all of San Diego is Exposure B—coastal areas require Exposure C</li>
-                <li><strong>Using outdated CBC edition:</strong> Must use current California Building Code (Title 24) triennial edition</li>
-                <li><strong>Incorrect Risk Category:</strong> Naval facilities, schools, and hospitals require higher wind speeds</li>
-                <li><strong>Neglecting California amendments:</strong> CBC has extensive California-specific requirements beyond base IBC</li>
-                <li><strong>Underestimating permit review time:</strong> California building departments conduct thorough plan reviews requiring significant time</li>
-                <li><strong>Missing PE seal:</strong> California requires PE-sealed structural calculations for commercial and complex residential projects</li>
-            </ul>
-
-            <h3>How WindLoadCalc.com Handles San Diego Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all San Diego-specific requirements:</p>
-
-            <ul>
-                <li><strong>Automatic Velocity Determination:</strong> Enter any San Diego zip code or address and the system automatically applies 95-110 mph based on location</li>
-                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on coastal proximity and terrain</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current CBC-adopted ASCE 7-22 requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
-                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for California permit submission</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your San Diego Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all San Diego-specific requirements including the 95-110 mph design velocity, appropriate Exposure Category selection, Risk Category adjustments, and component pressure coefficients. Simply enter your San Diego project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate San Diego Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>San Diego vs California Coastal Wind Load Requirements</h3>
-            <p>San Diego's wind load requirements differ from more exposed California coastal areas and inland regions:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Requirement</th>
-                        <th>San Diego</th>
-                        <th>Northern CA Coast</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Design Wind Speed</strong></td>
-                        <td>95-110 mph</td>
-                        <td>100-120 mph</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Exposure Category</strong></td>
-                        <td>Primarily B, some C coastal</td>
-                        <td>C required for coastal exposure</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Climate</strong></td>
-                        <td>Mild Mediterranean</td>
-                        <td>More variable, stronger marine winds</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Seismic Zone</strong></td>
-                        <td>High (SDC D or E)</td>
-                        <td>Very High (SDC D or E)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Governing Design</strong></td>
-                        <td>Typically seismic</td>
-                        <td>Typically seismic</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Building Code</strong></td>
-                        <td>California Building Code (CBC)</td>
-                        <td>California Building Code (CBC)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>Throughout California, seismic design typically governs structural system design, but wind loads remain important for cladding, roofing systems, and component design. San Diego's moderate wind speeds and mild climate make it one of the most favorable building environments in the United States.</p>
-
-            <h3>Santa Ana Winds and San Diego</h3>
-            <p>While San Diego experiences <strong>Santa Ana wind events</strong>—hot, dry winds that blow from inland areas toward the coast—these events are less severe in San Diego than in Southern California communities farther north. Santa Ana winds typically occur in fall and winter months and can produce wind gusts of 40-60 mph in San Diego, with higher gusts in mountain and canyon areas.</p>
-
-            <p>Key Santa Ana wind considerations for San Diego projects:</p>
-
-            <ul>
-                <li><strong>Wildfire Risk:</strong> Santa Ana winds increase wildfire risk in San Diego County's wildland-urban interface areas</li>
-                <li><strong>Ember Protection:</strong> Buildings in high fire severity zones require ember-resistant construction per California Chapter 7A</li>
-                <li><strong>Roof Systems:</strong> While wind speeds are moderate, roof systems should be designed for wind-driven debris during fire events</li>
-                <li><strong>Temporary Structures:</strong> Construction sites should secure temporary structures during forecasted Santa Ana wind events</li>
-            </ul>
-
-            <p>The ASCE 7-22 design wind speeds for San Diego account for all expected wind phenomena including Santa Ana events.</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get San Diego-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for San Diego projects. Our software automatically handles the 95-110 mph velocity range, Exposure B/C determination, and generates PE-ready reports for California building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try San Diego Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../california-wind-load-requirements.html" style="color: #60a5fa;">California Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1178,5 +554,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
