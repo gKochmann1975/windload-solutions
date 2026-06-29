@@ -25,745 +25,250 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #0018ff;
-            --dark-blue: #181E57;
-            --map-light: #5eead4;
-            --map-dark: #2dd4bf;
-            --map-deep: #14b8a6;
-            --cyan: #06b6d4;
-            --orange: #f97316;
-            --purple: #a855f7;
-            --green: #10b981;
-            --amber: #f59e0b;
-            --pink: #ec4899;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 1001;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Hero Section - Light Blue Gradient */
-        .hero {
-            background: linear-gradient(135deg, var(--map-light) 0%, var(--map-dark) 100%);
-            color: white;
-            padding: 180px 0 100px;
-            text-align: center;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .breadcrumb {
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .breadcrumb a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .breadcrumb a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* Content Sections */
-        .content-section {
-            padding: 5rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            color: #1f2937;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            color: #1f2937;
-            margin: 3rem 0 1.5rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0;
-            padding-left: 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4b5563;
-            margin-bottom: 0.8rem;
-        }
-
-        /* Info Cards Grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .info-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--map-deep);
-            transition: all 0.3s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .info-card h4 {
-            font-size: 1.4rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .info-card i {
-            color: var(--map-deep);
-            font-size: 1.5rem;
-        }
-
-        .info-card p {
-            font-size: 1rem;
-            color: #6b7280;
-            line-height: 1.7;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            margin: 3rem 0;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, var(--map-deep), var(--map-dark));
-            color: white;
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-            color: #4b5563;
-        }
-
-        .comparison-table tr:hover {
-            background: #f9fafb;
-        }
-
-        /* Highlight Box */
-        .highlight-box {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-left: 5px solid var(--map-deep);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 3rem 0;
-        }
-
-        .highlight-box h3 {
-            color: #1e40af;
-            margin-top: 0;
-        }
-
-        .highlight-box p {
-            color: #1e3a8a;
-            margin-bottom: 0;
-        }
-
-        /* Related Links Section */
-        .related-links {
-            background: #f9fafb;
-            padding: 5rem 0;
-        }
-
-        .related-links h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-            color: #1f2937;
-        }
-
-        .link-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .link-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .link-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .link-card-icon {
-            background: linear-gradient(135deg, var(--map-light), var(--map-dark));
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            font-size: 2.5rem;
-        }
-
-        .link-card-content {
-            padding: 1.5rem;
-            flex: 1;
-        }
-
-        .link-card-content h4 {
-            color: #1f2937;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .link-card-content p {
-            color: #6b7280;
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* WindLoadCalc Promo */
-        .windloadcalc-promo {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 5rem 0;
-            text-align: center;
-        }
-
-        .windloadcalc-promo h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .windloadcalc-promo p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto 2rem auto;
-        }
-
-        .cta-button {
-            background: white;
-            color: #1e3a8a;
-            padding: 1.2rem 3rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .link-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "ASCE 7 Standards",
-                "item": "https://windload.solutions/asce-7-standards.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Design Methods",
-                "item": "https://windload.solutions/design-methods-asce-7-guide.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "LRFD Method",
-                "item": "https://windload.solutions/lrfd-load-resistance-factor-design-wind-loads.html"
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -868,717 +373,237 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
+<main>
+<main>
 
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">ASCE 7 · SECTION 2.3 · DESIGN METHODS</p>
+    <h1>Load &amp; Resistance Factor Design <span class="sweep">for wind</span></h1>
+    <p class="lead">The strength-level method: apply the full wind load at <strong>1.0W</strong>, then put the safety margin on capacity with resistance factors&nbsp;&phi;.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">1.0W</span><span class="lbl">WIND LOAD FACTOR</span></div>
+      <div class="stat"><span class="num">Strength</span><span class="lbl">DESIGN LEVEL</span></div>
+      <div class="stat"><span class="num">V<sub>ult</sub></span><span class="lbl">USED DIRECTLY</span></div>
+    </div>
+  </div></section>
 
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
+  <div class="divider"></div>
 
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
+  <!-- CORE INEQUALITY — custom SVG: factored load vs factored resistance -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">THE GOVERNING CHECK</p>
+    <h2>Factored load stays under <span class="sweep">factored resistance</span></h2>
+    <p class="lead">LRFD separates the two sides of the inequality: load factors scale demand, resistance factors&nbsp;&phi; shrink capacity. Design holds when &phi;R<sub>n</sub> &ge; the load effects.</p>
 
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
+    <div class="info-box glass" style="max-width:760px;margin-inline:auto;">
+      <svg viewBox="0 0 760 260" role="img" aria-label="Factored load effects must stay less than or equal to phi times nominal resistance" style="width:100%;height:auto;display:block;">
+        <defs>
+          <linearGradient id="lrfdLoad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#7c3aed"/>
+          </linearGradient>
+          <linearGradient id="lrfdRes" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#0ea5b7"/>
+          </linearGradient>
+        </defs>
+        <!-- load side -->
+        <text x="190" y="42" text-anchor="middle" fill="#c4b5fd" font-size="15" font-weight="700" letter-spacing="1">FACTORED LOAD EFFECTS</text>
+        <rect x="60" y="64" width="260" height="46" rx="10" fill="url(#lrfdLoad)" opacity="0.92"/>
+        <text x="190" y="93" text-anchor="middle" fill="#fff" font-size="19" font-weight="800">&sum; &gamma;<tspan baseline-shift="sub" font-size="12">i</tspan> Q<tspan baseline-shift="sub" font-size="12">i</tspan></text>
+        <text x="190" y="138" text-anchor="middle" fill="#e9d5ff" font-size="13">1.2D + 1.0W &nbsp;·&nbsp; 0.9D + 1.0W</text>
 
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
+        <!-- inequality -->
+        <text x="380" y="98" text-anchor="middle" fill="#f8fafc" font-size="40" font-weight="800">&le;</text>
+        <text x="380" y="138" text-anchor="middle" fill="#94a3b8" font-size="12" letter-spacing="1">DESIGN CHECK</text>
 
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
+        <!-- resistance side -->
+        <text x="570" y="42" text-anchor="middle" fill="#67e8f9" font-size="15" font-weight="700" letter-spacing="1">FACTORED RESISTANCE</text>
+        <rect x="440" y="64" width="260" height="46" rx="10" fill="url(#lrfdRes)" opacity="0.92"/>
+        <text x="570" y="93" text-anchor="middle" fill="#04212b" font-size="19" font-weight="800">&phi; R<tspan baseline-shift="sub" font-size="12">n</tspan></text>
+        <text x="570" y="138" text-anchor="middle" fill="#a5f3fc" font-size="13">capacity reduced by &phi; &lt; 1.0</text>
 
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
+        <!-- baseline rule -->
+        <line x1="60" y1="178" x2="700" y2="178" stroke="#334155" stroke-width="2"/>
+        <text x="190" y="210" text-anchor="middle" fill="#cbd5e1" font-size="13">Demand side &mdash; loads scaled up</text>
+        <text x="570" y="210" text-anchor="middle" fill="#cbd5e1" font-size="13">Capacity side &mdash; strength scaled down</text>
+        <text x="380" y="238" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="700">Safety lives in the gap between the two bars</text>
+      </svg>
+    </div>
+  </div></section>
 
-.nav-subsection {
-    position: relative;
-}
+  <div class="divider"></div>
 
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
+  <!-- KEY LRFD LOAD COMBINATIONS -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">ASCE 7 SECTION 2.3 · STRENGTH COMBINATIONS</p>
+    <h2>Key LRFD wind <span class="sweep">load combinations</span></h2>
+    <p class="lead">Because mapped speeds are already ultimate (strength-level) since ASCE 7-10, V<sub>ult</sub> drives W directly &mdash; the wind factor is 1.0, with no 0.6 reduction.</p>
 
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 36V20l16-10 16 10v16"/><path d="M8 36h32"/><path d="M24 36V24"/>
+        </svg>
+        <h3>1.2D + 1.0W</h3>
+        <p>Full wind acting with gravity &mdash; the workhorse combination for most lateral and downward cases.</p>
+        <span class="badge badge--method">GRAVITY + WIND</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M24 38V14"/><path d="M16 22l8-8 8 8"/><path d="M10 40h28"/>
+        </svg>
+        <h3>0.9D + 1.0W</h3>
+        <p>Dead load minimized so wind uplift can govern &mdash; critical for light roofs, overhangs and net suction.</p>
+        <span class="badge badge--method">UPLIFT CHECK</span>
+      </div>
+    </div>
+  </div></section>
 
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
+  <div class="divider"></div>
 
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
-
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="breadcrumb">
-                    <a href="index.html">Home</a> ›
-                    <a href="asce-7-standards.html">ASCE 7</a> › <a href="nominal-vs-ultimate-wind-loads.html">Design Methods</a> ›
-                    LRFD Wind Loads
-                </div>
-                <div class="hero-icon">
-                    <i class="fas fa-helmet-safety"></i>
-                </div>
-                <h1>LRFD Wind Loads</h1>
-                <p class="hero-subtitle">Modern strength-based approach to wind load design per ASCE 7</p>
-            </div>
+  <!-- LRFD vs ASD WIND FACTOR CALLOUT -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">THE FACTOR THAT TELLS THEM APART</p>
+    <h2>LRFD <span class="sweep">1.0W</span> vs ASD <span class="sweep">0.6W</span></h2>
+    <div class="info-box glass" style="max-width:720px;margin-inline:auto;">
+      <div class="grid" data-n="2" style="margin-top:0;">
+        <div class="card glass">
+          <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M24 6v36"/><path d="M10 16h28"/><circle cx="14" cy="30" r="6"/><circle cx="34" cy="30" r="6"/>
+          </svg>
+          <h3>LRFD &mdash; 1.0W</h3>
+          <p>Strength level. The full ultimate wind load is applied; margin sits on capacity through &phi;R<sub>n</sub>.</p>
+          <span class="badge badge--method">STRENGTH</span>
         </div>
-    </section>
-
-    <!-- Main Content -->
-
-    <!-- Design Method Quick Navigation -->
-    <section class="content-section" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); padding: 2rem 0; border-top: 3px solid #1e40af; border-bottom: 3px solid #1e40af;">
-        <div class="container">
-            <h3 style="text-align: center; color: #1e40af; margin-bottom: 1.5rem;">
-                <i class="fas fa-drafting-compass" style="margin-right: 0.75rem;"></i>Quick Navigation: Design Methods
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.875rem; max-width: 1200px; margin: 0 auto;">
-                <a href="asd-allowable-stress-design-wind-loads.html" class="design-nav-button" style="">
-                    <i class="fas fa-drafting-compass"></i><br>
-                    <strong>ASD</strong><br>
-                    <span style="font-size: 0.8rem;">Allowable Stress</span>
-                </a>
-                <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="design-nav-button" style="class="design-nav-button design-nav-button-current"">
-                    <i class="fas fa-hard-hat"></i><br>
-                    <strong>LRFD</strong><br>
-                    <span style="font-size: 0.8rem;">Load & Resistance</span>
-                </a>
-                <a href="asd-lrfd-conversion-guide.html" class="design-nav-button" style="">
-                    <i class="fas fa-exchange-alt"></i><br>
-                    <strong>ASD/LRFD</strong><br>
-                    <span style="font-size: 0.8rem;">Conversion</span>
-                </a>
-                <a href="nominal-vs-ultimate-wind-loads.html" class="design-nav-button" style="">
-                    <i class="fas fa-balance-scale"></i><br>
-                    <strong>Nom vs Ult</strong><br>
-                    <span style="font-size: 0.8rem;">Comparison</span>
-                </a>
-                <a href="nominal-wind-loads-explained.html" class="design-nav-button" style="">
-                    <i class="fas fa-wind"></i><br>
-                    <strong>Nominal</strong><br>
-                    <span style="font-size: 0.8rem;">Explained</span>
-                </a>
-                <a href="ultimate-wind-loads-explained.html" class="design-nav-button" style="">
-                    <i class="fas fa-bolt"></i><br>
-                    <strong>Ultimate</strong><br>
-                    <span style="font-size: 0.8rem;">Explained</span>
-                </a>
-                <a href="directional-vs-non-directional-wind-loads.html" class="design-nav-button" style="">
-                    <i class="fas fa-compass"></i><br>
-                    <strong>Directional</strong><br>
-                    <span style="font-size: 0.8rem;">K<sub>d</sub> Factor</span>
-                </a>
-            </div>
+        <div class="card glass">
+          <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M24 6v36"/><path d="M10 16h28"/><circle cx="14" cy="30" r="4"/><circle cx="34" cy="30" r="8"/>
+          </svg>
+          <h3>ASD &mdash; 0.6W</h3>
+          <p>Service level. Wind is reduced to 0.6W so it can be checked against allowable stresses.</p>
+          <span class="badge badge--data">SERVICE</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div></section>
 
-    <style>
-        .design-nav-button {
-            display: block;
-            padding: 1rem 0.75rem;
-            background: white;
-            border: 2px solid #1e40af;
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
-            color: #1e40af;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            font-size: 0.95rem;
-        }
+  <div class="divider"></div>
 
-        .design-nav-button:hover {
-            background: #1e40af;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
+  <!-- WHEN TO USE LRFD -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">WHERE STRENGTH DESIGN LEADS</p>
+    <h2>When to reach for <span class="sweep">LRFD</span></h2>
+    <p class="lead">The modern standard across most commercial materials and lateral systems.</p>
 
-        .design-nav-button i {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 40V18l8-4v26"/><path d="M16 40V10l12-4v34"/><path d="M28 40V20l12 4v16"/><path d="M6 40h36"/>
+        </svg>
+        <h3>Commercial Steel</h3>
+        <p>AISC 360 is primarily LRFD-based &mdash; the default for office, retail and industrial steel.</p>
+        <span class="badge badge--method">AISC 360</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="10" y="8" width="28" height="32" rx="2"/><path d="M18 8v32M30 8v32M10 18h28M10 30h28"/>
+        </svg>
+        <h3>Concrete Structures</h3>
+        <p>ACI 318 Strength Design is the LRFD equivalent &mdash; factored loads with &phi; reduction throughout.</p>
+        <span class="badge badge--method">ACI 318</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="16" y="6" width="16" height="36" rx="1"/><path d="M16 14h16M16 22h16M16 30h16"/>
+        </svg>
+        <h3>High-Rise &amp; MWFRS</h3>
+        <p>Tall buildings and lateral force-resisting frames rely on LRFD for consistent reliability.</p>
+        <span class="badge badge--method">LATERAL SYSTEMS</span>
+      </div>
+    </div>
+  </div></section>
 
-        .design-nav-button-current {
-            background: #1e40af;
-            color: white;
-            font-weight: bold;
-            border: 3px solid #1e3a8a;
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
-        }
+  <div class="divider"></div>
 
-        .design-nav-button-current:hover {
-            background: #1e3a8a;
-            transform: translateY(-2px);
-        }
-    </style>
-    <section class="content-section">
-        <div class="container">
-            <h2><i class="fas fa-book-open" style="color: var(--map-deep); margin-right: 1rem;"></i>What is LRFD (Load and Resistance Factor Design)?</h2>
+  <!-- CTA -->
+  <section class="sec sec-glow"><div class="wrap">
+    <p class="eyebrow">PUT 1.0W TO WORK</p>
+    <h2>Run factored LRFD checks <span class="sweep">automatically</span></h2>
+    <p class="lead">Generate strength-level wind pressures, both governing combinations and &phi;R<sub>n</sub> checks in one report.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Open the Wind Load Calculators</a>
+      <a class="btn-ghost" href="asd-lrfd-conversion-guide.html">Convert ASD &harr; LRFD</a>
+    </div>
+  </div></section>
 
-            <p><strong>Load and Resistance Factor Design (LRFD)</strong>, also called Strength Design, is a modern structural design methodology that uses probabilistic analysis to achieve consistent reliability across different failure modes and materials. For wind loads, LRFD uses a <strong>load factor of 1.0</strong> applied to the wind load (W) in governing load combinations per ASCE 7 Section 2.3.</p>
+  <div class="divider"></div>
 
-            <p>LRFD separates load factors (applied to loads) from resistance factors φ (applied to member strengths). The design philosophy is: <strong>Factored Load ≤ Factored Resistance</strong>, or more formally: <strong>∑γ<sub>i</sub>Q<sub>i</sub> ≤ φR<sub>n</sub></strong>, where γ represents load factors, Q represents loads, φ is the resistance factor, and R<sub>n</sub> is nominal strength.</p>
+  <!-- RELATED LINKS -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">KEEP EXPLORING · DESIGN METHODS</p>
+    <h2>Related <span class="sweep">method guides</span></h2>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="asd-allowable-stress-design-wind-loads.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8 40L24 8l16 32z"/><path d="M16 40h16"/>
+        </svg>
+        <h3>ASD Wind Loads</h3>
+        <p>Allowable Stress Design and the 0.6W wind factor.</p>
+        <span class="badge badge--method">METHOD</span>
+      </a>
+      <a class="card glass" href="asd-lrfd-conversion-guide.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 18h24l-6-6M38 30H14l6 6"/>
+        </svg>
+        <h3>ASD &harr; LRFD Conversion</h3>
+        <p>Move between service-level and strength-level results.</p>
+        <span class="badge badge--method">CONVERT</span>
+      </a>
+      <a class="card glass" href="ultimate-wind-loads-explained.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M26 6L12 28h10l-2 14 14-22H24z"/>
+        </svg>
+        <h3>Ultimate Wind Loads</h3>
+        <p>The strength-level (V<sub>ult</sub>) pressures LRFD uses directly.</p>
+        <span class="badge badge--method">STRENGTH</span>
+      </a>
+      <a class="card glass" href="nominal-vs-ultimate-wind-loads.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M24 8v32"/><path d="M10 18h28"/><circle cx="14" cy="30" r="5"/><circle cx="34" cy="30" r="7"/>
+        </svg>
+        <h3>Nominal vs Ultimate</h3>
+        <p>How service-level and strength-level pressures relate.</p>
+        <span class="badge badge--method">COMPARE</span>
+      </a>
+      <a class="card glass" href="nominal-wind-loads-explained.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="24" cy="24" r="16"/><path d="M24 14v10l7 4"/>
+        </svg>
+        <h3>Nominal Wind Loads</h3>
+        <p>Service-level (ASD) wind pressures explained.</p>
+        <span class="badge badge--method">NOMINAL</span>
+      </a>
+      <a class="card glass" href="asce-7-wind-load-calculator.html">
+        <svg viewBox="0 0 48 48" width="38" height="38" fill="none" stroke="#a855f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="12" y="6" width="24" height="36" rx="3"/><path d="M16 14h16M16 22h4M24 22h8M16 30h4M24 30h8"/>
+        </svg>
+        <h3>ASCE 7 Calculator</h3>
+        <p>Professional ASD and LRFD wind pressure software.</p>
+        <span class="badge badge--method">TOOL</span>
+      </a>
+    </div>
+  </div></section>
 
-            <div class="info-grid">
-                <div class="info-card">
-                    <h4><i class="fas fa-chart-line"></i> Design Philosophy</h4>
-                    <p>LRFD uses probability-based load and resistance factors to achieve target reliability index (β ≈ 3.0 for 50-year service life), providing consistent safety across structural systems.</p>
-                </div>
+</main>
 
-                <div class="info-card">
-                    <h4><i class="fas fa-calculator"></i> Wind Load Factor</h4>
-                    <p>Wind loads in LRFD are factored by 1.0 in governing strength combinations. The full calculated wind pressure is used without reduction, with safety on the resistance side via φ factors.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-shield-halved"></i> Resistance Factors</h4>
-                    <p>LRFD applies resistance factors φ to nominal strengths: φ = 0.90 (tension), 0.90 (flexure steel), 0.75 (compression), 0.65-0.90 (concrete flexure), accounting for uncertainty in material properties.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-building"></i> Common Applications</h4>
-                    <p>LRFD is the standard method for commercial steel and concrete construction, high-rise buildings, engineered wood structures, and Main Wind Force Resisting System (MWFRS) design.</p>
-                </div>
-            </div>
-
-            <h3>LRFD Load Combinations for Wind (ASCE 7 Section 2.3)</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Load Combination</th>
-                        <th>Formula</th>
-                        <th>When It Governs</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Combination 3</strong></td>
-                        <td>1.2D + 1.6(L<sub>r</sub> or S or R) + (L or 0.5W)</td>
-                        <td>Gravity-dominated structures where wind is secondary</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Combination 4</strong></td>
-                        <td>1.2D + 1.0W + L + 0.5(L<sub>r</sub> or S or R)</td>
-                        <td>Most wind load cases - full wind with moderate gravity loads</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Combination 5</strong></td>
-                        <td>1.2D + 1.0E + L + 0.2S</td>
-                        <td>Seismic (not wind, but shown for completeness)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Combination 6</strong></td>
-                        <td>0.9D + 1.0W</td>
-                        <td><strong>Wind uplift</strong> - critical for lightweight structures, roofs, overhangs, and negative pressures</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <section class="content-section" style="background: #f9fafb;">
-        <div class="container">
-            <h2><i class="fas fa-calculator" style="color: var(--map-deep); margin-right: 1rem;"></i>Calculating LRFD Wind Pressures</h2>
-
-            <p>Wind pressures for LRFD use the same ASCE 7 equations as ASD. The key difference is how these pressures are applied in load combinations - LRFD uses the full calculated pressure (1.0W) rather than a reduced value (0.6W), with safety addressed through resistance factors φ.</p>
-
-            <h3>Main Wind Force Resisting System (MWFRS) - LRFD</h3>
-
-            <div class="info-card">
-                <h4><i class="fas fa-formula"></i> ASCE 7 Equation 27.4-1 (Directional Procedure)</h4>
-                <p><strong>p = q K<sub>z</sub> K<sub>zt</sub> K<sub>d</sub> C<sub>p</sub></strong> (leeward and windward walls)</p>
-                <p style="margin-top: 1rem;">Where:</p>
-                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                    <li><strong>p</strong> = Design wind pressure (psf) - <em>ultimate/strength level for LRFD</em></li>
-                    <li><strong>q</strong> = Velocity pressure (psf) calculated per Equation 26.10-1</li>
-                    <li><strong>K<sub>z</sub></strong> = Velocity pressure exposure coefficient (varies with height)</li>
-                    <li><strong>K<sub>zt</sub></strong> = Topographic factor (≥1.0)</li>
-                    <li><strong>K<sub>d</sub></strong> = Wind directionality factor (0.85 for buildings)</li>
-                    <li><strong>C<sub>p</sub></strong> = External pressure coefficient (Figure 27.4-1 for enclosed buildings)</li>
-                </ul>
-            </div>
-
-            <h3>Resistance Factors for Wind Load Design</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Material/Member Type</th>
-                        <th>Resistance Factor (φ)</th>
-                        <th>Application</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Steel - Tension</strong></td>
-                        <td>φ = 0.90</td>
-                        <td>Yielding of gross section, fracture of net section (AISC 360)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Steel - Flexure</strong></td>
-                        <td>φ = 0.90</td>
-                        <td>Lateral-torsional buckling, local buckling, yielding</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Steel - Compression</strong></td>
-                        <td>φ = 0.90</td>
-                        <td>Column buckling, local buckling (AISC 360-16)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Concrete - Flexure</strong></td>
-                        <td>φ = 0.65-0.90</td>
-                        <td>Depends on tension vs compression-controlled (ACI 318)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Concrete - Shear</strong></td>
-                        <td>φ = 0.75</td>
-                        <td>Shear and torsion in beams and slabs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Wood - All Limit States</strong></td>
-                        <td>φ = 0.85</td>
-                        <td>Bending, compression, tension, shear (NDS for Wood)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="highlight-box">
-                <h3><i class="fas fa-lightbulb" style="color: #1e40af; margin-right: 0.75rem;"></i>LRFD Philosophy: 1.0W with φR<sub>n</sub></h3>
-                <p>LRFD applies the full wind load (1.0W) to the structure, then ensures safety by reducing the resistance side using φ factors:</p>
-                <ul style="color: #1e3a8a; margin-left: 2rem; margin-top: 1rem;">
-                    <li><strong>Load Side:</strong> 1.2D + 1.0W = Maximum expected combined loads</li>
-                    <li><strong>Resistance Side:</strong> φR<sub>n</sub> = Reduced strength accounting for material variability</li>
-                    <li><strong>Design Check:</strong> 1.2D + 1.0W ≤ φR<sub>n</sub> (factored load ≤ factored resistance)</li>
-                </ul>
-                <p style="margin-top: 1rem;">This provides consistent reliability across all structural materials and failure modes.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h2><i class="fas fa-helmet-safety" style="color: var(--map-deep); margin-right: 1rem;"></i>Step-by-Step LRFD Wind Load Example</h2>
-
-            <p>Let's walk through a complete LRFD design example for a steel beam subjected to wind loads.</p>
-
-            
-            <h3>Example Project Parameters</h3>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <h4><i class="fas fa-building"></i> Structure</h4>
-                    <p><strong>Office building</strong><br>
-                    Risk Category II<br>
-                    Enclosed, h=40 feet<br>
-                    Houston, Texas</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-map-marker-alt"></i> Site Conditions</h4>
-                    <p><strong>V = 130 mph</strong><br>
-                    Exposure Category C<br>
-                    Flat terrain (K<sub>zt</sub> = 1.0)<br>
-                    Elev < 3,000 ft</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-i-cursor"></i> Member</h4>
-                    <p><strong>Steel roof beam W16×26</strong><br>
-                    Span: 25 feet<br>
-                    Tributary width: 12 ft<br>
-                    Roof slope: 4:12 (18.4°)</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-cogs"></i> Design Method</h4>
-                    <p><strong>LRFD per AISC 360-16</strong><br>
-                    1.0W load factor<br>
-                    φ = 0.90 (flexure)<br>
-                    Strength design</p>
-                </div>
-            </div>
-
-            <h3>Step 1: Calculate Velocity Pressure</h3>
-            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
-                q<sub>h</sub> = 0.00256 K<sub>h</sub> K<sub>zt</sub> K<sub>d</sub> K<sub>e</sub> V²<br><br>
-                K<sub>h</sub> = 0.85 (Table 26.10-1, Exposure C, h=40 ft)<br>
-                K<sub>zt</sub> = 1.0, K<sub>d</sub> = 0.85, K<sub>e</sub> = 1.0, V = 130 mph<br><br>
-                q<sub>h</sub> = 0.00256 × 0.85 × 1.0 × 0.85 × 1.0 × (130)²<br>
-                <strong>q<sub>h</sub> = 30.9 psf</strong>
-            </p>
-
-            <h3>Step 2: Calculate Wind Pressure</h3>
-            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
-                For MWFRS, windward roof (18.4° slope):<br>
-                C<sub>p</sub> = -0.9 (suction, Figure 27.4-1)<br>
-                GC<sub>pi</sub> = ±0.18<br><br>
-                p = q<sub>h</sub> [(C<sub>p</sub>) - (GC<sub>pi</sub>)]<br>
-                p = 30.9 × [(-0.9) - (+0.18)]<br>
-                <strong>p = -33.4 psf</strong> (net uplift)
-            </p>
-
-            <h3>Step 3: Apply LRFD Load Combination</h3>
-            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
-                Wind load W = -33.4 psf × 12 ft = <strong>-400.8 lb/ft</strong><br>
-                Dead load D = -25 psf × 12 ft = <strong>-300 lb/ft</strong><br><br>
-                <strong>LRFD Combination 6: 0.9D + 1.0W</strong> (uplift)<br>
-                w<sub>u</sub> = 0.9(-300) + 1.0(-400.8)<br>
-                <strong>w<sub>u</sub> = -671 lb/ft</strong> (factored uplift)
-            </p>
-
-            <h3>Step 4: Check Beam Strength</h3>
-            <p style="background: #eff6ff; padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--map-deep); margin: 1.5rem 0;">
-                <strong>Required Strength:</strong><br>
-                M<sub>u</sub> = w<sub>u</sub>L²/8 = 671 × (25)² / 8<br>
-                <strong>M<sub>u</sub> = 52.5 kip-ft</strong><br><br>
-                <strong>Design Strength (W16×26, AISC 360-16):</strong><br>
-                M<sub>n</sub> = 118 kip-ft (nominal capacity)<br>
-                φM<sub>n</sub> = 0.90 × 118<br>
-                <strong>φM<sub>n</sub> = 106 kip-ft</strong><br><br>
-                <strong>Check:</strong> M<sub>u</sub> ≤ φM<sub>n</sub><br>
-                52.5 kip-ft < 106 kip-ft ✓ <strong>OK</strong><br>
-                Utilization = 52.5/106 = <strong>50%</strong>
-            </p>
-
-            <div class="highlight-box">
-                <h3><i class="fas fa-check-circle" style="color: #1e40af; margin-right: 0.75rem;"></i>LRFD Design Process Summary</h3>
-                <p><strong>1. Calculate Loads:</strong> Wind pressure p using ASCE 7 equations<br>
-                <strong>2. Apply Load Factors:</strong> 1.2D + 1.0W (or 0.9D + 1.0W for uplift)<br>
-                <strong>3. Determine Required Strength:</strong> M<sub>u</sub>, V<sub>u</sub>, P<sub>u</sub> from structural analysis<br>
-                <strong>4. Calculate Design Strength:</strong> φR<sub>n</sub> per material specifications<br>
-                <strong>5. Verify:</strong> Required Strength ≤ Design Strength</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="content-section" style="background: #f9fafb;">
-        <div class="container">
-            <h2><i class="fas fa-building-columns" style="color: var(--map-deep); margin-right: 1rem;"></i>When to Use LRFD for Wind Loads</h2>
-
-            <p>LRFD is the modern standard for commercial construction, providing consistent reliability across materials and structural systems.</p>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <h4><i class="fas fa-industry"></i> Commercial Steel</h4>
-                    <p>AISC 360 steel design specifications are primarily LRFD-based. Modern commercial steel structures, office buildings, and industrial facilities use LRFD as standard.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-building"></i> Concrete Structures</h4>
-                    <p>ACI 318 concrete code uses "Strength Design" (equivalent to LRFD). All modern concrete buildings use factored loads with φ reduction factors.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-city"></i> High-Rise Buildings</h4>
-                    <p>Tall buildings and complex structures exclusively use LRFD for consistent reliability analysis across all structural elements and load paths.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-network-wired"></i> MWFRS Design</h4>
-                    <p>Main Wind Force Resisting Systems (lateral systems) typically designed using LRFD for frames, shear walls, and braced frames.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-tree"></i> Engineered Wood</h4>
-                    <p>Modern engineered wood products (glulam, LVL, CLT) increasingly use LRFD per NDS, though ASD remains common for traditional lumber.</p>
-                </div>
-
-                <div class="info-card">
-                    <h4><i class="fas fa-file-contract"></i> Code Preference</h4>
-                    <p>Many jurisdictions and design standards now require or strongly prefer LRFD for commercial construction due to probabilistic basis.</p>
-                </div>
-            </div>
-
-            <h3>Material Design Standards - LRFD Adoption</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Material</th>
-                        <th>Design Standard</th>
-                        <th>Primary Method</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Steel</strong></td>
-                        <td>AISC 360-16</td>
-                        <td>LRFD</td>
-                        <td>Industry standard since 1986</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Concrete</strong></td>
-                        <td>ACI 318-19</td>
-                        <td>Strength Design (LRFD)</td>
-                        <td>Required - ASD not available</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Wood</strong></td>
-                        <td>NDS 2018</td>
-                        <td>ASD/LRFD both</td>
-                        <td>Transition ongoing, LRFD growing</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Masonry</strong></td>
-                        <td>TMS 402/602</td>
-                        <td>Strength Design/ASD</td>
-                        <td>Both methods available</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h2><i class="fas fa-triangle-exclamation" style="color: var(--map-deep); margin-right: 1rem;"></i>Common LRFD Wind Load Mistakes</h2>
-
-            <h3>1. Using ASD Component Ratings with LRFD Loads</h3>
-            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
-                <strong>WRONG:</strong> Applying 1.0W LRFD loads directly to DP-rated components (DP ratings are ASD)<br><br>
-                <strong>RIGHT:</strong> Convert LRFD loads to ASD equivalent by dividing by 1.6, OR verify component has LRFD-specific rating
-            </p>
-
-            <h3>2. Forgetting Combination 6 (0.9D + 1.0W) for Uplift</h3>
-            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
-                <strong>WRONG:</strong> Only checking Combination 4 (1.2D + 1.0W) for all wind cases<br><br>
-                <strong>RIGHT:</strong> ALWAYS check BOTH Combo 4 AND Combo 6. The 0.9D factor often governs for lightweight roofs and uplift
-            </p>
-
-            <h3>3. Mixing Load Factors from Different Code Editions</h3>
-            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
-                <strong>WRONG:</strong> Using ASCE 7 load factors with outdated material resistance factors from older codes<br><br>
-                <strong>RIGHT:</strong> Ensure material code edition matches IBC/ASCE 7 edition for consistent reliability (e.g., ASCE 7-16 with AISC 360-16)
-            </p>
-
-            <h3>4. Incorrect Resistance Factor (φ) Selection</h3>
-            <p style="background: #fee; padding: 1.5rem; border-radius: 10px; border-left: 5px solid #dc2626; margin: 1.5rem 0;">
-                <strong>WRONG:</strong> Using φ = 0.90 for all steel members regardless of limit state<br><br>
-                <strong>RIGHT:</strong> Select φ based on specific failure mode: 0.90 (flexure), 0.90 (tension), 0.90 (compression), 0.75 (shear/bearing)
-            </p>
-
-            <div class="highlight-box">
-                <h3><i class="fas fa-clipboard-list" style="color: #1e40af; margin-right: 0.75rem;"></i>LRFD Code Compliance Checklist</h3>
-                <ul style="color: #1e3a8a; margin-left: 2rem; margin-top: 1rem;">
-                    <li>✓ Calculate wind pressures using ASCE 7 equations (same methodology as ASD)</li>
-                    <li>✓ Apply correct load combinations - check BOTH Combo 4 (1.2D + 1.0W) AND Combo 6 (0.9D + 1.0W)</li>
-                    <li>✓ Use 1.0W load factor (not 0.6W from ASD)</li>
-                    <li>✓ Select appropriate resistance factors φ for each limit state per material code</li>
-                    <li>✓ Verify: Factored Load ≤ φR<sub>n</sub> for all members</li>
-                    <li>✓ Check serviceability under unfactored loads (deflections, drift)</li>
-                    <li>✓ Ensure material design code edition matches ASCE 7 edition</li>
-                    <li>✓ Document all assumptions and calculations for code official review</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Related Design Method Resources -->
-    <section class="related-links">
-        <div class="container">
-            <h2>Related Design Method Resources</h2>
-            <div class="link-cards">
-                <a href="asd-allowable-stress-design-wind-loads.html" class="link-card">
-                    <div class="link-card-icon">
-                        <i class="fas fa-drafting-compass"></i>
-                    </div>
-                    <div class="link-card-content">
-                        <h4>ASD Wind Loads</h4>
-                        <p>Allowable Stress Design method with 0.6W factor</p>
-                    </div>
-                </a>
-
-                <a href="asd-lrfd-conversion-guide.html" class="link-card">
-                    <div class="link-card-icon">
-                        <i class="fas fa-arrow-right-arrow-left"></i>
-                    </div>
-                    <div class="link-card-content">
-                        <h4>ASD ↔ LRFD Conversion</h4>
-                        <p>Convert between ASD and LRFD wind loads and design methods</p>
-                    </div>
-                </a>
-
-                <a href="nominal-vs-ultimate-wind-loads.html" class="link-card">
-                    <div class="link-card-icon">
-                        <i class="fas fa-scale-balanced"></i>
-                    </div>
-                    <div class="link-card-content">
-                        <h4>Nominal vs Ultimate Loads</h4>
-                        <p>Understanding the difference between nominal and ultimate wind pressures</p>
-                    </div>
-                </a>
-
-                <a href="nominal-wind-loads-explained.html" class="link-card">
-                    <div class="link-card-icon">
-                        <i class="fas fa-gauge"></i>
-                    </div>
-                    <div class="link-card-content">
-                        <h4>Nominal Wind Loads</h4>
-                        <p>Complete guide to nominal (ASD) wind pressures</p>
-                    </div>
-                </a>
-
-                <a href="ultimate-wind-loads-explained.html" class="link-card">
-                    <div class="link-card-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="link-card-content">
-                        <h4>Ultimate Wind Loads</h4>
-                        <p>Strength-based (LRFD) wind pressure calculations</p>
-                    </div>
-                </a>
-
-                <a href="asce-7-wind-load-calculator.html" class="link-card">
-                    <div class="link-card-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <div class="link-card-content">
-                        <h4>ASCE 7 Wind Load Calculator</h4>
-                        <p>Professional ASD and LRFD wind pressure calculation software</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- WindLoadCalc Promotional Section -->
-    <section class="windloadcalc-promo">
-        <div class="container">
-            <h2>Need Professional LRFD Wind Load Calculators?</h2>
-            <p>Visit <strong>WindLoadCalc.com</strong> for automated LRFD wind load calculations, MWFRS and C&C analysis, and professional latest ASCE 7 (ASCE 7-22) software. Generate complete LRFD calculation reports with factored loads and resistance checks.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate LRFD Wind Loads Now →</a>
-        </div>
-    </section>
-<section class="windloadcalc-promo">
-        <div class="container">
-            <h2>Need Professional Wind Load Calculators?</h2>
-            <p>Visit <strong>WindLoadCalc.com</strong> for automated latest ASCE 7 (ASCE 7-22) wind speed lookup, professional wind load calculator software, and the Building Intelligence Platform (BIP) for comprehensive structural analysis.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Visit WindLoadCalc.com →</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.main-header');
@@ -1637,146 +662,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-        /* batch4: sub-nav wrap */
-        @media (max-width: 768px) {
-            *:has(> .design-nav-button), *:has(> .hvhz-nav-button), *:has(> .risk-nav-button) {
-                display: grid !important; grid-template-columns: 1fr !important; gap: 0.75rem !important;
-            }
-        }
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
