@@ -8,6 +8,21 @@
 staged=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.html$' | grep -v '^backups/')
 [ -z "$staged" ] && exit 0
 
+# Lighthouse-100 normalizer: enforce self-hosted async Font Awesome, async
+# fonts, logo img dimensions, and footer heading order on staged pages so we
+# never deploy a regression. Idempotent; re-stages anything it fixes.
+py=""
+command -v python >/dev/null 2>&1 && py=python
+[ -z "$py" ] && command -v python3 >/dev/null 2>&1 && py=python3
+if [ -n "$py" ]; then
+  # shellcheck disable=SC2086
+  if "$py" scripts/optimize-lighthouse.py $staged >/dev/null 2>&1; then
+    echo "$staged" | while IFS= read -r f; do [ -n "$f" ] && git add "$f"; done
+  fi
+else
+  echo "pre-commit: python not found; skipping Lighthouse normalizer." >&2
+fi
+
 if ! command -v node >/dev/null 2>&1; then
   echo "pre-commit: node not found; skipping mobile-first lint." >&2
   exit 0

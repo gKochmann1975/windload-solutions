@@ -78,8 +78,15 @@ def normalize(s):
 
 
 def main():
-    files = [f for f in glob.glob(os.path.join(ROOT, '*.html'))
-             if not os.path.basename(f).endswith('-old.html')]
+    import sys
+    args = sys.argv[1:]
+    if args:
+        # Normalize only the given files (used by the pre-commit hook).
+        files = [f for f in args
+                 if f.endswith('.html') and not f.endswith('-old.html') and os.path.isfile(f)]
+    else:
+        files = [f for f in glob.glob(os.path.join(ROOT, '*.html'))
+                 if not os.path.basename(f).endswith('-old.html')]
     changed = 0
     for f in files:
         s0 = open(f, encoding='utf-8').read()
