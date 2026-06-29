@@ -29,857 +29,251 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-        
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Sub-menu styles */
-        .nav-item-with-submenu {
-            position: relative;
-        }
-
-        .nav-item-with-submenu > a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sub-menu {
-            display: none;
-            flex-direction: column;
-            padding-left: 1.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .sub-menu.active {
-            display: flex;
-        }
-
-        .sub-menu a {
-            font-size: 1rem;
-            padding: 0.75rem 0;
-        }
-
-        .submenu-toggle {
-            transition: transform 0.3s ease;
-        }
-
-        .submenu-toggle.active {
-            transform: rotate(180deg);
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #c2410c 0%, #ea580c 25%, #fb923c 50%, #1e3a8a 75%, #1e40af 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-                .hero::before {
-            content: '⭐🌊';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .tornado-alley-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .tornado-alley-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
-            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
-        }
-
-        .tornado-alley-badge i {
-            margin-right: 0.5rem;
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            0%, 90% { transform: rotate(0deg); }
-            95% { transform: rotate(180deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #ea580c;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #ea580c;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #fb923c;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #ea580c;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #ea580c;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* HVHZ Card */
-        .hvhz-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(234, 88, 12, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .hvhz-card h4 {
-            color: #ea580c;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .hvhz-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Texas Wind Loads",
-                "item": "https://windload.solutions/texas-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What ASCE 7 version does Texas use for wind load calculations?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Texas uses the 2021 International Building Code (IBC) which adopts ASCE 7-16 for wind load calculations. Coastal areas have additional requirements through the Texas Department of Insurance (TDI) for windstorm certification."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is a WPI-8 form in Texas?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The WPI-8 (Windstorm Inspection Certificate) is a required document for TWIA (Texas Windstorm Insurance Association) coverage. It certifies that a structure was built in compliance with the Texas Building Code and wind load standards. A Texas-licensed PE, Registered Architect, or certified windstorm inspector must sign the WPI-8 form."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is TWIA in Texas?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "TWIA (Texas Windstorm Insurance Association) is a state-created insurer of last resort providing windstorm and hail coverage for properties in 14 designated coastal counties where private insurance is unavailable. TWIA eligibility requires WPI-8 windstorm certification and compliance with current building codes."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the design wind speed for Houston, Texas?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Houston design wind speeds range from 130-150 mph (3-second gust) for Risk Category II structures, depending on the specific location within the metro area and proximity to the Gulf Coast. Areas closer to Galveston Bay require higher design wind speeds."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What are TDI product evaluations in Texas?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "TDI (Texas Department of Insurance) product evaluations certify that building products meet Texas wind load requirements. While voluntary for most of Texas, TDI-evaluated products are effectively mandatory for structures seeking TWIA windstorm insurance coverage in coastal areas. Evaluations cover windows, doors, roof coverings, and cladding systems."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do I need a PE seal for wind load calculations in Texas?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "All commercial structures in Texas require PE-sealed wind load calculations. Coastal residential projects also require PE involvement for WPI-8 windstorm certification. Inland residential structures may not require PE-sealed calculations for simple structures, but PE involvement is recommended for complex designs."
-                }
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-        <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- WLC Calculator CTA - Above the Fold -->
-    <style>
-        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
-        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
-        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
-        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
-        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
-        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
-        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
-        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
-        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
-        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
-        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
-        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
-        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
-        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
-        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
-        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
-        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
-        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
-        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
-        @media (max-width: 600px) {
-            .wlc-cta-banner h2 { font-size: 1.45rem; }
-            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
-            .wlc-cta-form input[type="text"] { text-align: center; }
-            .wlc-final-cta h2 { font-size: 1.65rem; }
-        }
-    </style>
-    <section class="wlc-cta-banner" aria-label="Try the Texas Wind Load Calculator">
-        <div class="wlc-cta-banner-inner">
-            <h2>Calculate Texas Wind Loads Instantly &rarr;</h2>
-            <p class="wlc-sub">Skip the manual math &mdash; get instant latest ASCE 7 (ASCE 7-22) results for any Texas ZIP code, with TDI coastal and TWIA-region awareness built in.</p>
-            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
-                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter Texas ZIP (e.g. 77550)" aria-label="Texas ZIP code" required>
-                <button type="submit">Start Calculation</button>
-            </form>
-            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
-        </div>
-    </section>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -984,476 +378,252 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
-
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
-
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
-
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
-
-.nav-subsection {
-    position: relative;
-}
-
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
-
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
-
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
-
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Texas Wind Load Requirements</h1>
-            <a href="tornado-alley-wind-loads-safety.html" class="tornado-alley-badge">
-                <i class="fas fa-tornado"></i> Tornado Alley State
-            </a>
-            <p>Complete Guide to 2021 IBC, ASCE 7-16, TDI Product Evaluations, WPI-8 Certification, and TWIA Windstorm Insurance Requirements</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Texas Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h2>Texas Building Code and ASCE 7-16</h2>
-            <p>Texas operates under the <strong>2021 International Building Code (IBC)</strong> with state-specific amendments. The Texas building code adopts <strong>ASCE 7-16</strong> as the standard for wind load calculations. While most of Texas follows standard IBC provisions, coastal areas within 1 mile of the Gulf of Mexico are designated as <strong>High Velocity Hurricane Zones (HVHZ)</strong> and have significantly more stringent requirements.</p>
-
-            <p>The <a href="https://www.tdi.texas.gov/" target="_blank" rel="noopener">Texas Department of Insurance (TDI)</a> oversees building code enforcement and product approvals for the state. Engineers and contractors must comply with both IBC requirements and Texas-specific amendments, particularly in coastal counties where hurricane exposure creates severe wind hazards.</p>
-
-            <div class="info-box">
-                <h4><strong>✓</strong> Texas Wind Load Key Requirements</h4>
-                <p><strong>Building Code:</strong> 2021 IBC with Texas amendments</p>
-                <p><strong>ASCE 7 Version:</strong> ASCE 7-16</p>
-                <p><strong>Coastal HVHZ:</strong> Within 1 mile of Gulf Coast (highest wind speeds)</p>
-                <p><strong>TDI Product Evaluations:</strong> Required for windows, doors, roofing, and cladding in coastal areas</p>
-                <p><strong>WPI-8 Certification:</strong> Mandatory for TWIA windstorm insurance coverage</p>
-                <p><strong>PE Seal:</strong> Required for commercial structures and coastal residential projects</p>
-            </div>
-
-            <h3>High Velocity Hurricane Zone (HVHZ) - Texas Coastal Areas</h3>
-            <p>Texas coastal counties within 1 mile of the Gulf of Mexico are designated as HVHZ due to extreme hurricane exposure. These areas include Galveston, Brazoria, Matagorda, Calhoun, Aransas, Nueces, Kleberg, Kenedy, Willacy, and Cameron Counties. HVHZ designation requires enhanced building standards, mandatory product approvals, and windstorm certification for insurance coverage.</p>
-
-            <div class="hvhz-card">
-                <h4>🌊 Texas Coastal HVHZ Requirements</h4>
-                <p><strong>Design Wind Speeds:</strong> 120-160 mph (3-second gust) depending on Risk Category and proximity to coast</p>
-                <p><strong>Exposure Category:</strong> C required for all coastal structures (open terrain)</p>
-                <p><strong>TDI Product Evaluations:</strong> All exterior building components must meet TDI evaluation criteria</p>
-                <p><strong>WPI-8 Windstorm Certification:</strong> Required for TWIA insurance eligibility</p>
-                <p><strong>Wind-Borne Debris Protection:</strong> Impact-resistant glazing or shutters required</p>
-                <p><strong>Enhanced Tie-Downs:</strong> Roof-to-wall and wall-to-foundation connections must exceed standard IBC</p>
-                <p><strong>Official Resource:</strong> <a href="https://www.tdi.texas.gov/" target="_blank" rel="noopener">Texas Department of Insurance (TDI)</a></p>
-            </div>
-
-            <h3>TDI Product Evaluations for Wind Load Components</h3>
-            <p>The <a href="https://www.tdi.texas.gov/" target="_blank" rel="noopener">Texas Department of Insurance (TDI)</a> maintains a product evaluation program similar to Florida's NOA system but on a voluntary basis for most of Texas. However, for structures seeking TWIA windstorm insurance coverage in coastal areas, TDI-evaluated products become effectively mandatory.</p>
-
-            <p>TDI evaluates building products for compliance with Texas wind load requirements, including:</p>
-            <ul>
-                <li><strong>Windows and Doors:</strong> Must withstand design wind pressures and impact from wind-borne debris</li>
-                <li><strong>Roof Coverings:</strong> Shingles, tiles, metal panels, and membranes tested for wind uplift resistance</li>
-                <li><strong>Wall Cladding:</strong> Siding, EIFS, and other exterior wall systems evaluated for wind pressure resistance</li>
-                <li><strong>Shutters and Impact Protection:</strong> Hurricane shutters and impact-resistant glazing systems</li>
-                <li><strong>Roof Deck Fasteners:</strong> Nails, screws, and adhesives for securing roof sheathing</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies Texas-specific wind speed requirements and exposure categories based on your project's location, ensuring compliance with TDI expectations for product selection. Engineers shopping a quicker path can jump straight to the <a href="https://windloadcalc.com/texas-wind-load-calculator">Texas Wind Load Calculator</a> for a state-tuned interface.</p>
-
-            <h3>WPI-8 Windstorm Certification Form</h3>
-            <p>The <strong>WPI-8 form (Windstorm Inspection Certificate)</strong> is a critical document required for <strong>Texas Windstorm Insurance Association (TWIA)</strong> coverage. All new construction and substantial improvements in the Texas coastal HVHZ must obtain WPI-8 certification from a Texas-licensed Professional Engineer, Registered Architect, or certified windstorm inspector.</p>
-
-            <p>WPI-8 certification verifies that:</p>
-            <ul>
-                <li>The structure was built in compliance with the Texas Building Code and applicable wind load standards</li>
-                <li>All exterior openings (windows, doors, garage doors) are properly protected against wind-borne debris</li>
-                <li>Roof covering, roof deck attachment, and roof-to-wall connections meet or exceed code requirements</li>
-                <li>Wall-to-foundation connections provide adequate resistance to uplift and overturning forces</li>
-                <li>All installed products have appropriate TDI evaluations where required</li>
-            </ul>
-
-            <p>Without WPI-8 certification, property owners in TWIA-designated areas cannot obtain windstorm insurance coverage, making the certification effectively mandatory for coastal construction.</p>
-
-            <h3>Texas Windstorm Insurance Association (TWIA)</h3>
-            <p>The <strong>Texas Windstorm Insurance Association (TWIA)</strong> is a state-created insurer of last resort providing windstorm and hail coverage for properties in designated coastal areas where private insurance is unavailable or unaffordable. TWIA coverage is available in 14 Texas coastal counties and parts of Harris County.</p>
-
-            <p>TWIA eligibility requirements:</p>
-            <ul>
-                <li>Property must be located in the TWIA-designated catastrophe area (coastal counties)</li>
-                <li>Property owner must be unable to obtain windstorm coverage from the private insurance market</li>
-                <li>New construction must have WPI-8 windstorm certification</li>
-                <li>Property must meet current building code standards</li>
-                <li>Premium rates are set by the Texas Legislature and vary by location and construction type</li>
-            </ul>
-
-            <p>Official TWIA information: <a href="https://www.twia.org/" target="_blank" rel="noopener">Texas Windstorm Insurance Association</a></p>
-
-            <h3>County-Specific Wind Speed Requirements</h3>
-            <p>Texas wind speeds vary significantly from the Gulf Coast to inland areas. Coastal counties have the highest design wind speeds due to hurricane exposure, while inland areas face lower wind speeds primarily from severe thunderstorms and occasional tornadoes.</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Region</th>
-                        <th>Risk Category II Velocity</th>
-                        <th>Exposure Category</th>
-                        <th>Special Requirements</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Gulf Coast HVHZ</strong> (within 1 mile)</td>
-                        <td>140-160 mph</td>
-                        <td>C</td>
-                        <td>TDI evaluations, WPI-8 cert, TWIA requirements</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Coastal Counties</strong> (1-10 miles inland)</td>
-                        <td>130-150 mph</td>
-                        <td>C or B</td>
-                        <td>TDI evaluations recommended, enhanced tie-downs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Houston Metro</strong></td>
-                        <td>120-140 mph</td>
-                        <td>B or C</td>
-                        <td>Harris County amendments, flood considerations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>South Texas Plains</strong></td>
-                        <td>110-130 mph</td>
-                        <td>B or C</td>
-                        <td>Standard IBC requirements</td>
-                    </tr>
-                    <tr>
-                        <td><strong>North Texas</strong></td>
-                        <td>90-115 mph</td>
-                        <td>B</td>
-                        <td>Tornado considerations in some areas</td>
-                    </tr>
-                    <tr>
-                        <td><strong>West Texas</strong></td>
-                        <td>90-110 mph</td>
-                        <td>B or C</td>
-                        <td>Open terrain, dust storms</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically determines the correct design wind speed for your Texas project location by entering your zip code or street address. This eliminates manual map lookups and ensures compliance with county-specific requirements and TDI expectations. For a Texas-tuned workflow with coastal-county overrides pre-applied, open the dedicated <a href="https://windloadcalc.com/texas-wind-load-calculator">Texas Wind Load Calculator</a>.</p>
-
-            <!-- WLC Inline CTA -->
-            <aside class="wlc-inline-cta" aria-label="Open the Texas Wind Load Calculator">
-                <h3>Run a Texas project in seconds, not hours</h3>
-                <p>WindLoadCalc pre-applies the latest ASCE 7 (ASCE 7-22), coastal-county wind speeds, TDI / TWIA awareness, and Exposure C defaults for Gulf-facing sites. Open the calculator, pick a Texas ZIP, and you'll have design pressures before you've finished your coffee.</p>
-                <a class="wlc-btn" href="https://windloadcalc.com/texas-wind-load-calculator">Open the Texas Wind Load Calculator &rarr;</a>
-            </aside>
-
-            <h3>Texas City Wind Load Guides</h3>
-            <p>For detailed city-specific wind load requirements, building codes, and local enforcement information, explore our comprehensive Texas city guides:</p>
-
-            <div class="external-links-grid">
-                <a href="cities/houston-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🤠 Houston - 130-150 mph (Gulf Coast)
-                </a>
-                <a href="cities/galveston-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🌊 Galveston - 150-160 mph (Coastal TWIA)
-                </a>
-                <a href="cities/corpus-christi-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🏖️ Corpus Christi - 140-150 mph (Coastal)
-                </a>
-                <a href="cities/dallas-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🏙️ Dallas - 100-115 mph (North Texas)
-                </a>
-                <a href="cities/san-antonio-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🌵 San Antonio - 100-115 mph (Central)
-                </a>
-                <a href="cities/austin-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🎸 Austin - 100-110 mph (Central)
-                </a>
-                <a href="cities/fort-worth-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🐂 Fort Worth - 100-115 mph (North Texas)
-                </a>
-                <a href="cities/arlington-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    ⚾ Arlington - 100-115 mph (DFW)
-                </a>
-                <a href="cities/plano-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🏢 Plano - 100-115 mph (DFW)
-                </a>
-                <a href="cities/el-paso-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🌄 El Paso - 90-105 mph (West Texas)
-                </a>
-                <a href="cities/lubbock-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🌾 Lubbock - 105-120 mph (High Plains)
-                </a>
-                <a href="cities/amarillo-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🤠 Amarillo - 110-125 mph (Panhandle)
-                </a>
-                <a href="cities/midland-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ea580c; color: #c2410c;">
-                    🛢️ Midland - 100-115 mph (Permian Basin)
-                </a>
-            </div>
-
-            <h3>Professional Engineer (PE) Seal Requirements</h3>
-            <p>In Texas, <strong>all commercial structures require sealed calculations from a Texas-licensed Professional Engineer (PE)</strong>. Residential structures may not require PE-sealed calculations in inland areas, but coastal residential projects typically do require PE involvement, particularly for WPI-8 windstorm certification.</p>
-
-            <p>Texas PE seal requirements for wind load calculations:</p>
-            <ul>
-                <li><strong>Commercial Buildings:</strong> Always require PE-sealed wind load calculations</li>
-                <li><strong>Coastal Residential (HVHZ):</strong> PE seal required for WPI-8 certification</li>
-                <li><strong>Inland Residential:</strong> PE seal not typically required for simple structures but recommended</li>
-                <li><strong>Complex Structures:</strong> PE seal required regardless of location or occupancy</li>
-                <li><strong>TWIA Insurance:</strong> PE or Registered Architect must sign WPI-8 form</li>
-            </ul>
-
-            <p>The Texas Board of Professional Engineers regulates PE licensing: <a href="https://pels.texas.gov/" target="_blank" rel="noopener">Texas Board of Professional Engineers and Land Surveyors</a></p>
-
-            <div class="info-box">
-                <h4><strong>✓</strong> PE Seal Best Practices for Texas</h4>
-                <p><strong>Use Texas-Licensed PE:</strong> Out-of-state licenses not accepted</p>
-                <p><strong>Include ASCE 7-16 References:</strong> Clearly cite sections used in calculations</p>
-                <p><strong>Document Coastal Requirements:</strong> Note HVHZ provisions, TDI evaluations, WPI-8 requirements</p>
-                <p><strong>Provide Wind-Borne Debris Analysis:</strong> Required for coastal areas within 1 mile of coast</p>
-                <p><strong>Reference TWIA Standards:</strong> If property will seek TWIA coverage</p>
-                <p><strong>Include Product Specifications:</strong> List TDI-evaluated products where applicable</p>
-            </div>
-
-            <h3>Wind-Borne Debris Regions in Texas</h3>
-            <p>Texas coastal areas within 1 mile of the Gulf of Mexico are designated as <strong>wind-borne debris regions</strong>. In these areas, all exterior openings (windows, doors, skylights, garage doors) must be protected against impact from wind-borne debris such as 2x4 lumber traveling at high velocity.</p>
-
-            <p>Protection methods include:</p>
-            <ul>
-                <li><strong>Impact-Resistant Glazing:</strong> Laminated glass or polycarbonate panels tested to ASTM E1996 or ASTM E1886/E1996</li>
-                <li><strong>Hurricane Shutters:</strong> Roll-down, accordion, colonial, or panel shutters with TDI evaluation</li>
-                <li><strong>Impact-Resistant Doors:</strong> Garage doors and entry doors tested for impact resistance</li>
-                <li><strong>Opening Protection Systems:</strong> Must be permanently installed or readily deployable before a storm</li>
-            </ul>
-
-            <h3>Why Texas Has Stringent Coastal Wind Load Requirements</h3>
-            <p>Texas has experienced some of the most devastating hurricanes in U.S. history. The 1900 Galveston Hurricane remains the deadliest natural disaster in U.S. history with 6,000-12,000 fatalities. More recently, Hurricane Harvey (2017) caused catastrophic flooding and wind damage across the Houston metropolitan area, Hurricane Ike (2008) devastated Galveston and Bolivar Peninsula, and Hurricane Rita (2005) impacted the Texas-Louisiana border.</p>
-
-            <p>The Texas coast's vulnerability stems from its geographic exposure to Gulf of Mexico hurricanes, low-lying coastal topography that makes surge flooding worse, and rapid development in coastal areas. The stringent requirements—including TDI product evaluations, WPI-8 certification, and TWIA insurance mandates—are designed to protect life and property in this high-hazard environment.</p>
-
-            <h3>How WindLoadCalc.com Handles Texas Requirements</h3>
-            <p>Calculating wind loads for Texas projects involves numerous state-specific requirements that go beyond standard ASCE 7 procedures. The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> &mdash; and the state-specific <a href="https://windloadcalc.com/texas-wind-load-calculator">Texas Wind Load Calculator</a> &mdash; automate all Texas-specific provisions:</p>
-
-            <ul>
-                <li><strong>Automatic Velocity Determination:</strong> Enter your project zip code or address, and the software automatically applies the correct design wind speed based on proximity to coast and county location</li>
-                <li><strong>Latest ASCE 7 (ASCE 7-22) Compliance:</strong> All calculations follow the latest ASCE 7 (ASCE 7-22) methodology</li>
-                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on project surroundings and coastal proximity</li>
-                <li><strong>HVHZ Identification:</strong> Automatically identifies if project is in coastal HVHZ (within 1 mile of Gulf)</li>
-                <li><strong>Wind-Borne Debris Requirements:</strong> Flags projects requiring impact-resistant glazing or shutters</li>
-                <li><strong>Components & Cladding Pressures:</strong> Generates pressure coefficients for all building components meeting TDI evaluation criteria</li>
-                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system pressures for structural frame design</li>
-                <li><strong>WPI-8 Ready Reports:</strong> Generates comprehensive calculation reports suitable for PE seal and WPI-8 certification</li>
-                <li><strong>TWIA Compliance Notes:</strong> Indicates requirements for TWIA windstorm insurance eligibility</li>
-            </ul>
-
-            <p>By automating Texas-specific wind load requirements, WindLoadCalc.com saves engineers hours of manual calculations while ensuring full compliance with the latest ASCE 7 (ASCE 7-22), TDI expectations, and TWIA insurance requirements. The software eliminates the risk of using incorrect velocities, exposure categories, or pressure coefficients that could result in non-compliant designs, failed inspections, or denied insurance coverage.</p>
-
-            <h3>Official Texas Building Code Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Texas wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.tdi.texas.gov/" target="_blank" rel="noopener" class="external-link">
-                    Texas Department of Insurance
-                </a>
-                <a href="https://www.twia.org/" target="_blank" rel="noopener" class="external-link">
-                    Texas Windstorm Insurance (TWIA)
-                </a>
-                <a href="https://pels.texas.gov/" target="_blank" rel="noopener" class="external-link">
-                    TX Board of Professional Engineers
-                </a>
-                <a href="https://www.tdlr.texas.gov/" target="_blank" rel="noopener" class="external-link">
-                    TX Dept of Licensing & Regulation
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solar Section -->
-    <section class="content-section" style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);">
-        <div class="container">
-            <h2 style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-solar-panel" style="color: #f59e0b;"></i> Texas Solar - #2 in the Nation</h2>
-            <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 1.5rem;"><strong>Texas ranks #2 nationally with 20+ GW of installed solar capacity.</strong> The ERCOT grid and vast open land drive massive utility-scale solar development across West Texas and the Permian Basin.</p>
-
-            <div class="info-card" style="background: white; border-left: 5px solid #f59e0b;">
-                <h3 style="color: #92400e;">Texas Solar Wind Load Requirements</h3>
-                <ul style="color: #78350f; margin: 1rem 0 1rem 1.5rem;">
-                    <li><strong>Rooftop PV:</strong> ASCE 7-16 Chapter 30 with GCrn coefficients</li>
-                    <li><strong>Ground-Mount:</strong> ASCE 7-22 Section 29.4.5 for utility-scale solar farms</li>
-                    <li><strong>Coastal:</strong> TDI windstorm certification required in 14 Gulf Coast counties</li>
-                    <li><strong>Wind Speed:</strong> 95 mph (inland) to 160 mph (Gulf Coast)</li>
-                    <li><strong>Exposure Category:</strong> Typically C (open terrain for solar farms)</li>
-                </ul>
-
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                    <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 700; text-decoration: none;"><i class="fas fa-calculator"></i> Solar Panel Calculator</a>
-                    <a href="solar-belt-wind-load-requirements.html" style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; color: #d97706; border: 2px solid #f59e0b; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 700; text-decoration: none;"><i class="fas fa-sun"></i> Solar Belt Hub</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WLC Final Conversion CTA -->
-    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for Texas">
-        <div class="wlc-final-cta-inner">
-            <h2>Stop calculating Texas wind loads by hand</h2>
-            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">Florida-born wind load engineers, in business since 2002 &mdash; now serving Texas, the Gulf Coast, and every corner of the Lone Star State.</p>
-            <ul>
-                <li>Instant ZIP &rarr; latest ASCE 7 (ASCE 7-22) wind speed for all 4 risk categories</li>
-                <li>Auto-applies coastal-county overrides (Cameron, Nueces, Galveston, Brazoria, Jefferson, and more)</li>
-                <li>TDI / TWIA-aware outputs &mdash; ready for a Texas PE seal and WPI-8 packet</li>
-            </ul>
-            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Started with Texas-Compliant Wind Load Calculations</h2>
-            <p>WindLoadCalc.com provides instant access to professional-grade wind load calculation software with the latest ASCE 7 (ASCE 7-22) compliance. Automatically handles HVHZ velocities, TDI requirements, WPI-8 certification needs, and TWIA insurance provisions for your Texas coastal projects.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Texas Wind Loads Now →</a>
-        </div>
-    </section>
-
-    
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+<main>
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="tx"><svg viewBox="562.9 344.1 250.4 243.1" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M793.98,412.15l0.99,1.07l0.79,0.3l0.23,0.43l0.38,0.11l0.47,-0.1l0.7,-0.51l1.05,0.12l0.87,-0.19l1.73,0.22l0.97,0.49l0.09,3.02l0.09,3.03l0.09,3.03l0.09,3.03l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l2.7,2.67l1.18,1.85l0.38,0.95l0.19,3.27l0.28,0.78l1.36,1.2l0.05,0.81l1.45,2.33l-0.01,1.11l1.39,2.49l0.77,0.64l0.17,1.71l0.44,1.29l-0.59,0.94l0.29,1.27l-0.34,1.2l-0.16,1.59l-0.82,2.48l-0.75,1.22l-1.01,2.32l0.14,1.91l-0.56,2.1l-0.05,0.8l0.61,1.37l0.3,3.81l-0.3,0.81l-1.25,2.27l-0.93,-0.03l-1.96,3.75l1.22,2.05l-0.06,0.75l-4.1,0.52l-9.25,4.35l-3.61,2.31l0.18,-0.76l4.36,-2.99l-1.56,-0.42l-2.49,0.77l-0.9,-0.27l1.03,-2.43l-0.37,-2.13l-1.77,-0.03l-1.11,1.71l-0.79,-0.06l-1.04,-0.72l-0.79,0.24l0.63,3.85l1.14,1.57l0.96,2.01l-2.54,2.53l-2.36,2.09l-0.24,2l-2.38,2.62l-2.25,1.49l-5.3,3.49l-1.52,0.75l-2.4,1.62l-3.32,1.21l-3.19,1.91l-1.08,0.29l2.04,-1.62l2.41,-1.6l-2.07,0.22l-3.19,-0.75l-1.95,-0.05l-0.02,0.58l-1.49,0.82l-1.53,-1.22l-0.66,-0.82l-0.31,-0.71l-0.65,-0.17l-0.63,0.32l2.26,4.98l0.98,0.22l1.08,0.5l-1.36,1.15l-1.46,0.87l-2.29,0.57l-1.92,-1.83l-0.44,2.27l-0.27,2.27l-0.66,0.58l-1.05,0.82l-0.56,-0.63l-0.26,-0.88l-0.67,0.78l-0.98,0.58l-1.61,0.1l-1.21,0.3l0.02,0.94l0.27,0.95l2.15,-0.72l-0.8,2.42l-2,2.38l-1.62,0.54l-2.46,-0.39l-0.61,0.23l-0.55,0.49l2.81,3.81l-1.93,5.65l-1.22,2.04l-0.83,0.25l-0.89,0.04l-3.17,-1.89l-1.71,-1.45l1.46,3.88l4.17,1.2l0.19,1.46l-0.04,1.25l-0.85,1.45l-0.81,1.93l0.55,1.36l0.61,3.36l0.54,1.55l0.55,4.68l0.64,2.04l3.75,7.52l1.3,0.08l0.2,0.81l-0.14,1.55l-2.79,0.41l-1.18,0.67l-0.24,0.6l-0.18,0.32l-0.36,-0.04l-1.32,-0.45l-2.99,-2.17l-4.37,-1.4l-5.76,-0.63l-3.92,-1.16l-2.07,-1.67l-2.18,-1.02l-2.29,-0.37l-1.88,-0.93l-1.47,-1.5l-2.18,-1l-2.89,-0.5l-1.85,-1.15l-1.22,-2.7l0,-0.04l-1.02,-4.48l-1.37,-2.83l-2.73,-3.55l-0.25,-0.46v0l0,-0.57l0.43,-1.99l-0.25,-1.45l-0.86,-1.21l-0.16,-1.25l0.54,-1.29l0.09,-1.57l-0.35,-1.85l-1.74,-2.05l-3.11,-2.25l-2.59,-3.21l-2.06,-4.17l-2.08,-2.92l-2.11,-1.67l-1.4,-1.99l-0.69,-2.3l-0.17,-1.32l0.34,-0.35l-1.22,-2.58l-2.76,-4.81l-1.54,-3.49l-0.33,-2.17l-1.76,-2.66l-3.18,-3.15l-1.71,-2.03l-0.37,-1.36l-0.01,0l-4.97,-4.19l-1.36,-2.52l-1.13,-0.84l-1.35,0l-0.68,-0.28v-0.55l-0.44,-0.05l-0.87,0.45l-2.76,-0.07l-4.65,-0.6l-3.32,-0.89l-2,-1.17l-1.46,0.04l-0.92,1.25l-1.83,0.72l-2.74,0.18l-2.51,2.26l-2.29,4.34l-1.08,2.82l0.14,1.3l-0.59,0.89l-1.32,0.49l-1.4,1.21l-1.48,1.92l-1.62,0.86l-1.76,-0.21l-3.13,-1.83l-4.49,-3.45l-3.55,-2.21l-2.63,-0.95l-2.25,-1.62l-1.87,-2.29l-1.77,-1.57l-1.67,-0.86l-1.8,-2.51l-1.94,-4.17l-0.86,-3.16l0.31,-3.21l-2.32,-7.29l-1.29,-3.18l-1.04,-1.51l-2.14,-1.89l-3.23,-2.28l-4.18,-4.34l-5.11,-6.41l-3.66,-3.93l-2.23,-1.45l-1.82,-2.32l-1.4,-3.19l-1.47,-2.09l-0.17,-0.11l-2.16,-1.4h0l-1.46,-4.26l0.12,0.01l4.25,0.49l4.26,0.49l4.26,0.47l4.26,0.46l4.26,0.45l4.26,0.44l4.26,0.43l4.26,0.42l4.26,0.41l4.26,0.4l4.27,0.39l4.27,0.38l4.27,0.37l4.27,0.36l4.27,0.35l4.27,0.33l0.52,-6.26l0.51,-6.26l0.52,-6.26l0.51,-6.25l0.52,-6.25l0.51,-6.25l0.51,-6.25l0.51,-6.24l0.51,-6.24l0.51,-6.24l0.51,-6.24l0.51,-6.24l0.51,-6.23l0.51,-6.23l0.51,-6.23l0.51,-6.23l0.75,0.04l3.35,0.26l3.35,0.25l3.35,0.24l3.36,0.23l3.36,0.23l3.36,0.22l3.36,0.21l3.36,0.21l3.36,0.2l3.36,0.19l3.36,0.19l3.36,0.18l3.36,0.17l3.36,0.17l3.36,0.16l3.36,0.15l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.12,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l1.07,0.28l1.32,0.79l3.23,2.98l0.96,0.65l1.78,-0.29l1.9,0.42l0.51,-0.04l0.42,-1.2l0.19,-0.24l0.27,0.05l1.62,1.15l0.31,0.44l0.92,1.59l0.18,1.85l0.53,0.29l1.01,0.25l2.47,0.19l3.11,1.3l1.27,0.22l2.26,-0.26l2.08,1.67l0.74,0.26l0.62,-0.21l1.23,-1.16l2.63,0.2l2.14,-0.16l0.14,1.36l0.35,0.98l1.75,1.08l0.41,0.51l0.05,1.65l0.45,0.43l0.72,0.18l0.75,-0.09l0.89,-0.5l1.95,-1.59l0.59,-0.39l0.36,-0.03l0.35,0.09l0.29,0.36l0.62,1.25l1.66,0.7l0.94,1.07l0.59,0.17l0.65,-0.19l1.04,-0.63l0.81,0.04l0.93,-0.64l0.37,0.15l0.15,0.46l-0.29,1.38l0.15,0.53l0.37,0.62l0.5,0.43l0.49,0.07l0.38,-0.34l0.72,-1.73l-0.04,-0.63l0.79,-0.21l0.36,-0.33l0.47,-1.25l0.81,-0.34l0.43,0.07l0.39,0.36l0.78,1.15l1.88,0.66l0.49,0.04l0.49,-0.24l0.85,-0.94l0.44,-0.11l0.35,0.13l0.2,0.14l0.06,1.12l1.93,1.28l1.42,0.39l1.38,1.29l0.4,0.15l0.68,-1.04l1.33,-0.36l1.27,-1.06l3.68,-1.36l1.46,0.43l1.47,-0.03l0.38,-0.6l2.61,-0.87l0.53,-0.33l0.72,0.42l0.26,0.62l0.34,0.26l1.79,0.3l0.99,-0.04l1.81,-0.82l0.7,-1.03l0.41,-0.06l1.3,0.49l3.44,2.04l1.75,1.66l1.94,0.79l1.06,0.71L793.98,412.15zM784.68,513.12l-0.99,0.23l4.27,-3.51l0.89,-1.16l1.15,0.04l-1.89,1.96L784.68,513.12zM750.41,535.55l-0.74,0.09l0.92,-1.21l1.48,-0.6l3.26,-2.32l1.32,-0.15l0.69,-0.8l0.3,-0.12l-0.2,0.99l-2.61,1.39L750.41,535.55zM745.35,541.16l-0.44,0.05l0.99,-1.84l0.19,-0.74l1.61,-2.32l0.84,-0.34l0.34,1l-1.65,1.63L745.35,541.16zM738.34,554.67l-0.65,1.29l0.2,-1.94l1.7,-4.38l3.4,-5.74l1.41,-0.95l-3.91,6.3L738.34,554.67zM741.7,580.59l-0.3,1.05l-1.63,-4.95l-2.58,-11.17l-0.01,-6.34l0.46,-2.17l0.57,8.96l2.88,11.42L741.7,580.59z"/></svg></span>
+    <p class="eyebrow">TEXAS · 2021 IBC · ASCE 7-16</p>
+    <h1>Texas Wind Load <span class="sweep">Requirements</span></h1>
+    <p class="lead">From the Gulf Coast windstorm catastrophe area to the inland plains &mdash; codes, ASCE 7 edition, TDI / TWIA rules, and design wind ranges in clean visual modules.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">2021 IBC</span><span class="lbl">ADOPTED CODE</span></div>
+      <div class="stat"><span class="num">ASCE 7-16</span><span class="lbl">WIND STANDARD</span></div>
+      <div class="stat"><span class="num">90&ndash;160</span><span class="lbl">MPH RANGE (3-SEC GUST)</span></div>
+      <div class="stat"><span class="num">14</span><span class="lbl">TWIA COASTAL COUNTIES</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/texas-wind-load-calculator">Open the Texas Wind Load Calculator</a>
+      <a class="btn-ghost" href="state-requirements.html">All State Requirements</a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ CODE & ASCE EDITION ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CODE &amp; STANDARD</p>
+    <h2>Texas Code &amp; <span class="sweep">ASCE Edition</span></h2>
+    <p class="lead">Texas operates under the 2021 International Building Code with state amendments, adopting ASCE 7-16 for wind load calculations. Coastal Gulf areas carry enhanced provisions.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6h18l8 8v28H12z"/><path d="M30 6v8h8"/><path d="M18 24h14M18 31h14"/></svg>
+        <h3>Building Code</h3>
+        <p>2021 IBC with Texas amendments.</p>
+        <span class="badge badge--data">2021 IBC</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 38c8-4 8 4 16 0s8 4 16 0"/><path d="M6 28c8-4 8 4 16 0s8 4 16 0"/><path d="M24 8v12"/></svg>
+        <h3>Wind Standard</h3>
+        <p>ASCE 7-16 governs all wind load design statewide.</p>
+        <span class="badge badge--method">ASCE 7-16</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6C16 16 12 22 12 30a12 12 0 0 0 24 0c0-8-4-14-12-24z"/></svg>
+        <h3>Coastal HVHZ</h3>
+        <p>Within 1 mile of the Gulf &mdash; the highest wind speeds and strictest rules.</p>
+        <span class="badge badge--hvhz">GULF COAST</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="20" r="10"/><path d="M24 30v12M18 38h12"/><path d="M20 20l3 3 6-6"/></svg>
+        <h3>Oversight: TDI</h3>
+        <p>Texas Dept. of Insurance handles product evaluations &amp; coastal enforcement.</p>
+        <span class="badge badge--data">TDI</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <h4>Texas Wind Load Key Requirements</h4>
+      <p><strong>Building Code:</strong> 2021 IBC with Texas amendments &middot; <strong>ASCE 7:</strong> ASCE 7-16</p>
+      <p><strong>Coastal HVHZ:</strong> within 1 mile of the Gulf Coast (highest wind speeds) &middot; <strong>Exposure C</strong> required for coastal structures</p>
+      <p><strong>TDI Product Evaluations:</strong> windows, doors, roofing &amp; cladding in coastal areas &middot; <strong>WPI-8:</strong> mandatory for TWIA coverage</p>
+      <p><strong>PE Seal:</strong> required for commercial structures and coastal residential projects</p>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ WIND ZONE: COASTAL vs INLAND ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">WIND ZONES</p>
+    <h2>Coastal Windstorm <span class="sweep">vs Inland</span></h2>
+    <p class="lead">Design wind speeds drop sharply moving from the hurricane-exposed Gulf Coast to the inland plains. Values are 3-second-gust ranges for Risk Category II.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 34c8-5 8 5 16 0s8 5 16 0"/><path d="M6 26c8-5 8 5 16 0s8 5 16 0"/><path d="M30 8a8 8 0 0 1 0 12"/></svg>
+        <h3>Gulf Coast HVHZ</h3>
+        <p>Within 1 mile of the coast &mdash; TDI evaluations, WPI-8 cert, TWIA region. Exposure C.</p>
+        <span class="badge badge--hvhz">140&ndash;160 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 38h36"/><path d="M12 38V22l8-6 8 6v16"/><path d="M30 38V28h8v10"/></svg>
+        <h3>Coastal Counties / Houston Metro</h3>
+        <p>1&ndash;10 miles inland and the Houston metro with Harris County amendments. Exposure B or C.</p>
+        <span class="badge badge--data">120&ndash;150 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40L18 16l8 12 6-9 6 21z"/><path d="M16 40h-2"/></svg>
+        <h3>Inland: North &amp; West Texas</h3>
+        <p>South Texas plains, North Texas (tornado considerations) and open West Texas terrain.</p>
+        <span class="badge badge--data">90&ndash;130 MPH</span>
+      </div>
+    </div>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Region</th><th>Risk Cat II Velocity</th><th>Exposure</th><th>Special Requirements</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gulf Coast HVHZ</strong> (within 1 mile)</td><td>140&ndash;160 mph</td><td>C</td><td>TDI evaluations, WPI-8 cert, TWIA</td></tr>
+        <tr><td><strong>Coastal Counties</strong> (1&ndash;10 mi inland)</td><td>130&ndash;150 mph</td><td>C or B</td><td>TDI recommended, enhanced tie-downs</td></tr>
+        <tr><td><strong>Houston Metro</strong></td><td>120&ndash;140 mph</td><td>B or C</td><td>Harris County amendments, flood</td></tr>
+        <tr><td><strong>South Texas Plains</strong></td><td>110&ndash;130 mph</td><td>B or C</td><td>Standard IBC requirements</td></tr>
+        <tr><td><strong>North Texas</strong></td><td>90&ndash;115 mph</td><td>B</td><td>Tornado considerations in some areas</td></tr>
+        <tr><td><strong>West Texas</strong></td><td>90&ndash;110 mph</td><td>B or C</td><td>Open terrain, dust storms</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ MAJOR TEXAS CITIES ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CITY GUIDES</p>
+    <h2>Major Texas <span class="sweep">Cities</span></h2>
+    <p class="lead">City-specific wind speeds, codes, and local enforcement &mdash; coastal Gulf cities first, then inland metros.</p>
+    <div class="grid" data-n="6">
+      <a class="card glass" href="cities/houston-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M12 40V18l6-4v26M22 40V12l8 5v23M34 40V22l4 3v15"/></svg>
+        <h3>Houston</h3><p>Gulf Coast metro</p><span class="badge badge--hvhz">130&ndash;150 MPH</span>
+      </a>
+      <a class="card glass" href="cities/galveston-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 34c8-5 8 5 16 0s8 5 16 0"/><path d="M6 26c8-5 8 5 16 0s8 5 16 0M6 42c8-5 8 5 16 0s8 5 16 0"/></svg>
+        <h3>Galveston</h3><p>Coastal TWIA island</p><span class="badge badge--hvhz">150&ndash;160 MPH</span>
+      </a>
+      <a class="card glass" href="cities/corpus-christi-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 38h36"/><path d="M10 38c4-10 8-14 14-14s10 4 14 14"/><circle cx="24" cy="18" r="3"/></svg>
+        <h3>Corpus Christi</h3><p>Gulf coastal</p><span class="badge badge--hvhz">140&ndash;150 MPH</span>
+      </a>
+      <a class="card glass" href="cities/dallas-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36"/><path d="M14 40V14l5-3v29M27 40V20l6 4v16"/></svg>
+        <h3>Dallas</h3><p>North Texas</p><span class="badge badge--data">100&ndash;115 MPH</span>
+      </a>
+      <a class="card glass" href="cities/san-antonio-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6v14M24 20c-5 0-8 3-8 8v12h16V28c0-5-3-8-8-8z"/><path d="M12 30h-4M40 30h-4"/></svg>
+        <h3>San Antonio</h3><p>Central Texas</p><span class="badge badge--data">100&ndash;115 MPH</span>
+      </a>
+      <a class="card glass" href="cities/austin-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8v32M16 12l16-4v10l-16 4"/></svg>
+        <h3>Austin</h3><p>Central Texas</p><span class="badge badge--data">100&ndash;110 MPH</span>
+      </a>
+      <a class="card glass" href="cities/fort-worth-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40h36M12 40V20l12-8 12 8v20"/><path d="M20 40V30h8v10"/></svg>
+        <h3>Fort Worth</h3><p>North Texas</p><span class="badge badge--data">100&ndash;115 MPH</span>
+      </a>
+      <a class="card glass" href="cities/arlington-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="16"/><path d="M24 8v32M8 24h32"/></svg>
+        <h3>Arlington</h3><p>DFW metroplex</p><span class="badge badge--data">100&ndash;115 MPH</span>
+      </a>
+      <a class="card glass" href="cities/plano-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 40V12h12v28M26 40V22h12v18"/><path d="M6 40h36"/></svg>
+        <h3>Plano</h3><p>DFW metroplex</p><span class="badge badge--data">100&ndash;115 MPH</span>
+      </a>
+      <a class="card glass" href="cities/el-paso-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 38L18 18l7 10 5-7 8 17z"/></svg>
+        <h3>El Paso</h3><p>West Texas</p><span class="badge badge--data">90&ndash;105 MPH</span>
+      </a>
+      <a class="card glass" href="cities/lubbock-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 40c0-6 5-10 10-10M40 40c0-6-5-10-10-10M16 40V22M24 40V18M32 40V22"/></svg>
+        <h3>Lubbock</h3><p>High Plains</p><span class="badge badge--data">105&ndash;120 MPH</span>
+      </a>
+      <a class="card glass" href="cities/amarillo-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 32c8-5 8 5 16 0s8 5 16 0"/><path d="M30 10a8 8 0 0 1 0 12"/><path d="M6 40h36"/></svg>
+        <h3>Amarillo</h3><p>Panhandle</p><span class="badge badge--data">110&ndash;125 MPH</span>
+      </a>
+    </div>
+    <p class="lead" style="margin-top:1.5rem;">Permian Basin too &mdash; see the <a href="cities/midland-wind-load-requirements.html">Midland wind load guide</a> (100&ndash;115 mph).</p>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ REQUIREMENTS MODULE ============ -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">COASTAL COMPLIANCE</p>
+    <h2>Texas Coastal <span class="sweep">Requirements</span></h2>
+    <p class="lead">The TDI / TWIA framework that governs Gulf-facing construction &mdash; the rules that make coastal Texas distinct from the inland plains.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l16 6v10c0 11-7 17-16 20-9-3-16-9-16-20V12z"/><path d="M18 24l5 5 9-10"/></svg>
+        <h3>TDI Product Evaluations</h3>
+        <p>Windows, doors, roof coverings &amp; cladding evaluated for Texas wind &mdash; effectively mandatory for TWIA coverage.</p>
+        <span class="badge badge--hvhz">TDI</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6h18l6 6v30H12z"/><path d="M30 6v6h6"/><path d="M18 22l3 3 7-7M18 32h12"/></svg>
+        <h3>WPI-8 Certification</h3>
+        <p>The Windstorm Inspection Certificate &mdash; required for TWIA insurance, signed by a Texas PE, RA, or certified inspector.</p>
+        <span class="badge badge--hvhz">WPI-8</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="8" width="28" height="32" rx="2"/><path d="M16 16h16M16 22h16M16 28h10"/><path d="M30 34l3 3 5-6"/></svg>
+        <h3>TWIA Eligibility</h3>
+        <p>State insurer of last resort across 14 coastal counties plus parts of Harris County &mdash; needs WPI-8 and current code.</p>
+        <span class="badge badge--hvhz">TWIA</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="10" width="28" height="28" rx="2"/><path d="M10 24h28M24 10v28"/><path d="M14 14l8 8M34 14l-8 8"/></svg>
+        <h3>Wind-Borne Debris</h3>
+        <p>Within 1 mile of the Gulf, all openings need impact-resistant glazing or shutters (ASTM E1886/E1996).</p>
+        <span class="badge badge--hvhz">IMPACT</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <h4>PE Seal &amp; Best Practices</h4>
+      <p><strong>Commercial:</strong> always requires Texas-licensed PE-sealed calculations (out-of-state licenses not accepted).</p>
+      <p><strong>Coastal residential (HVHZ):</strong> PE seal required for WPI-8 &middot; <strong>Inland residential:</strong> not typically required for simple structures, recommended otherwise.</p>
+      <p><strong>Document:</strong> cite ASCE 7-16 sections, HVHZ provisions, TDI-evaluated products, wind-borne debris analysis, and TWIA standards.</p>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ CTA + RELATED ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">RUN A TEXAS PROJECT</p>
+    <h2>Calculate Texas Wind Loads <span class="sweep">Instantly</span></h2>
+    <p class="lead">Pre-applied coastal-county overrides, TDI / TWIA awareness, Exposure C defaults for Gulf-facing sites, and WPI-8-ready reports &mdash; for any Texas ZIP.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/texas-wind-load-calculator">Open the Texas Wind Load Calculator</a>
+      <a class="btn-ghost" href="https://windloadcalc.com/wind-load-calculator-shop.html">Wind Load Calculator Shop</a>
+    </div>
+    <div class="grid" data-n="2" style="margin-top:2rem;">
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6l4 8 9 1-6 7 1 9-8-4-8 4 1-9-6-7 9-1z"/></svg>
+        <h3>10 Mandatory Wind Load States</h3>
+        <p>Where wind load calculations are required by code.</p>
+        <span class="badge badge--data">HUB</span>
+      </a>
+      <a class="card glass" href="state-requirements.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8l12 4 12-4v28l-12 4-12-4-12 4V12z"/><path d="M18 8v28M30 12v28"/></svg>
+        <h3>All State Requirements</h3>
+        <p>ASCE 7 edition and wind rules for every state.</p>
+        <span class="badge badge--data">ALL 50</span>
+      </a>
+    </div>
+    <div class="info-box glass">
+      <h4>Official Texas Resources</h4>
+      <p><a href="https://www.tdi.texas.gov/" target="_blank" rel="noopener">Texas Department of Insurance (TDI)</a> &middot; <a href="https://www.twia.org/" target="_blank" rel="noopener">Texas Windstorm Insurance (TWIA)</a></p>
+      <p><a href="https://pels.texas.gov/" target="_blank" rel="noopener">TX Board of Professional Engineers &amp; Land Surveyors</a> &middot; <a href="https://www.tdlr.texas.gov/" target="_blank" rel="noopener">TX Dept of Licensing &amp; Regulation</a></p>
+    </div>
+  </div></section>
+
+</main>
+
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1529,141 +699,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

@@ -25,692 +25,251 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.7;
-            color: #1a202c;
-            background: #ffffff;
-        }
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Sub-menu styles */
-        .nav-item-with-submenu {
-            position: relative;
-        }
-
-        .nav-item-with-submenu > a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-item-with-submenu .submenu-toggle {
-            margin-left: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-item-with-submenu.open .submenu-toggle {
-            transform: rotate(180deg);
-        }
-
-        .sub-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            padding-left: 1rem;
-        }
-
-        .nav-item-with-submenu.open .sub-menu {
-            max-height: 500px;
-        }
-
-        .sub-menu a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-            padding: 0.75rem 0 0.75rem 0.5rem;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            color: #4b5563;
-        }
-
-        .sub-menu a i {
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .sub-menu a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-            background: rgba(0, 24, 255, 0.03);
-        }
-
-        /* Color-code submenu items */
-        .sub-menu a:nth-child(1) i { color: #06b6d4; }
-        .sub-menu a:nth-child(2) i { color: #f97316; }
-        .sub-menu a:nth-child(3) i { color: #a855f7; }
-        .sub-menu a:nth-child(4) i { color: #10b981; }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - California Sunshine Gradient */
-        .hero {
-            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FDB913 50%, #FFD700 75%, #FFED4E 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-                .hero::before {
-            content: '☀️🌴';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Content Section */
-        .content {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .content h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 3rem 0 1.5rem;
-            color: #D35400;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .content h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #FF6B35, #F7931E);
-            border-radius: 2px;
-        }
-
-        .content h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 2rem 0 1rem;
-            color: #E67E22;
-        }
-
-        .content p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #4a5568;
-            line-height: 1.8;
-        }
-
-        .content ul, .content ol {
-            margin: 1.5rem 0 1.5rem 2rem;
-            color: #4a5568;
-        }
-
-        .content li {
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        .content strong {
-            color: #2d3748;
-            font-weight: 600;
-        }
-
-        /* Info Cards */
-        .info-card {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-            border-left: 5px solid #F7931E;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(247, 147, 30, 0.1);
-        }
-
-        .info-card h3 {
-            color: #D35400;
-            margin-top: 0;
-        }
-
-        .info-card ul {
-            margin-bottom: 0;
-        }
-
-        /* Highlight Box */
-        .highlight {
-            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(255,215,0,0.15) 100%);
-            border-left: 5px solid #F7931E;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .highlight p {
-            margin-bottom: 0;
-            color: #9a3412;
-            font-weight: 500;
-        }
-
-        /* CTA Button */
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
-            color: white;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(247, 147, 30, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(247, 147, 30, 0.4);
-        }
-
-        /* Footer */
-        footer {
-            background: #1a202c;
-            color: white;
-            padding: 3rem 2rem 2rem;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-size: 0.95rem;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content h2 {
-                font-size: 2rem;
-            }
-
-            .content h3 {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-    </style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "California Wind Loads",
-                "item": "https://windload.solutions/california-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-        <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- WLC Calculator CTA - Above the Fold -->
-    <style>
-        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
-        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
-        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
-        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
-        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
-        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
-        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
-        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
-        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
-        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
-        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
-        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
-        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
-        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
-        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
-        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
-        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
-        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
-        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
-        @media (max-width: 600px) {
-            .wlc-cta-banner h2 { font-size: 1.45rem; }
-            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
-            .wlc-cta-form input[type="text"] { text-align: center; }
-            .wlc-final-cta h2 { font-size: 1.65rem; }
-        }
-    </style>
-    <section class="wlc-cta-banner" aria-label="Try the California Wind Load Calculator">
-        <div class="wlc-cta-banner-inner">
-            <h2>Calculate California Wind Loads Instantly &rarr;</h2>
-            <p class="wlc-sub">Skip the manual math &mdash; get instant latest ASCE 7 (ASCE 7-22) results for any California ZIP, with special wind regions (Banning, Tehachapi, Cajon, Altamont) flagged automatically.</p>
-            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
-                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter CA ZIP (e.g. 90001)" aria-label="California ZIP code" required>
-                <button type="submit">Start Calculation</button>
-            </form>
-            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
-        </div>
-    </section>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -815,765 +374,308 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
-
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
-
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
-
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
-
-.nav-subsection {
-    position: relative;
-}
-
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
-
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
-
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
-
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>California Wind Load Requirements</h1>
-            <p>Comprehensive guide to CA building codes, ASCE 7-22 standards, PE/SE seal requirements, and California-specific wind design provisions</p>
-        </div>
-    </section>
-
-    <main class="content">
-            <h2>California Building Code Wind Load Standards</h2>
-
-            <div class="info-card">
-                <h3>Overview</h3>
-                <p>California maintains its own building code system through the California Building Standards Commission (CBSC), which includes the California Building Code (CBC) based on the International Building Code (IBC) with California-specific amendments. Wind load requirements for components and cladding follow ASCE 7-22 standards with state-specific considerations for coastal regions, seismic zones, and varied topography.</p>
-            </div>
-
-            <h3>California Building Code (CBC)</h3>
-            <p>The 2025 California Building Code (Title 24, Part 2) incorporates:</p>
-            <ul>
-                <li><strong>Base Standard:</strong> 2024 International Building Code (IBC)</li>
-                <li><strong>Wind Load Standard:</strong> ASCE 7-22 (Minimum Design Loads and Associated Criteria for Buildings and Other Structures)</li>
-                <li><strong>California Amendments:</strong> State-specific modifications addressing seismic and regional concerns</li>
-                <li><strong>Coastal Considerations:</strong> Enhanced requirements for Pacific coastal regions</li>
-                <li><strong>Energy Code Integration:</strong> Title 24, Part 6 coordination for building envelope</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h3>Key Requirement</h3>
-                <p><strong>All structural designs in California must consider both wind and seismic loads.</strong> The governing load case determines the final design, but both must be evaluated. For coastal regions and high-wind zones, wind loads often control envelope component design even though seismic loads may govern the main structure.</p>
-            </div>
-
-            <h3>Wind Speed Requirements</h3>
-            <p>California wind speeds vary significantly by region and elevation:</p>
-            <ul>
-                <li><strong>Coastal Regions (Pacific Coast):</strong> 85-110 mph (3-second gust)</li>
-                <li><strong>Inland Valleys:</strong> 85-100 mph</li>
-                <li><strong>Mountain Regions (Sierra Nevada, etc.):</strong> 90-120 mph</li>
-                <li><strong>Desert Areas (Mojave, Colorado Desert):</strong> 90-110 mph</li>
-                <li><strong>High-Wind Mountain Passes:</strong> 110-130 mph</li>
-            </ul>
-
-            <p>Wind speeds are determined based on:</p>
-            <ol>
-                <li>ASCE 7-22 wind speed maps</li>
-                <li>Local jurisdiction amendments</li>
-                <li>Coastal exposure considerations</li>
-                <li>Elevation and topographic effects</li>
-                <li>Special wind region designations</li>
-            </ol>
-
-            <h2>California City Wind Load Guides</h2>
-            <p>Explore detailed wind load requirements for major California cities. Each city guide provides specific wind speeds, local code requirements, exposure considerations, and topographic factors relevant to that region:</p>
-
-            <div class="external-links-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-                <a href="cities/los-angeles-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌴</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Los Angeles</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Hollywood, beaches, and urban development wind loads</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/san-diego-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #00BFFF 0%, #1E90FF 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏖️</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">San Diego</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Coastal exposure and America's Finest City</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/san-jose-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(247, 147, 30, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💻</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">San Jose</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Silicon Valley tech hub wind requirements</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/san-francisco-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌉</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">San Francisco</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Bay winds and Golden Gate exposure</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 95-110 mph</div>
-                </a>
-
-                <a href="cities/sacramento-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #27AE60 0%, #229954 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏛️</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Sacramento</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">State capital and Central Valley conditions</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/fresno-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #8B4513 0%, #654321 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌾</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Fresno</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Agricultural heartland wind design</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/oakland-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚓</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Oakland</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">East Bay port city and hills exposure</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 90-100 mph</div>
-                </a>
-
-                <a href="cities/long-beach-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚢</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Long Beach</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Pacific coast port city wind loads</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 90-100 mph</div>
-                </a>
-
-                <a href="cities/anaheim-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎢</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Anaheim</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Theme park city and Orange County winds</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/santa-ana-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #FF4500 0%, #DC143C 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💨</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Santa Ana</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Famous Santa Ana winds phenomenon</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 90-105 mph</div>
-                </a>
-
-                <a href="cities/riverside-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏜️</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Riverside</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Inland Empire and mountain pass winds</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 90-105 mph</div>
-                </a>
-
-                <a href="cities/stockton-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #16A085 0%, #138D75 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(22, 160, 133, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌊</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Stockton</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Delta region and valley wind conditions</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-95 mph</div>
-                </a>
-
-                <a href="cities/bakersfield-wind-load-requirements.html" class="external-link-card" style="background: linear-gradient(135deg, #D35400 0%, #BA4A00 100%); border: none; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: white; box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3); transition: all 0.3s ease; display: block;">
-                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛢️</div>
-                    <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700;">Bakersfield</h3>
-                    <p style="margin: 0 0 0.75rem 0; font-size: 0.95rem; opacity: 0.95;">Southern Central Valley oil country winds</p>
-                    <div style="font-weight: 600; font-size: 1rem; opacity: 0.9;">Wind Speed: 85-100 mph</div>
-                </a>
-            </div>
-
-            <style>
-                .external-link-card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
-                }
-            </style>
-
-            <h2>Components and Cladding (C&C) Design</h2>
-
-            <div class="info-card">
-                <h3>What is Components and Cladding?</h3>
-                <p>Components and cladding (C&C) includes building envelope elements that do not qualify as part of the main wind force resisting system (MWFRS). These elements receive wind loads directly and transfer them to the MWFRS.</p>
-            </div>
-
-            <h3>C&C Elements Requiring Analysis</h3>
-            <ul>
-                <li><strong>Windows and Doors:</strong> Residential and commercial fenestration systems</li>
-                <li><strong>Curtain Walls:</strong> Non-structural exterior walls (common in commercial buildings)</li>
-                <li><strong>Roof Covering:</strong> Shingles, tiles, membrane systems</li>
-                <li><strong>Wall Cladding:</strong> Siding, stucco, EIFS, masonry veneer</li>
-                <li><strong>Parapets:</strong> Particularly important in California's flat-roof commercial designs</li>
-                <li><strong>Solar Panel Mounting Systems:</strong> Critical given California's solar requirements</li>
-                <li><strong>Architectural Features:</strong> Canopies, awnings, louvers, screens</li>
-                <li><strong>Fasteners and Connections:</strong> All attachment points to structure</li>
-            </ul>
-
-            <h3>California-Specific C&C Considerations</h3>
-            <div class="highlight-box">
-                <p><strong>Seismic-Wind Interaction:</strong> California's unique requirement is ensuring that C&C systems designed for wind loads can also accommodate seismic drift and building movement. This dual-load consideration affects:</p>
-                <ul>
-                    <li>Curtain wall connection details</li>
-                    <li>Window and door frame anchorage</li>
-                    <li>Cladding system flexibility</li>
-                    <li>Fastener selection and spacing</li>
-                </ul>
-            </div>
-
-            <h3>Design Pressure Calculations</h3>
-            <p>Per ASCE 7-22 Chapter 30, C&C wind pressures in California are calculated using:</p>
-            <ul>
-                <li><strong>Basic Wind Speed (V):</strong> From ASCE 7-22 maps or local amendments</li>
-                <li><strong>Risk Category:</strong> I through IV (schools are Category IV per DSA requirements)</li>
-                <li><strong>Exposure Category:</strong> B (urban), C (open terrain), or D (coastal)</li>
-                <li><strong>Topographic Factor (Kzt):</strong> Critical for Sierra foothills and coastal bluffs</li>
-                <li><strong>Effective Wind Area:</strong> Component tributary area</li>
-                <li><strong>External Pressure Coefficients (GCp):</strong> From ASCE 7-22 figures</li>
-                <li><strong>Internal Pressure Coefficients (GCpi):</strong> Based on building enclosure classification</li>
-            </ul>
-
-            <h2>California Professional Engineering Requirements</h2>
-
-            <div class="info-card">
-                <h3>When PE/SE Sealing is Required</h3>
-                <p>California has specific requirements for professional engineer involvement:</p>
-                <ul>
-                    <li><strong>Commercial Buildings:</strong> All commercial structures require PE or SE seal</li>
-                    <li><strong>Multi-Family (4+ units):</strong> Requires PE or SE stamp</li>
-                    <li><strong>Schools (DSA Jurisdiction):</strong> Requires SE stamp and DSA approval process</li>
-                    <li><strong>Coastal High-Wind Zones:</strong> PE/SE seal required for C&C calculations</li>
-                    <li><strong>Large Residential (over specific square footage):</strong> Local jurisdiction requirements vary</li>
-                    <li><strong>Hospitals and Essential Facilities:</strong> SE seal required</li>
-                </ul>
-            </div>
-
-            <h3>Division of the State Architect (DSA)</h3>
-            <p>California's DSA has unique jurisdiction over:</p>
-            <ul>
-                <li><strong>K-12 Public Schools:</strong> All public school construction and major renovations</li>
-                <li><strong>Community Colleges:</strong> Most community college projects</li>
-                <li><strong>Essential Services Buildings:</strong> Certain state-owned facilities</li>
-            </ul>
-            <p>DSA projects require:</p>
-            <ul>
-                <li>Structural Engineer (SE) license in California</li>
-                <li>Detailed wind load calculations with all assumptions documented</li>
-                <li>Rigorous plan review and approval process</li>
-                <li>Project inspector oversight during construction</li>
-            </ul>
-
-            <h3>California SE License</h3>
-            <div class="highlight-box">
-                <p>California is one of the few states with a separate Structural Engineer (SE) license beyond the standard PE license. The SE license is required for:</p>
-                <ul>
-                    <li>Hospitals and other structures with surgery and emergency treatment areas</li>
-                    <li>Public and private schools K-12</li>
-                    <li>Essential services buildings</li>
-                    <li>Structures over specific height limits (varies by jurisdiction)</li>
-                </ul>
-            </div>
-
-            <h3>Our PE Services for California Projects</h3>
-            <p>Windload Solutions provides professional engineering services for California wind load calculations:</p>
-            <ul>
-                <li><strong>Latest ASCE 7 (ASCE 7-22) C&C Analysis:</strong> Complete component and cladding pressure calculations</li>
-                <li><strong>PE Sealed Reports:</strong> Stamped and signed by California-licensed PE</li>
-                <li><strong>California Code Compliance:</strong> CBC and local jurisdiction requirements</li>
-                <li><strong>Seismic-Wind Coordination:</strong> Integrated load analysis</li>
-                <li><strong>Building Department Submittal Package:</strong> Ready for permit application</li>
-                <li><strong>Plan Review Response:</strong> Support through approval process</li>
-            </ul>
-
-            <a href="professional-engineer-sign-seal-wind-load-pressures.html" class="cta-button">Get PE Sealed Wind Load Report</a>
-
-            <!-- WLC Inline CTA -->
-            <aside class="wlc-inline-cta" aria-label="Open the California Wind Load Calculator">
-                <h3>Wind isn't usually CA's primary driver &mdash; but it still has to be right</h3>
-                <p>Seismic dominates most California structural design, yet wind still has to clear plan-check. The dedicated calculator pre-loads latest ASCE 7 (ASCE 7-22) wind speeds for every ZIP, flags special wind regions, and keeps seismic coordination notes attached to your report.</p>
-                <a class="wlc-btn" href="https://windloadcalc.com/california-wind-load-calculator">Open the California Wind Load Calculator &rarr;</a>
-            </aside>
-
-            <h2>Topographic Effects in California</h2>
-
-            <div class="info-card">
-                <h3>California's Diverse Topography</h3>
-                <p>California's varied terrain creates significant topographic effects on wind loads. The state includes coastal bluffs, major mountain ranges, valleys, and desert plateaus—all of which can amplify wind pressures on building components.</p>
-            </div>
-
-            <h3>Regions Requiring Topographic Analysis</h3>
-            <ul>
-                <li><strong>Sierra Nevada Foothills:</strong> Eastern slopes and isolated peaks</li>
-                <li><strong>Coastal Bluffs:</strong> Pacific coastline elevated terrain</li>
-                <li><strong>San Gabriel/San Bernardino Mountains:</strong> Southern California ranges</li>
-                <li><strong>Coastal Range:</strong> Central and Northern California mountains</li>
-                <li><strong>Desert Mountain Passes:</strong> Wind tunnel effects in Mojave region</li>
-                <li><strong>Bay Area Hills:</strong> Oakland Hills, Marin Headlands, etc.</li>
-            </ul>
-
-            <h3>Topographic Factor (Kzt) Calculation</h3>
-            <p>Per ASCE 7-22 Section 26.8, the topographic factor Kzt accounts for wind speed-up effects over hills, ridges, and escarpments. California projects must consider Kzt when:</p>
-            <ul>
-                <li>Building is located on a hill, ridge, or escarpment</li>
-                <li>Topographic feature is isolated and unobstructed upwind</li>
-                <li>Topographic feature height-to-length ratio meets ASCE 7-22 criteria</li>
-            </ul>
-
-            <h3>Four Topographic Categories</h3>
-
-            <div class="info-card">
-                <h4>1. Flat Terrain (Kzt = 1.0)</h4>
-                <p>Central Valley floor areas, coastal plains, and flat desert regions where topographic speed-up does not occur.</p>
-            </div>
-
-            <div class="info-card">
-                <h4>2. Escarpments</h4>
-                <p>Coastal bluffs along the Pacific, canyon edges in desert regions. Characterized by steep drop-offs with relatively flat terrain on top.</p>
-                <p><strong>Examples:</strong> Palos Verdes Peninsula, Marin Headlands, coastal Big Sur region</p>
-            </div>
-
-            <div class="info-card">
-                <h4>3. Two-Dimensional Ridges</h4>
-                <p>Long, linear ridgelines in Sierra foothills, Coastal Range, and Southern California mountains. Wind accelerates as it flows over the ridge crest.</p>
-                <p><strong>Examples:</strong> Linear ridges in Oakland Hills, Santa Monica Mountains</p>
-            </div>
-
-            <div class="info-card">
-                <h4>4. Three-Dimensional Axisymmetric Hills</h4>
-                <p>Isolated hills and peaks with similar slopes in all directions. Common in wine country, foothill developments, and coastal areas.</p>
-                <p><strong>Examples:</strong> Isolated peaks in Napa Valley, Paso Robles wine region</p>
-            </div>
-
-            <div class="highlight-box">
-                <h3>California Design Tip</h3>
-                <p>Many California developments are located in scenic hilltop and coastal bluff locations. Don't overlook topographic effects—Kzt values can increase design pressures by 30-50% for C&C elements in these locations. This is especially critical for solar panel mounting systems, which are required on most new residential construction per Title 24. Run a quick check in the <a href="https://windloadcalc.com/california-wind-load-calculator">California Wind Load Calculator</a> before finalizing the schedule.</p>
-            </div>
-
-            <a href="instructional-videos-asce-7-wind-load-calculator-wind-load-pressure-software-components-cladding-wind-load-pressures-asce-7.html" class="cta-button">Learn About Topographic Analysis</a>
-
-            <h2>Risk Categories and Importance Factors</h2>
-
-            <div class="info-card">
-                <h3>ASCE 7-22 Risk Categories for California</h3>
-                <p>Buildings are classified into risk categories based on their use and the consequences of failure:</p>
-            </div>
-
-            <h3>Risk Category I</h3>
-            <p><strong>Low-hazard buildings with minimal occupancy:</strong></p>
-            <ul>
-                <li>Agricultural facilities</li>
-                <li>Minor storage buildings</li>
-                <li>Temporary structures</li>
-            </ul>
-            <p><strong>Wind Importance Factor:</strong> 0.87</p>
-
-            <h3>Risk Category II</h3>
-            <p><strong>Standard occupancy buildings (most common):</strong></p>
-            <ul>
-                <li>Residential buildings (single-family, multi-family)</li>
-                <li>Office buildings</li>
-                <li>Retail stores</li>
-                <li>Industrial facilities</li>
-                <li>Most commercial buildings</li>
-            </ul>
-            <p><strong>Wind Importance Factor:</strong> 1.00</p>
-
-            <h3>Risk Category III</h3>
-            <p><strong>Buildings representing substantial hazard to human life:</strong></p>
-            <ul>
-                <li>Assembly spaces with occupancy > 300</li>
-                <li>Schools (elementary through high school)</li>
-                <li>Colleges and universities with occupancy > 250</li>
-                <li>Healthcare facilities (not hospitals)</li>
-                <li>Jails and detention facilities</li>
-                <li>Power stations and water treatment facilities</li>
-            </ul>
-            <p><strong>Wind Importance Factor:</strong> 1.15</p>
-
-            <h3>Risk Category IV</h3>
-            <p><strong>Essential facilities required for post-disaster recovery:</strong></p>
-            <ul>
-                <li>Hospitals with surgery and emergency treatment</li>
-                <li>Fire and police stations</li>
-                <li>Emergency operation centers</li>
-                <li>Emergency shelters</li>
-                <li>Aviation control towers</li>
-                <li>Critical communication facilities</li>
-            </ul>
-            <p><strong>Wind Importance Factor:</strong> 1.15</p>
-
-            <div class="highlight-box">
-                <h3>California-Specific Notes</h3>
-                <ul>
-                    <li><strong>Schools:</strong> Public K-12 schools are Risk Category IV under DSA jurisdiction (more stringent than ASCE 7-22)</li>
-                    <li><strong>Seismic vs. Wind:</strong> Risk Category affects both wind and seismic design in California</li>
-                    <li><strong>Solar Requirements:</strong> Title 24 solar requirements apply across all Risk Categories for residential construction</li>
-                </ul>
-            </div>
-
-            <h2>Wind-Borne Debris Regions</h2>
-
-            <div class="info-card">
-                <h3>California Wind-Borne Debris Considerations</h3>
-                <p>While California does not have official wind-borne debris regions like hurricane-prone states, certain coastal and high-wind mountain areas may warrant debris impact protection considerations for critical facilities and glazing systems.</p>
-            </div>
-
-            <h3>Areas for Enhanced Consideration</h3>
-            <ul>
-                <li><strong>Coastal High-Wind Zones:</strong> Exposed Pacific coastal regions with wind speeds approaching 110 mph</li>
-                <li><strong>Wildfire Interface Areas:</strong> Regions where wind-driven ember cast creates debris concerns</li>
-                <li><strong>Mountain Pass Regions:</strong> High-wind desert corridors with vegetation debris potential</li>
-            </ul>
-
-            <h3>California Glazing Requirements</h3>
-            <p>CBC Section 2403 addresses glazing requirements:</p>
-            <ul>
-                <li>Safety glazing in hazardous locations</li>
-                <li>Impact resistance for specific applications</li>
-                <li>Wind load resistance per ASCE 7-22</li>
-                <li>Coordination with California Energy Code (Title 24, Part 6) for fenestration performance</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h3>Wildfire and Wind Coordination</h3>
-                <p>In California's Wildland-Urban Interface (WUI) zones, wind-driven ember cast during wildfires creates unique C&C design considerations. CBC Chapter 7A addresses ignition-resistant construction, which must be coordinated with wind load requirements for:</p>
-                <ul>
-                    <li>Roof covering assemblies</li>
-                    <li>Exterior wall covering</li>
-                    <li>Vents and openings</li>
-                    <li>Eaves and soffits</li>
-                </ul>
-            </div>
-
-            <h2>Exposure Categories in California</h2>
-
-            <div class="info-card">
-                <h3>Determining Wind Exposure</h3>
-                <p>ASCE 7-22 defines exposure categories based on ground surface roughness. California's diverse urban, coastal, agricultural, and desert terrain requires careful exposure determination.</p>
-            </div>
-
-            <h3>Exposure B</h3>
-            <p><strong>Urban and suburban areas, wooded areas, or terrain with numerous obstructions:</strong></p>
-            <ul>
-                <li>Los Angeles Basin urban areas</li>
-                <li>San Francisco Bay Area developed regions</li>
-                <li>Sacramento metro area</li>
-                <li>Dense suburban developments throughout the state</li>
-                <li>Forested mountain communities</li>
-            </ul>
-            <p><strong>Characteristics:</strong> Lowest wind pressures due to surface roughness and obstructions</p>
-
-            <h3>Exposure C</h3>
-            <p><strong>Open terrain with scattered obstructions (most common for new development):</strong></p>
-            <ul>
-                <li>Central Valley agricultural areas</li>
-                <li>Desert developments (Mojave, Coachella Valley)</li>
-                <li>Grassland and low-vegetation regions</li>
-                <li>New suburban developments on previously undeveloped land</li>
-                <li>Coastal areas with low vegetation</li>
-            </ul>
-            <p><strong>Characteristics:</strong> Moderate wind pressures—default exposure for most projects</p>
-
-            <h3>Exposure D</h3>
-            <p><strong>Flat, unobstructed coastal areas directly exposed to wind flowing over open water:</strong></p>
-            <ul>
-                <li>Pacific coastal developments with direct ocean exposure</li>
-                <li>San Francisco Bay shoreline areas</li>
-                <li>Coastal bluff developments</li>
-                <li>Flat mudflats and tidal areas</li>
-            </ul>
-            <p><strong>Characteristics:</strong> Highest wind pressures—must extend at least 5,000 ft inland from shoreline or be within 600 ft of shoreline</p>
-
-            <div class="highlight-box">
-                <h3>California Exposure Determination Tips</h3>
-                <ul>
-                    <li><strong>Urban Infill:</strong> Most Los Angeles, San Francisco, San Diego, San Jose urban areas qualify as Exposure B</li>
-                    <li><strong>New Development:</strong> Foothill and valley greenfield developments often require Exposure C</li>
-                    <li><strong>Coastal:</strong> Don't automatically assume Exposure D—must meet strict criteria for distance and terrain</li>
-                    <li><strong>Mixed Terrain:</strong> Use most severe exposure for worst-case wind direction unless detailed analysis performed</li>
-                </ul>
-            </div>
-
-            <h2>California Building Department Requirements</h2>
-
-            <div class="info-card">
-                <h3>Permit and Plan Review Process</h3>
-                <p>California has 482 incorporated cities and 58 counties, each with their own building department. Plan review requirements vary by jurisdiction, but all follow the California Building Code framework.</p>
-            </div>
-
-            <h3>Typical Submittal Requirements for C&C Wind Loads</h3>
-            <ul>
-                <li><strong>Structural Calculations:</strong> Complete ASCE 7-22 wind load analysis</li>
-                <li><strong>PE Stamp and Signature:</strong> Required for commercial and multi-family projects</li>
-                <li><strong>Design Criteria Summary:</strong> Wind speed, exposure, risk category, topographic effects</li>
-                <li><strong>Component Details:</strong> Window/door schedules with design pressures</li>
-                <li><strong>Manufacturer Product Approvals:</strong> CCMC, ICC-ES, or other recognized approvals</li>
-                <li><strong>Installation Details:</strong> Fastener specifications and connection details</li>
-                <li><strong>Special Inspections:</strong> Requirements per CBC Chapter 17</li>
-            </ul>
-
-            <h3>Major California Jurisdictions</h3>
-            <ul>
-                <li><strong>Los Angeles:</strong> LADBS (Department of Building and Safety)</li>
-                <li><strong>San Francisco:</strong> SF-DBI (Department of Building Inspection)</li>
-                <li><strong>San Diego:</strong> Development Services Department</li>
-                <li><strong>San Jose:</strong> Planning, Building and Code Enforcement</li>
-                <li><strong>Sacramento:</strong> Community Development Department</li>
-            </ul>
-            <p>Large jurisdictions often have additional local amendments and submittal requirements beyond base CBC.</p>
-
-            <h3>DSA Process for Schools</h3>
-            <div class="highlight-box">
-                <p>Public K-12 school projects follow a separate approval process through the Division of the State Architect:</p>
-                <ol>
-                    <li><strong>Pre-Design Conference:</strong> Coordinate scope and requirements</li>
-                    <li><strong>DSA Submittal:</strong> Complete structural calculations including wind and seismic</li>
-                    <li><strong>Plan Review:</strong> Detailed DSA structural engineer review (typically 2-3 rounds)</li>
-                    <li><strong>DSA Approval:</strong> "Approved for Construction" stamp</li>
-                    <li><strong>Construction:</strong> DSA Project Inspector oversight</li>
-                    <li><strong>Close-out:</strong> DSA certification of project completion</li>
-                </ol>
-                <p>DSA projects require California SE license and extensive documentation.</p>
-            </div>
-
-            <!-- Solar Section -->
-            <div class="info-card" style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left: 5px solid #f59e0b; margin: 3rem 0;">
-                <h2 style="color: #92400e; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-solar-panel" style="color: #f59e0b;"></i> California Solar - #1 in the Nation</h2>
-                <p style="font-size: 1.1rem; color: #78350f; margin-bottom: 1rem;"><strong>California leads the nation with 39+ GW of installed solar capacity</strong> - more than any other state. Title 24 mandates solar on new residential construction, driving massive growth in both rooftop and utility-scale installations.</p>
-
-                <h3 style="color: #92400e; margin-top: 1.5rem;">California Solar Wind Load Requirements</h3>
-                <ul style="color: #78350f; margin: 1rem 0 1rem 1.5rem;">
-                    <li><strong>Rooftop PV:</strong> ASCE 7-22 Chapter 30 with GCrn coefficients (Figure 30.7-3)</li>
-                    <li><strong>Ground-Mount:</strong> ASCE 7-22 Section 29.4.5 for utility-scale solar farms</li>
-                    <li><strong>Title 24:</strong> Mandatory solar on new residential since 2020</li>
-                    <li><strong>Exposure Category:</strong> Typically B (urban) or C (Central Valley, desert)</li>
-                    <li><strong>Wind Speed:</strong> 85-110 mph inland, up to 130 mph coastal</li>
-                </ul>
-
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                    <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.3s ease;"><i class="fas fa-calculator"></i> Solar Panel Calculator</a>
-                    <a href="solar-belt-wind-load-requirements.html" style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; color: #d97706; border: 2px solid #f59e0b; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.3s ease;"><i class="fas fa-sun"></i> Solar Belt Hub</a>
-                </div>
-            </div>
-
-            <h2>California C&C Wind Load Calculator Tools</h2>
-
-            <div class="info-card">
-                <h3>Professional Wind Load Analysis Software</h3>
-                <p>Windload Solutions provides latest ASCE 7 (ASCE 7-22) compliant wind load calculators specifically designed for California projects. Our tools address the unique California requirements including seismic coordination, varied topography, and CBC compliance &mdash; start with the dedicated <a href="https://windloadcalc.com/california-wind-load-calculator">California Wind Load Calculator</a> for a state-tuned interface.</p>
-            </div>
-
-            <h3>Available Calculators</h3>
-            <ul>
-                <li><strong>Building C&C Calculator:</strong> Wall and roof components for California structures</li>
-                <li><strong>Low-Rise Building Calculator:</strong> Residential and small commercial (mean roof height ≤ 60 ft)</li>
-                <li><strong>Topographic Factor Calculator:</strong> Kzt determination for California hillside and coastal bluff sites</li>
-                <li><strong>Velocity/Zip Code Tool:</strong> California wind speed determination by location</li>
-                <li><strong>Parapets and Overhangs:</strong> Common California flat-roof commercial details</li>
-            </ul>
-
-            <h3>California-Specific Features</h3>
-            <ul>
-                <li>2025 CBC / 2024 IBC compliance with California amendments</li>
-                <li>Pacific coastal exposure analysis</li>
-                <li>Sierra Nevada and Coastal Range topographic effects</li>
-                <li>Seismic-wind coordination notes</li>
-                <li>DSA-ready calculation format for school projects</li>
-                <li>Title 24 solar panel mounting system analysis</li>
-            </ul>
-
-            <a href="free-online-wind-load-calculators-demos-free-excel-wind-load-calculator.html" class="cta-button">Try Free California Wind Load Calculator Demo</a>
-
-            <h2>Get Started with Your California Wind Load Analysis</h2>
-
-            <div class="info-card">
-                <h3>Professional C&C Wind Load Services</h3>
-                <p>Whether you're designing a coastal residence, hillside development, commercial building in the Central Valley, or a DSA school project, Windload Solutions provides the California-specific wind load analysis you need.</p>
-            </div>
-
-            <h3>Our California Services Include:</h3>
-            <ul>
-                <li>Latest ASCE 7 (ASCE 7-22) components and cladding wind pressure calculations</li>
-                <li>California Building Code (CBC) compliance verification</li>
-                <li>PE stamped and sealed calculation packages</li>
-                <li>Topographic analysis for hillside and coastal bluff sites</li>
-                <li>Seismic-wind load coordination</li>
-                <li>Building department submittal packages</li>
-                <li>DSA-format calculations for school projects</li>
-                <li>Plan review response and RFI support</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h3>Why Choose Windload Solutions for California Projects?</h3>
-                <ul>
-                    <li><strong>24+ Years of Experience:</strong> Extensive California project portfolio</li>
-                    <li><strong>California-Licensed PE:</strong> Familiar with CBC and local jurisdiction requirements</li>
-                    <li><strong>Fast Turnaround:</strong> Most projects completed within 3-5 business days</li>
-                    <li><strong>Comprehensive Analysis:</strong> Wind, topography, and seismic coordination</li>
-                    <li><strong>Building Department Accepted:</strong> Submittal-ready calculation packages</li>
-                    <li><strong>Responsive Support:</strong> Available for plan review questions and RFIs</li>
-                </ul>
-            </div>
-
-            <div style="text-align: center; margin: 3rem 0;">
-                <a href="contact-us-wind-load-calculators-for-components-and-cladding-cc-wind-load-pressures-per-the-asce-7-16-and-asce-7-22-publication-windloads-made-easy.html" class="cta-button" style="font-size: 1.2rem; padding: 1.5rem 3rem;">Contact Us for California Wind Load Analysis</a>
-            </div>
-    </main>
-
-    <!-- WLC Final Conversion CTA -->
-    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for California">
-        <div class="wlc-final-cta-inner">
-            <h2>Stop calculating California wind loads by hand</h2>
-            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">In business since 2002 &mdash; honest about CA being a seismic-first state, sharp on getting the wind numbers right anyway.</p>
-            <ul>
-                <li>Instant ZIP &rarr; latest ASCE 7 (ASCE 7-22) wind speed for all 4 risk categories</li>
-                <li>Special wind regions (Banning, Tehachapi, Cajon, Altamont) auto-flagged</li>
-                <li>Topographic Kzt and seismic-wind coordination notes in every report</li>
-            </ul>
-            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
-        </div>
-    </section>
-
-    <!-- WindLoadCalc.com Promotional Section -->
-    <section class="windloadcalc-promo" style="background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 4rem 0; text-align: center;">
-        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 1.5rem; color: white;">Need California Wind Load Calculators?</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">Visit our sister site <strong>WindLoadCalc.com</strong> for professional ASCE 7 wind load calculator software and the Building Intelligence Platform (BIP).</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" style="display: inline-block; background: white; color: #0018ff; padding: 1.2rem 2.5rem; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" target="_blank">Visit WindLoadCalc.com →</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    
-
-    <script>
+<main>
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="ca"><svg viewBox="291 154.4 141.8 242.7" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M371.75,174.28l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.02l-1.09,4.03l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l2.98,4.56l3,4.56l3.02,4.56l3.05,4.55l3.07,4.54l3.09,4.54l3.11,4.53l3.13,4.53l2.41,3.75l2.42,3.75l2.44,3.75l2.45,3.74l2.46,3.74l2.48,3.74l2.49,3.73l2.5,3.73l3.46,5.32l3.48,5.31l3.51,5.3l3.53,5.3l3.56,5.29l3.59,5.28l3.62,5.28l3.9,5.63l-0.39,1.82l0.45,2.66l1.95,5.06l0.13,1.14l0.03,0.03l-0.12,1.14l0.89,1.45l2.36,2.25l0.44,0.95l-0.01,0.07l-0.13,0.6l-0.83,0.59l-3.5,1.82l-2.02,1.65l-2.31,2.87l-0.28,2.66l-0.52,2.14l-0.76,1.62l-0.95,1.44l-1.15,1.26l-1.07,0.67l-0.98,0.09l-0.72,1.83l-0.46,3.58l0.59,2.36l1.64,1.14l0.86,1.39l0.08,1.64l-0.47,1.5l-1.03,1.37l-1.39,0.58l-2.61,-0.31l0,0l-0.11,0.19l-2.16,-0.21l-5.38,-0.65l-5.39,-0.67l-5.38,-0.69l-5.38,-0.7l-5.38,-0.72l-5.38,-0.74l-5.38,-0.76l-5.38,-0.77l-0.01,-0.15l0.44,-2.41l-0.65,-1.04l-1.22,0.26l0.24,-3.21l0.62,-1.39l0.21,-1.45l-0.19,-3.74l-1.69,-4.89l-4.56,-6.68l-2.53,-2.49l-1.78,-2.8l-1.32,-0.98l-1.81,-0.63l-0.79,0.87l-1.93,-1.21l0.94,-2.39l-1.17,-3.95l-1.57,-0.8l-4.25,-0.84l-5.11,-3.34l-1.36,-1.55l-0.04,-2.16l-2.15,-2.43l-2.98,-2.62l-2.02,-0.11l-2.43,-0.93l-3.22,-2.19l-2.03,-0.72l-4.14,-0.74l-1.44,-0.67l-0.97,-1.94l-1.29,-1.19l0.85,-1.82l0.29,-1.78l0.6,-1.28l0.15,-3.13l1.28,-2.58l-0.18,-1.11l-0.63,-0.99l-2.33,-1.86l-0.09,-1.53l0.98,-1.82l-0.33,-1.47l-1.82,-1.8l-1.25,-3.28l-2.13,-2.21l-0.34,-2.78l-1.13,-1.98l-0.15,-1.51l-2.06,-5.84l-2.58,-4.85l0.07,-2.34l0.73,-3.02l1.97,-1.4l1.24,-1.37l0.35,-1.49l0.09,-1.14l-0.71,-2.24l-4.53,-2.54L303,265.5l0.82,-3.6l-0.46,-4.07l0.68,-2.35l0.53,-2.61l1.33,-0.21l0.98,0.51l-0.41,0.98l-0.19,1.92l0.81,1.73l0.99,0.94l0.67,1.64l0.68,0.64l0.8,0.34l-0.19,-0.98l-0.31,-0.68l-0.05,-1.93l-0.42,-2.57l-0.88,-1.61l0.04,-2.45l-0.38,-0.69l-0.09,-0.94l1.5,-0.64l1.85,-0.22l2.25,0.46l6.14,2.16l1.5,-0.19l1.04,0.51l0.83,0.16l-1.52,-1.09l-1.01,-0.08l-1.08,-0.45l-2.26,-0.53l-0.83,-0.52l-0.78,-1l-0.63,-0.26l-2.42,0.63l-0.87,-0.42l-1.77,-1.99l-0.89,-0.47l-1.75,0.31l-1.18,3.25l-0.27,2.6l-0.99,-0.02l-0.76,-1.33l-1.45,-1.09l-1.06,-1.33l-1.37,-2.29l-0.8,-0.93l-1.56,1.08l0.16,-0.66l1.06,-1.48l0.69,-2.82l1.02,2.73l-0.05,-1.72l-0.79,-2.11l-0.82,-0.9l-0.31,-3.45l-2.24,-2.71l-1.33,-3.67l-3.05,-6.35l1.05,-4.41l0.06,-5.98l1.68,-2.88l0.6,-2.23l0.24,-3.58l-0.27,-2.07l-2.08,-6.11l-2.43,-4.46l0.29,-2.69l0.58,-2.62l1.49,-2.02l1.42,-2.17l0.68,-0.48l0.1,0.32l-0.3,0.47l0.44,0.31l0.52,-0.99l0.47,-0.45l-0.5,-0.24l0.16,-0.32l0.52,-0.56l2.08,-2.78l1.15,-3.98l2.69,-4.47l0.46,-1.61l0.37,-3.67l-0.06,-2.29l-0.82,-1.88l1.25,-1.95l0.61,-2.05l-0.15,-0.43l4.31,1.38l4.17,1.32l4.18,1.31l4.18,1.3l4.19,1.28l4.19,1.27l4.19,1.26l4.2,1.25l4.2,1.23l4.2,1.22l4.21,1.21l4.21,1.2l4.21,1.19l4.22,1.17l4.22,1.16L371.75,174.28zM327.88,344.91l3.35,2.08l2.11,0l0.21,0.63l-0.36,0.4l-4.66,-0.35l-1.21,-0.95l0.09,-0.83l-0.25,-0.89L327.88,344.91zM319.97,344.03l-0.97,-0.2l-1.4,-0.63l0.65,-0.36l0.91,-0.14l0.18,0.34L319.97,344.03zM324.06,347.59l-1.34,-0.04l-0.88,-0.55l-0.96,-2.47l3.3,0.61l1.15,1.27l0.12,0.3L324.06,347.59zM351.66,367.08l0.52,1.82l-1.27,-0.53l-1.4,-0.26l-0.2,-0.97l-0.11,-1.31l-0.2,-0.38l-0.92,-0.35l-0.04,-0.13l0.04,-0.61l0.34,-0.21l2.62,2.09L351.66,367.08zM330.94,365.63l-0.82,-0.17l-1.06,-0.49l-0.26,-1.31l0.93,0.16l0.8,0.38l0.43,1.09L330.94,365.63zM348.58,379.15l-1.11,-0.07l-1.07,-0.74l-0.49,-2.35l-0.7,-1.92l0.72,-0.31l0.51,1.8l1.67,2.96L348.58,379.15z"/></svg></span>
+    <p class="eyebrow">CALIFORNIA · 2025 CBC (TITLE 24) · ASCE 7-22</p>
+    <h1>California Wind Load <span class="sweep">Requirements</span></h1>
+    <p class="lead">A seismic-first state where wind still has to clear plan-check &mdash; lower speeds statewide, but sharp spikes through the mountain passes and special wind regions.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">2025 CBC</span><span class="lbl">TITLE 24, PART 2 · 2024 IBC</span></div>
+      <div class="stat"><span class="num">ASCE 7-22</span><span class="lbl">ADOPTED WIND STANDARD</span></div>
+      <div class="stat"><span class="num">85&ndash;130</span><span class="lbl">MPH RANGE (3-SEC GUST)</span></div>
+      <div class="stat"><span class="num">4</span><span class="lbl">SPECIAL WIND REGIONS FLAGGED</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/california-wind-load-calculator">Open the California Wind Load Calculator</a>
+      <a class="btn-ghost" href="state-requirements.html">All State Requirements</a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ CODE & ASCE EDITION ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">ADOPTED CODE &amp; STANDARD</p>
+    <h2>California Code &amp; <span class="sweep">ASCE Edition</span></h2>
+    <p class="lead">The 2025 California Building Code (Title 24, Part 2) builds on the 2024 IBC and adopts ASCE 7-22 for wind, with state amendments for seismic and coastal regions.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11H4z"/><path d="M14 4v5h5"/><path d="M8 13h8M8 16h6"/></svg>
+        <h3>2025 CBC</h3>
+        <p>Title 24, Part 2 &mdash; California's own code on a 2024 IBC base.</p>
+        <span class="badge badge--method">TITLE 24</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v6c0 4-3.5 7-8 8-4.5-1-8-4-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>ASCE 7-22</h3>
+        <p>Adopted wind standard &mdash; minimum design loads &amp; associated criteria.</p>
+        <span class="badge badge--data">WIND STANDARD</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-7 4 4 3-5 6 8z"/><path d="M3 21h18"/></svg>
+        <h3>Seismic + Wind</h3>
+        <p>Every design evaluates both; the governing case controls the final member.</p>
+        <span class="badge badge--method">DUAL-LOAD</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c3-3 6-3 9 0s6 3 9 0"/><path d="M3 17c3-3 6-3 9 0s6 3 9 0"/></svg>
+        <h3>Coastal &amp; Title 24</h3>
+        <p>Enhanced Pacific-coast provisions plus Title 24, Part 6 envelope coordination.</p>
+        <span class="badge badge--data">ENVELOPE</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p><strong>Key requirement:</strong> all California structural designs must consider both wind and seismic loads. Seismic often governs the main structure, but for coastal and high-wind zones wind frequently controls envelope (C&amp;C) component design.</p>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ WIND ACROSS CALIFORNIA ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">WIND ACROSS THE STATE · RANGES, NOT POINTS</p>
+    <h2>Wind Across <span class="sweep">California</span></h2>
+    <p class="lead">California is comparatively low-wind. Speeds rise with elevation and exposure, then spike where wind funnels through mountain passes &mdash; the state's special wind regions.</p>
+    <div class="grid" data-n="5">
+      <a class="card glass" href="https://windloadcalc.com/california-wind-load-calculator">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14c4-4 8-4 12 0"/><path d="M14 7c2-1 4 0 4 2s-2 3-4 2"/><path d="M5 19h12"/></svg>
+        <h3>Special Wind Regions</h3>
+        <p>Banning, Tehachapi, Cajon &amp; Altamont passes &mdash; auto-flagged by the calculator. Site-specific speeds required.</p>
+        <span class="badge badge--data">110&ndash;130 MPH</span>
+      </a>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16c2-1 3-1 5 0s3 1 5 0 3-1 5 0 3 1 3 0"/><path d="M4 20h16"/></svg>
+        <h3>Pacific Coast</h3>
+        <p>Direct ocean exposure raises envelope pressures along the coastline.</p>
+        <span class="badge badge--data">85&ndash;110 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l5-9 4 6 3-4 6 7z"/><path d="M3 21h18"/></svg>
+        <h3>Mountain Regions</h3>
+        <p>Sierra Nevada and ranges &mdash; topographic speed-up over ridges and peaks.</p>
+        <span class="badge badge--data">90&ndash;120 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M3 18c2-2 5-2 7 0M14 18c2-2 5-2 7 0"/></svg>
+        <h3>Desert Areas</h3>
+        <p>Mojave and Colorado Desert &mdash; open terrain with wind-tunnel corridors.</p>
+        <span class="badge badge--data">90&ndash;110 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M6 20V9l6-4 6 4v11"/><path d="M10 20v-5h4v5"/></svg>
+        <h3>Inland Valleys</h3>
+        <p>Central Valley floor and metro basins &mdash; the state's calmest wind.</p>
+        <span class="badge badge--data">85&ndash;100 MPH</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p><strong>Wind speed is set by:</strong> ASCE 7-22 wind speed maps, local jurisdiction amendments, coastal exposure, elevation &amp; topographic (Kzt) effects, and special wind region designations. Pass corridors require site-specific determination &mdash; no single statewide number applies.</p>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ MAJOR CALIFORNIA CITIES ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CITY GUIDES · 13 METROS</p>
+    <h2>Major California <span class="sweep">Cities</span></h2>
+    <p class="lead">Per-city wind speeds, local code notes, exposure and topographic factors. Ranges are qualitative; confirm site values in the calculator.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="cities/los-angeles-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l5-3v4l5-3v5l8-4v15z"/><path d="M7 21v-3M12 21v-3M17 21v-3"/></svg>
+        <h3>Los Angeles</h3>
+        <p>Urban basin and beaches.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/san-diego-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c2-1 4-1 6 0s4 1 6 0 4-1 6 0"/><path d="M4 21h16"/><path d="M12 4v6"/></svg>
+        <h3>San Diego</h3>
+        <p>Coastal exposure, southern coast.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/san-jose-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="1"/><path d="M8 10h8M8 14h5"/></svg>
+        <h3>San Jose</h3>
+        <p>Silicon Valley tech hub.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/san-francisco-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18M5 17V9M19 17V9"/><path d="M5 11c4-4 10-4 14 0"/></svg>
+        <h3>San Francisco</h3>
+        <p>Bay winds, Golden Gate exposure.</p>
+        <span class="badge badge--data">95&ndash;110 MPH</span>
+      </a>
+      <a class="card glass" href="cities/sacramento-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 5H4z"/><path d="M6 8v9M10 8v9M14 8v9M18 8v9"/><path d="M4 20h16"/></svg>
+        <h3>Sacramento</h3>
+        <p>State capital, Central Valley.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/fresno-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V8M12 8c0-3 2-5 5-5-1 3-2 5-5 5zM12 11c0-3-2-5-5-5 1 3 2 5 5 5z"/></svg>
+        <h3>Fresno</h3>
+        <p>Agricultural heartland.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/oakland-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M9 6h6"/><path d="M5 20c2-2 4-2 7-2s5 0 7 2"/><path d="M8 12l4 6 4-6"/></svg>
+        <h3>Oakland</h3>
+        <p>East Bay port and hills.</p>
+        <span class="badge badge--data">90&ndash;100 MPH</span>
+      </a>
+      <a class="card glass" href="cities/long-beach-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16h16l-2 4H6z"/><path d="M12 4v8M9 8h6"/></svg>
+        <h3>Long Beach</h3>
+        <p>Pacific coast port city.</p>
+        <span class="badge badge--data">90&ndash;100 MPH</span>
+      </a>
+      <a class="card glass" href="cities/anaheim-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>
+        <h3>Anaheim</h3>
+        <p>Orange County, theme-park city.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/santa-ana-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h12a3 3 0 1 0-3-3"/><path d="M3 14h15a3 3 0 1 1-3 3"/></svg>
+        <h3>Santa Ana</h3>
+        <p>Famous Santa Ana winds.</p>
+        <span class="badge badge--data">90&ndash;105 MPH</span>
+      </a>
+      <a class="card glass" href="cities/riverside-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l6-8 4 5 3-4 5 7z"/><path d="M3 21h18"/></svg>
+        <h3>Riverside</h3>
+        <p>Inland Empire, mountain pass winds.</p>
+        <span class="badge badge--data">90&ndash;105 MPH</span>
+      </a>
+      <a class="card glass" href="cities/stockton-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15c3-2 6-2 9 0s6 2 9 0"/><path d="M3 19c3-2 6-2 9 0s6 2 9 0"/></svg>
+        <h3>Stockton</h3>
+        <p>Delta region, valley conditions.</p>
+        <span class="badge badge--data">85&ndash;95 MPH</span>
+      </a>
+      <a class="card glass" href="cities/bakersfield-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V7M9 10V4M15 10V4"/><path d="M5 21h14"/><path d="M7 21v-4h10v4"/></svg>
+        <h3>Bakersfield</h3>
+        <p>Southern Central Valley.</p>
+        <span class="badge badge--data">85&ndash;100 MPH</span>
+      </a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ REQUIREMENTS ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">WHAT CALIFORNIA REQUIRES</p>
+    <h2>Requirements &amp; <span class="sweep">Compliance</span></h2>
+    <p class="lead">From PE/SE sealing to DSA review and topographic factors &mdash; the provisions that govern a compliant California submittal.</p>
+    <div class="grid" data-n="6">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13l-2 8 5-3 5 3-2-8"/></svg>
+        <h3>PE / SE Seal</h3>
+        <p>Required for commercial, multi-family (4+), coastal high-wind C&amp;C, hospitals &amp; essential facilities.</p>
+        <span class="badge badge--method">STAMP REQUIRED</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12z"/><path d="M9 21v-6h6v6"/><path d="M9 12h.01M15 12h.01"/></svg>
+        <h3>DSA for Schools</h3>
+        <p>Division of the State Architect governs K-12 and community colleges &mdash; California SE license and full plan review.</p>
+        <span class="badge badge--method">SE LICENSE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l4-9 4 6 3-5 7 8z"/><path d="M3 20h18"/><path d="M14 4l2 2-2 2"/></svg>
+        <h3>Topographic Kzt</h3>
+        <p>Coastal bluffs, ridges &amp; isolated hills per ASCE 7-22 §26.8 &mdash; speed-up raises envelope pressures.</p>
+        <span class="badge badge--data">§26.8</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h16M9 9v11"/></svg>
+        <h3>C&amp;C Pressures</h3>
+        <p>Per ASCE 7-22 Ch. 30 &mdash; windows, curtain walls, roofing, cladding, parapets &amp; fasteners.</p>
+        <span class="badge badge--data">CHAPTER 30</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c2-1 4-1 6 0s4 1 6 0 3-1 6 0"/><path d="M3 12c2-1 4-1 6 0s4 1 6 0 3-1 6 0"/><path d="M3 7c2-1 4-1 6 0s4 1 6 0 3-1 6 0"/></svg>
+        <h3>Exposure B / C / D</h3>
+        <p>Urban B, open-terrain C (the common default), and strict coastal D criteria.</p>
+        <span class="badge badge--data">SURFACE ROUGHNESS</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="9" rx="1"/><path d="M7 7h2M11 7h2M7 10h6"/><path d="M9 17l3 3 3-3"/></svg>
+        <h3>Title 24 Solar</h3>
+        <p>Mandatory rooftop PV on new residential &mdash; mounting per ASCE 7-22 Ch. 30 GCrn coefficients.</p>
+        <span class="badge badge--method">MOUNTING WIND</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p><strong>Risk category &amp; wind:</strong> ASCE 7-22 has no wind importance factor &mdash; instead a higher risk category points to a longer return-period speed map, so design wind speed and loads rise with category. In California, public K-12 schools sit at the highest tier under DSA, and Title 24 solar applies across all categories for residential.</p>
+    </div>
+    <div class="cmp-scroll">
+      <table class="cmp">
+        <thead><tr><th>Risk Category</th><th>Typical California Use</th><th>Speed Map (MRI)</th></tr></thead>
+        <tbody>
+          <tr><td>I</td><td>Agricultural, minor storage, temporary structures</td><td>Lowest (300-yr)</td></tr>
+          <tr><td>II</td><td>Homes, offices, retail, most commercial &amp; industrial</td><td>Standard (700-yr)</td></tr>
+          <tr><td>III</td><td>Assembly &gt;300, colleges, healthcare, jails, power/water</td><td>Higher (1,700-yr)</td></tr>
+          <tr><td>IV</td><td>Hospitals, fire/police, EOCs, shelters &mdash; plus DSA K-12 schools</td><td>Highest (3,000-yr)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ CTA + RELATED ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">START YOUR CALIFORNIA ANALYSIS</p>
+    <h2>Get California Wind Loads <span class="sweep">Right</span></h2>
+    <p class="lead">Seismic-first, wind-accurate. The calculator pre-loads ASCE 7-22 speeds for every ZIP, flags the special wind regions, and keeps seismic coordination notes on the report.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/california-wind-load-calculator">Open the California Wind Load Calculator</a>
+      <a class="btn-ghost" href="professional-engineer-sign-seal-wind-load-pressures.html">Get a PE Sealed Report</a>
+    </div>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        <h3>Mandatory Wind-Load States</h3>
+        <p>Where wind load review is strictly enforced.</p>
+        <span class="badge badge--go">HUB</span>
+      </a>
+      <a class="card glass" href="state-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <h3>All State Requirements</h3>
+        <p>Browse wind-load rules state by state.</p>
+        <span class="badge badge--go">ALL 50</span>
+      </a>
+      <a class="card glass" href="topographic-effects-wind-loads.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19l6-11 4 7 3-5 5 9z"/><path d="M3 19h18"/></svg>
+        <h3>Topographic Effects</h3>
+        <p>Kzt speed-up over hills, ridges &amp; bluffs.</p>
+        <span class="badge badge--data">Kzt</span>
+      </a>
+      <a class="card glass" href="solar-belt-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        <h3>Solar Belt Hub</h3>
+        <p>Title 24 solar &amp; PV mounting wind loads.</p>
+        <span class="badge badge--data">SOLAR</span>
+      </a>
+    </div>
+  </div></section>
+
+</main>
+
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1650,141 +752,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

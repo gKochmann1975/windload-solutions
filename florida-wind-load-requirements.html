@@ -29,794 +29,251 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-        
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Sub-menu styles */
-        .nav-item-with-submenu {
-            position: relative;
-        }
-
-        .nav-item-with-submenu > a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sub-menu {
-            display: none;
-            flex-direction: column;
-            padding-left: 1.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .sub-menu.active {
-            display: flex;
-        }
-
-        .sub-menu a {
-            font-size: 1rem;
-            padding: 0.75rem 0;
-        }
-
-        .submenu-toggle {
-            transition: transform 0.3s ease;
-        }
-
-        .submenu-toggle.active {
-            transform: rotate(180deg);
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 25%, #ffa07a 50%, #0ea5e9 75%, #0284c7 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-                .hero::before {
-            content: '🌴🌊';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #ff6b35;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #ff6b35;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #ff8c42;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #ff6b35;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #ff6b35;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* HVHZ Card */
-        .hvhz-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(255, 107, 53, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .hvhz-card h4 {
-            color: #ff6b35;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .hvhz-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Florida Wind Loads",
-                "item": "https://windload.solutions/florida-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What ASCE 7 version does Florida use for wind load calculations?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Florida Building Code 8th Edition (2023) adopts ASCE 7-22 for wind load calculations. This is the most current edition and includes updated wind speed maps and load calculation procedures for all Florida counties."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the design wind speed for Miami-Dade County?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Miami-Dade County requires a design wind speed of 175 mph (3-second gust) for Risk Category II structures. This is one of the highest design wind speeds in the continental United States due to the county's HVHZ (High-Velocity Hurricane Zone) designation."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is HVHZ in Florida?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "HVHZ stands for High-Velocity Hurricane Zone. In Florida, HVHZ encompasses Miami-Dade County and Broward County. Buildings in HVHZ areas must meet stricter wind load requirements, use products with Miami-Dade NOA (Notice of Acceptance) approval, and pass TAS impact testing for wind-borne debris protection."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do I need a PE seal for wind load calculations in Florida?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes, all structural calculations in Florida must be prepared by or under the direct supervision of a Professional Engineer (PE) or Architect licensed in Florida. Wind load calculations must be sealed and submitted as part of the building permit application."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is a Miami-Dade NOA?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "A Miami-Dade NOA (Notice of Acceptance) is a product approval issued by the Miami-Dade County Building Code Compliance Office. Products with NOA approval have been tested to meet Miami-Dade's strict wind load and impact resistance requirements (TAS 201, 202, 203). NOAs are required for all exterior building components in HVHZ areas."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What exposure category is required for Florida coastal projects?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Florida coastal projects typically require Exposure Category C, which reflects open terrain with scattered obstructions. In HVHZ areas (Miami-Dade and Broward Counties), Exposure C is mandatory for all structures regardless of surrounding terrain."
-                }
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-        <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -921,427 +378,266 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
-
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
-
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
-
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
-
-.nav-subsection {
-    position: relative;
-}
-
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
-
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
-
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
-
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Florida Wind Load Requirements</h1>
-            <p>Comprehensive Guide to FBC 8th Edition 2023, ASCE 7-22 Adoption, HVHZ Zones, and Florida-Specific Wind Load Compliance</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Florida Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h2>Florida Building Code 8th Edition (2023)</h2>
-            <p>Florida operates under the <strong>Florida Building Code (FBC) 8th Edition</strong>, effective December 31, 2023. This latest edition adopts <strong>ASCE 7-22</strong> as the standard for wind load calculations, replacing the previous ASCE 7-16 requirements. The FBC is one of the most stringent building codes in the United States, primarily due to Florida's extensive hurricane exposure and coastal geography.</p>
-
-            <p>The Florida Building Code is administered by the <a href="https://www.floridabuilding.org/" target="_blank" rel="noopener">Florida Building Commission</a>, which provides regulatory oversight, code interpretation, and product approval services. All structural engineers, architects, and contractors working on Florida projects must comply with FBC requirements, including wind load calculations that account for the state's unique high-wind hazard zones.</p>
-
-            <div class="info-box">
-                <h4><strong>✓</strong> FBC 8th Edition Key Updates</h4>
-                <p><strong>ASCE 7-22 Adoption:</strong> Updated wind speed maps and load calculation procedures</p>
-                <p><strong>Enhanced HVHZ Requirements:</strong> Stricter provisions for High-Velocity Hurricane Zones</p>
-                <p><strong>Increased Wind Speeds:</strong> Many coastal areas now require higher design velocities</p>
-                <p><strong>Product Approval Changes:</strong> Updated TAS (Testing Application Standard) protocols</p>
-                <p><strong>Impact Testing:</strong> Modified TAS 201, 202, and 203 requirements for wind-borne debris regions</p>
-            </div>
-
-            <h3>ASCE 7-22 Wind Load Calculations for Florida</h3>
-            <p>Under the FBC 8th Edition, all wind load calculations must follow <strong>ASCE 7-22</strong> methodology. This includes determining design wind speeds based on Risk Category, calculating velocity pressure using Exposure Category, and applying topographic factors where terrain features amplify wind effects. The fundamental equation for velocity pressure in Florida is:</p>
-
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #ff6b35; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
-
-            <p>For Florida coastal projects, <strong>Exposure Category C</strong> is typically required, reflecting open terrain with scattered obstructions. The <a href="https://windloadcalc.com/florida-wind-load-calculator">Florida Wind Load Calculator</a> automatically applies Florida-specific requirements including HVHZ velocities, exposure categories, and county-specific provisions based on your project's zip code or street address.</p>
-
-            <h3>High-Velocity Hurricane Zones (HVHZ)</h3>
-            <p>Florida's <strong>High-Velocity Hurricane Zones (HVHZ)</strong> encompass <strong>Miami-Dade County</strong> and <strong>Broward County</strong>, regions with the most severe hurricane exposure in the continental United States. These counties enforce the strictest wind load requirements in the nation, including mandatory product approval, impact testing, and enhanced design velocities that exceed standard ASCE 7 maps.</p>
-
-            <div class="hvhz-card">
-                <h4>🌀 Miami-Dade County HVHZ Requirements</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 175 mph (3-second gust)</p>
-                <p><strong>Exposure Category:</strong> C (required for all structures)</p>
-                <p><strong>Product Approval:</strong> All exterior building components must have a valid Miami-Dade County Notice of Acceptance (NOA)</p>
-                <p><strong>Impact Testing:</strong> TAS 201, 202, 203 required for all openings and cladding in Wind-Borne Debris Regions</p>
-                <p><strong>Official Resource:</strong> <a href="https://www.miamidade.gov/building/" target="_blank" rel="noopener">Miami-Dade County Product Control Division</a></p>
-            </div>
-
-            <div class="hvhz-card">
-                <h4>🌀 Broward County HVHZ Requirements</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 170 mph (3-second gust)</p>
-                <p><strong>Exposure Category:</strong> C (required for all structures)</p>
-                <p><strong>Product Approval:</strong> All exterior building components must have Broward County Product Control approval</p>
-                <p><strong>Impact Testing:</strong> TAS 201, 202, 203 required for all openings and cladding in Wind-Borne Debris Regions</p>
-                <p><strong>Official Resource:</strong> <a href="https://www.broward.org/Building/" target="_blank" rel="noopener">Broward County Building Code Services</a></p>
-            </div>
-
-            <h3>County-Specific Wind Speed Requirements</h3>
-            <p>Florida's 67 counties have varying wind speed requirements based on their geographic location and hurricane exposure. While most counties follow standard ASCE 7-22 wind speed maps, <strong>Miami-Dade and Broward Counties</strong> have county-specific velocities that supersede the ASCE maps. Additionally, <strong>Collier County</strong> enforces stricter interpretation of FBC requirements, particularly for coastal structures.</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>County</th>
-                        <th>Risk Category II Velocity</th>
-                        <th>Exposure Category</th>
-                        <th>Special Requirements</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Miami-Dade</strong></td>
-                        <td>175 mph</td>
-                        <td>C</td>
-                        <td>NOA required, TAS impact testing, HVHZ provisions</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Broward</strong></td>
-                        <td>170 mph</td>
-                        <td>C</td>
-                        <td>Product Control approval, TAS impact testing, HVHZ provisions</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Collier</strong></td>
-                        <td>Per ASCE 7-22 map (typically 170 mph coastal)</td>
-                        <td>C (coastal), B or C (inland)</td>
-                        <td>Strict enforcement, additional local amendments</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Palm Beach</strong></td>
-                        <td>Per ASCE 7-22 map (typically 160-170 mph)</td>
-                        <td>C (coastal), B or C (inland)</td>
-                        <td>Wind-borne debris regions require impact protection</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lee</strong></td>
-                        <td>Per ASCE 7-22 map (typically 160 mph coastal)</td>
-                        <td>C (coastal), B or C (inland)</td>
-                        <td>Wind-borne debris regions require impact protection</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>For county-specific HVHZ workflows, see the dedicated <a href="https://windloadcalc.com/miami-dade-wind-load-calculator">Miami-Dade Wind Load Calculator</a> and <a href="https://windloadcalc.com/broward-wind-load-calculator">Broward Wind Load Calculator</a>, which apply the correct 175 mph and 170 mph design velocities, NOA/TAS product approval logic, and HVHZ amendments automatically by zip code or street address.</p>
-
-            <h3>Florida City Wind Load Guides</h3>
-            <p>For detailed city-specific wind load requirements, including local building department contacts, zip code references, and municipality-specific guidance, visit our Florida city guides:</p>
-
-            <div class="external-links-grid">
-                <a href="cities/miami-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🌴 Miami (175 mph HVHZ)
-                </a>
-                <a href="cities/fort-lauderdale-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🏖️ Fort Lauderdale (170 mph HVHZ)
-                </a>
-                <a href="cities/tampa-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    ⚡ Tampa (150-160 mph)
-                </a>
-                <a href="cities/jacksonville-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🌉 Jacksonville (130-140 mph)
-                </a>
-                <a href="cities/orlando-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🎢 Orlando (130-140 mph)
-                </a>
-                <a href="cities/key-west-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🔑 Key West (170-180 mph)
-                </a>
-                <a href="cities/west-palm-beach-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🌴 West Palm Beach (170 mph HVHZ)
-                </a>
-                <a href="cities/naples-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    🏖️ Naples (160-170 mph)
-                </a>
-                <a href="cities/pensacola-wind-load-requirements.html" class="external-link" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-color: #ff6b35;">
-                    ✈️ Pensacola (150-160 mph)
-                </a>
-            </div>
-
-            <h3>Risk Categories in Florida</h3>
-            <p>Florida projects are classified into Risk Categories I through IV based on occupancy and use, as defined in ASCE 7-22 Table 1.5-1. Each Risk Category has different design wind speeds, with higher categories requiring increased velocities to account for greater consequences of failure:</p>
-
-            <p><span class="risk-badge">Risk Category I</span> Agricultural facilities, temporary structures (lowest design wind speed)</p>
-            <p><span class="risk-badge">Risk Category II</span> Residential buildings, commercial buildings, most standard occupancies (standard design wind speed)</p>
-            <p><span class="risk-badge">Risk Category III</span> Schools, assembly occupancies >300 people, facilities with substantial hazardous materials (higher design wind speed)</p>
-            <p><span class="risk-badge">Risk Category IV</span> Essential facilities (hospitals, fire stations, emergency operations centers), buildings storing extremely hazardous materials (highest design wind speed)</p>
-
-            <p>For Miami-Dade County Risk Category II structures, the design wind speed is <strong>175 mph</strong>. Risk Category III would require approximately <strong>185 mph</strong>, and Risk Category IV would require approximately <strong>195 mph</strong>. These velocities are significantly higher than most other states, reflecting Florida's severe hurricane hazard.</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Florida Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all Florida-specific requirements including FBC 8th Edition compliance, ASCE 7-22 calculations, Miami-Dade and Broward County HVHZ velocities, Collier County provisions, and Risk Category adjustments. Simply enter your project's zip code or address, and our software determines the correct design wind speeds, exposure categories, and component pressure coefficients for full Florida compliance.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Florida Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Professional Engineer (PE) Seal Requirements</h3>
-            <p>In Florida, <strong>all structural calculations must be prepared by or under the direct supervision of a Professional Engineer (PE) or Architect licensed in the State of Florida</strong>. This requirement is mandated by the <a href="https://www.myfloridalicense.com/" target="_blank" rel="noopener">Florida Department of Business and Professional Regulation (DBPR)</a> and applies to all wind load calculations for buildings and structures.</p>
-
-            <p>Wind load calculations for components and cladding (C&C), main wind force resisting systems (MWFRS), and roof systems must be sealed by a Florida-licensed PE or Architect. The sealed calculations must be submitted as part of the building permit application package and are subject to review by local building departments. For complex structures or projects in HVHZ areas, enhanced scrutiny is applied to ensure full compliance with FBC 8th Edition requirements.</p>
-
-            <div class="info-box">
-                <h4><strong>✓</strong> PE Seal Best Practices for Florida</h4>
-                <p><strong>Use Licensed Professionals:</strong> Ensure your PE or Architect is licensed in Florida (not just reciprocal)</p>
-                <p><strong>Include ASCE 7-22 References:</strong> Clearly cite which sections of ASCE 7-22 were used</p>
-                <p><strong>Document County-Specific Requirements:</strong> Note HVHZ provisions, county velocities, and local amendments</p>
-                <p><strong>Provide Calculation Details:</strong> Show all inputs, assumptions, and safety factors</p>
-                <p><strong>Reference Product Approvals:</strong> Include FL Numbers or NOA numbers for specified products</p>
-            </div>
-
-            <h3>Florida Product Approval System (FL Numbers and NOAs)</h3>
-            <p>Florida requires <strong>product approval</strong> for all exterior building components subject to wind loads, including windows, doors, shutters, impact-resistant glazing, roof coverings, and wall cladding. Products must be tested according to Florida-specific protocols and receive a <strong>Florida Product Approval Number (FL Number)</strong> from the <a href="https://www.floridabuilding.org/" target="_blank" rel="noopener">Florida Building Commission</a>.</p>
-
-            <p>In HVHZ counties (Miami-Dade and Broward), additional county-level approval is required. Miami-Dade County issues <strong>Notices of Acceptance (NOAs)</strong>, while Broward County maintains its own Product Control approval system. These approvals are more stringent than the statewide FL Numbers and require passing TAS impact testing protocols.</p>
-
-            <h3>TAS Impact Testing Requirements</h3>
-            <p>In <strong>Wind-Borne Debris Regions</strong> (which include all HVHZ areas and coastal zones within 1 mile of the coastline where wind speeds exceed 140 mph), all exterior openings and glazing must pass TAS (Testing Application Standard) impact testing:</p>
-
-            <ul>
-                <li><strong>TAS 201:</strong> Criteria for Testing Impact and Non-Impact Resistant Building Envelope Components</li>
-                <li><strong>TAS 202:</strong> Criteria for Testing Products Subject to Cyclic Wind Pressure Loading</li>
-                <li><strong>TAS 203:</strong> Criteria for Testing Structural Resistance to Wind-Borne Debris Impact</li>
-            </ul>
-
-            <p>Products must withstand impact from a 9-pound 2x4 wood stud traveling at specific velocities (ranging from 34 mph to 50 mph depending on the zone), followed by cyclic pressure testing simulating hurricane wind loads. Only products with valid NOAs or FL Numbers demonstrating TAS compliance can be installed in these regions.</p>
-
-            <h3>Official Florida Building Code Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official government resources for Florida wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.floridabuilding.org/" target="_blank" rel="noopener" class="external-link">
-                    Florida Building Commission
-                </a>
-                <a href="https://www.miamidade.gov/building/" target="_blank" rel="noopener" class="external-link">
-                    Miami-Dade Product Control
-                </a>
-                <a href="https://www.broward.org/Building/" target="_blank" rel="noopener" class="external-link">
-                    Broward County Building Code
-                </a>
-                <a href="https://www.myfloridalicense.com/" target="_blank" rel="noopener" class="external-link">
-                    Florida DBPR (PE Licensing)
-                </a>
-            </div>
-
-            <h3>Why Florida Has the Strictest Wind Load Requirements</h3>
-            <p>Florida's position as a peninsula surrounded by warm Atlantic Ocean and Gulf of Mexico waters makes it the most hurricane-prone state in the nation. Since 1851, Florida has been struck by more hurricanes than any other state, with catastrophic events including Hurricane Andrew (1992), Hurricane Irma (2017), Hurricane Michael (2018), and Hurricane Ian (2022) causing billions of dollars in damage and numerous fatalities.</p>
-
-            <p>The FBC's stringent requirements—including ASCE 7-22 adoption, HVHZ provisions, county-specific velocities, mandatory product approval, and TAS impact testing—are designed to protect life and property in this extreme hazard environment. These requirements have been proven effective: buildings constructed to modern FBC standards perform significantly better in hurricanes compared to older structures built before code enhancements.</p>
-
-            <h3>How WindLoadCalc.com Handles Florida Requirements</h3>
-            <p>Calculating wind loads for Florida projects involves numerous state-specific requirements that go beyond standard ASCE 7 procedures. The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automates all Florida-specific provisions:</p>
-
-            <ul>
-                <li><strong>Automatic Velocity Determination:</strong> Enter your project zip code or address, and the software automatically applies the correct design wind speed, including Miami-Dade (175 mph), Broward (170 mph), and other county-specific velocities</li>
-                <li><strong>ASCE 7-22 Full Compliance:</strong> All calculations follow FBC 8th Edition adopted ASCE 7-22 methodology</li>
-                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on project location and surroundings</li>
-                <li><strong>Risk Category Adjustments:</strong> Applies appropriate velocity increases for Risk Categories I, II, III, and IV</li>
-                <li><strong>HVHZ Provisions:</strong> Automatically applies enhanced requirements for Miami-Dade and Broward County projects</li>
-                <li><strong>Topographic Effects:</strong> Calculates Kzt factors for sites near hills, ridges, escarpments, or coastal bluffs</li>
-                <li><strong>Components & Cladding Pressures:</strong> Generates pressure coefficients for all building components including windows, doors, roof panels, and wall cladding</li>
-                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system pressures for structural frame design</li>
-                <li><strong>PE-Ready Reports:</strong> Generates comprehensive calculation reports suitable for PE seal and building permit submission</li>
-            </ul>
-
-            <p>By automating Florida's complex wind load requirements, WindLoadCalc.com saves engineers hours of manual calculations while ensuring full compliance with FBC 8th Edition, ASCE 7-22, and county-specific provisions. The software eliminates the risk of using incorrect velocities, exposure categories, or pressure coefficients that could result in non-compliant designs or permit rejections.</p>
-        </div>
-    </section>
-
-    <!-- Florida Solar Section -->
-    <section class="content-section" style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left: 5px solid #f59e0b; margin: 2rem auto; max-width: 1200px; border-radius: 12px;">
-        <div class="container">
-            <h2 style="color: #92400e;"><i class="fas fa-solar-panel" style="color: #f59e0b;"></i> Florida Solar - #3 in the Nation</h2>
-            <p><strong>Florida ranks #3 nationally with 11+ GW of installed solar capacity</strong>, earning its "Sunshine State" nickname through both residential rooftop systems and large utility-scale solar farms. Florida's combination of high solar irradiance and strict hurricane-force wind requirements creates unique engineering challenges for solar installations.</p>
-
-            <h3>Florida Solar Wind Load Requirements</h3>
-            <p>Solar installations in Florida must comply with the strictest wind load requirements in the nation:</p>
-            <ul>
-                <li><strong>Rooftop PV Systems:</strong> ASCE 7-22 Chapter 30 with GCrn coefficients for solar panel wind loads</li>
-                <li><strong>Ground-Mount Solar:</strong> ASCE 7-22 Section 29.4.5 for utility-scale solar farm wind load calculations</li>
-                <li><strong>HVHZ Solar:</strong> Miami-Dade and Broward County solar installations require NOA product approval</li>
-                <li><strong>Hurricane Resistance:</strong> Solar panels in HVHZ must pass TAS testing protocols</li>
-                <li><strong>High Wind Speeds:</strong> Design wind speeds up to 175 mph in Miami-Dade require robust mounting systems</li>
-            </ul>
-
-            <p>Florida's position as both a solar leader and hurricane-prone state means proper wind load calculations are essential for solar panel survival during severe weather events.</p>
-
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                <a href="https://windloadcalc.com/shop/solar-panels.html" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; padding: 0.875rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
-                    <i class="fas fa-calculator"></i> Solar Panel Calculator
-                </a>
-                <a href="solar-belt-wind-load-requirements.html" style="display: inline-flex; align-items: center; gap: 0.5rem; background: white; color: #f59e0b; border: 2px solid #f59e0b; padding: 0.875rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
-                    <i class="fas fa-sun"></i> Solar Belt Hub
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Started with Florida-Compliant Wind Load Calculations</h2>
-            <p>WindLoadCalc.com provides instant access to professional-grade wind load calculation software with full Florida Building Code 8th Edition compliance. Try our software today and experience automated HVHZ velocity determination, ASCE 7-22 calculations, and PE-ready reports for your Florida projects.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Florida Wind Loads Now →</a>
-        </div>
-    </section>
-
-    
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+<main>
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="fl"><svg viewBox="927.5 454.6 163.3 139.9" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1045.28,455.26l1.22,1.86l2.7,7.99l1.4,2.7l2.95,7.43l4.04,7.01l5.48,8.37l8.43,9.85l1.06,1.43l-0.63,1.47l-0.03,1.42l0.28,2.08l0.59,1.98l1.21,2.33l2.16,3.51l-0.97,-0.61l-3.11,-5.04l-0.8,-3.13l-0.46,-4.56l-0.49,0.2l-0.16,1.53l0.07,1.76l-0.44,0.76l-1.2,-2.5l-0.15,-1.19l0.56,-1.52l-0.32,-0.46l-1.41,-0.49l-0.46,-1.07l-0.01,-1.13l-0.84,-0.46l-0.57,0.13l0.84,2.65l0.89,1.56l1.43,3.87l1.64,2.21l1.06,1.91l12.16,20.24l2.49,2.41l1.09,1.86l1.51,4.02l1.12,5.31l0.33,10.02l0.86,6.73l-0.24,-0.17l-0.26,-0.68l-0.34,-0.04l-0.68,3.27l-1.18,3.05l0.2,4.39l-0.42,2.29l-2.01,2.69l-1.5,0.2l-3.37,2.33l-2.65,-0.01l-2.9,1.48l-2.04,0.23l-1.5,-1.84l0.03,-0.94l0.31,-0.99l0.75,-0.34l3.06,1.68l0.36,-0.98l-1,-0.93l-1.66,-0.33l-1.26,-0.46l-3.12,-4.48l-2.95,-2.94l-0.76,-2.16l-4.35,-0.69l-3.32,-1.58l-2.52,-3.35l-2.13,-6.31l-1.42,-0.52l-0.63,-0.42l0.9,-2.6l1.03,-2.22l-0.99,0.67l-0.67,0.87l-0.72,1.94l-0.69,0.39l-0.71,-0.17l-1.3,-3.29l-0.43,-4.23l0.83,-1.73l-1.66,0.21l-1.62,0.86l0.47,1.36l-0.12,0.81l-1.28,-0.01l-1.02,-0.35l-1.51,-1.26l-2.17,-2.51l-4.72,-7.11l-0.86,-0.98l-1.35,-0.95l0.51,-0.43l0.98,-0.36l1.78,-3.78l1.48,-2.35l0.38,-1.52l-0.2,-0.6l-0.93,-0.77l-0.92,0.94l-0.48,-0.16l-1.44,-1.63l-1.19,-0.34l-0.72,0.5l1.04,1.35l0.82,0.44l0.03,2.19l-0.2,0.74l-0.6,0.72l-1.13,-0.17l-0.47,0.61l-0.73,-0.47l-0.78,-0.85l-0.94,-1.45l0.6,-9.01l0.92,-5.81l-0.74,-6.36l-0.01,-0.96l-0.4,-1.66l-2.85,-3.32l-11.46,-7.45l-9.32,-9.47l-7.31,-3.05l-5.03,1.54l-0.79,0.91l-0.25,1.09l0.48,1.14l-0.41,0.55l-1.39,0.12l-1.83,0.51l-4.52,3.39l-1.73,0.11l-1.47,0.91l-1.11,0.68l-3.02,0.66l-2.52,0.93l-1.16,-0.2l-0.92,-1.53l-0.2,-1.67l0.74,1.21l1.03,0.89l0.37,-0.45l0.05,-0.91l-1.11,-1.63l-3.19,-1.89l-3.71,-2.88l1.03,-0.01l0.18,-0.73l-1.14,-0.8l0.31,-1.11l0.6,-1.2l-1.38,0.33l-1.17,0.92l0.07,0.97l-0.16,0.79l-0.69,-0.04l-1.36,-0.8l-6.48,-1.95l-5.56,-0.91l4.07,-1.11l2.3,0.28l-0.36,-0.77l-0.6,-0.45l-1.84,-0.45l-2.23,0.49l-1.46,-0.15l-1.39,0.79l-1.5,1.11l-1.37,0.63l-5.5,1.25l-4.45,1.19l0.65,-0.85l0.72,-0.58l2.59,-1.03l0.24,-1.63l-0.78,-1.46l-0.66,0.44l-0.62,1.27l-0.99,-0.77l-1,0.1l-0.09,1.93l-1.16,1.4l-0.46,1.34l-3.68,1.36l-0.52,-0.29l0.99,-1.32l-0.15,-0.67l-0.76,0.44l0.11,-0.78l0.62,-0.75l0.22,-0.82l-0.23,-1.51l0.29,-2.18l-0.32,-0.65l-3.05,-2.51l-0.81,-1.39l-0.27,-1.52l0.12,-1.62l6.21,-0.59l6.21,-0.61l6.21,-0.63l6.21,-0.66l6.21,-0.68l6.2,-0.7l6.2,-0.72l6.18,-0.75l1,1.66l1.97,3.45l0.16,0.84l1.82,-0.09l3.09,-0.17l3.09,-0.18l3.09,-0.19l3.09,-0.19l3.09,-0.2l3.09,-0.2l3.09,-0.21l3.09,-0.21l3.09,-0.22l3.09,-0.22l3.09,-0.23l3.09,-0.24l3.09,-0.24l3.09,-0.25l3.09,-0.25l3.09,-0.26l0.13,0.73l0.68,1.07l0.33,1.29l0.33,0.59l0.67,0.3l0.98,-0.05l0.86,-0.89l0.36,-1.72l-0.13,-1.84l-0.69,-2.01l-0.21,-1.75l0.32,-1.1l0.53,-0.34l0.41,-0.63l0.39,-0.18l1.1,0.13l4.19,0.84L1045.28,455.26zM982.99,488.77l-1.86,1.04l-2.19,-0.33l1.3,-0.27l0.98,0.12l2.27,-1.44l1.15,-1.02l1.42,-0.51L982.99,488.77zM1083.9,527.61l0.61,1.58l-2.5,-3.49l-3.3,-5.58l-2,-4.4l1.03,1.1l1.25,2.44L1083.9,527.61zM1048.56,550.12l0.17,1.32l-1.36,-2.05l-1.05,-2.33l1.09,0.64L1048.56,550.12zM1049.84,552.19l-0.63,0.7l-1.52,-0.21l-0.91,-0.65l-0.57,-1.45l1.51,1.4l0.51,0.29L1049.84,552.19zM1088.32,576.1l-3.34,4.93l0.27,-1.14l1.2,-2.54l0.33,-1.15l0.95,-0.86l0.79,-1.39l-0.17,-1.43l1.27,-1.25l0.45,-0.23L1088.32,576.1zM1083.99,582.38l-0.53,0.2l0.65,-1.1l0.24,0.03L1083.99,582.38zM1080.44,585.29l-0.39,0.06l0.14,-0.35l0.7,-0.78l0.33,0.2l0.02,0.33L1080.44,585.29zM1076.35,587.99l-0.85,0.69l-1.04,-0.23l0.98,-0.71l3.09,-1.1l-1.08,0.91L1076.35,587.99zM1070.61,590.46l-0.54,0.56l-0.32,-0.09l-0.11,-0.68l-1.12,-1.35l-0.03,-0.4l2.25,1.14l0.12,0.39L1070.61,590.46zM1066.01,592.38l-1.3,0.44l0.94,-1.06l0.13,-1.41l0.8,0.95l0.09,0.64L1066.01,592.38zM1061.73,594.34l-0.52,0.13l-0.1,-0.34l0.84,-0.57l0.6,-0.06l0.05,0.48L1061.73,594.34z"/></svg></span>
+    <p class="eyebrow">FBC 8TH EDITION 2023 · ASCE 7-22 · HVHZ STATE</p>
+    <h1>Florida Wind Load <span class="sweep">Requirements</span></h1>
+    <p class="lead">The most hurricane-prone state in the nation, governed by the strictest wind code in the U.S. — High-Velocity Hurricane Zones in Miami-Dade and Broward set the bar.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">FBC 8th</span><span class="lbl">EDITION 2023 · ASCE 7-22</span></div>
+      <div class="stat"><span class="num">170-180+</span><span class="lbl">MPH COASTAL S. FLORIDA (RISK II)</span></div>
+      <div class="stat"><span class="num">HVHZ</span><span class="lbl">MIAMI-DADE + BROWARD</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/florida-wind-load-calculator">Calculate Florida Wind Loads</a>
+      <a class="btn-ghost" href="hvhz-florida-requirements.html">HVHZ Requirements</a>
+    </div>
+  </div></section>
+
+  <!-- ============ CODE & ASCE EDITION ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">ADOPTED CODE</p>
+    <h2>Florida Code &amp; <span class="sweep">ASCE Edition</span></h2>
+    <p class="lead">Florida operates under the <strong>Florida Building Code (FBC) 8th Edition</strong>, effective December 31, 2023, which adopts <strong>ASCE 7-22</strong> for all wind load calculations — replacing the prior ASCE 7-16 basis.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/><path d="M8 12h8M8 16h5"/></svg>
+        <h3>FBC 8th Edition (2023)</h3>
+        <p>Effective Dec 31, 2023. Among the most stringent building codes in the nation.</p>
+        <span class="badge badge--method">ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M3 12a9 9 0 1018 0 9 9 0 10-18 0"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
+        <h3>Updated Wind Maps</h3>
+        <p>ASCE 7-22 brings revised wind speed maps and load calculation procedures statewide.</p>
+        <span class="badge badge--data">NEW MAPS</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Enhanced HVHZ Rules</h3>
+        <p>Stricter High-Velocity Hurricane Zone provisions plus updated TAS impact protocols.</p>
+        <span class="badge badge--hvhz">HVHZ</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M6 3h9l3 3v15H6z"/><path d="M9 11l2 2 4-4"/><path d="M9 16h6"/></svg>
+        <h3>Product Approval</h3>
+        <p>Updated TAS 201 / 202 / 203 testing for wind-borne debris regions.</p>
+        <span class="badge badge--data">TAS 201-203</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p class="lead" style="margin:0">Velocity pressure under ASCE 7-22: <strong style="font-family:'Courier New',monospace">q<sub>z</sub> = 0.00256 · K<sub>z</sub> · K<sub>zt</sub> · K<sub>d</sub> · K<sub>e</sub> · V&sup2;</strong>. Coastal projects typically require <strong>Exposure Category C</strong>.</p>
+    </div>
+    <p class="lead">Administered by the <a href="https://www.floridabuilding.org/" target="_blank" rel="noopener">Florida Building Commission</a> — code interpretation, regulatory oversight, and product approval.</p>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ WIND ZONES ACROSS FLORIDA ============ -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">WIND ZONES</p>
+    <h2>Wind Zones Across <span class="sweep">Florida</span></h2>
+    <p class="lead">Florida's 67 counties vary by hurricane exposure. Miami-Dade and Broward enforce county-specific HVHZ velocities that supersede the standard ASCE maps; other coastal counties read directly from the ASCE 7-22 map.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M3 12a9 9 0 1018 0 9 9 0 10-18 0"/><path d="M12 7a5 5 0 015 5M12 7a5 5 0 00-5 5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        <h3>HVHZ Counties</h3>
+        <p>Miami-Dade (175 mph) &amp; Broward (170 mph), Risk Cat II. Mandatory NOA / Product Control approval, TAS impact testing, Exposure C required for all structures.</p>
+        <span class="badge badge--hvhz">170-175 MPH · HVHZ</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M3 18l4-6 4 3 4-7 6 5"/><path d="M3 21h18"/></svg>
+        <h3>Rest of Florida</h3>
+        <p>Per ASCE 7-22 maps — coastal South/SW FL ~160-180 mph, Panhandle &amp; Central ~130-160 mph. Wind-borne debris regions still require impact protection.</p>
+        <span class="badge badge--data">VARIES BY SITE</span>
+      </div>
+    </div>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>County</th><th>Risk Cat II Velocity</th><th>Exposure</th><th>Special Requirements</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Miami-Dade</strong></td><td>175 mph</td><td>C</td><td>NOA required, TAS impact testing, HVHZ provisions</td></tr>
+        <tr><td><strong>Broward</strong></td><td>170 mph</td><td>C</td><td>Product Control approval, TAS impact testing, HVHZ provisions</td></tr>
+        <tr><td><strong>Collier</strong></td><td>Per ASCE 7-22 map (typ. 170 mph coastal)</td><td>C coastal · B/C inland</td><td>Strict enforcement, additional local amendments</td></tr>
+        <tr><td><strong>Palm Beach</strong></td><td>Per ASCE 7-22 map (typ. 160-170 mph)</td><td>C coastal · B/C inland</td><td>Wind-borne debris regions require impact protection</td></tr>
+        <tr><td><strong>Lee</strong></td><td>Per ASCE 7-22 map (typ. 160 mph coastal)</td><td>C coastal · B/C inland</td><td>Wind-borne debris regions require impact protection</td></tr>
+      </tbody>
+    </table></div>
+    <div class="hero-cta">
+      <a class="btn-ghost" href="https://windloadcalc.com/miami-dade-wind-load-calculator">Miami-Dade Calculator</a>
+      <a class="btn-ghost" href="https://windloadcalc.com/broward-wind-load-calculator">Broward Calculator</a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ MAJOR FLORIDA CITIES ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CITY GUIDES</p>
+    <h2>Major Florida <span class="sweep">Cities</span></h2>
+    <p class="lead">City-specific wind load requirements, local building department contacts, and zip-code references across Florida.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="cities/miami-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M3 21V8l6-4 6 4v13M9 21v-5h2v5"/><path d="M15 21V10l4-2v13"/></svg>
+        <h3>Miami</h3><p>HVHZ — highest design velocity in the continental U.S.</p>
+        <span class="badge badge--hvhz">175 MPH HVHZ</span>
+      </a>
+      <a class="card glass" href="cities/fort-lauderdale-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M3 18h18M5 18l2-9h10l2 9M9 9V5h6v4"/></svg>
+        <h3>Fort Lauderdale</h3><p>Broward County HVHZ — Product Control approval.</p>
+        <span class="badge badge--hvhz">170 MPH HVHZ</span>
+      </a>
+      <a class="card glass" href="cities/west-palm-beach-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M12 22V12M12 12c0-4 2-6 6-7-1 4-3 6-6 7M12 12c0-4-2-6-6-7 1 4 3 6 6 7"/></svg>
+        <h3>West Palm Beach</h3><p>Coastal wind-borne debris region.</p>
+        <span class="badge badge--hvhz">170 MPH HVHZ</span>
+      </a>
+      <a class="card glass" href="cities/key-west-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><circle cx="8" cy="14" r="3"/><path d="M10 12l8-8M16 6l2 2M14 8l2 2"/></svg>
+        <h3>Key West</h3><p>Southernmost point — extreme coastal exposure.</p>
+        <span class="badge badge--data">170-180 MPH</span>
+      </a>
+      <a class="card glass" href="cities/naples-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M3 20s2-3 5-3 4 3 4 3M12 20s1-3 4-3 5 3 5 3M5 13l2-6 2 6M15 11l2-5 2 5"/></svg>
+        <h3>Naples</h3><p>Southwest Gulf coast, Collier County.</p>
+        <span class="badge badge--data">160-170 MPH</span>
+      </a>
+      <a class="card glass" href="cities/tampa-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>
+        <h3>Tampa</h3><p>Gulf coast metro — west-central Florida.</p>
+        <span class="badge badge--data">150-160 MPH</span>
+      </a>
+      <a class="card glass" href="cities/pensacola-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M3 16h12l3-3 3 3M3 16v3h18v-3M7 13l2-2 2 2"/></svg>
+        <h3>Pensacola</h3><p>Western Panhandle, Gulf of Mexico.</p>
+        <span class="badge badge--data">150-160 MPH</span>
+      </a>
+      <a class="card glass" href="cities/jacksonville-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M3 16h18M6 16V8l3-2 3 2v8M14 16V6l3-1 3 1v10"/></svg>
+        <h3>Jacksonville</h3><p>Northeast Atlantic coast.</p>
+        <span class="badge badge--data">130-140 MPH</span>
+      </a>
+      <a class="card glass" href="cities/orlando-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
+        <h3>Orlando</h3><p>Central inland — lower design velocity.</p>
+        <span class="badge badge--data">130-140 MPH</span>
+      </a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ RISK CATEGORIES ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">ASCE 7-22 TABLE 1.5-1</p>
+    <h2>Risk Categories in <span class="sweep">Florida</span></h2>
+    <p class="lead">Higher risk category means a longer-return-period wind map and a higher design wind speed — not a fixed multiplier. In Miami-Dade, Risk Cat II is 175 mph, rising for Cat III and Cat IV.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="36" height="36"><path d="M3 20h18M5 20v-8l7-5 7 5v8M9 20v-5h6v5"/></svg>
+        <h3>Risk Category I</h3><p>Agricultural &amp; temporary structures — lowest design wind speed.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="36" height="36"><path d="M5 21V5h8v16M13 21V9h6v12M8 9h2M8 13h2M16 13h1"/></svg>
+        <h3>Risk Category II</h3><p>Homes, offices, retail — standard occupancy. Miami-Dade: 175 mph.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="36" height="36"><circle cx="8" cy="8" r="2"/><circle cx="16" cy="8" r="2"/><path d="M3 20c0-3 2-5 5-5s5 2 5 5M11 20c0-3 2-5 5-5s5 2 5 5"/></svg>
+        <h3>Risk Category III</h3><p>Schools, assembly &gt;300. Higher design wind speed (~185 mph in Miami-Dade).</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="36" height="36"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M12 8v6M9 11h6"/></svg>
+        <h3>Risk Category IV</h3><p>Hospitals, fire/police, EOCs — essential facilities (~195 mph in Miami-Dade).</p>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ WHAT YOU NEED ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">COMPLIANCE CHECKLIST</p>
+    <h2>What You Need in <span class="sweep">Florida</span></h2>
+    <p class="lead">Beyond ASCE 7-22 math, Florida layers on PE sealing, product approval, and impact testing.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><circle cx="12" cy="9" r="5"/><path d="M9 13l-2 8 5-3 5 3-2-8"/></svg>
+        <h3>PE Seal</h3>
+        <p>All structural calculations must be sealed by a Florida-licensed PE or Architect and submitted with the permit package.</p>
+        <span class="badge">DBPR REQUIRED</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><path d="M6 3h12v18l-6-3-6 3z"/><path d="M9 9l2 2 4-4"/></svg>
+        <h3>Product Approval</h3>
+        <p>Florida Product Approval (FL Number) statewide; Miami-Dade NOA or Broward Product Control in HVHZ counties.</p>
+        <span class="badge badge--hvhz">FL # / NOA</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="38" height="38"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 9h18M8 13l3 3 5-5"/></svg>
+        <h3>TAS Impact Testing</h3>
+        <p>In wind-borne debris regions, openings &amp; glazing must pass TAS 201, 202 &amp; 203 — the 9-lb 2x4 missile plus cyclic pressure.</p>
+        <span class="badge badge--data">TAS 201-203</span>
+      </div>
+    </div>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Standard</th><th>Criteria</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TAS 201</strong></td><td>Impact &amp; non-impact resistant building envelope components</td></tr>
+        <tr><td><strong>TAS 202</strong></td><td>Products subject to cyclic wind pressure loading</td></tr>
+        <tr><td><strong>TAS 203</strong></td><td>Structural resistance to wind-borne debris impact</td></tr>
+      </tbody>
+    </table></div>
+    <p class="eyebrow" style="margin-top:2rem">OFFICIAL RESOURCES</p>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="https://www.floridabuilding.org/" target="_blank" rel="noopener"><h3>Florida Building Commission</h3><span class="badge badge--go">OFFICIAL ↗</span></a>
+      <a class="card glass" href="https://www.miamidade.gov/building/" target="_blank" rel="noopener"><h3>Miami-Dade Product Control</h3><span class="badge badge--go">OFFICIAL ↗</span></a>
+      <a class="card glass" href="https://www.broward.org/Building/" target="_blank" rel="noopener"><h3>Broward County Building Code</h3><span class="badge badge--go">OFFICIAL ↗</span></a>
+      <a class="card glass" href="https://www.myfloridalicense.com/" target="_blank" rel="noopener"><h3>Florida DBPR (PE Licensing)</h3><span class="badge badge--go">OFFICIAL ↗</span></a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- ============ CTA ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">AUTOMATE FLORIDA COMPLIANCE</p>
+    <h2>Calculate Florida Wind Loads <span class="sweep">Now</span></h2>
+    <p class="lead">Enter a zip code or address and the software applies FBC 8th Edition / ASCE 7-22, Miami-Dade (175 mph) and Broward (170 mph) HVHZ velocities, exposure, Risk Category, and PE-ready reports automatically.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Try the Wind Load Calculator</a>
+      <a class="btn-ghost" href="https://windloadcalc.com/florida-wind-load-calculator">Florida Calculator</a>
+    </div>
+    <div class="divider"></div>
+    <p class="eyebrow">RELATED</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M12 3l3 6 6 .5-4.5 4 1.5 6.5L12 16l-6 4 1.5-6.5L3 9.5 9 9z"/></svg>
+        <h3>10 Mandatory States</h3><p>States that require sealed wind load calculations.</p><span class="badge badge--method">GUIDE</span>
+      </a>
+      <a class="card glass" href="hvhz-florida-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M3 12a9 9 0 1018 0 9 9 0 10-18 0"/><path d="M12 7a5 5 0 015 5M12 7a5 5 0 00-5 5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        <h3>HVHZ Florida Requirements</h3><p>Deep dive on Miami-Dade &amp; Broward HVHZ rules.</p><span class="badge badge--hvhz">HVHZ</span>
+      </a>
+      <a class="card glass" href="state-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="34" height="34"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <h3>All State Requirements</h3><p>Wind load codes for all 50 states.</p><span class="badge badge--data">DIRECTORY</span>
+      </a>
+    </div>
+  </div></section>
+
+</main>
+
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1417,141 +713,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
