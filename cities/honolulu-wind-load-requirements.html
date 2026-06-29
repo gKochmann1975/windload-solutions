@@ -29,782 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Honolulu specific colors (turquoise/coral tropical) */
-        .hero {
-            background: linear-gradient(135deg, #0891b2 0%, #06b6d4 25%, #22d3ee 50%, #fb7185 75%, #f43f5e 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '🌺🏝️';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #06b6d4;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #06b6d4;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #0891b2;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #06b6d4;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #06b6d4;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Hurricane Card */
-        .hvhz-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(6, 182, 212, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .hvhz-card h4 {
-            color: #06b6d4;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .hvhz-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Hawaii",
-                "item": "https://windload.solutions/hawaii-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Honolulu",
-                "item": "https://windload.solutions/cities/honolulu-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What is the design wind speed for Honolulu, Hawaii?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Honolulu design wind speeds range from 130-140 mph (3-second gust) for Risk Category II structures per ASCE 7-22. Higher Risk Categories (III and IV) require elevated wind speeds. Always verify with Honolulu County building department for locally adopted values."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What building code governs wind loads in Honolulu?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Honolulu follows the Hawaii state building code which references ASCE 7 for wind load calculations. Honolulu County may have local amendments that affect design requirements. Check with the local building department for the currently adopted code edition."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What exposure category applies to most Honolulu buildings?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most Honolulu buildings fall under Exposure Category C/D depending on surrounding terrain and surface roughness. Urban and suburban areas typically qualify for Exposure B, while open terrain or hurricane-prone Pacific location may require Exposure C. Site-specific analysis per ASCE 7 Section 26.7 determines the actual exposure."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are there special wind load considerations for Honolulu?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Honolulu has hurricane-prone Pacific location that may affect wind load design. Additionally, local terrain, building height, and occupancy type influence required wind pressures. Projects should consider these factors along with Honolulu County specific requirements for permit approval."
-            }
-        }
-    ]
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
 }
-    </script>
-</head>
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -816,283 +286,244 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Honolulu Wind Load Requirements</h1>
-            <p>City and County of Honolulu | 130-150 mph Design Wind Speed | Pacific Hurricane Risk | Exposure Category C Coastal | Hawaii State Building Code</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Honolulu Wind Loads Now →</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">HAWAII · HONOLULU</p>
+    <h1>Where the Trade Winds Never Stop and the <span class="sweep">Pacific Can Turn on Oahu</span></h1>
+    <p class="lead">Every parcel in the City and County of Honolulu is high-wind country &mdash; persistent northeast trades by day, a Category-4 Pacific hurricane on the worst day, and two volcanic ranges bending the flow in between.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">130&ndash;150</span><span class="lbl">MPH GUST · RISK CAT II</span></div>
+      <div class="stat"><span class="num">C / D</span><span class="lbl">COASTAL EXPOSURE</span></div>
+      <div class="stat"><span class="num">7-22</span><span class="lbl">ASCE EDITION · HI CODE</span></div>
+      <div class="stat"><span class="num">1992</span><span class="lbl">HURRICANE INIKI STRUCK</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Honolulu Wind Loads</a>
+      <a class="btn-ghost" href="../hawaii-wind-load-requirements.html">Hawaii Overview</a>
+    </div>
+  </div></section>
 
-    <section class="content-section">
-        <div class="container">
+  <div class="divider"></div>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">130-150</span>
-                    <span class="stat-label">Design Wind Speed (Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">C</span>
-                    <span class="stat-label">Exposure Category (Coastal)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">HI</span>
-                    <span class="stat-label">Hawaii Building Code</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">HIGH</span>
-                    <span class="stat-label">Pacific Hurricane Risk</span>
-                </div>
-            </div>
+  <!-- CUSTOM SVG ISLAND / TRADE-WIND MOTIF -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">AN ISLAND BETWEEN TWO RANGES</p>
+    <h2>Oahu Splits the Trades Between <span class="sweep">Ko&#699;olau and Wai&#699;anae</span></h2>
+    <p class="lead">The steady northeast flow piles against the windward Ko&#699;olau wall, races over the saddle, and accelerates down the leeward slope toward Honolulu's coastal core.</p>
+    <div class="info-box glass" style="text-align:center;">
+      <svg viewBox="0 0 320 180" width="100%" style="max-width:520px;height:auto" role="img" aria-label="Island of Oahu with two ridge lines and northeast trade winds crossing toward a hurricane swirl over the Pacific">
+        <defs>
+          <linearGradient id="hnlSea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0e7490"/><stop offset="1" stop-color="#06283d"/>
+          </linearGradient>
+          <linearGradient id="hnlRidge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0f766e"/><stop offset="1" stop-color="#134e4a"/>
+          </linearGradient>
+          <radialGradient id="hnlEye" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#b45309"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="320" height="180" fill="url(#hnlSea)"/>
+        <!-- island of Oahu: two ridge lines, leeward coast facing viewer -->
+        <path d="M60 150 Q70 96 118 90 Q150 86 168 112 Q196 80 244 92 Q272 100 268 150 Z" fill="url(#hnlRidge)" opacity="0.92"/>
+        <!-- Waianae range crest (left, taller) -->
+        <path d="M86 132 L118 78 L150 124" fill="none" stroke="#5eead4" stroke-width="2.5" opacity="0.6"/>
+        <!-- Koolau range crest (right) -->
+        <path d="M176 122 L210 88 L246 126" fill="none" stroke="#5eead4" stroke-width="2.5" opacity="0.6"/>
+        <!-- Honolulu coastal core marker -->
+        <circle cx="164" cy="146" r="4" fill="#fbbf24"/>
+        <!-- persistent NE trade-wind streaks crossing from upper-right -->
+        <g stroke="#fcd34d" stroke-width="2.5" stroke-linecap="round" opacity="0.75">
+          <path d="M300 36 Q250 44 196 60"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2.4s" repeatCount="indefinite"/></path>
+          <path d="M306 58 Q252 70 200 86"><animate attributeName="opacity" values="0.9;0.2;0.9" dur="2.4s" repeatCount="indefinite"/></path>
+          <path d="M298 18 Q256 24 214 36"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="3s" repeatCount="indefinite"/></path>
+        </g>
+        <!-- Pacific hurricane swirl approaching from the south -->
+        <g transform="translate(56,52)">
+          <g>
+            <path d="M0 -26 Q26 -18 22 5 Q19 22 0 23" stroke="#fbbf24" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M0 26 Q-26 18 -22 -5 Q-19 -22 0 -23" stroke="#f59e0b" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="10s" repeatCount="indefinite"/>
+          </g>
+          <circle cx="0" cy="0" r="6" fill="url(#hnlEye)"/>
+        </g>
+      </svg>
+      <p style="margin-top:1rem;">Coastal Honolulu &mdash; Waikiki, Ala Moana, the airport flats &mdash; reads true <strong>Exposure C</strong>, with the most open headlands and piers climbing to <strong>Exposure D</strong>.</p>
+    </div>
+  </div></section>
 
-            <h2>Honolulu: Pacific Island Wind Load Engineering</h2>
-            <p>Honolulu, located in the <strong>City and County of Honolulu on the island of Oahu, Hawaii</strong>, has unique wind load requirements shaped by Pacific hurricanes, persistent trade winds, volcanic terrain, and tropical island conditions. Design wind speeds for Risk Category II structures range from <strong>130 to 150 mph</strong> (3-second gust) depending on location and exposure on the island, per the <strong>Hawaii State Building Code</strong> which adopts the International Building Code (IBC) with Hawaii-specific amendments.</p>
+  <div class="divider"></div>
 
-            <p>Honolulu's wind load engineering must account for multiple factors unlike most mainland cities: Pacific hurricane threats (which differ from Atlantic hurricanes), consistent northeast trade winds averaging 10-20 mph year-round, dramatic topographic effects from the Ko'olau and Wai'anae mountain ranges, and coastal exposure from multiple directions. The tourism and resort construction industry demands high-rise engineering with advanced wind analysis for both hurricane survival and everyday trade wind comfort.</p>
+  <!-- CITY WIND / EXPOSURE MODULE: trade winds + hurricane -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">TWO WIND PROBLEMS AT ONCE</p>
+    <h2>Daily Trades and a <span class="sweep">Once-in-a-Generation Pacific Strike</span></h2>
+    <p class="lead">Honolulu structures answer to relentless trade-wind cycling 80&ndash;90% of the year and to the catastrophic case Iniki proved was real.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M4 18h26a5 5 0 1 0-5-5"/><path d="M4 28h32a5 5 0 1 1-5 5"/><path d="M4 38h18a4 4 0 1 0-4-4"/></svg>
+        <h3>Persistent Northeast Trades</h3>
+        <p>Steady 10&ndash;20 mph trades with 30&ndash;40 mph gusts drive fatigue cycling on curtain walls and salt-spray corrosion on every exposed fastener.</p>
+        <span class="badge badge--data">FATIGUE &amp; SALT</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M24 6q18 6 14 24 M24 42q-18-6-14-24" /><circle cx="24" cy="24" r="4" fill="#fbbf24" stroke="none"/></svg>
+        <h3>Pacific Hurricane Exposure</h3>
+        <p>Central Pacific storms approach Oahu from the southeast &mdash; aimed straight at the population centers &mdash; so the 130&ndash;150 mph maps design for a direct Category-4 case.</p>
+        <span class="badge badge--hvhz">130&ndash;150 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M6 40h36"/><path d="M14 40V14l10-8 10 8v26"/><path d="M21 40V28h6v12"/><path d="M20 18h8"/></svg>
+        <h3>High-Rise &amp; Resort Skyline</h3>
+        <p>Slender towers over 300 ft and 400-ft-plus projects trigger wind-tunnel testing, dynamic vortex-shedding analysis, and balcony comfort design.</p>
+        <span class="badge badge--method">TOWER ENGINEERING</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p><strong>Topographic factor matters here.</strong> The Ko&#699;olau (to ~3,150 ft) and Wai&#699;anae (to ~4,025 ft) ranges raise <code>K<sub>zt</sub></code> above 1.0 near ridges and slopes, returning toward 1.0 away from the feature &mdash; an effect mainland coastal cities rarely face.</p>
+    </div>
+  </div></section>
 
-            <div class="info-box">
-                <h4><strong>🌺</strong> Honolulu Wind Load Quick Facts</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 130-150 mph (varies by location on Oahu)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~145-165 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~155-175 mph</p>
-                <p><strong>Exposure Category:</strong> C (coastal areas), D (extremely exposed), B (inland/urban)</p>
-                <p><strong>Building Code:</strong> Hawaii State Building Code (adopts IBC with amendments)</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22</p>
-                <p><strong>County:</strong> City and County of Honolulu (consolidated)</p>
-            </div>
+  <div class="divider"></div>
 
-            <h3>Why Honolulu Has Variable 130-150 mph Wind Speeds</h3>
-            <p>Unlike many U.S. cities with uniform wind speeds, Honolulu's wind load requirements vary significantly based on location on Oahu island. Coastal and windward (northeast) areas typically require 140-150 mph design values, while more sheltered leeward (southwest) locations may use 130-140 mph. This variability reflects Oahu's complex topography with two mountain ranges creating diverse wind exposure patterns.</p>
+  <!-- RISK CATEGORY READOUT -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">READING V FROM THE RIGHT MAP</p>
+    <h2>Hospitals and Shelters Pull a <span class="sweep">Longer Return Period</span></h2>
+    <p class="lead">Risk category doesn't multiply the wind speed &mdash; it sends you to a different ASCE 7-22 map with a longer mean recurrence interval, and Oahu's design gusts climb accordingly.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Risk Category</th><th>Map Return Period</th><th>Honolulu Range</th><th>Typical Occupancy</th></tr></thead>
+      <tbody>
+        <tr><td>Category I</td><td>300-year MRI</td><td>~120&ndash;140 mph</td><td>Ag &amp; minor storage</td></tr>
+        <tr><td>Category II</td><td>700-year MRI</td><td>130&ndash;150 mph</td><td>Homes, hotels, retail, offices</td></tr>
+        <tr><td>Category III</td><td>1,700-year MRI</td><td>~145&ndash;165 mph</td><td>Schools, large assembly</td></tr>
+        <tr><td>Category IV</td><td>3,000-year MRI</td><td>~155&ndash;175 mph</td><td>Hospitals, fire, EOC, shelters</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box glass">
+      <p><strong>Velocity pressure:</strong> <code>q<sub>z</sub> = 0.00256 K<sub>z</sub> K<sub>zt</sub> K<sub>d</sub> K<sub>e</sub> V&sup2;</code>. A 15 ft Exposure C coastal wall (V = 145, K<sub>z</sub> = 0.85, K<sub>zt</sub> = 1.0, K<sub>d</sub> = 0.85, K<sub>e</sub> = 1.0) lands near <strong>q<sub>z</sub> &asymp; 49 psf</strong> &mdash; before any ridge brings K<sub>zt</sub> above 1.0.</p>
+    </div>
+  </div></section>
 
-            <p>The wind speed requirements are based on Pacific hurricane history—particularly <strong>Hurricane Iniki (1992)</strong> which devastated Kauai with 145 mph sustained winds and 227 mph peak gusts, and <strong>Hurricane Lane (2018)</strong> which passed dangerously close to Oahu as a Category 4 storm. While Oahu hasn't experienced a direct major hurricane strike in modern history, engineers must design for worst-case scenarios given the catastrophic damage potential to Honolulu's dense urban core, critical tourism infrastructure, and high-rise buildings.</p>
+  <div class="divider"></div>
 
-            <h3>Pacific Hurricanes vs. Atlantic Hurricanes</h3>
-            <p>Honolulu engineers must understand key differences between Pacific and Atlantic hurricane threats:</p>
+  <!-- CITY COMPLY GRID (no-orphan, data-n=4) -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CLEARING A PERMIT ON OAHU</p>
+    <h2>What a Honolulu Submittal <span class="sweep">Actually Has to Show</span></h2>
+    <p class="lead">Hawaii seals it, the island location sets the gust, and the calculations have to speak ASCE 7-22.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M24 6l16 6v10c0 11-8 17-16 20-8-3-16-9-16-20V12z"/><path d="M18 24l5 5 9-10"/></svg>
+        <h3>Hawaii-Sealed Wind Package</h3>
+        <p>A Hawaii-licensed PE or architect must seal the address-specific velocity, exposure, and MWFRS/C&amp;C pressures.</p>
+        <span class="badge badge--method">PE SEAL</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M10 8h28v32H10z"/><path d="M16 16h16M16 24h16M16 32h10"/></svg>
+        <h3>ASCE 7-22 Methodology</h3>
+        <p>The Hawaii State Building Code adopts the IBC referencing ASCE 7-22 &mdash; the standard every new Honolulu calculation follows.</p>
+        <span class="badge badge--data">7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M8 44l16-16M14 30l-4 4 4 4 4-4M30 12l6-6 6 6-6 6zM24 28l8-8"/></svg>
+        <h3>Site-Specific Exposure &amp; K<sub>zt</sub></h3>
+        <p>Coastal Waikiki and Ala Moana usually justify Exposure C or D, and sites near the ranges need a documented topographic factor.</p>
+        <span class="badge badge--data">EXPOSURE C / D</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M6 26q6-6 12 0t12 0 12 0"/><path d="M6 36q6-6 12 0t12 0 12 0"/><path d="M24 6v8M18 12h12"/></svg>
+        <h3>Salt &amp; Trade-Wind Detailing</h3>
+        <p>Specs must call out enhanced corrosion protection and cladding designed for millions of trade-wind fatigue cycles, not just hurricane peaks.</p>
+        <span class="badge badge--method">CORROSION SPEC</span>
+      </div>
+    </div>
+  </div></section>
 
-            <ul>
-                <li><strong>Season Timing:</strong> Central Pacific hurricane season runs June 1 to November 30 (same dates as Atlantic, but peak activity differs)</li>
-                <li><strong>Frequency:</strong> Central Pacific averages 4-5 tropical cyclones per year vs. Atlantic's 12-14, but Hawaii faces unique vulnerability as an isolated island chain</li>
-                <li><strong>Approach Patterns:</strong> Pacific hurricanes typically approach from the southeast, while Oahu's population centers face south and east</li>
-                <li><strong>Weakening Trends:</strong> Cooler ocean waters north of the main Hawaiian islands often weaken storms, but cannot be relied upon for design</li>
-                <li><strong>Historical Impact:</strong> Since 1950, only two hurricanes have made direct landfall on Hawaiian islands, creating limited local damage data</li>
-            </ul>
+  <div class="divider"></div>
 
-            <h3>Trade Winds and Everyday Wind Loading</h3>
-            <p>Beyond hurricane design, Honolulu structures must account for persistent <strong>northeast trade winds</strong> that blow 80-90% of the year at 10-20 mph with gusts to 30-40 mph. These steady winds create unique engineering considerations:</p>
+  <!-- NEARBY / STATEWIDE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">MAP YOUR SITE</p>
+    <h2>From Waikiki to the <span class="sweep">Rest of the Hawaiian Islands</span></h2>
+    <p class="lead">Pin the exact gust and exposure for your Oahu address, then place it inside the statewide picture.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="../wind-speed-by-location.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"><path d="M24 4C16 4 10 10 10 18c0 10 14 26 14 26s14-16 14-26c0-8-6-14-14-14z"/><circle cx="24" cy="18" r="5"/></svg>
+        <h3>Wind Speed by Location</h3>
+        <p>Look up the design gust for any Honolulu zip or street address.</p>
+        <span class="badge badge--data">LOOKUP</span>
+      </a>
+      <a class="card glass" href="../hawaii-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"><path d="M8 10l10-4 12 4 10-4v32l-10 4-12-4-10 4z"/><path d="M18 6v32M30 10v32"/></svg>
+        <h3>Hawaii Requirements</h3>
+        <p>Statewide adoption, editions, and the all-island high-wind picture.</p>
+        <span class="badge badge--data">STATE</span>
+      </a>
+      <a class="card glass" href="../state-requirements.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"><rect x="6" y="10" width="36" height="28" rx="2"/><path d="M6 20h36M16 10v28"/></svg>
+        <h3>All State Requirements</h3>
+        <p>Compare Honolulu against wind codes across every U.S. state.</p>
+        <span class="badge badge--data">NATIONAL</span>
+      </a>
+    </div>
+  </div></section>
 
-            <div class="hvhz-card">
-                <h4>🌊 Trade Wind Engineering Considerations</h4>
-                <p><strong>High-Rise Cladding Fatigue:</strong> Constant wind exposure causes fatigue loading on building envelope components—curtain wall systems must be designed for millions of wind cycles</p>
-                <p><strong>Pedestrian Wind Comfort:</strong> Ground-level wind acceleration around towers affects outdoor spaces, requiring wind tunnel testing and mitigation for major projects</p>
-                <p><strong>Corrosion Protection:</strong> Salt-laden trade winds accelerate corrosion, requiring enhanced protection for fasteners and structural steel exposed to wind-driven salt spray</p>
-                <p><strong>Directional Loading:</strong> Predominant northeast wind direction influences optimal building orientation and facade design strategies</p>
-            </div>
+  <div class="divider"></div>
 
-            <h3>Honolulu Wind Load Calculations: Volcanic Terrain Effects</h3>
-            <p>Oahu's volcanic mountains create dramatic topographic effects on wind flow. The Ko'olau Range (up to 3,150 ft) and Wai'anae Range (up to 4,025 ft) significantly modify wind patterns. Engineers must carefully evaluate the <strong>topographic factor (Kzt)</strong> in ASCE 7-22 calculations:</p>
+  <!-- OFFICIAL RESOURCES -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">OFFICIAL DESKS</p>
+    <h2>Honolulu's <span class="sweep">Building &amp; Licensing Authorities</span></h2>
+    <p class="lead">The offices that adopt the code, review the plans, and seal the engineers on Oahu.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="https://www.honolulu.gov/dpp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M8 40h32M12 40V16l12-8 12 8v24"/><path d="M20 40V28h8v12"/></svg>
+        <h3>Dept. of Planning &amp; Permitting</h3>
+        <p>City and County of Honolulu permitting and plan review.</p>
+        <span class="badge">HONOLULU DPP</span>
+      </a>
+      <a class="card glass" href="https://energy.hawaii.gov/building-code" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M10 8h28v32H10z"/><path d="M16 16h16M16 24h16M16 32h8"/></svg>
+        <h3>Hawaii State Building Code</h3>
+        <p>Statewide code adoption and amendments.</p>
+        <span class="badge">STATE CODE</span>
+      </a>
+      <a class="card glass" href="https://cca.hawaii.gov/pvl/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"><path d="M24 6v8M14 14h20M10 14l-4 12h12zM38 14l4 12H30zM6 26q5 5 12 0M30 26q5 5 12 0M24 14v22M16 40h16"/></svg>
+        <h3>Hawaii PE Licensing (PVL)</h3>
+        <p>Professional engineer and architect licensing.</p>
+        <span class="badge">PVL</span>
+      </a>
+    </div>
+  </div></section>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #06b6d4; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+  <div class="divider"></div>
 
-            <p>For a Honolulu coastal project with V = 145 mph and typical conditions:</p>
-            <ul>
-                <li><strong>V = 145 mph</strong> (Honolulu coastal wind speed)</li>
-                <li><strong>Kz = 0.85</strong> (15 ft height, Exposure C)</li>
-                <li><strong>Kzt = 1.0-1.3</strong> (varies by proximity to ridges and slopes)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (sea level)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 45-58 psf</strong> depending on topographic effects—significantly higher than mainland cities at similar latitude.</p>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">PERMIT-READY IN MINUTES</p>
+    <h2>Run Your Oahu Loads <span class="sweep">Before You Draw a Detail</span></h2>
+    <p class="lead">Enter a Honolulu address and the calculator pulls the 130&ndash;150 mph velocity for that island location, recommends coastal exposure, accounts for topographic effects, and returns PE-ready ASCE 7-22 pressures.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Honolulu Wind Loads</a>
+      <a class="btn-ghost" href="../wind-speed-by-location.html">Find Your Wind Speed</a>
+    </div>
+  </div></section>
 
-            <h3>Exposure Categories in Honolulu</h3>
-            <p>Honolulu projects require careful exposure category determination based on specific site location:</p>
+</main>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Exposure Category</th>
-                        <th>Honolulu Application</th>
-                        <th>Typical Locations</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Exposure B</strong></td>
-                        <td>Inland urban/suburban</td>
-                        <td>Central Honolulu neighborhoods, urban valleys with substantial development</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Exposure C</strong></td>
-                        <td>Coastal and open terrain (most common)</td>
-                        <td>Waikiki, Ala Moana, coastal hotel districts, airport areas, most beachfront</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Exposure D</strong></td>
-                        <td>Extremely exposed coastal</td>
-                        <td>Structures on exposed headlands, piers, or in areas with flat terrain and unobstructed ocean exposure</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>Honolulu projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>Honolulu Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~120-140 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>130-150 mph</td>
-                        <td>Residential, hotels, commercial, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~145-165 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~155-175 mph</td>
-                        <td>Hospitals, fire stations, emergency shelters, emergency operations centers</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>High-Rise and Resort Construction Considerations</h3>
-            <p>Honolulu's skyline is dominated by high-rise residential towers, hotels, and condominiums, many exceeding 300 feet in height. These structures require advanced wind engineering:</p>
-
-            <ul>
-                <li><strong>Wind Tunnel Testing:</strong> Buildings over 400 feet typically require wind tunnel testing per Hawaii Building Code provisions</li>
-                <li><strong>Dynamic Analysis:</strong> Slender towers with height-to-width ratios over 4:1 require dynamic analysis for vortex shedding and motion</li>
-                <li><strong>Cladding Performance:</strong> High-rise curtain walls must meet stringent performance requirements for both hurricane wind pressure and everyday trade wind cycling</li>
-                <li><strong>Balcony Design:</strong> Exposed residential and hotel balconies require special attention to wind comfort and safety, with railing pressures often governing design</li>
-                <li><strong>Mechanical Equipment:</strong> Rooftop HVAC and cooling tower equipment must be anchored for extreme wind events and protected from salt corrosion</li>
-            </ul>
-
-            <h3>Honolulu Zip Codes and Wind Speed Reference</h3>
-            <p>Honolulu wind speeds vary by location on Oahu. Coastal and windward areas typically require higher design values. Common Honolulu zip codes include:</p>
-
-            <ul>
-                <li><strong>96801-96819:</strong> Downtown Honolulu, Chinatown, government district</li>
-                <li><strong>96813-96817:</strong> Waikiki Beach, tourist zone (Exposure C/D coastal)</li>
-                <li><strong>96814:</strong> Ala Moana, commercial/retail district</li>
-                <li><strong>96815-96822:</strong> Kahala, Diamond Head, residential coastal</li>
-                <li><strong>96825-96826:</strong> Hawaii Kai, Koko Head (windward exposure)</li>
-                <li><strong>96816-96821:</strong> Manoa Valley, University area (sheltered inland)</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> provides Hawaii-specific wind speeds when you enter any Honolulu zip code or address, automatically accounting for location-specific requirements.</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Honolulu Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles Honolulu and Hawaii-specific requirements including variable design velocities based on Oahu location, exposure category determination, Risk Category adjustments, and topographic effects. Simply enter your Honolulu project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Honolulu Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Professional Engineer (PE) Requirements in Hawaii</h3>
-            <p>All wind load calculations for Honolulu building permits must be prepared by or under the direct supervision of a <strong>Professional Engineer (PE) or Architect licensed in Hawaii</strong>. The sealed calculations must include:</p>
-
-            <ul>
-                <li>Project address with specific location on Oahu and exposure determination</li>
-                <li>Design wind speed (130-150 mph range for Risk Category II, with justification for specific value)</li>
-                <li>Exposure Category determination (B, C, or D with supporting documentation)</li>
-                <li>Topographic factor (Kzt) analysis for sites near volcanic terrain features</li>
-                <li>Risk Category determination per ASCE 7-22 Table 1.5-1</li>
-                <li>Complete ASCE 7-22 calculation methodology</li>
-                <li>Component and Cladding (C&C) pressures for all building elements</li>
-                <li>Main Wind Force Resisting System (MWFRS) pressures</li>
-                <li>Corrosion protection specifications for salt environment</li>
-            </ul>
-
-            <h3>Official City and County of Honolulu Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Honolulu wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.honolulu.gov/dpp" target="_blank" rel="noopener" class="external-link">
-                    Honolulu Department of Planning and Permitting
-                </a>
-                <a href="https://energy.hawaii.gov/building-code" target="_blank" rel="noopener" class="external-link">
-                    Hawaii State Building Code
-                </a>
-                <a href="https://cca.hawaii.gov/pvl/" target="_blank" rel="noopener" class="external-link">
-                    Hawaii PE Licensing (PVL)
-                </a>
-            </div>
-
-            <h3>Common Honolulu Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Using single wind speed:</strong> Honolulu requires site-specific wind speed determination (130-150 mph range), not a single value</li>
-                <li><strong>Ignoring topographic effects:</strong> Volcanic terrain creates significant Kzt factors that cannot be ignored</li>
-                <li><strong>Wrong exposure category:</strong> Many engineers incorrectly use Exposure B for coastal Waikiki/Ala Moana projects that require Exposure C or D</li>
-                <li><strong>Neglecting trade wind fatigue:</strong> High-rise cladding must be designed for fatigue from constant trade wind cycling, not just hurricane events</li>
-                <li><strong>Inadequate corrosion protection:</strong> Salt-laden trade winds require enhanced fastener and connector protection beyond mainland standards</li>
-                <li><strong>Incorrect Risk Category:</strong> Hotels, schools, and assembly buildings may require Risk Category III with higher wind speeds</li>
-            </ul>
-
-            <h3>Hurricane Iniki (1992): Lessons for Honolulu</h3>
-            <p>Although Hurricane Iniki struck Kauai (not Oahu), the 1992 Category 4 hurricane provided critical lessons for Honolulu wind engineering. Iniki's 145 mph sustained winds and 227 mph peak gusts caused $3 billion in damage and destroyed thousands of structures on Kauai, demonstrating the catastrophic potential of a direct Pacific hurricane strike.</p>
-
-            <p>Post-Iniki studies revealed failures similar to those discovered after Hurricane Andrew in Florida: inadequate connector capacity, poor quality control in construction, and underestimation of debris impact forces. These findings influenced Hawaii's adoption of enhanced building code provisions and increased design wind speeds for new construction.</p>
-
-            <h3>Hurricane Lane (2018): Recent Near-Miss</h3>
-            <p>Hurricane Lane passed within 100 miles south of Oahu as a Category 4 storm in August 2018, providing a modern reminder of Honolulu's hurricane vulnerability. While Lane weakened before closest approach and caused primarily flooding damage from extreme rainfall (52 inches on Big Island), the storm's track demonstrated that major hurricanes can and do threaten the Hawaiian Islands.</p>
-
-            <p>Lane reinforced the importance of designing for worst-case scenarios despite the historical rarity of direct strikes, particularly for critical facilities like hospitals, emergency operations centers, and high-rise residential buildings that would be catastrophic to lose.</p>
-
-            <h3>How WindLoadCalc.com Handles Honolulu Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Honolulu-specific requirements:</p>
-
-            <ul>
-                <li><strong>Location-Specific Wind Speeds:</strong> Enter any Honolulu zip code and the system provides appropriate design wind speed for that Oahu location</li>
-                <li><strong>Exposure Category Guidance:</strong> Provides exposure recommendations based on coastal proximity and terrain characteristics</li>
-                <li><strong>Topographic Effects:</strong> Calculates Kzt factors for sites near volcanic terrain features</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current Hawaii State Building Code requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding, and other components</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for Hawaii permit submission</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Honolulu-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Honolulu and Oahu projects. Our software automatically handles location-specific wind speeds, exposure categories, topographic effects, and generates PE-ready reports for City and County of Honolulu building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Honolulu Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1130,5 +561,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

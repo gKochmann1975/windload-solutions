@@ -29,782 +29,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Fresno colors (Green/Gold - agriculture/Fresno State) */
-        .hero {
-            background: linear-gradient(135deg, #006747 0%, #008855 25%, #00a060 50%, #DAA520 75%, #f4c430 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '🍇🌾';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #006747;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #006747;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #00a060;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #006747;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #006747;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #006747 0%, #00a060 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 103, 71, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #006747 0%, #00a060 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Fresno Card */
-        .fresno-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(0, 103, 71, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .fresno-card h4 {
-            color: #006747;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .fresno-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "California",
-                "item": "https://windload.solutions/california-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Fresno",
-                "item": "https://windload.solutions/cities/fresno-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What is the design wind speed for Fresno, California?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Fresno design wind speeds range from 90-100 mph (3-second gust) for Risk Category II structures per ASCE 7-22. Higher Risk Categories (III and IV) require elevated wind speeds. Always verify with Fresno County building department for locally adopted values."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What building code governs wind loads in Fresno?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Fresno follows the California state building code which references ASCE 7 for wind load calculations. Fresno County may have local amendments that affect design requirements. Check with the local building department for the currently adopted code edition."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What exposure category applies to most Fresno buildings?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most Fresno buildings fall under Exposure Category B/C depending on surrounding terrain and surface roughness. Urban and suburban areas typically qualify for Exposure B, while open terrain or Central Valley agricultural area may require Exposure C. Site-specific analysis per ASCE 7 Section 26.7 determines the actual exposure."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are there special wind load considerations for Fresno?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Fresno has Central Valley agricultural area that may affect wind load design. Additionally, local terrain, building height, and occupancy type influence required wind pressures. Projects should consider these factors along with Fresno County specific requirements for permit approval."
-            }
-        }
-    ]
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
 }
-    </script>
-</head>
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -817,352 +287,239 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Fresno Wind Load Requirements</h1>
-            <p>Fresno County, CA | 85-95 mph Design Wind Speed | CBC Title 24 | Agricultural Capital | Exposure B/C</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Fresno Wind Loads Now →</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">CALIFORNIA · FRESNO</p>
+    <h1>Fresno wind loads, where <span class="sweep">seismic leads and wind follows</span></h1>
+    <p class="lead">On the San Joaquin Valley floor, ringed by the Sierra Nevada and Coast Ranges, Fresno sees some of California's lowest design winds, so cladding and ag structures decide the wind story.</p>
 
-    <section class="content-section">
-        <div class="container">
+    <!-- Custom inline valley + wind motif (no state silhouette): mountain ranges either side, sheltered ag valley floor, gentle wind flow -->
+    <svg viewBox="0 0 260 150" width="260" height="150" role="img" aria-label="Sheltered valley floor between two mountain ranges with low wind flow and crop rows" style="max-width:100%;height:auto;margin:1.25rem auto 0;display:block">
+      <defs>
+        <linearGradient id="fr-wind" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#22d3ee" stop-opacity="0"/>
+          <stop offset="0.5" stop-color="#22d3ee" stop-opacity="0.85"/>
+          <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="fr-violet" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a78bfa" stop-opacity="0.5"/>
+          <stop offset="1" stop-color="#a78bfa" stop-opacity="0.05"/>
+        </linearGradient>
+      </defs>
+      <!-- Coast Ranges (west / left) -->
+      <path d="M2 120 L20 78 L34 100 L46 70 L58 120 Z" fill="url(#fr-violet)" stroke="currentColor" stroke-width="1.4" stroke-opacity="0.5"/>
+      <!-- Sierra Nevada (east / right, taller) -->
+      <path d="M198 120 L214 54 L226 82 L240 44 L258 120 Z" fill="url(#fr-violet)" stroke="currentColor" stroke-width="1.4" stroke-opacity="0.5"/>
+      <!-- sheltered valley floor -->
+      <path d="M40 122 Q130 112 222 122" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.45"/>
+      <!-- crop rows on the floor -->
+      <g stroke="currentColor" stroke-width="1.2" stroke-opacity="0.35" stroke-linecap="round">
+        <path d="M70 128 L96 128"/><path d="M104 128 L130 128"/><path d="M138 128 L164 128"/><path d="M172 128 L198 128"/>
+      </g>
+      <!-- low, gentle wind streamlines crossing the sheltered floor -->
+      <g fill="none" stroke="url(#fr-wind)" stroke-width="3" stroke-linecap="round">
+        <path d="M48 88 Q130 84 214 90"><animate attributeName="stroke-dasharray" values="0 240;240 0" dur="4.4s" repeatCount="indefinite"/></path>
+        <path d="M46 104 Q130 100 216 106"><animate attributeName="stroke-dasharray" values="0 240;240 0" dur="5.2s" repeatCount="indefinite"/></path>
+      </g>
+      <!-- location pin over Fresno mid-valley -->
+      <g transform="translate(114,52)">
+        <path d="M16 0 C25 0 32 7 32 16 C32 28 16 44 16 44 C16 44 0 28 0 16 C0 7 7 0 16 0 Z" fill="#22d3ee" fill-opacity="0.18" stroke="#22d3ee" stroke-width="2"/>
+        <circle cx="16" cy="16" r="6" fill="#22d3ee"/>
+      </g>
+    </svg>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">85-95</span>
-                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">B/C</span>
-                    <span class="stat-label">Exposure Category<br>(Urban/Agricultural)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">CBC</span>
-                    <span class="stat-label">California Building<br>Code</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">LOW</span>
-                    <span class="stat-label">Wind Risk (Seismic<br>Dominates)</span>
-                </div>
-            </div>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">85–95</span><span class="lbl">MPH DESIGN WIND (RISK II)</span></div>
+      <div class="stat"><span class="num">Fresno</span><span class="lbl">COUNTY, CALIFORNIA</span></div>
+      <div class="stat"><span class="num">CBC</span><span class="lbl">TITLE 24 · ASCE 7-22</span></div>
+      <div class="stat"><span class="num">B / C</span><span class="lbl">EXPOSURE CATEGORY</span></div>
+    </div>
+  </div></section>
 
-            <h2>Fresno, California: Low Wind Risk, Central Valley Agricultural Hub</h2>
-            <p>Fresno, located in <strong>Fresno County, California</strong>, has low wind load requirements that are typically less critical than seismic design considerations. As the agricultural capital of America and the heart of the San Joaquin Valley, Fresno experiences moderate wind conditions. California uses the <strong>California Building Code (CBC, Title 24)</strong>, which is based on the International Building Code (IBC) with California-specific amendments. Design wind speeds for Risk Category II structures typically range from <strong>85-95 mph</strong> (3-second gust) depending on precise location, with Exposure Category B being typical for urban areas and Exposure Category C for surrounding agricultural regions.</p>
+  <div class="divider"></div>
 
-            <p>These requirements reflect Fresno's inland Central Valley location with minimal severe wind exposure. Unlike coastal California cities that face higher wind loads, or hurricane-prone regions that require extreme wind resistance, Fresno's wind loads are relatively modest. For most structures in Fresno, <strong>seismic design governs</strong> the structural system, with wind loads being a secondary consideration that rarely controls the design.</p>
+  <!-- WHY THE WIND IS LOW / SEISMIC NOTE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CYAN · WIND CLIMATE</p>
+    <h2>A sheltered valley with <span class="sweep">mild design winds</span></h2>
+    <p class="lead">Mountains on both flanks shield the mid-valley city, so Fresno carries low wind hazard, and the lateral system is usually sized by earthquake, not by gusts.</p>
 
-            <div class="info-box">
-                <h4><strong>🍇</strong> Fresno Wind Load Quick Facts</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 85-95 mph (3-second gust, typical range)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~100-110 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~110-120 mph</p>
-                <p><strong>Exposure Category:</strong> B (urban areas), C (agricultural/open areas)</p>
-                <p><strong>Building Code:</strong> California Building Code (CBC, Title 24)</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
-                <p><strong>County:</strong> Fresno County</p>
-                <p><strong>Special Consideration:</strong> Seismic design typically governs over wind loads</p>
-            </div>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M2 40 L14 18 L22 30 L34 10 L46 40 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+        <h3>Double mountain shield</h3>
+        <p>Coast Ranges and Sierra Nevada flank the valley, keeping severe storm winds away from the floor.</p>
+        <span class="badge badge--data">LOW WIND HAZARD</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M6 24 Q14 8 22 24 T38 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M6 34 Q14 22 22 34 T42 34" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.55"/></svg>
+        <h3>Seismic governs the system</h3>
+        <p>Near the San Andreas system, earthquake forces typically size shear walls and frames, not wind.</p>
+        <span class="badge badge--method">SEISMIC LEADS</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><rect x="8" y="14" width="32" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M8 14 L24 6 L40 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 36 V24 M32 36 V24" stroke="currentColor" stroke-width="2.5"/></svg>
+        <h3>Wind still owns the envelope</h3>
+        <p>Roofing, cladding, and lightweight ag buildings remain governed by component and cladding pressures.</p>
+        <span class="badge badge--data">C&amp;C CONTROLS</span>
+      </div>
+    </div>
+  </div></section>
 
-            <h3>Why Fresno Has 85-95 mph Wind Speed Requirements</h3>
-            <p>Fresno's design wind speed of 85-95 mph for Risk Category II structures reflects the city's protected Central Valley location with low wind exposure. The San Joaquin Valley is surrounded by mountain ranges that provide significant wind shielding from coastal storms and severe weather systems. Fresno is not subject to hurricanes, tornadoes are extremely rare, and severe windstorms are infrequent. The moderate wind speeds in ASCE 7-22 acknowledge this low wind risk while still providing adequate protection for occasional wind events.</p>
+  <div class="divider"></div>
 
-            <p>The primary wind events affecting Fresno are occasional winter storm systems that can produce gusty winds, summer thunderstorm outflows, and rare downslope wind events from the Sierra Nevada. However, these events rarely approach design wind speeds. The flat terrain and agricultural landscape of the San Joaquin Valley typically results in relatively uniform wind patterns without the extreme localized gusts found in coastal or mountainous regions.</p>
+  <!-- EXPOSURE: URBAN vs AGRICULTURAL -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">CYAN · TERRAIN &amp; EXPOSURE</p>
+    <h2>Urban Fresno reads B, <span class="sweep">open farmland reads C</span></h2>
+    <p class="lead">As the agricultural heart of Fresno County, the city's edge dissolves into orchards, vineyards, and open row crops, so exposure can shift sharply at the urban boundary.</p>
 
-            <h3>Agricultural Capital Construction Considerations</h3>
-            <p>Fresno is known as the agricultural capital of America, producing more agricultural value than any other county in the United States. This creates unique wind load considerations for the region's extensive agricultural and food processing infrastructure:</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><rect x="6" y="20" width="12" height="20" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="20" y="12" width="10" height="28" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="32" y="24" width="10" height="16" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+        <h3>Exposure B — built-up Fresno</h3>
+        <p>Downtown and established neighborhoods present continuous obstructions that qualify as Exposure B.</p>
+        <span class="badge badge--data">URBAN B</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M4 38 H44" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M10 38 V28 M10 28 Q14 22 18 28 M10 28 Q6 22 2 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M26 38 V26 M26 26 Q31 19 36 26 M26 26 Q21 19 16 26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3>Exposure C — open ag land</h3>
+        <p>Orchards and open row-crop terrain around the city read Exposure C, lifting velocity pressure noticeably.</p>
+        <span class="badge badge--data">FARMLAND C</span>
+      </div>
+    </div>
 
-            <div class="fresno-card">
-                <h4>Agricultural Structure Wind Load Considerations</h4>
-                <p><strong>Agricultural Buildings:</strong> Barns, equipment storage facilities, packing houses, and processing plants are common throughout Fresno County. These structures often feature large clear-span designs with significant roof areas requiring careful wind pressure analysis.</p>
-                <p><strong>Food Processing Facilities:</strong> Cold storage warehouses, packing plants, and processing facilities require special attention to building envelope performance. Wind-driven air infiltration can impact refrigeration loads and food safety compliance.</p>
-                <p><strong>Greenhouses and Shade Structures:</strong> Lightweight agricultural structures used for crop protection have high wind vulnerability. Component and cladding (C&C) pressures and uplift forces are critical design considerations.</p>
-                <p><strong>Grain Elevators and Silos:</strong> Tall cylindrical structures require specialized wind load analysis including along-wind, across-wind, and torsional effects per ASCE 7-22 Chapter 29.</p>
-                <p><strong>Solar Arrays:</strong> Agricultural land increasingly hosts ground-mounted solar installations. Wind loads on solar panel arrays, particularly uplift and overturning, require detailed analysis.</p>
-            </div>
+    <div class="info-box glass">
+      <p>Per ASCE 7-22 Table 26.10-1, low-rise C exposure (Kz 0.85) versus B (Kz 0.70) is roughly a 40% jump in velocity pressure at the same wind speed, so calling the boundary correctly matters more here than the mph value does.</p>
+    </div>
+  </div></section>
 
-            <h3>Exposure Category Considerations in Fresno</h3>
-            <p>Fresno's exposure category varies significantly between urban and agricultural areas, which directly impacts wind load magnitudes:</p>
+  <div class="divider"></div>
 
-            <div class="fresno-card">
-                <h4>Exposure Category Selection for Fresno</h4>
-                <p><strong>Exposure Category B (Urban Fresno):</strong> Downtown Fresno and established residential neighborhoods feature dense development with numerous buildings, trees, and other obstructions. Exposure B assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind.</p>
-                <p><strong>Exposure Category C (Agricultural Areas):</strong> The extensive agricultural regions surrounding Fresno feature open farmland, orchards, and vineyards with scattered trees and farm buildings. This open terrain qualifies as Exposure C, resulting in higher wind pressures than urban Exposure B locations.</p>
-                <p><strong>Transitional Areas:</strong> Areas at the urban-agricultural interface require careful evaluation to determine appropriate exposure category. Conservative design may consider Exposure C for structures near the urban edge.</p>
-            </div>
+  <!-- WHAT YOU NEED TO COMPLY -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">COMPLIANCE · ASCE 7-22</p>
+    <h2>Four inputs for a <span class="sweep">Fresno County submittal</span></h2>
+    <p class="lead">Every Fresno wind-load package under the California Building Code reduces to these decisions.</p>
 
-            <p>The difference between Exposure B and C can result in velocity pressure increases of 30-50% for the same wind speed, making proper exposure determination critical for accurate wind load calculations in Fresno County.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M24 8 V24 L34 30" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>Design wind speed</h3>
+        <p>85–95 mph 3-second gust for Risk Category II; higher categories read a longer-MRI map.</p>
+        <span class="badge badge--data">85–95 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M6 40 L18 40 L18 24 L30 24 L30 40 L42 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M6 40 L6 18 M42 40 L42 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>Exposure category</h3>
+        <p>Resolve B or C per ASCE 7 §26.7 from upwind roughness, direction by direction.</p>
+        <span class="badge badge--data">B OR C</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><rect x="9" y="6" width="30" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15 16 H33 M15 24 H33 M15 32 H27" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>Code &amp; standard</h3>
+        <p>California Building Code (Title 24) referencing ASCE 7-22 for the wind calculation.</p>
+        <span class="badge badge--method">CBC · ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="20" cy="18" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M27 25 L40 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M16 18 l3 3 l6 -7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>PE seal &amp; review</h3>
+        <p>California requires a licensed PE seal on structural calculations for most projects.</p>
+        <span class="badge badge--method">PE SEAL</span>
+      </div>
+    </div>
 
-            <h3>Seismic Design Dominates in Fresno</h3>
-            <p>Fresno is located in a moderate-to-high seismic zone due to proximity to the San Andreas Fault system and other active California faults. For virtually all structures in Fresno, <strong>seismic design will govern the structural system</strong>, including:</p>
+    <div class="info-box glass">
+      <p>For large clear-span barns, packing houses, and greenhouses, run uplift and open-building pressure coefficients carefully; lightweight ag envelopes are where Fresno wind loads bite hardest. Confirm the locally adopted edition with the authority having jurisdiction.</p>
+    </div>
+  </div></section>
 
-            <ul>
-                <li><strong>Lateral Force Resisting System (LFRS):</strong> Seismic forces typically exceed wind forces by a significant margin, controlling the design of shear walls, moment frames, and braced frames</li>
-                <li><strong>Foundation Design:</strong> Seismic overturning and sliding forces control foundation proportioning and anchorage</li>
-                <li><strong>Connection Design:</strong> Ductile seismic connections with substantial capacity typically exceed wind connection requirements</li>
-                <li><strong>Building Separation:</strong> Seismic drift requirements control building separations and expansion joints</li>
-                <li><strong>Non-Structural Components:</strong> Seismic anchorage requirements for mechanical equipment, piping, and architectural components are typically more stringent than wind requirements</li>
-            </ul>
+  <div class="divider"></div>
 
-            <p>However, engineers must still verify wind loads for specific components such as roof cladding, windows, wall panels, and equipment anchorage, as wind loads may occasionally control for lightweight building envelope components, particularly in agricultural structures with large surface areas.</p>
+  <!-- OFFICIAL RESOURCES -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CYAN · OFFICIAL RESOURCES</p>
+    <h2>Permitting &amp; <span class="sweep">authorities</span></h2>
+    <p class="lead">Source-of-truth links for Fresno and Fresno County wind-load compliance.</p>
 
-            <h3>Fresno Wind Load Calculations: Step by Step</h3>
-            <p>Calculating wind loads for Fresno projects requires following ASCE 7-22 methodology as adopted by the CBC. The fundamental velocity pressure equation is:</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="https://www.fresno.gov/darm/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M8 40 V20 L24 8 L40 20 V40 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><rect x="20" y="28" width="8" height="12" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+        <h3>Fresno Building Division</h3>
+        <p>City Development and Resource Management permits within Fresno limits.</p>
+        <span class="badge badge--data">CITY</span>
+      </a>
+      <a class="card glass" href="https://www.dgs.ca.gov/BSC" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M24 6 L42 14 V18 H6 V14 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M12 18 V36 M20 18 V36 M28 18 V36 M36 18 V36 M6 40 H42" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>CA Building Standards Commission</h3>
+        <p>Statewide California Building Code (Title 24).</p>
+        <span class="badge badge--data">STATE CODE</span>
+      </a>
+      <a class="card glass" href="https://www.bpelsg.ca.gov/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="24" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M10 42 C10 32 38 32 38 42" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <h3>California PE Licensing Board</h3>
+        <p>Professional Engineer licensing and seals.</p>
+        <span class="badge badge--data">LICENSING</span>
+      </a>
+    </div>
+  </div></section>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #006747; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+  <div class="divider"></div>
 
-            <p>For Fresno with V = 90 mph (typical value) and standard conditions, the resulting pressures are low. A Fresno project with:</p>
-            <ul>
-                <li><strong>V = 90 mph</strong> (Fresno typical velocity)</li>
-                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
-                <li><strong>Kzt = 1.0</strong> (flat terrain typical)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (approximately 300 ft elevation)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 12.4 psf</strong>—substantially lower than hurricane-prone regions and even lower than many inland U.S. cities that experience severe thunderstorms or tornado risk.</p>
+  <!-- NEARBY / STATEWIDE -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">STATEWIDE · NAVIGATION</p>
+    <h2>California &amp; <span class="sweep">nearby requirements</span></h2>
+    <p class="lead">Step up to the statewide picture or compare wind speeds across locations.</p>
 
-            <p>For agricultural areas using Exposure C:</p>
-            <ul>
-                <li><strong>V = 90 mph</strong> (same velocity)</li>
-                <li><strong>Kz = 0.85</strong> (15 ft height, Exposure C open terrain)</li>
-                <li><strong>Other factors same</strong></li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 15.0 psf</strong>—demonstrating the significant impact of exposure category on wind loads.</p>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="../california-wind-load-requirements.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M24 6 L40 14 V26 C40 36 24 44 24 44 C24 44 8 36 8 26 V14 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M18 24 l4 4 l8 -10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>California Wind Loads</h3>
+        <p>Statewide CBC and ASCE 7 wind-load overview.</p>
+        <span class="badge badge--data">STATE PAGE</span>
+      </a>
+      <a class="card glass" href="../state-requirements.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><rect x="6" y="10" width="36" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M6 20 H42 M18 10 V38 M30 10 V38" stroke="currentColor" stroke-width="2.5"/></svg>
+        <h3>All State Requirements</h3>
+        <p>Adopted codes and editions by state.</p>
+        <span class="badge badge--data">ALL STATES</span>
+      </a>
+      <a class="card glass" href="../wind-speed-by-location.html">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M6 24 H42 M24 6 V42 M12 14 Q24 22 36 14 M12 34 Q24 26 36 34" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.7"/></svg>
+        <h3>Wind Speed by Location</h3>
+        <p>Look up design wind speeds across the map.</p>
+        <span class="badge badge--data">SPEED MAP</span>
+      </a>
+    </div>
+  </div></section>
 
-            <p>These modest pressures mean that for the main wind force resisting system (MWFRS), wind loads are rarely critical for typical buildings. However, component and cladding (C&C) pressures for localized elements must still be evaluated as these pressures can be significantly higher than MWFRS pressures.</p>
+  <div class="divider"></div>
 
-            <h3>California Building Code (CBC) and Permitting</h3>
-            <p>California has a statewide building code known as the <strong>California Building Code (CBC)</strong>, published as Title 24 of the California Code of Regulations. The CBC is based on the International Building Code (IBC) with California-specific amendments that address the state's unique seismic, fire, and accessibility requirements.</p>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">EMERALD · GET STARTED</p>
+    <h2>Run Fresno loads <span class="sweep">in minutes</span></h2>
+    <p class="lead">Enter a Fresno address or zip and get ASCE 7-22 MWFRS and C&amp;C pressures, ready for a Fresno County permit submittal.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Fresno Wind Loads</a>
+      <a class="btn-ghost" href="../california-wind-load-requirements.html">California Requirements</a>
+    </div>
+  </div></section>
 
-            <p>Key Fresno building code considerations:</p>
+</main>
 
-            <ul>
-                <li><strong>Building Code Adoption:</strong> Fresno uses the California Building Code (CBC) Title 24, typically updated every three years on a statewide basis</li>
-                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by CBC</li>
-                <li><strong>Seismic Requirements:</strong> CBC Chapter 16 and ASCE 7 Chapter 11 seismic provisions are extensively detailed and typically govern design</li>
-                <li><strong>Permit Authority:</strong> City of Fresno Development and Resource Management Department handles building permits within city limits</li>
-                <li><strong>Agricultural Exemptions:</strong> Certain agricultural structures may have modified permitting requirements, but wind load analysis is still required for substantial structures</li>
-                <li><strong>Green Building:</strong> California's CALGreen code (Title 24, Part 11) imposes additional sustainability requirements</li>
-                <li><strong>Energy Efficiency:</strong> Title 24, Part 6 energy standards are among the most stringent in the nation</li>
-            </ul>
-
-            <p>You can access Fresno building permits and requirements through the <a href="https://www.fresno.gov/darm/" target="_blank" rel="noopener">City of Fresno Development and Resource Management Department</a>.</p>
-
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>Fresno projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>Fresno Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~80-85 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>85-95 mph</td>
-                        <td>Residential, commercial, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~100-110 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~110-120 mph</td>
-                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Professional Engineer (PE) Requirements in California</h3>
-            <p>California has strict Professional Engineer licensing requirements that apply to wind load calculations and structural design:</p>
-
-            <ul>
-                <li><strong>Commercial Buildings:</strong> Require PE-sealed structural calculations from a California-licensed Civil or Structural Engineer</li>
-                <li><strong>Agricultural Structures:</strong> Large agricultural buildings typically require PE involvement, though some smaller structures may use prescriptive design</li>
-                <li><strong>Residential Structures:</strong> Single-family dwellings under certain size and complexity thresholds may be designed without PE involvement using prescriptive code provisions</li>
-                <li><strong>Structural Engineers:</strong> California uniquely licenses Structural Engineers (SE) separately from Civil Engineers (CE). Complex or high-risk structures may require SE involvement</li>
-                <li><strong>Plan Check:</strong> California building departments conduct thorough plan review, and PE-sealed calculations are typically required for permit approval</li>
-                <li><strong>Agricultural Engineer:</strong> Some agricultural facilities may involve Agricultural Engineers, though structural aspects still require PE/SE review</li>
-            </ul>
-
-            <h3>Hot Climate and Building Envelope Considerations</h3>
-            <p>Fresno experiences extreme summer heat with temperatures frequently exceeding 100°F. This creates unique building envelope considerations that interact with wind load design:</p>
-
-            <ul>
-                <li><strong>Thermal Expansion:</strong> Building envelope systems must accommodate significant thermal movement while maintaining wind resistance</li>
-                <li><strong>Air Infiltration:</strong> Wind-driven air infiltration can dramatically increase cooling loads in Fresno's hot climate, making building envelope performance critical</li>
-                <li><strong>Cool Roofs:</strong> California Title 24 requires cool roof systems for many applications. Wind resistance of reflective roof membranes and coatings must be verified</li>
-                <li><strong>Solar Shading:</strong> Extensive use of exterior shading devices requires wind load analysis for attachment and structural adequacy</li>
-            </ul>
-
-            <h3>Official Fresno Building Department Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Fresno wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.fresno.gov/darm/" target="_blank" rel="noopener" class="external-link">
-                    Fresno Building Division
-                </a>
-                <a href="https://www.bpelsg.ca.gov/" target="_blank" rel="noopener" class="external-link">
-                    California PE Licensing Board
-                </a>
-                <a href="https://www.dgs.ca.gov/BSC" target="_blank" rel="noopener" class="external-link">
-                    California Building Standards Commission
-                </a>
-            </div>
-
-            <h3>Common Fresno Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Neglecting exposure category differences:</strong> Failing to recognize Exposure C for agricultural areas can significantly underestimate wind loads</li>
-                <li><strong>Using outdated wind speed maps:</strong> Verify you're using ASCE 7-22 wind speeds as adopted by current CBC</li>
-                <li><strong>Ignoring agricultural structure complexity:</strong> Large clear-span agricultural buildings require careful MWFRS and C&C analysis</li>
-                <li><strong>Underestimating uplift on lightweight structures:</strong> Greenhouses and shade structures are highly vulnerable to uplift forces</li>
-                <li><strong>Incorrect Risk Category:</strong> Schools and food processing facilities may require higher wind speeds than standard buildings</li>
-                <li><strong>Combining load factors:</strong> Ensure proper load combinations per CBC Section 1605 when checking wind with other loads</li>
-                <li><strong>Forgetting equipment anchorage:</strong> Agricultural equipment, HVAC units, and solar panels need proper wind analysis</li>
-                <li><strong>Ignoring wind on open buildings:</strong> Agricultural buildings with large openings require special pressure coefficient considerations</li>
-            </ul>
-
-            <h3>How WindLoadCalc.com Handles Fresno Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Fresno-specific requirements:</p>
-
-            <ul>
-                <li><strong>Automatic Velocity Determination:</strong> Enter any Fresno zip code or address and the system automatically applies 85-95 mph based on location</li>
-                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B for urban Fresno locations and allows Exposure C selection for agricultural areas</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current CBC-adopted ASCE 7-22 requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding, and equipment</li>
-                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
-                <li><strong>Agricultural Structure Support:</strong> Handles open buildings, partially enclosed buildings, and equipment platforms</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for California permit submission</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Fresno Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all Fresno-specific requirements including the 85-95 mph design velocity, Exposure Category B/C assignment, Risk Category adjustments, and component pressure coefficients. Simply enter your Fresno project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Fresno Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Fresno vs Other California Cities Wind Load Requirements</h3>
-            <p>Fresno's wind load requirements differ from other major California cities:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Requirement</th>
-                        <th>Fresno (Central Valley)</th>
-                        <th>California Coast</th>
-                        <th>Bay Area</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Design Wind Speed</strong></td>
-                        <td>85-95 mph</td>
-                        <td>110-130 mph</td>
-                        <td>95-110 mph</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Exposure Category</strong></td>
-                        <td>B (urban), C (agricultural)</td>
-                        <td>C or D (open/coastal)</td>
-                        <td>Primarily B (urban/suburban)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Wind Risk Level</strong></td>
-                        <td>Low</td>
-                        <td>Moderate</td>
-                        <td>Low</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Governing Load</strong></td>
-                        <td>Seismic typically governs</td>
-                        <td>Seismic typically governs</td>
-                        <td>Seismic typically governs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Typical Construction</strong></td>
-                        <td>Agricultural, residential, commercial</td>
-                        <td>Residential, resort, commercial</td>
-                        <td>Tech campus, commercial, residential</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Building Code</strong></td>
-                        <td>CBC Title 24</td>
-                        <td>CBC Title 24</td>
-                        <td>CBC Title 24</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>While Fresno has the lowest wind loads among major California population centers, engineers must still verify that building components are adequately designed for wind pressures, particularly in agricultural applications and for structures in Exposure C areas.</p>
-
-            <h3>Fresno Zip Codes and Wind Speed Reference</h3>
-            <p>Fresno zip codes cover a large geographic area within Fresno County. Common Fresno zip codes include:</p>
-
-            <ul>
-                <li><strong>93650:</strong> Central Fresno</li>
-                <li><strong>93701-93730:</strong> Fresno main zip code range</li>
-                <li><strong>93704, 93705, 93710:</strong> Northwest Fresno, including Woodward Park area</li>
-                <li><strong>93711, 93720, 93722:</strong> North Fresno residential areas</li>
-                <li><strong>93721:</strong> Downtown Fresno</li>
-                <li><strong>93726, 93727:</strong> Southeast Fresno</li>
-                <li><strong>93728:</strong> Clovis area (adjacent city)</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Fresno wind speed based on your specific zip code or street address.</p>
-
-            <h3>Agricultural Valley Wind Characteristics</h3>
-            <p>The San Joaquin Valley's unique geography creates distinctive wind patterns that engineers should understand:</p>
-
-            <div class="fresno-card">
-                <h4>Central Valley Wind Patterns</h4>
-                <p><strong>Valley Floor Location:</strong> Fresno sits at approximately 300 feet elevation on the San Joaquin Valley floor, surrounded by the Sierra Nevada to the east and Coast Ranges to the west. This valley position provides significant wind protection.</p>
-                <p><strong>Seasonal Wind Patterns:</strong> Winter storms can produce gusty winds, while summer features consistent northwesterly afternoon winds. These patterns are relatively predictable and rarely extreme.</p>
-                <p><strong>Downslope Winds:</strong> Occasional downslope wind events from the Sierra Nevada can produce localized higher winds, though these are infrequent in Fresno compared to foothill communities.</p>
-                <p><strong>Agricultural Microclimate:</strong> Extensive orchards and vineyards create significant surface roughness, further reducing wind speeds compared to barren terrain.</p>
-                <p><strong>Dust Storms:</strong> While not a structural concern, agricultural areas can experience dust storms (haboobs) during summer thunderstorm season, which can impact visibility and air quality but rarely produce damaging winds.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Fresno-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Fresno projects. Our software automatically handles the 85-95 mph velocity range, Exposure B/C determination, and generates PE-ready reports for building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Fresno Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../california-wind-load-requirements.html" style="color: #60a5fa;">California Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1200,5 +557,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
