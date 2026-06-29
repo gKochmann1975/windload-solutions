@@ -18,7 +18,8 @@ def create_page(page_data):
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💨</text></svg>">
     <title>{page_data['title']}</title>
     <meta name="description" content="{page_data['description']}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/css/all.min.css"></noscript>
 
     <style>
         * {{
