@@ -32,762 +32,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #F1B82D;
-            background: rgba(241, 184, 45, 0.1);
-            border-color: rgba(241, 184, 45, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #F1B82D 0%, #000000 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #F1B82D;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Missouri Tigers Gold & Black */
-        .hero {
-            background: linear-gradient(135deg, #F1B82D 0%, #d4a425 25%, #b8911e 50%, #1f2937 75%, #000000 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '\1F405';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.15;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .tornado-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .tornado-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
-        }
-
-        .tornado-badge i {
-            margin-right: 0.5rem;
-        }
-
-        .voluntary-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            margin-left: 0.5rem;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .voluntary-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
-        }
-
-        .voluntary-badge i {
-            margin-right: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: #F1B82D;
-            color: #000000;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            background: #d4a425;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #d4a425;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #F1B82D;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #F1B82D;
-            margin: 2rem 0;
-        }
-
-        .info-box.warning {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left-color: #f59e0b;
-        }
-
-        .info-box.tornado {
-            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
-            border-left-color: #dc2626;
-        }
-
-        .info-box.joplin {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-left-color: #1f2937;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #d4a425;
-        }
-
-        .info-box.warning h4 strong {
-            color: #f59e0b;
-        }
-
-        .info-box.tornado h4 strong {
-            color: #dc2626;
-        }
-
-        .info-box.joplin h4 strong {
-            color: #1f2937;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
-            color: #F1B82D;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #fef3c7;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* City Cards */
-        .city-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .city-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .city-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(241, 184, 45, 0.25);
-            border-color: #F1B82D;
-        }
-
-        .city-card h4 {
-            color: #1f2937;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .city-card p {
-            color: #4b5563;
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid #F1B82D;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .formula-box h4 {
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .formula {
-            font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
-            color: #1f2937;
-            background: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .formula-desc {
-            font-size: 0.95rem;
-            color: #4b5563;
-            margin: 0.5rem 0;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #F1B82D 0%, #d4a425 50%, #1f2937 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-section .cta-button {
-            background: white;
-            color: #1f2937;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-            color: white;
-            padding: 4rem 2rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-column h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #F1B82D;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-column a {
-            color: #9ca3af;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: #F1B82D;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero {
-                padding: 8rem 1.5rem 4rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.8rem;
-            }
-
-            .header-container {
-                padding: 0 1.5rem;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-        }
-
-        /* Navigation Subsections */
-        .nav-subsection {
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-subsection-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .nav-subsection-title i {
-            transition: transform 0.3s ease;
-            font-size: 0.8rem;
-        }
-
-        .nav-subsection.active .nav-subsection-title i {
-            transform: rotate(180deg);
-        }
-
-        .nav-subsection-content {
-            display: none;
-            padding-left: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .nav-subsection.active .nav-subsection-content {
-            display: block;
-        }
-
-        .nav-subsection-content a {
-            font-size: 1rem;
-            padding: 0.6rem 0;
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.png" alt="Wind Load Solutions Logo" class="logo-image">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="header-cta" target="_blank" rel="noopener">Wind Load Calculators</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay" onclick="toggleMenu()"></div>
-
-    <!-- Navigation Menu -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marked-alt"></i> State Requirements</a>
         <div class="nav-subsection">
@@ -806,380 +296,230 @@
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Calculators</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div>
-                <a href="tornado-alley-wind-loads-safety.html" class="tornado-badge"><i class="fas fa-tornado"></i> Tornado Alley State</a>
-                <span class="voluntary-badge"><i class="fas fa-check-circle"></i> Voluntary State</span>
-            </div>
-            <h1>Missouri Wind Load Requirements</h1>
-            <p>Complete guide to Missouri wind load requirements including ASCE 7-22 tornado provisions, St. Louis and Kansas City building codes, Joplin tornado lessons learned, and Tornado Alley design considerations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Missouri Wind Load Calculator</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="mo"><svg viewBox="769.7 255.5 118.7 101.5" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M843.17,260.73L842.36,264.19L842.47,267.04L843.24,270.45L844.07,272.99L844.96,274.67L848.02,277.77L853.28,282.29L856.68,286.66L858.21,290.9L859.81,292.54L861.47,291.58L863.64,291.85L866.01,292.42L867.28,293.18L867.57,293.46L867.72,293.76L867.65,294.08L867.38,294.94L864.95,302.28L864.15,305.63L864.37,306.85L865.65,308.56L868,310.74L870.02,312.14L871.72,312.74L874.42,314.44L878.14,317.23L880.06,319.38L880.17,320.9L880.64,322.43L881.48,323.97L881.59,325.49L880.97,326.98L881.39,328.91L882.87,331.26L884.08,332.66L885.02,333.12L885.21,333.09L885.27,332.86L885.11,332.53L885.05,332.23L885.09,331.81L885.26,331.64L885.42,331.58L886.3,332.12L887.66,333.37L888.36,335.11L888.41,337.35L888.09,339.5L887.4,341.56L886.5,342.32L886.07,342.23L885.14,341.94L884.78,342.07L883.99,342.65L883.18,344.67L883.16,344.72L882.82,344.94L882.56,344.75L882.52,344.65L882.31,344.09L881.86,343.54L881.57,343.55L881.32,343.62L881.24,343.9L881.2,344.52L881.27,344.78L881.68,346.41L881.5,347.62L880.66,348.15L880.57,348.82L881.13,349.55L881.16,349.89L880.98,350.19L880.38,350.32L879.93,350.52L879.6,351.15L880.41,352.27L880.37,353.68L879.48,355.4L879.39,356.05L876.09,356.32L873.13,356.57L870.17,356.81L867.21,357.04L868.47,354.59L869.32,353.68L869.92,352.74L871.07,351.83L872.28,349.95L872.38,349.1L872.19,348.28L871.34,347.2L870.43,345.52L865.44,345.83L860.45,346.13L855.46,346.41L850.47,346.68L845.47,346.93L840.48,347.17L835.48,347.39L830.49,347.6L825.49,347.79L820.5,347.96L815.5,348.12L810.5,348.27L805.5,348.4L800.5,348.51L795.5,348.61L790.51,348.69L790.46,345.91L790.42,343.14L790.38,340.36L790.34,337.58L790.29,334.68L790.24,331.79L790.19,328.89L790.14,325.99L790.09,323.1L790.04,320.2L789.98,317.31L789.93,314.41L789.88,311.51L789.83,308.62L789.78,305.72L789.73,302.83L789.68,299.93L789.63,297.04L789.58,294.14L789.53,291.24L789.55,290.39L786.84,288.88L785.62,287.45L784.99,285.59L783.76,283.76L781.92,281.94L781.6,279.98L782.79,277.87L783.79,276.8L784.6,276.75L784.68,275.85L784.03,274.08L783.1,273.44L781.88,273.9L780.84,273.88L776.87,271.04L776.6,270.84L775.36,268.95L774.85,266.68L773.86,265.21L772.39,264.53L771.46,263.04L771.06,260.73L770.12,258.41L769.69,257.72L773.92,257.68L778.19,257.62L782.47,257.55L786.74,257.47L791.02,257.37L795.29,257.26L799.56,257.14L803.84,257.01L808.11,256.87L812.38,256.71L816.65,256.54L820.92,256.36L825.19,256.17L829.46,255.97L833.73,255.75L838,255.53L838.91,257.1L839.86,257.53L840.07,258.05L841.32,258.83L841.62,259.63z"/></svg></span>
+    <p class="eyebrow">MISSOURI · TORNADO ALLEY · ASCE 7</p>
+    <h1>Missouri Wind Load <span class="sweep">Requirements</span></h1>
+    <p class="lead">A voluntary-code state in the heart of Tornado Alley. No mandatory statewide building code, but major jurisdictions adopt the IBC with ASCE 7, and the 2011 Joplin EF5 reshaped how Missouri builds.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">105–115</span><span class="lbl">MPH · RISK CAT II</span></div>
+      <div class="stat"><span class="num">~45</span><span class="lbl">TORNADOES / YEAR</span></div>
+      <div class="stat"><span class="num">EF5</span><span class="lbl">JOPLIN · 2011</span></div>
+      <div class="stat"><span class="num">7-16</span><span class="lbl">ASCE EDITION (LOCAL)</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Missouri Wind Load Calculator</a>
+      <a class="btn-ghost" href="tornado-alley-wind-loads-safety.html">Tornado Alley Safety</a>
+    </div>
+  </div></section>
 
-    <main>
-        <!-- Key Info Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-exclamation-triangle" style="color: #dc2626; margin-right: 0.5rem;"></i> Missouri Wind Load Overview</h2>
+  <div class="divider"></div>
 
-                <div class="info-box joplin">
-                    <h4><i class="fas fa-tornado"></i> <strong>Remembering Joplin: May 22, 2011</strong></h4>
-                    <p>The Joplin tornado remains the <strong>deadliest tornado in the United States since 1947</strong>, killing 158 people and causing $2.8 billion in damage. The EF5 tornado's 200+ mph winds destroyed a third of the city, including St. John's Regional Medical Center. This catastrophic event fundamentally changed how Missouri approaches wind-resistant construction and emergency preparedness.</p>
-                </div>
+  <!-- CODE / ADOPTION MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CODE ADOPTION · LOCAL CONTROL</p>
+    <h2>No statewide mandate, <span class="sweep">local adoption rules</span></h2>
+    <p class="lead">Missouri has no mandatory statewide building code. Each municipality decides whether to adopt a code and which edition to enforce — major cities run comprehensive enforcement, while many rural counties have none.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Jurisdiction</th><th>Adopted Code</th><th>Wind Standard</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>St. Louis City</strong></td><td>2018 IBC</td><td>ASCE 7-16</td><td>Historic preservation, Gateway Arch zone</td></tr>
+        <tr><td><strong>St. Louis County</strong></td><td>2018 IBC</td><td>ASCE 7-16</td><td>Municipal variation within county</td></tr>
+        <tr><td><strong>Kansas City</strong></td><td>2018 IBC</td><td>ASCE 7-16</td><td>Bi-state metro coordination</td></tr>
+        <tr><td><strong>Springfield</strong></td><td>2018 IBC</td><td>ASCE 7-16</td><td>Southwest Missouri hub</td></tr>
+        <tr><td><strong>Joplin</strong></td><td>2018 IBC + Amendments</td><td>ASCE 7-16</td><td>Enhanced wind provisions, safe-room incentives</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box glass">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <p><strong>Rural Missouri:</strong> Many counties have no building codes or only partial enforcement. There, wind load design is entirely voluntary but strongly recommended given the state's tornado exposure.</p>
+    </div>
+  </div></section>
 
-                <p>Missouri is a <strong>voluntary wind load state</strong>, meaning PE-sealed wind load calculations are not legally required statewide. However, Missouri's position in Tornado Alley and the Joplin tragedy have led many jurisdictions to adopt building codes with wind load provisions.</p>
+  <div class="divider"></div>
 
-                <h3>Quick Facts</h3>
-                <ul>
-                    <li><strong>State Requirement:</strong> Voluntary (not legally required statewide)</li>
-                    <li><strong>Adopted Code:</strong> 2018/2021 IBC with ASCE 7-16 (varies by jurisdiction)</li>
-                    <li><strong>Basic Wind Speed Range:</strong> 105-115 mph (Risk Category II)</li>
-                    <li><strong>Tornado Risk:</strong> High - averages 45 tornadoes annually</li>
-                    <li><strong>Special Provisions:</strong> Hospital and school safe room requirements in some areas</li>
-                    <li><strong>Local Amendments:</strong> St. Louis, Kansas City, Joplin have enhanced requirements</li>
-                </ul>
-            </div>
-        </section>
+  <!-- WIND + TORNADO CONTEXT MODULE -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">WIND SPEEDS · TORNADO CONTEXT</p>
+    <h2>Basic wind speeds &amp; the <span class="sweep">tornado question</span></h2>
+    <p class="lead">Missouri basic wind speeds per ASCE 7-16/7-22 run roughly 105–115 mph for Risk Category II structures, rising with region and risk category.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Region</th><th>Risk Cat II</th><th>Risk Cat III</th><th>Risk Cat IV</th></tr></thead>
+      <tbody>
+        <tr><td><strong>St. Louis Metro</strong></td><td>110 mph</td><td>115 mph</td><td>120 mph</td></tr>
+        <tr><td><strong>Kansas City Area</strong></td><td>110 mph</td><td>115 mph</td><td>120 mph</td></tr>
+        <tr><td><strong>Southwest (Joplin)</strong></td><td>115 mph</td><td>120 mph</td><td>125 mph</td></tr>
+        <tr><td><strong>Southeast Missouri</strong></td><td>105 mph</td><td>110 mph</td><td>115 mph</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box glass">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H6"/><path d="M19 12H9"/><path d="M16 16h-6"/><path d="M11 20H9"/></svg>
+      <p><strong>Tornado provisions — ASCE 7-22 Chapter 32:</strong> Standard basic-wind-speed maps cover straight-line and most thunderstorm winds; they do not size structures for direct tornado strikes. ASCE 7-22 added Chapter 32 tornado loads, which apply to <strong>Risk Category III and IV</strong> buildings (hospitals, schools, emergency facilities) in tornado-prone regions like Missouri. The effect is qualitative here: higher risk category &rarr; longer-return-period map &rarr; higher design loads, with Chapter 32 layering tornado demand on the most critical structures.</p>
+    </div>
+    <div class="info-box glass">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M5 10h14"/><path d="M8 14h8"/><path d="M11 18h2"/></svg>
+      <p><strong>Joplin, May 22, 2011:</strong> The deadliest U.S. tornado since 1947 — an EF5 with 200+ mph winds that killed 158 people, caused $2.8B in damage, and destroyed St. John's Regional Medical Center. The rebuild now models tornado-resilient construction: reinforced concrete, FEMA-compliant community safe rooms, and continuous load paths.</p>
+    </div>
+  </div></section>
 
-        <!-- Joplin Section -->
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-shield-alt" style="color: #1f2937; margin-right: 0.5rem;"></i> Lessons from Joplin: Building Better</h2>
+  <div class="divider"></div>
 
-                <p>Following the 2011 Joplin tornado, significant changes were made to Missouri building practices and codes. The rebuilt Joplin serves as a model for tornado-resilient construction.</p>
+  <!-- MAJOR CITIES CARD GRID -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CITY GUIDES</p>
+    <h2>Major Missouri <span class="sweep">cities</span></h2>
+    <p class="lead">Local wind speeds, codes, and jurisdiction notes for Missouri's largest markets.</p>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="cities/st-louis-wind-load-requirements.html">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V10a8 8 0 0 1 16 0v11"/><path d="M2 21h20"/></svg>
+        <h3>St. Louis</h3>
+        <p>Gateway City · 2011 EF4 airport damage</p>
+        <span class="badge badge--data">110 MPH</span>
+      </a>
+      <a class="card glass" href="cities/kansas-city-mo-wind-load-requirements.html">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-6h6v6"/><path d="M3 21h18"/></svg>
+        <h3>Kansas City</h3>
+        <p>Bi-state metro · coordinated codes</p>
+        <span class="badge badge--data">110 MPH</span>
+      </a>
+      <a class="card glass" href="cities/springfield-mo-wind-load-requirements.html">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z"/><circle cx="12" cy="11" r="2.5"/></svg>
+        <h3>Springfield</h3>
+        <p>SW Missouri hub · Route 66</p>
+        <span class="badge badge--data">110 MPH</span>
+      </a>
+      <a class="card glass" href="cities/joplin-wind-load-requirements.html">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H7"/><path d="M19 12H9"/><path d="M15 16h-4"/><path d="M12 20h-1"/></svg>
+        <h3>Joplin</h3>
+        <p>2011 EF5 · enhanced codes &amp; safe rooms</p>
+        <span class="badge badge--hvhz">115 MPH</span>
+      </a>
+    </div>
+  </div></section>
 
-                <div class="info-box">
-                    <h4><i class="fas fa-building"></i> <strong>Post-Joplin Construction Improvements</strong></h4>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>St. John's Mercy Hospital:</strong> Rebuilt with reinforced concrete, safe rooms, and continuous load paths</li>
-                        <li><strong>Joplin Schools:</strong> All rebuilt schools include FEMA-compliant community safe rooms</li>
-                        <li><strong>Enhanced Code Enforcement:</strong> Joplin adopted stronger building code provisions</li>
-                        <li><strong>Insurance Changes:</strong> Many insurers now require wind-resistant construction</li>
-                    </ul>
-                </div>
+  <div class="divider"></div>
 
-                <h3>Historic Missouri Tornadoes</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Date</th>
-                            <th>Rating</th>
-                            <th>Impact</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Joplin Tornado</strong></td>
-                            <td>May 22, 2011</td>
-                            <td>EF5</td>
-                            <td>158 fatalities, $2.8B damage, hospital destroyed</td>
-                        </tr>
-                        <tr>
-                            <td><strong>St. Louis Tornado</strong></td>
-                            <td>April 22, 2011</td>
-                            <td>EF4</td>
-                            <td>Damaged Lambert Airport, 0 fatalities</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tri-State Tornado</strong></td>
-                            <td>March 18, 1925</td>
-                            <td>F5</td>
-                            <td>695 fatalities (deadliest US tornado), crossed 3 states</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ruskin Heights</strong></td>
-                            <td>May 20, 1957</td>
-                            <td>F5</td>
-                            <td>44 fatalities, Kansas City suburb devastated</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+  <!-- REQUIREMENTS MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">WHEN CALCULATIONS ARE NEEDED</p>
+    <h2>Voluntary statewide, <span class="sweep">often required locally</span></h2>
+    <p class="lead">Even as a voluntary state, wind load calculations are recommended or required across these situations.</p>
+    <div class="grid" data-n="6">
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>
+        <h3>Commercial Builds</h3>
+        <p>St. Louis, Kansas City, Springfield &amp; other cities</p>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 11 4.6-2.4 8-6 8-11V5Z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Risk Cat III / IV</h3>
+        <p>Hospitals, schools, emergency facilities</p>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v12M6 12h12"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        <h3>Healthcare</h3>
+        <p>Enhanced requirements adopted post-Joplin</p>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 7l3-4h12l3 4"/><path d="M12 11v4"/></svg>
+        <h3>Insurance</h3>
+        <p>Many insurers require sealed engineering</p>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v8H4z"/><path d="M4 10l8-6 8 6"/><path d="M9 18v-4h6v4"/></svg>
+        <h3>Safe Rooms</h3>
+        <p>FEMA / ICC 500 storm-shelter compliance</p>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M6 8h4M14 8h4M6 12h4M14 12h4"/><path d="M8 20h8"/></svg>
+        <h3>Solar &amp; Ag</h3>
+        <p>Ground-mount, rooftop arrays &amp; farm structures</p>
+      </div>
+    </div>
+  </div></section>
 
-        <!-- Building Code Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-building" style="color: #1f2937; margin-right: 0.5rem;"></i> Missouri Building Code Framework</h2>
+  <div class="divider"></div>
 
-                <p>Missouri has no mandatory statewide building code. Each municipality determines whether to adopt building codes and which edition to enforce. Major cities generally have comprehensive code enforcement.</p>
+  <!-- RISK CATEGORIES MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">RISK CATEGORIES · ASCE 7</p>
+    <h2>Higher risk category, <span class="sweep">higher design wind</span></h2>
+    <p class="lead">Risk category does not multiply loads by a fixed factor — it selects a different wind-speed map with a longer return period. In Missouri, that interacts with ASCE 7-22 Chapter 32 tornado provisions for the most critical buildings.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18h16"/><path d="M6 18V9l3 3 3-6 3 4 3-3v11"/></svg>
+        <h3>Category I</h3>
+        <p>Low hazard — minor ag &amp; storage</p>
+        <span class="badge">300-YR MAP</span>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-7h6v7"/></svg>
+        <h3>Category II</h3>
+        <p>Standard occupancy — homes, offices, retail</p>
+        <span class="badge badge--data">700-YR MAP</span>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7h14v14"/><path d="M9 11h6M9 15h6"/></svg>
+        <h3>Category III</h3>
+        <p>Assembly &gt;300, schools — Ch 32 tornado loads</p>
+        <span class="badge badge--method">1,700-YR MAP</span>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V7Z"/><path d="M12 8v6M9 11h6"/></svg>
+        <h3>Category IV</h3>
+        <p>Essential — hospitals, EOC, shelters — Ch 32</p>
+        <span class="badge badge--method">3,000-YR MAP</span>
+      </div>
+    </div>
+  </div></section>
 
-                <h3>Major Jurisdiction Code Adoption</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Jurisdiction</th>
-                            <th>Adopted Code</th>
-                            <th>Wind Standard</th>
-                            <th>Special Requirements</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>St. Louis City</strong></td>
-                            <td>2018 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Historic preservation, Gateway Arch zone</td>
-                        </tr>
-                        <tr>
-                            <td><strong>St. Louis County</strong></td>
-                            <td>2018 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Municipal variation within county</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Kansas City</strong></td>
-                            <td>2018 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Bi-state metro coordination</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Springfield</strong></td>
-                            <td>2018 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Southwest Missouri hub</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Joplin</strong></td>
-                            <td>2018 IBC + Amendments</td>
-                            <td>ASCE 7-16</td>
-                            <td>Enhanced wind provisions, safe room incentives</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <div class="divider"></div>
 
-                <div class="info-box warning">
-                    <h4><i class="fas fa-exclamation-circle"></i> <strong>Rural Missouri</strong></h4>
-                    <p>Many rural Missouri counties have <strong>no building codes</strong> or only partial enforcement. In these areas, wind load design is entirely voluntary but strongly recommended given Missouri's significant tornado risk.</p>
-                </div>
-            </div>
-        </section>
+  <!-- CTA + RELATED LINKS -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">GET STARTED</p>
+    <h2>Need Missouri <span class="sweep">wind load calculations?</span></h2>
+    <p class="lead">Professional ASCE 7 calculators account for Missouri's tornado risk, exposure conditions, and local jurisdiction requirements.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Get Wind Load Calculator</a>
+      <a class="btn-ghost" href="state-requirements.html">All State Requirements</a>
+    </div>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="tornado-alley-wind-loads-safety.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H7"/><path d="M19 12H9"/><path d="M15 16h-4"/><path d="M12 20h-1"/></svg>
+        <h3>Tornado Alley Safety</h3>
+        <p>Wind loads &amp; resilient design across the corridor</p>
+        <span class="badge badge--go">REGIONAL HUB</span>
+      </a>
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20 3 17V4l6 3 6-3 6 3v13l-6-3-6 3Z"/><path d="M9 7v13M15 4v13"/></svg>
+        <h3>Mandatory States</h3>
+        <p>The 10 states that require sealed wind loads</p>
+        <span class="badge badge--go">COMPARE</span>
+      </a>
+      <a class="card glass" href="state-requirements.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F1B82D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8Z"/></svg>
+        <h3>State Requirements</h3>
+        <p>Browse wind load rules for every state</p>
+        <span class="badge badge--go">DIRECTORY</span>
+      </a>
+    </div>
+  </div></section>
 
-        <!-- Wind Speed Section -->
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-wind" style="color: #F1B82D; margin-right: 0.5rem;"></i> Missouri Wind Speed Zones</h2>
+</main>
 
-                <p>Missouri basic wind speeds per ASCE 7-16/7-22 range from <strong>105 mph to 115 mph</strong> for Risk Category II structures. The state's location at the intersection of multiple weather patterns contributes to significant severe weather risk.</p>
-
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Region</th>
-                            <th>Risk Cat II</th>
-                            <th>Risk Cat III</th>
-                            <th>Risk Cat IV</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>St. Louis Metro</strong></td>
-                            <td>110 mph</td>
-                            <td>115 mph</td>
-                            <td>120 mph</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Kansas City Area</strong></td>
-                            <td>110 mph</td>
-                            <td>115 mph</td>
-                            <td>120 mph</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Southwest (Joplin)</strong></td>
-                            <td>115 mph</td>
-                            <td>120 mph</td>
-                            <td>125 mph</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Southeast Missouri</strong></td>
-                            <td>105 mph</td>
-                            <td>110 mph</td>
-                            <td>115 mph</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3>ASCE 7 Wind Load Formula</h3>
-                <div class="formula-box">
-                    <h4><i class="fas fa-calculator"></i> Velocity Pressure Equation</h4>
-                    <div class="formula">qz = 0.00256 × Kz × Kzt × Kd × Ke × V²</div>
-                    <div class="formula-desc"><strong>qz</strong> = Velocity pressure at height z (psf)</div>
-                    <div class="formula-desc"><strong>Kz</strong> = Velocity pressure exposure coefficient</div>
-                    <div class="formula-desc"><strong>Kzt</strong> = Topographic factor</div>
-                    <div class="formula-desc"><strong>Kd</strong> = Wind directionality factor</div>
-                    <div class="formula-desc"><strong>Ke</strong> = Ground elevation factor</div>
-                    <div class="formula-desc"><strong>V</strong> = Basic wind speed (mph)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Cities Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-city" style="color: #1f2937; margin-right: 0.5rem;"></i> Major Missouri Cities</h2>
-
-                <div class="city-grid">
-                    <a href="cities/st-louis-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-archway" style="color: #F1B82D;"></i> St. Louis</h4>
-                        <p>110 mph | Gateway City | 2011 EF4 airport damage</p>
-                    </a>
-                    <a href="cities/kansas-city-mo-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-building" style="color: #F1B82D;"></i> Kansas City</h4>
-                        <p>110 mph | Bi-state metro | BBQ Capital</p>
-                    </a>
-                    <a href="cities/springfield-mo-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-map-marker-alt" style="color: #F1B82D;"></i> Springfield</h4>
-                        <p>110 mph | SW Missouri hub | Route 66</p>
-                    </a>
-                    <a href="cities/joplin-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-tornado" style="color: #dc2626;"></i> Joplin</h4>
-                        <p>115 mph | 2011 EF5 | Enhanced codes</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- When Required Section -->
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-clipboard-check" style="color: #1f2937; margin-right: 0.5rem;"></i> When Wind Load Calculations Are Needed</h2>
-
-                <p>Although Missouri is a voluntary state, wind load calculations are recommended or required in several situations:</p>
-
-                <div class="info-box">
-                    <h4><i class="fas fa-list-check"></i> <strong>Recommended/Required Situations</strong></h4>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>Commercial buildings</strong> in St. Louis, Kansas City, Springfield, and other cities</li>
-                        <li><strong>Risk Category III/IV structures</strong> (hospitals, schools, emergency facilities)</li>
-                        <li><strong>Healthcare facilities</strong> - enhanced requirements post-Joplin</li>
-                        <li><strong>Insurance requirements</strong> - many insurers require engineering</li>
-                        <li><strong>Safe room construction</strong> - FEMA/ICC 500 compliance</li>
-                        <li><strong>Solar installations</strong> - ground-mount and rooftop systems</li>
-                        <li><strong>Agricultural structures</strong> - equipment buildings, storage facilities</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Related States Section -->
-        <section style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 4rem 0;">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 0.5rem; color: #1f2937;"><i class="fas fa-map-marked-alt" style="color: #F1B82D;"></i> Related State Guides</h2>
-                <p style="text-align: center; color: #64748b; margin-bottom: 2rem;">Explore wind load requirements for neighboring and similar states</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
-                    <a href="kansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(0, 81, 186, 0.1), rgba(232, 0, 13, 0.05)); border: 2px solid rgba(0, 81, 186, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #0051BA;"></i>
-                            <strong style="color: #0051BA;">Kansas</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">West</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Heart of Tornado Alley - Wichita, Topeka</p>
-                    </a>
-
-                    <a href="oklahoma-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(132, 22, 23, 0.1), rgba(255, 199, 44, 0.05)); border: 2px solid rgba(132, 22, 23, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #841617;"></i>
-                            <strong style="color: #841617;">Oklahoma</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">Southwest</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Tornado Capital - Moore, OKC, Tulsa</p>
-                    </a>
-
-                    <a href="arkansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(157, 34, 53, 0.1), rgba(245, 245, 245, 0.05)); border: 2px solid rgba(157, 34, 53, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #9D2235;"></i>
-                            <strong style="color: #9D2235;">Arkansas</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">South</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Southern Tornado Alley - Little Rock</p>
-                    </a>
-
-                    <a href="iowa-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(255, 205, 0, 0.1), rgba(31, 41, 55, 0.05)); border: 2px solid rgba(255, 205, 0, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-wind" style="color: #d97706;"></i>
-                            <strong style="color: #92400e;">Iowa</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">North</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">2020 Derecho - Des Moines, Cedar Rapids</p>
-                    </a>
-
-                    <a href="nebraska-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(228, 28, 56, 0.1), rgba(245, 212, 66, 0.05)); border: 2px solid rgba(228, 28, 56, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #E41C38;"></i>
-                            <strong style="color: #E41C38;">Nebraska</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">Northwest</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Northern Tornado Alley - Omaha, Lincoln</p>
-                    </a>
-                </div>
-
-                <div style="text-align: center; margin-top: 2rem;">
-                    <a href="other-states-wind-load-requirements.html" style="display: inline-block; background: #F1B82D; color: #1f2937; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
-                        <i class="fas fa-map"></i> View All 40 Non-Mandatory States
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <h2>Need Missouri Wind Load Calculations?</h2>
-                <p>Our professional ASCE 7 wind load calculators account for Missouri's unique tornado risk, exposure conditions, and local jurisdiction requirements.</p>
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Wind Load Calculator</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Wind Load Solutions</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="state-requirements.html">State Requirements</a></li>
-                    <li><a href="asce-7-standards.html">ASCE 7 Standards</a></li>
-                    <li><a href="articles.html">Articles</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Tornado Alley States</h4>
-                <ul>
-                    <li><a href="oklahoma-wind-load-requirements.html">Oklahoma</a></li>
-                    <li><a href="kansas-wind-load-requirements.html">Kansas</a></li>
-                    <li><a href="missouri-wind-load-requirements.html">Missouri</a></li>
-                    <li><a href="arkansas-wind-load-requirements.html">Arkansas</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Calculators</h4>
-                <ul>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculators</a></li>
-                    <li><a href="asce-7-wind-load-calculator.html">ASCE 7 Calculator</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Wind Load Solutions. All rights reserved.</p>
-            <p>Professional ASCE 7 wind load calculation resources for engineers and building professionals.</p>
-        </div>
-    </footer>
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.main-header');
@@ -1210,5 +550,8 @@
             subsection.classList.toggle('active');
         }
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

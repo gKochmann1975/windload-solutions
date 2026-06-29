@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iowa Wind Load Requirements | Tornado Alley, ASCE 7-22, Des Moines Building Codes | WindLoad.Solutions</title>
+    <meta name="description" content="Complete guide to Iowa wind load requirements including ASCE 7-22 tornado provisions, Des Moines and Cedar Rapids building codes, derecho damage considerations, and Tornado Alley design requirements.">
+    <link rel="canonical" href="https://windload.solutions/iowa-wind-load-requirements">
+    <meta name="keywords" content="Iowa wind load, Des Moines wind load, Cedar Rapids building code, ASCE 7-22 Iowa, tornado wind load, Iowa building codes, wind load calculator Iowa, Tornado Alley, derecho">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #FFCD00;
+            background: rgba(255, 205, 0, 0.1);
+            border-color: rgba(255, 205, 0, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Navigation Overlay */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Navigation Menu */
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #FFCD00 0%, #000000 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #000000;
+            padding-left: 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section - Iowa Hawkeyes Black & Gold */
+        .hero {
+            background: linear-gradient(135deg, #FFCD00 0%, #f59e0b 25%, #d97706 50%, #1f2937 75%, #000000 100%);
+            color: white;
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '\1F33E';
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0.15;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            line-height: 1;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tornado-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .tornado-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .tornado-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .voluntary-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            margin-left: 0.5rem;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .voluntary-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .voluntary-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #FFCD00;
+            color: #000000;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            background: #fbbf24;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 2.5rem 0 1rem 0;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .content-section li {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section a {
+            color: #d97706;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .content-section a:hover {
+            color: #f59e0b;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #FFCD00;
+            margin: 2rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left-color: #f59e0b;
+        }
+
+        .info-box.tornado {
+            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+            border-left-color: #dc2626;
+        }
+
+        .info-box.derecho {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-left-color: #1f2937;
+        }
+
+        .info-box h4 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-box h4 strong {
+            color: #d97706;
+        }
+
+        .info-box.warning h4 strong {
+            color: #f59e0b;
+        }
+
+        .info-box.tornado h4 strong {
+            color: #dc2626;
+        }
+
+        .info-box.derecho h4 strong {
+            color: #1f2937;
+        }
+
+        .info-box p {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: #FFCD00;
+        }
+
+        .comparison-table th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #1f2937;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #fef3c7;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* City Cards */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .city-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 205, 0, 0.25);
+            border-color: #FFCD00;
+        }
+
+        .city-card h4 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .city-card p {
+            color: #4b5563;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #FFCD00;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            color: #1f2937;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .formula-desc {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin: 0.5rem 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #FFCD00 0%, #d97706 50%, #1f2937 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .cta-button {
+            background: white;
+            color: #1f2937;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #FFCD00;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #FFCD00;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.8rem;
+            }
+
+            .header-container {
+                padding: 0 1.5rem;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+        }
+
+        /* Navigation Subsections */
+        .nav-subsection {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-subsection-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .nav-subsection-title i {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .nav-subsection.active .nav-subsection-title i {
+            transform: rotate(180deg);
+        }
+
+        .nav-subsection-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .nav-subsection.active .nav-subsection-content {
+            display: block;
+        }
+
+        .nav-subsection-content a {
+            font-size: 1rem;
+            padding: 0.6rem 0;
+        }
+            /* batch3: mobile table scroll */
+        @media (max-width: 768px) {
+            .comparison-table, .data-table, .edition-table, .tornado-table, table {
+                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+            }
+        }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.png" alt="Wind Load Solutions Logo" class="logo-image">
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="header-cta" target="_blank" rel="noopener">Wind Load Calculators</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Overlay -->
+    <div class="nav-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="state-requirements.html"><i class="fas fa-map-marked-alt"></i> State Requirements</a>
+        <div class="nav-subsection">
+            <div class="nav-subsection-title" onclick="toggleNavSubsection(this)">
+                <span><i class="fas fa-landmark"></i> Regional Hubs</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="nav-subsection-content">
+                <a href="mandatory-wind-load-states.html">Mandatory States (10)</a>
+                <a href="solar-belt-wind-load-requirements.html">Solar Belt States</a>
+                <a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a>
+            </div>
+        </div>
+        <a href="asce-7-standards.html"><i class="fas fa-book"></i> ASCE 7 Standards</a>
+        <a href="articles.html"><i class="fas fa-newspaper"></i> Articles</a>
+        <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Calculators</a>
+        <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div>
+                <a href="tornado-alley-wind-loads-safety.html" class="tornado-badge"><i class="fas fa-tornado"></i> Tornado Alley State</a>
+                <span class="voluntary-badge"><i class="fas fa-check-circle"></i> Voluntary State</span>
+            </div>
+            <h1>Iowa Wind Load Requirements</h1>
+            <p>Complete guide to Iowa wind load requirements including ASCE 7-22 tornado provisions, Des Moines and Cedar Rapids building codes, 2020 derecho damage lessons, and Tornado Alley design considerations.</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Iowa Wind Load Calculator</a>
+        </div>
+    </section>
+
+    <main>
+        <!-- Key Info Section -->
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-exclamation-triangle" style="color: #dc2626; margin-right: 0.5rem;"></i> Iowa Wind Load Overview</h2>
+
+                <div class="info-box derecho">
+                    <h4><i class="fas fa-wind"></i> <strong>The 2020 Derecho: A Wake-Up Call</strong></h4>
+                    <p>On August 10, 2020, Iowa experienced one of the most powerful derechos in U.S. history. With wind speeds reaching <strong>140 mph</strong> (equivalent to a Category 4 hurricane), the storm caused <strong>$11 billion in damage</strong>, destroyed 14 million acres of crops, and damaged or destroyed over 10,000 structures. This event highlighted the critical importance of wind-resistant design in Iowa.</p>
+                </div>
+
+                <p>Iowa is a <strong>voluntary wind load state</strong>, meaning PE-sealed wind load calculations are not legally required statewide. However, the devastating 2020 derecho has increased awareness of wind load design importance, and many cities have adopted building codes with wind provisions.</p>
+
+                <h3>Quick Facts</h3>
+                <ul>
+                    <li><strong>State Requirement:</strong> Voluntary (not legally required statewide)</li>
+                    <li><strong>Adopted Code:</strong> 2018/2021 IBC with ASCE 7-16 (varies by jurisdiction)</li>
+                    <li><strong>Basic Wind Speed Range:</strong> 105-115 mph (Risk Category II)</li>
+                    <li><strong>Tornado Risk:</strong> High - averages 48 tornadoes annually</li>
+                    <li><strong>Derecho Risk:</strong> Very High - Midwest derecho corridor</li>
+                    <li><strong>Local Amendments:</strong> Des Moines, Cedar Rapids, Iowa City have codes</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Derecho Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-wind" style="color: #1f2937; margin-right: 0.5rem;"></i> Derecho Wind Events in Iowa</h2>
+
+                <p>Iowa sits in the "Midwest derecho corridor" - a region particularly prone to these devastating straight-line wind events. Unlike tornadoes, derechos affect much larger areas and can produce sustained hurricane-force winds across hundreds of miles.</p>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-circle"></i> <strong>Derecho vs. Tornado Design</strong></h4>
+                    <p>While ASCE 7 basic wind speeds are designed for straight-line winds (including derecho-type events), the <strong>duration and extent</strong> of derecho winds differ from typical design assumptions. The 2020 derecho's 140 mph winds exceeded the ASCE 7-16 Risk Category II design wind speed of 115 mph for most of Iowa.</p>
+                </div>
+
+                <h3>Historic Iowa Wind Events</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Max Winds</th>
+                            <th>Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2020 Iowa Derecho</strong></td>
+                            <td>August 10, 2020</td>
+                            <td>140 mph</td>
+                            <td>$11B damage, 14M acres crops destroyed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parkersburg Tornado</strong></td>
+                            <td>May 25, 2008</td>
+                            <td>EF5 (205 mph)</td>
+                            <td>9 fatalities, town devastated</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2011 Derecho</strong></td>
+                            <td>July 11, 2011</td>
+                            <td>100+ mph</td>
+                            <td>Significant crop and structure damage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mapleton Tornado</strong></td>
+                            <td>April 9, 2011</td>
+                            <td>EF3 (165 mph)</td>
+                            <td>60% of town damaged</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Building Code Section -->
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-building" style="color: #1f2937; margin-right: 0.5rem;"></i> Iowa Building Code Framework</h2>
+
+                <p>Iowa has a voluntary statewide building code, with the state adopting the IBC as a baseline that municipalities can choose to enforce. Larger cities generally have code enforcement, while rural areas often have minimal or no building codes.</p>
+
+                <h3>Major Jurisdiction Code Adoption</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Jurisdiction</th>
+                            <th>Adopted Code</th>
+                            <th>Wind Standard</th>
+                            <th>Special Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Des Moines</strong></td>
+                            <td>2018 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>State capital requirements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cedar Rapids</strong></td>
+                            <td>2018 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>Post-derecho enhanced review</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iowa City</strong></td>
+                            <td>2018 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>University requirements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Davenport</strong></td>
+                            <td>2015 IBC</td>
+                            <td>ASCE 7-10</td>
+                            <td>Quad Cities coordination</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sioux City</strong></td>
+                            <td>2018 IBC</td>
+                            <td>ASCE 7-16</td>
+                            <td>Tri-state metro area</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-lightbulb"></i> <strong>Post-Derecho Code Review</strong></h4>
+                    <p>Following the 2020 derecho, several Iowa jurisdictions have begun reviewing their building code requirements. Cedar Rapids in particular has enhanced plan review processes and is considering additional wind-resistant construction requirements for new buildings.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wind Speed Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-wind" style="color: #FFCD00; margin-right: 0.5rem;"></i> Iowa Wind Speed Zones</h2>
+
+                <p>Iowa basic wind speeds per ASCE 7-16/7-22 range from <strong>105 mph to 115 mph</strong> for Risk Category II structures. Note that these design values were exceeded during the 2020 derecho.</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Risk Cat II</th>
+                            <th>Risk Cat III</th>
+                            <th>Risk Cat IV</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Des Moines Metro</strong></td>
+                            <td>110 mph</td>
+                            <td>115 mph</td>
+                            <td>120 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cedar Rapids Area</strong></td>
+                            <td>115 mph</td>
+                            <td>120 mph</td>
+                            <td>125 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Northwest Iowa</strong></td>
+                            <td>115 mph</td>
+                            <td>120 mph</td>
+                            <td>125 mph</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Southeast Iowa</strong></td>
+                            <td>105 mph</td>
+                            <td>110 mph</td>
+                            <td>115 mph</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>ASCE 7 Wind Load Formula</h3>
+                <div class="formula-box">
+                    <h4><i class="fas fa-calculator"></i> Velocity Pressure Equation</h4>
+                    <div class="formula">qz = 0.00256 × Kz × Kzt × Kd × Ke × V²</div>
+                    <div class="formula-desc"><strong>qz</strong> = Velocity pressure at height z (psf)</div>
+                    <div class="formula-desc"><strong>Kz</strong> = Velocity pressure exposure coefficient</div>
+                    <div class="formula-desc"><strong>Kzt</strong> = Topographic factor (typically 1.0 in flat Iowa)</div>
+                    <div class="formula-desc"><strong>Kd</strong> = Wind directionality factor</div>
+                    <div class="formula-desc"><strong>Ke</strong> = Ground elevation factor</div>
+                    <div class="formula-desc"><strong>V</strong> = Basic wind speed (mph)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cities Section -->
+        <section class="content-section" style="background: #f9fafb;">
+            <div class="container">
+                <h2><i class="fas fa-city" style="color: #1f2937; margin-right: 0.5rem;"></i> Major Iowa Cities</h2>
+
+                <div class="city-grid">
+                    <a href="cities/des-moines-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-landmark" style="color: #FFCD00;"></i> Des Moines</h4>
+                        <p>110 mph | State Capital | Insurance center</p>
+                    </a>
+                    <a href="cities/cedar-rapids-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-industry" style="color: #FFCD00;"></i> Cedar Rapids</h4>
+                        <p>115 mph | 2020 Derecho impact | Manufacturing hub</p>
+                    </a>
+                    <a href="cities/iowa-city-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-university" style="color: #FFCD00;"></i> Iowa City</h4>
+                        <p>115 mph | University of Iowa | Healthcare center</p>
+                    </a>
+                    <a href="cities/davenport-wind-load-requirements.html" class="city-card">
+                        <h4><i class="fas fa-water" style="color: #FFCD00;"></i> Davenport</h4>
+                        <p>110 mph | Quad Cities | Mississippi River</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- When Required Section -->
+        <section class="content-section">
+            <div class="container">
+                <h2><i class="fas fa-clipboard-check" style="color: #1f2937; margin-right: 0.5rem;"></i> When Wind Load Calculations Are Needed</h2>
+
+                <p>Although Iowa is a voluntary state, wind load calculations are recommended or required in several situations:</p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-list-check"></i> <strong>Recommended/Required Situations</strong></h4>
+                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
+                        <li><strong>Commercial buildings</strong> in Des Moines, Cedar Rapids, Iowa City and other cities</li>
+                        <li><strong>Risk Category III/IV structures</strong> (schools, hospitals, emergency facilities)</li>
+                        <li><strong>Post-derecho reconstruction</strong> - enhanced requirements in affected areas</li>
+                        <li><strong>Insurance requirements</strong> - many insurers now require engineering after 2020</li>
+                        <li><strong>Agricultural structures</strong> - grain elevators, equipment buildings</li>
+                        <li><strong>Wind turbines</strong> - Iowa is a major wind energy producer (#2 in nation)</li>
+                        <li><strong>Solar installations</strong> - ground-mount and rooftop systems</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related States Section -->
+        <section style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 4rem 0;">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 0.5rem; color: #1f2937;"><i class="fas fa-map-marked-alt" style="color: #d97706;"></i> Related State Guides</h2>
+                <p style="text-align: center; color: #64748b; margin-bottom: 2rem;">Explore wind load requirements for neighboring and similar states</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
+                    <a href="nebraska-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(228, 28, 56, 0.1), rgba(245, 212, 66, 0.05)); border: 2px solid rgba(228, 28, 56, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                            <i class="fas fa-tornado" style="color: #E41C38;"></i>
+                            <strong style="color: #E41C38;">Nebraska</strong>
+                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">West</span>
+                        </div>
+                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Northern Tornado Alley - Omaha, Lincoln</p>
+                    </a>
+
+                    <a href="missouri-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(241, 184, 45, 0.1), rgba(31, 41, 55, 0.05)); border: 2px solid rgba(241, 184, 45, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                            <i class="fas fa-tornado" style="color: #F1B82D;"></i>
+                            <strong style="color: #92400e;">Missouri</strong>
+                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">South</span>
+                        </div>
+                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Joplin tornado legacy - St. Louis, KC</p>
+                    </a>
+
+                    <a href="kansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(0, 81, 186, 0.1), rgba(232, 0, 13, 0.05)); border: 2px solid rgba(0, 81, 186, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                            <i class="fas fa-tornado" style="color: #0051BA;"></i>
+                            <strong style="color: #0051BA;">Kansas</strong>
+                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">Southwest</span>
+                        </div>
+                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Heart of Tornado Alley - Wichita, Topeka</p>
+                    </a>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="other-states-wind-load-requirements.html" style="display: inline-block; background: #d97706; color: white; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                        <i class="fas fa-map"></i> View All 40 Non-Mandatory States
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Need Iowa Wind Load Calculations?</h2>
+                <p>Our professional ASCE 7 wind load calculators account for Iowa's unique derecho risk, exposure conditions, and local jurisdiction requirements.</p>
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Wind Load Calculator</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Wind Load Solutions</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="state-requirements.html">State Requirements</a></li>
+                    <li><a href="asce-7-standards.html">ASCE 7 Standards</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Tornado Alley States</h4>
+                <ul>
+                    <li><a href="oklahoma-wind-load-requirements.html">Oklahoma</a></li>
+                    <li><a href="kansas-wind-load-requirements.html">Kansas</a></li>
+                    <li><a href="nebraska-wind-load-requirements.html">Nebraska</a></li>
+                    <li><a href="iowa-wind-load-requirements.html">Iowa</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Calculators</h4>
+                <ul>
+                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculators</a></li>
+                    <li><a href="asce-7-wind-load-calculator.html">ASCE 7 Calculator</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Wind Load Solutions. All rights reserved.</p>
+            <p>Professional ASCE 7 wind load calculation resources for engineers and building professionals.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const navOverlay = document.querySelector('.nav-overlay');
+            const logo = document.querySelector('.logo');
+
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function toggleNavSubsection(element) {
+            const subsection = element.parentElement;
+            subsection.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

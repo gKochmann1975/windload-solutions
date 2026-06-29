@@ -32,751 +32,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #841617;
-            background: rgba(132, 22, 23, 0.1);
-            border-color: rgba(132, 22, 23, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #841617 0%, #FFC72C 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #841617;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Oklahoma Crimson & Cream/Gold (OU Sooners) */
-        .hero {
-            background: linear-gradient(135deg, #841617 0%, #9a1b1c 25%, #b22222 50%, #FFC72C 75%, #FFD700 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '\1F32A\FE0F';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.2;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .tornado-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .tornado-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(220, 38, 38, 0.4);
-        }
-
-        .tornado-badge i {
-            margin-right: 0.5rem;
-        }
-
-        .voluntary-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            margin-left: 0.5rem;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .voluntary-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(34, 197, 94, 0.4);
-        }
-
-        .voluntary-badge i {
-            margin-right: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #841617;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #841617;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #b22222;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #841617;
-            margin: 2rem 0;
-        }
-
-        .info-box.warning {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left-color: #f59e0b;
-        }
-
-        .info-box.tornado {
-            background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
-            border-left-color: #dc2626;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #841617;
-        }
-
-        .info-box.warning h4 strong {
-            color: #f59e0b;
-        }
-
-        .info-box.tornado h4 strong {
-            color: #dc2626;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #841617 0%, #b22222 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #fef2f2;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* City Cards */
-        .city-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .city-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .city-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(132, 22, 23, 0.15);
-            border-color: #841617;
-        }
-
-        .city-card h4 {
-            color: #841617;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .city-card p {
-            color: #4b5563;
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .formula-box h4 {
-            color: #841617;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .formula {
-            font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
-            color: #1f2937;
-            background: white;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .formula-desc {
-            font-size: 0.95rem;
-            color: #4b5563;
-            margin: 0.5rem 0;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #841617 0%, #b22222 50%, #FFC72C 100%);
-            padding: 4rem 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-section .cta-button {
-            background: white;
-            color: #841617;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-            color: white;
-            padding: 4rem 2rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-column h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #FFC72C;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-column a {
-            color: #9ca3af;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: #FFC72C;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero {
-                padding: 8rem 1.5rem 4rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.8rem;
-            }
-
-            .header-container {
-                padding: 0 1.5rem;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-        }
-
-        /* Navigation Subsections */
-        .nav-subsection {
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-subsection-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .nav-subsection-title i {
-            transition: transform 0.3s ease;
-            font-size: 0.8rem;
-        }
-
-        .nav-subsection.active .nav-subsection-title i {
-            transform: rotate(180deg);
-        }
-
-        .nav-subsection-content {
-            display: none;
-            padding-left: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .nav-subsection.active .nav-subsection-content {
-            display: block;
-        }
-
-        .nav-subsection-content a {
-            font-size: 1rem;
-            padding: 0.6rem 0;
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.png" alt="Wind Load Solutions Logo" class="logo-image">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="header-cta" target="_blank" rel="noopener">Wind Load Calculators</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay" onclick="toggleMenu()"></div>
-
-    <!-- Navigation Menu -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marked-alt"></i> State Requirements</a>
         <div class="nav-subsection">
@@ -795,482 +296,255 @@
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Calculators</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div>
-                <a href="tornado-alley-wind-loads-safety.html" class="tornado-badge"><i class="fas fa-tornado"></i> Heart of Tornado Alley</a>
-                <span class="voluntary-badge"><i class="fas fa-check-circle"></i> Voluntary State</span>
-            </div>
-            <h1>Oklahoma Wind Load Requirements</h1>
-            <p>Complete guide to Oklahoma wind load requirements including ASCE 7-22 tornado provisions, Oklahoma City and Tulsa building codes, Moore enhanced construction standards, and Tornado Alley design considerations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Oklahoma Wind Load Calculator</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="ok"><svg viewBox="640.2 333 154 79.2" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M790.51,348.69L790.96,351.78L791.41,354.87L791.86,357.96L792.32,361.05L792.77,364.14L793.23,367.23L793.69,370.32L794.15,373.41L794.14,375.83L794.13,378.25L794.12,380.67L794.11,383.09L794.1,385.51L794.09,387.93L794.08,390.35L794.07,392.77L794.06,395.19L794.04,397.62L794.03,400.04L794.02,402.46L794.01,404.88L794,407.31L793.99,409.73L793.98,412.15L789.76,411.08L788.7,410.38L786.76,409.59L785.01,407.93L781.57,405.89L780.27,405.4L779.86,405.46L779.16,406.49L777.35,407.31L776.36,407.35L774.56,407.06L774.22,406.8L773.96,406.18L773.24,405.76L772.71,406.09L770.11,406.96L769.72,407.57L768.25,407.6L766.79,407.16L763.11,408.52L761.84,409.58L760.52,409.95L759.83,410.98L759.43,410.83L758.05,409.55L756.63,409.16L754.7,407.88L754.64,406.76L754.43,406.62L754.08,406.49L753.65,406.59L752.8,407.54L752.31,407.78L751.82,407.74L749.95,407.08L749.17,405.93L748.78,405.57L748.35,405.5L747.54,405.83L747.07,407.09L746.71,407.42L745.92,407.63L745.96,408.26L745.24,409.99L744.86,410.33L744.37,410.26L743.87,409.83L743.5,409.21L743.35,408.68L743.65,407.3L743.49,406.84L743.12,406.69L742.19,407.33L741.38,407.29L740.34,407.92L739.69,408.11L739.1,407.94L738.16,406.87L736.5,406.17L735.88,404.92L735.59,404.56L735.24,404.46L734.88,404.49L734.28,404.88L732.33,406.47L731.45,406.97L730.69,407.06L729.98,406.88L729.53,406.46L729.47,404.8L729.06,404.29L727.31,403.22L726.96,402.23L726.82,400.87L724.68,401.03L722.05,400.83L720.83,401.99L720.21,402.2L719.47,401.94L717.39,400.26L715.13,400.52L713.86,400.3L710.75,399L708.29,398.81L707.27,398.56L706.74,398.27L706.56,396.42L705.64,394.83L705.33,394.39L703.71,393.24L703.44,393.19L703.25,393.43L702.83,394.64L702.33,394.68L700.42,394.26L698.64,394.55L697.68,393.91L694.45,390.93L693.13,390.14L692.06,389.86L692.17,387.2L692.29,384.53L692.4,381.87L692.51,379.21L692.63,376.55L692.74,373.89L692.85,371.23L692.97,368.57L693.08,365.91L693.19,363.25L693.31,360.59L693.42,357.93L693.54,355.27L693.65,352.62L693.76,349.96L693.88,347.3L690.52,347.15L687.16,346.99L683.8,346.82L680.44,346.65L677.08,346.47L673.72,346.28L670.36,346.09L667,345.89L663.65,345.68L660.29,345.47L656.93,345.25L653.58,345.02L650.22,344.78L646.87,344.54L643.51,344.29L640.16,344.04L640.37,341.27L640.58,338.5L640.79,335.73L641,332.96L645.4,333.29L649.79,333.62L654.18,333.92L658.58,334.22L662.69,334.49L666.8,334.75L670.91,334.99L675.03,335.23L679.14,335.45L683.26,335.67L687.37,335.87L691.49,336.07L695.6,336.25L699.72,336.42L703.84,336.59L707.95,336.74L712.07,336.88L716.19,337.01L720.31,337.13L724.43,337.24L728.55,337.34L732.67,337.43L736.78,337.51L740.9,337.58L745.02,337.63L749.14,337.68L753.26,337.72L757.38,337.75L761.5,337.76L765.62,337.77L769.74,337.76L773.86,337.75L777.98,337.72L782.1,337.68L786.22,337.64L790.34,337.58L790.38,340.36L790.42,343.14L790.46,345.91z"/></svg></span>
+    <p class="eyebrow">OKLAHOMA · ASCE 7-16 · TORNADO ALLEY</p>
+    <h1>Oklahoma Wind Load <span class="sweep">Requirements</span></h1>
+    <p class="lead">A voluntary-adoption state in the heart of Tornado Alley, where ASCE 7-16 sets straight-line wind loads and ASCE 7-22 Chapter 32 adds tornado provisions for essential structures.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">105&ndash;120</span><span class="lbl">MPH BASIC WIND (RISK II)</span></div>
+      <div class="stat"><span class="num">7-16</span><span class="lbl">ASCE 7 EDITION</span></div>
+      <div class="stat"><span class="num">Ch 32</span><span class="lbl">7-22 TORNADO LOADS</span></div>
+      <div class="stat"><span class="num">Local</span><span class="lbl">ADOPTION MODEL</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Get Oklahoma Wind Load Calculator</a>
+      <a class="btn-ghost" href="tornado-alley-wind-loads-safety.html">Tornado Alley Guide</a>
+    </div>
+  </div></section>
 
-    <main>
-        <!-- Key Info Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-exclamation-triangle" style="color: #dc2626; margin-right: 0.5rem;"></i> Oklahoma Wind Load Overview</h2>
+  <div class="divider"></div>
 
-                <div class="info-box tornado">
-                    <h4><i class="fas fa-tornado"></i> <strong>Tornado Capital of the World</strong></h4>
-                    <p>Oklahoma experiences more tornadoes per square mile than any other state. The state averages <strong>62 tornadoes annually</strong>, with peak activity from April through June. Oklahoma City has been struck by more tornadoes than any other major city in the United States.</p>
-                </div>
+  <!-- CODE / ASCE EDITION MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">ADOPTED CODE</p>
+    <h2>Code &amp; <span class="sweep">ASCE 7 Edition</span></h2>
+    <p class="lead">Oklahoma uses a local-adoption model: individual cities and counties adopt and enforce building codes. Wind load calculations are voluntary statewide but commonly required by jurisdictions, insurers, and lenders.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+        <h3>Adopted Code</h3>
+        <p>2021 IBC with ASCE 7-16, varying by jurisdiction.</p>
+        <span class="badge badge--method">2021 IBC</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 9v11"/></svg>
+        <h3>Wind Standard</h3>
+        <p>ASCE 7-16 governs straight-line wind loads on structures.</p>
+        <span class="badge badge--method">ASCE 7-16</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M12 3v18M5 8l7-4 7 4M5 16l7 4 7-4"/></svg>
+        <h3>Adoption Model</h3>
+        <p>No mandatory statewide code; cities adopt model codes locally.</p>
+        <span class="badge">Voluntary state</span>
+      </div>
+    </div>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Jurisdiction</th><th>Adopted Code</th><th>Wind Standard</th><th>Special Requirements</th></tr></thead>
+      <tbody>
+        <tr><td>Oklahoma City</td><td>2021 IBC</td><td>ASCE 7-16</td><td>Enhanced commercial requirements</td></tr>
+        <tr><td>Tulsa</td><td>2021 IBC</td><td>ASCE 7-16</td><td>Flood zone provisions</td></tr>
+        <tr><td>Moore</td><td>2021 IBC + Amendments</td><td>ASCE 7-16</td><td>Safe room requirements, enhanced construction</td></tr>
+        <tr><td>Norman</td><td>2021 IBC</td><td>ASCE 7-16</td><td>University zone requirements</td></tr>
+        <tr><td>Edmond</td><td>2021 IBC</td><td>ASCE 7-16</td><td>Standard IBC requirements</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
 
-                <p>Oklahoma is a <strong>voluntary wind load state</strong>, meaning PE-sealed wind load calculations are not legally required statewide for building permits. However, given Oklahoma's extreme tornado risk, many jurisdictions have adopted enhanced construction requirements, and wind load analysis is strongly recommended for all structures.</p>
+  <div class="divider"></div>
 
-                <h3>Quick Facts</h3>
-                <ul>
-                    <li><strong>State Requirement:</strong> Voluntary (not legally required statewide)</li>
-                    <li><strong>Adopted Code:</strong> 2021 IBC with ASCE 7-16 (varies by jurisdiction)</li>
-                    <li><strong>Basic Wind Speed Range:</strong> 105-120 mph (Risk Category II)</li>
-                    <li><strong>Tornado Risk:</strong> Extreme - highest in nation</li>
-                    <li><strong>Special Provisions:</strong> ASCE 7-22 Chapter 32 tornado loads apply</li>
-                    <li><strong>Local Amendments:</strong> Moore, Norman, and other cities have enhanced requirements</li>
-                </ul>
-            </div>
-        </section>
+  <!-- WIND + TORNADO CONTEXT MODULE -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">WIND &amp; TORNADO CONTEXT</p>
+    <h2>Straight-Line Wind <span class="sweep">&amp; Tornado Loads</span></h2>
+    <p class="lead">Oklahoma's basic wind speeds per ASCE 7-16/7-22 range from 105 to 120 mph for Risk Category II, with the highest speeds in the western Panhandle. Higher risk categories read from longer return-period maps, raising the design speed.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 8h13a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h10a3 3 0 1 1-3 3"/></svg>
+        <h3>Basic Wind Speed</h3>
+        <p>105&ndash;120 mph (Risk Cat II), highest across the western Panhandle.</p>
+        <span class="badge badge--data">Risk II map</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 5h18M5 9h14M7 13h10M9 17l3 3 3-3"/></svg>
+        <h3>ASCE 7-22 Chapter 32</h3>
+        <p>Tornado loads apply to Risk Category III and IV buildings in tornado-prone regions.</p>
+        <span class="badge badge--hvhz">Tornado provisions</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <h3>ASCE 7-22 Chapter 32 — Qualitative Considerations</h3>
+      <p class="lead">For Risk Category III and IV structures, Chapter 32 introduces tornado-specific design factors layered on top of standard straight-line wind design. ASCE 7 basic wind speeds represent straight-line 3-second gusts and are not tornado wind speeds.</p>
+      <div class="grid" data-n="4">
+        <div class="card glass"><h3>Tornado Wind</h3><p>Design tornado speeds set by geographic location.</p></div>
+        <div class="card glass"><h3>Pressure Change</h3><p>Atmospheric pressure change (APC) on the building envelope.</p></div>
+        <div class="card glass"><h3>Debris Impact</h3><p>Windborne-debris impact resistance requirements.</p></div>
+        <div class="card glass"><h3>Safe Rooms</h3><p>Shelter design per ICC 500 / FEMA P-361.</p></div>
+      </div>
+    </div>
+  </div></section>
 
-        <!-- Tornado Section -->
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-tornado" style="color: #dc2626; margin-right: 0.5rem;"></i> Oklahoma Tornado Design Considerations</h2>
+  <div class="divider"></div>
 
-                <p>The ASCE 7-22 standard introduced <strong>Chapter 32: Tornado Loads</strong>, which provides design criteria for tornado-resistant construction. While not required for all buildings, these provisions are critical for Risk Category III and IV structures in Oklahoma's high-tornado-frequency zones.</p>
+  <!-- MAJOR CITIES GRID -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CITY GUIDES</p>
+    <h2>Major Oklahoma <span class="sweep">Cities</span></h2>
+    <p class="lead">Jurisdiction-level wind load requirements for Oklahoma's principal metros.</p>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="cities/oklahoma-city-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 21h18M6 21V9l6-4 6 4v12M10 21v-5h4v5"/></svg>
+        <h3>Oklahoma City</h3>
+        <p>State capital, tornado-prone metro.</p>
+        <span class="badge badge--data">Capital</span>
+      </a>
+      <a class="card glass" href="cities/tulsa-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M12 3v6M9 9h6v6a3 3 0 0 1-6 0zM7 21h10"/></svg>
+        <h3>Tulsa</h3>
+        <p>Oil Capital, Arkansas River basin.</p>
+        <span class="badge badge--data">Flood provisions</span>
+      </a>
+      <a class="card glass" href="cities/moore-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 5h18M5 9h14M7 13h10M9 17l3 3 3-3"/></svg>
+        <h3>Moore</h3>
+        <p>Enhanced standards, safe room required.</p>
+        <span class="badge badge--hvhz">Enhanced</span>
+      </a>
+      <a class="card glass" href="cities/norman-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 9l9-5 9 5-9 5zM6 11v6l6 3 6-3v-6"/></svg>
+        <h3>Norman</h3>
+        <p>University town, National Weather Center.</p>
+        <span class="badge badge--data">University zone</span>
+      </a>
+    </div>
+  </div></section>
 
-                <div class="info-box warning">
-                    <h4><i class="fas fa-exclamation-circle"></i> <strong>ASCE 7-22 Chapter 32 Tornado Provisions</strong></h4>
-                    <p>For Risk Category III and IV buildings in tornado-prone regions, ASCE 7-22 requires consideration of:</p>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>Tornado wind speeds</strong> based on geographic location</li>
-                        <li><strong>Atmospheric pressure change (APC)</strong> effects on building envelope</li>
-                        <li><strong>Windborne debris</strong> impact resistance requirements</li>
-                        <li><strong>Safe room</strong> design criteria per ICC 500/FEMA P-361</li>
-                    </ul>
-                </div>
+  <div class="divider"></div>
 
-                <h3>Historic Oklahoma Tornadoes</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Event</th>
-                            <th>Date</th>
-                            <th>Rating</th>
-                            <th>Impact</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Moore Tornado</strong></td>
-                            <td>May 20, 2013</td>
-                            <td>EF5</td>
-                            <td>210 mph winds, 24 fatalities, $2B damage</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Bridge Creek-Moore</strong></td>
-                            <td>May 3, 1999</td>
-                            <td>F5</td>
-                            <td>301 mph (highest recorded), 36 fatalities</td>
-                        </tr>
-                        <tr>
-                            <td><strong>El Reno Tornado</strong></td>
-                            <td>May 31, 2013</td>
-                            <td>EF3</td>
-                            <td>2.6-mile width (widest recorded), 8 fatalities</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Joplin Tornado</strong></td>
-                            <td>May 22, 2011</td>
-                            <td>EF5</td>
-                            <td>158 fatalities (deadliest since 1947)</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <!-- REQUIREMENTS MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">WHEN IT APPLIES</p>
+    <h2>When Wind Load Calculations <span class="sweep">Are Needed</span></h2>
+    <p class="lead">Oklahoma is voluntary, but calculations are recommended or required across these situations.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M4 4h16v16H4z"/><path d="M8 12l3 3 5-6"/></svg>
+        <h3>Commercial Buildings</h3>
+        <p>OKC, Tulsa, and other major cities.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>
+        <h3>Risk Cat III / IV</h3>
+        <p>Schools, hospitals, emergency facilities.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>
+        <h3>Insurance &amp; Lenders</h3>
+        <p>Engineering often required for commercial property.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        <h3>Solar Installations</h3>
+        <p>Ground-mount and large rooftop systems.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M4 4h16v8H4zM12 12v8M7 20h10"/></svg>
+        <h3>Signage &amp; Canopies</h3>
+        <p>Freestanding signs and canopy structures.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 9h18v10H3zM3 9l3-5h12l3 5"/></svg>
+        <h3>Manufactured Buildings</h3>
+        <p>Modular and prefabricated structures.</p>
+      </div>
+    </div>
+  </div></section>
 
-                <h3>Tornado Wind Speed vs. Design Wind Speed</h3>
-                <p>It's important to understand that <strong>ASCE 7 basic wind speeds are not tornado wind speeds</strong>. The basic wind speed maps represent 3-second gust speeds with specific return periods for straight-line winds. Tornado wind speeds can far exceed these values:</p>
+  <div class="divider"></div>
 
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Wind Type</th>
-                            <th>Typical Speed Range</th>
-                            <th>Design Basis</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>ASCE 7 Basic Wind Speed</strong></td>
-                            <td>105-120 mph</td>
-                            <td>700-year MRI (Risk Cat II)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>EF3 Tornado</strong></td>
-                            <td>136-165 mph</td>
-                            <td>Severe damage expected</td>
-                        </tr>
-                        <tr>
-                            <td><strong>EF4 Tornado</strong></td>
-                            <td>166-200 mph</td>
-                            <td>Devastating damage</td>
-                        </tr>
-                        <tr>
-                            <td><strong>EF5 Tornado</strong></td>
-                            <td>&gt;200 mph</td>
-                            <td>Incredible destruction</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+  <!-- RISK CATEGORIES MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">RISK CATEGORIES</p>
+    <h2>Risk Category &amp; <span class="sweep">Design Speed</span></h2>
+    <p class="lead">Risk category selects which wind-speed map you read from. Higher categories use longer return-period maps, raising the design wind speed — there is no fixed multiplier between them.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <h3>Risk Category I</h3>
+        <p>Low-hazard: minor agricultural and storage structures.</p>
+        <span class="badge badge--data">Lower-speed map</span>
+      </div>
+      <div class="card glass">
+        <h3>Risk Category II</h3>
+        <p>Standard occupancy: homes, offices, retail, most buildings.</p>
+        <span class="badge badge--data">105&ndash;120 mph</span>
+      </div>
+      <div class="card glass">
+        <h3>Risk Category III</h3>
+        <p>Substantial hazard: large assembly, schools, jails. Ch 32 applies.</p>
+        <span class="badge badge--hvhz">Higher map</span>
+      </div>
+      <div class="card glass">
+        <h3>Risk Category IV</h3>
+        <p>Essential: hospitals, fire/police, shelters. Ch 32 applies.</p>
+        <span class="badge badge--hvhz">Highest map</span>
+      </div>
+    </div>
+  </div></section>
 
-        <!-- Building Code Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-building" style="color: #841617; margin-right: 0.5rem;"></i> Oklahoma Building Code Framework</h2>
+  <div class="divider"></div>
 
-                <p>Oklahoma operates under a <strong>local adoption model</strong> where individual cities and counties adopt and enforce building codes. There is no mandatory statewide building code, though the state provides model codes that jurisdictions may adopt.</p>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">GET STARTED</p>
+    <h2>Need Oklahoma Wind Load <span class="sweep">Calculations?</span></h2>
+    <p class="lead">Professional ASCE 7 calculators account for Oklahoma's tornado risk, exposure categories, and local jurisdiction requirements.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Get Wind Load Calculator</a>
+      <a class="btn-ghost" href="state-requirements.html">All State Requirements</a>
+    </div>
+  </div></section>
 
-                <h3>Major Jurisdiction Code Adoption</h3>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Jurisdiction</th>
-                            <th>Adopted Code</th>
-                            <th>Wind Standard</th>
-                            <th>Special Requirements</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Oklahoma City</strong></td>
-                            <td>2021 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Enhanced commercial requirements</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tulsa</strong></td>
-                            <td>2021 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Flood zone provisions</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Moore</strong></td>
-                            <td>2021 IBC + Amendments</td>
-                            <td>ASCE 7-16</td>
-                            <td>Safe room requirements, enhanced construction</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Norman</strong></td>
-                            <td>2021 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>University zone requirements</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Edmond</strong></td>
-                            <td>2021 IBC</td>
-                            <td>ASCE 7-16</td>
-                            <td>Standard IBC requirements</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <!-- RELATED LINKS -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">RELATED</p>
+    <h2>Related <span class="sweep">Guides</span></h2>
+    <div class="grid" data-n="3">
+      <a class="card glass" href="tornado-alley-wind-loads-safety.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M3 5h18M5 9h14M7 13h10M9 17l3 3 3-3"/></svg>
+        <h3>Tornado Alley Wind Loads</h3>
+        <p>Regional tornado design and safety guidance.</p>
+        <span class="badge badge--hvhz">Hub</span>
+      </a>
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M4 4h16v16H4z"/><path d="M8 12l3 3 5-6"/></svg>
+        <h3>Mandatory States</h3>
+        <p>States requiring PE-sealed wind load calculations.</p>
+        <span class="badge badge--go">10 states</span>
+      </a>
+      <a class="card glass" href="state-requirements.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="40" height="40"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <h3>State Requirements</h3>
+        <p>Wind load rules and codes by state.</p>
+        <span class="badge badge--data">Directory</span>
+      </a>
+    </div>
+  </div></section>
 
-                <div class="info-box">
-                    <h4><i class="fas fa-shield-alt"></i> <strong>Moore's Enhanced Construction Standards</strong></h4>
-                    <p>Following the devastating 2013 tornado, the City of Moore adopted enhanced construction requirements that include:</p>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>Safe room requirement</strong> for new residential construction</li>
-                        <li><strong>Enhanced roof-to-wall connections</strong> with hurricane clips or straps</li>
-                        <li><strong>Garage door bracing</strong> requirements</li>
-                        <li><strong>Continuous load path</strong> from roof to foundation</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+</main>
 
-        <!-- Wind Speed Section -->
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-wind" style="color: #841617; margin-right: 0.5rem;"></i> Oklahoma Wind Speed Zones</h2>
-
-                <p>Oklahoma's basic wind speeds per ASCE 7-16/7-22 range from <strong>105 mph to 120 mph</strong> for Risk Category II structures. The highest wind speeds are found in the western Panhandle region.</p>
-
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Region</th>
-                            <th>Risk Cat II</th>
-                            <th>Risk Cat III</th>
-                            <th>Risk Cat IV</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Oklahoma City Metro</strong></td>
-                            <td>115 mph</td>
-                            <td>120 mph</td>
-                            <td>125 mph</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tulsa Area</strong></td>
-                            <td>110 mph</td>
-                            <td>115 mph</td>
-                            <td>120 mph</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Panhandle (West)</strong></td>
-                            <td>120 mph</td>
-                            <td>125 mph</td>
-                            <td>130 mph</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Southeast Oklahoma</strong></td>
-                            <td>105 mph</td>
-                            <td>110 mph</td>
-                            <td>115 mph</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3>ASCE 7 Wind Load Formula</h3>
-                <div class="formula-box">
-                    <h4><i class="fas fa-calculator"></i> Velocity Pressure Equation</h4>
-                    <div class="formula">qz = 0.00256 × Kz × Kzt × Kd × Ke × V²</div>
-                    <div class="formula-desc"><strong>qz</strong> = Velocity pressure at height z (psf)</div>
-                    <div class="formula-desc"><strong>Kz</strong> = Velocity pressure exposure coefficient</div>
-                    <div class="formula-desc"><strong>Kzt</strong> = Topographic factor</div>
-                    <div class="formula-desc"><strong>Kd</strong> = Wind directionality factor</div>
-                    <div class="formula-desc"><strong>Ke</strong> = Ground elevation factor</div>
-                    <div class="formula-desc"><strong>V</strong> = Basic wind speed (mph)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Cities Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-city" style="color: #841617; margin-right: 0.5rem;"></i> Major Oklahoma Cities</h2>
-
-                <div class="city-grid">
-                    <a href="cities/oklahoma-city-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-landmark" style="color: #841617;"></i> Oklahoma City</h4>
-                        <p>115 mph | State Capital | Tornado-prone metro</p>
-                    </a>
-                    <a href="cities/tulsa-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-oil-can" style="color: #841617;"></i> Tulsa</h4>
-                        <p>110 mph | Oil Capital | Arkansas River basin</p>
-                    </a>
-                    <a href="cities/moore-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-tornado" style="color: #dc2626;"></i> Moore</h4>
-                        <p>115 mph | Enhanced Standards | Safe room required</p>
-                    </a>
-                    <a href="cities/norman-wind-load-requirements.html" class="city-card">
-                        <h4><i class="fas fa-university" style="color: #841617;"></i> Norman</h4>
-                        <p>115 mph | University Town | National Weather Center</p>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Safe Rooms Section -->
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-shield-alt" style="color: #841617; margin-right: 0.5rem;"></i> Oklahoma Safe Room Requirements</h2>
-
-                <p>Given Oklahoma's extreme tornado risk, safe rooms and storm shelters are a critical consideration for building design. FEMA and ICC provide standards for residential and community safe rooms.</p>
-
-                <div class="info-box">
-                    <h4><i class="fas fa-home"></i> <strong>Safe Room Design Standards</strong></h4>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>FEMA P-361:</strong> Safe Rooms for Tornadoes and Hurricanes (community shelters)</li>
-                        <li><strong>FEMA P-320:</strong> Taking Shelter from the Storm (residential)</li>
-                        <li><strong>ICC 500:</strong> ICC/NSSA Standard for the Design and Construction of Storm Shelters</li>
-                        <li><strong>Design Wind Speed:</strong> 250 mph for EF5 tornado protection</li>
-                    </ul>
-                </div>
-
-                <h3>FEMA Safe Room Rebate Program</h3>
-                <p>Oklahoma participates in FEMA's Hazard Mitigation Grant Program (HMGP), which provides funding assistance for residential safe room construction. After federally declared disasters, homeowners may qualify for rebates of up to <strong>75% of safe room construction costs</strong>.</p>
-
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Safe Room Type</th>
-                            <th>Typical Cost</th>
-                            <th>FEMA Rebate</th>
-                            <th>Design Standard</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>In-Ground Shelter</strong></td>
-                            <td>$3,000-$6,000</td>
-                            <td>Up to 75%</td>
-                            <td>FEMA P-320</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Above-Ground Room</strong></td>
-                            <td>$6,000-$12,000</td>
-                            <td>Up to 75%</td>
-                            <td>ICC 500 / FEMA P-361</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Garage Safe Room</strong></td>
-                            <td>$8,000-$15,000</td>
-                            <td>Up to 75%</td>
-                            <td>ICC 500</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Community Shelter</strong></td>
-                            <td>Varies</td>
-                            <td>Up to 75%</td>
-                            <td>FEMA P-361</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- When Required Section -->
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-clipboard-check" style="color: #841617; margin-right: 0.5rem;"></i> When Wind Load Calculations Are Needed</h2>
-
-                <p>Although Oklahoma is a voluntary state, wind load calculations are recommended or required in several situations:</p>
-
-                <div class="info-box">
-                    <h4><i class="fas fa-list-check"></i> <strong>Recommended/Required Situations</strong></h4>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>Commercial buildings</strong> in OKC, Tulsa, and other major cities</li>
-                        <li><strong>Risk Category III/IV structures</strong> (schools, hospitals, emergency facilities)</li>
-                        <li><strong>Insurance requirements</strong> - many insurers require engineering for commercial properties</li>
-                        <li><strong>Lender requirements</strong> - commercial lenders often require structural analysis</li>
-                        <li><strong>Solar installations</strong> - ground-mount and large rooftop systems</li>
-                        <li><strong>Signage and canopies</strong> - freestanding signs and canopy structures</li>
-                        <li><strong>Manufactured buildings</strong> - modular and prefabricated structures</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Related States Section -->
-        <section style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 4rem 0;">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 0.5rem; color: #1f2937;"><i class="fas fa-map-marked-alt" style="color: #841617;"></i> Related State Guides</h2>
-                <p style="text-align: center; color: #64748b; margin-bottom: 2rem;">Explore wind load requirements for neighboring and similar states</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
-                    <!-- Neighboring States -->
-                    <a href="kansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(0, 81, 186, 0.1), rgba(232, 0, 13, 0.05)); border: 2px solid rgba(0, 81, 186, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #0051BA;"></i>
-                            <strong style="color: #0051BA;">Kansas</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">North</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Heart of Tornado Alley - Wichita, Topeka</p>
-                    </a>
-
-                    <a href="texas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(191, 87, 0, 0.1), rgba(0, 39, 76, 0.05)); border: 2px solid rgba(191, 87, 0, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-star" style="color: #bf5700;"></i>
-                            <strong style="color: #bf5700;">Texas</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">South</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Mandatory state - Gulf Coast & Panhandle</p>
-                    </a>
-
-                    <a href="arkansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(157, 34, 53, 0.1), rgba(245, 245, 245, 0.05)); border: 2px solid rgba(157, 34, 53, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #9D2235;"></i>
-                            <strong style="color: #9D2235;">Arkansas</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">East</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Southern Tornado Alley - Little Rock</p>
-                    </a>
-
-                    <a href="missouri-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(241, 184, 45, 0.1), rgba(31, 41, 55, 0.05)); border: 2px solid rgba(241, 184, 45, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-tornado" style="color: #F1B82D;"></i>
-                            <strong style="color: #92400e;">Missouri</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">Northeast</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Joplin tornado legacy - St. Louis, KC</p>
-                    </a>
-
-                    <a href="colorado-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(30, 58, 95, 0.1), rgba(245, 158, 11, 0.05)); border: 2px solid rgba(30, 58, 95, 0.2); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: all 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                            <i class="fas fa-mountain" style="color: #1e3a5f;"></i>
-                            <strong style="color: #1e3a5f;">Colorado</strong>
-                            <span style="font-size: 0.75rem; color: #64748b; margin-left: auto;">Northwest</span>
-                        </div>
-                        <p style="color: #666; font-size: 0.85rem; margin: 0;">Eastern plains tornado risk - Denver</p>
-                    </a>
-                </div>
-
-                <div style="text-align: center; margin-top: 2rem;">
-                    <a href="other-states-wind-load-requirements.html" style="display: inline-block; background: #841617; color: white; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
-                        <i class="fas fa-map"></i> View All 40 Non-Mandatory States
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <h2>Need Oklahoma Wind Load Calculations?</h2>
-                <p>Our professional ASCE 7 wind load calculators account for Oklahoma's unique tornado risk, exposure categories, and local jurisdiction requirements.</p>
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Wind Load Calculator</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Wind Load Solutions</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="state-requirements.html">State Requirements</a></li>
-                    <li><a href="asce-7-standards.html">ASCE 7 Standards</a></li>
-                    <li><a href="articles.html">Articles</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Tornado Alley States</h4>
-                <ul>
-                    <li><a href="oklahoma-wind-load-requirements.html">Oklahoma</a></li>
-                    <li><a href="kansas-wind-load-requirements.html">Kansas</a></li>
-                    <li><a href="nebraska-wind-load-requirements.html">Nebraska</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Calculators</h4>
-                <ul>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculators</a></li>
-                    <li><a href="asce-7-wind-load-calculator.html">ASCE 7 Calculator</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Wind Load Solutions. All rights reserved.</p>
-            <p>Professional ASCE 7 wind load calculation resources for engineers and building professionals.</p>
-        </div>
-    </footer>
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.main-header');
@@ -1301,5 +575,8 @@
             subsection.classList.toggle('active');
         }
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

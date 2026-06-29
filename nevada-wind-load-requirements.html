@@ -32,945 +32,252 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Hero Section - Nevada Silver/Desert colors */
-        .hero {
-            background: linear-gradient(135deg, #78716c 0%, #a8a29e 25%, #fbbf24 50%, #f59e0b 75%, #d97706 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '\2600\FE0F\1F3B0';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.25;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .solar-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .solar-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
-        }
-
-        .solar-badge i {
-            margin-right: 0.5rem;
-        }
-
-        .local-rule-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            margin-bottom: 1.5rem;
-            margin-left: 0.5rem;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .local-rule-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(124, 58, 237, 0.4);
-        }
-
-        .local-rule-badge i {
-            margin-right: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #d97706;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #d97706;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #f59e0b;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #d97706;
-            margin: 2rem 0;
-        }
-
-        .info-box.warning {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left-color: #f59e0b;
-        }
-
-        .info-box.solar {
-            background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
-            border-left-color: #f97316;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #d97706;
-        }
-
-        .info-box.warning h4 strong {
-            color: #f59e0b;
-        }
-
-        .info-box.solar h4 strong {
-            color: #f97316;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Jurisdiction Cards */
-        .jurisdiction-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .jurisdiction-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .jurisdiction-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(217, 119, 6, 0.15);
-            border-color: #d97706;
-        }
-
-        .jurisdiction-card h4 {
-            color: #d97706;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .jurisdiction-card p {
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            font-size: 1rem;
-        }
-
-        .jurisdiction-card .code-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-
-        .jurisdiction-card .new-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-            margin-left: 0.5rem;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: #1f2937;
-            color: #f9fafb;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        .formula-box h4 {
-            color: #fbbf24;
-            margin-bottom: 1rem;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .formula-box .formula {
-            font-size: 1.3rem;
-            color: #fbbf24;
-            margin: 1rem 0;
-        }
-
-        .formula-box .formula-desc {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin: 0.5rem 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #d97706;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #d97706;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.15);
-        }
-
-        .external-link::after {
-            content: '\2197';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        .site-footer {
-            background: #1a202c;
-            color: #e5e7eb;
-            padding: 4rem 2rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-column h4 {
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #f59e0b;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-column a {
-            color: #e5e7eb;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .footer-column a:hover {
-            color: #f59e0b;
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-bottom p {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            margin: 0.5rem 0;
-        }
-
-        .footer-tagline {
-            font-weight: 600;
-            color: #f59e0b;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            .solar-badge,
-            .local-rule-badge {
-                display: block;
-                margin: 0.5rem auto;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .site-footer {
-                padding: 3rem 1.5rem 1.5rem;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-
-        /* Navigation styles */
-        .nav-links > a > i {
-            margin-right: 0.75rem;
-            color: #0018ff;
-            width: 1.25rem;
-            text-align: center;
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Solar Belt",
-                "item": "https://windload.solutions/solar-belt-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Nevada Wind Loads",
-                "item": "https://windload.solutions/nevada-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-
-    <!-- FAQ Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What ASCE 7 version does Nevada use for wind load calculations?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Nevada adopted the 2024 IBC for state-owned land, which references ASCE 7-22. Local jurisdictions like Clark County (Las Vegas) and Washoe County (Reno) have their own code adoptions, typically using the 2018 or 2021 IBC with ASCE 7-16."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What is the design wind speed for Las Vegas, Nevada?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Las Vegas wind speeds are determined per the ASCE 7 wind speed maps. The default exposure category is C unless the applicant provides detailed justification for another category per Section R301.2.1.4."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Does Nevada allow air density corrections for wind loads?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "No. Per the Northern Nevada Code Amendments, air density corrections to design wind pressures are prohibited. This is an important local amendment that affects wind load calculations in Washoe County, Reno, and Sparks."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Does Nevada require PE-sealed wind load calculations for solar panels?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "No. Nevada is one of 40 states where building departments do NOT require PE-sealed wind load calculations by law. However, wind load calculations may be needed for insurance, manufacturer warranties, or utility interconnection requirements."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What are the special wind regions in Nevada?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "The basic wind speed for special wind regions near mountainous terrain and near gorges shall be in accordance with local jurisdiction requirements. These special wind regions are indicated on ASCE 7 maps and require site-specific wind speed determination."
-                }
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <div class="nav-overlay"></div>
-
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -986,328 +293,312 @@
         <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div>
-                <a href="solar-belt-wind-load-requirements.html" class="solar-badge"><i class="fas fa-solar-panel"></i> Solar Belt State</a>
-                <span class="local-rule-badge"><i class="fas fa-landmark"></i> Local Jurisdiction State</span>
-            </div>
-            <h1>Nevada Wind Load Requirements</h1>
-            <p>Complete guide to Nevada wind load requirements for solar PV installations, including ASCE 7-16/7-22 standards, Las Vegas and Reno code requirements, utility-scale solar farms, and Northern Nevada amendments.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Nevada Wind Load Calculator</a>
-        </div>
-    </section>
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="nv"><svg viewBox="354.4 174.3 113.7 173.4" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M446.17,305.87L444.44,314.41L442.52,323.79L442.16,323.87L440.71,325.81L439.37,326.59L438.51,326.38L437.77,325.58L437.13,324.18L435.96,323.21L434.24,322.68L432.65,322.55L431.19,322.83L430.2,323.46L429.42,324.92L429.44,325.6L429.94,327.22L429.53,329.49L429.27,331.34L429.54,332.44L429.39,333.62L428.7,335.41L428.62,336.97L429.09,339.87L427.14,347.54L427.11,347.68L423.21,342.05L419.59,336.77L416,331.49L412.44,326.2L408.91,320.9L405.39,315.6L401.91,310.29L398.46,304.98L395.95,301.25L393.46,297.52L390.98,293.78L388.52,290.04L386.06,286.3L383.63,282.56L381.2,278.81L378.79,275.06L375.66,270.53L372.56,266L369.47,261.46L366.4,256.92L363.36,252.37L360.33,247.82L357.33,243.26L354.35,238.69L355.44,234.67L356.52,230.65L357.61,226.62L358.7,222.6L359.78,218.58L360.87,214.55L361.96,210.53L363.04,206.5L364.13,202.48L365.22,198.45L366.31,194.42L367.4,190.4L368.49,186.37L369.57,182.34L370.66,178.31L371.75,174.28L377.74,175.89L383.73,177.47L389.72,179.02L395.72,180.55L401.73,182.06L407.75,183.54L413.77,185L419.79,186.43L425.81,187.83L431.82,189.21L437.85,190.56L443.88,191.89L449.91,193.19L455.95,194.47L462,195.72L468.05,196.95L467.36,200.36L466.68,203.77L465.99,207.17L465.31,210.58L464.63,213.99L463.94,217.39L463.26,220.8L462.57,224.2L461.89,227.61L461.21,231.01L460.52,234.42L459.84,237.82L459.16,241.22L458.47,244.63L457.79,248.03L457.11,251.43L456.42,254.84L455.74,258.24L455.06,261.64L454.37,265.04L453.69,268.45L453.01,271.85L452.32,275.25L451.64,278.65L450.96,282.05L450.27,285.46L449.59,288.86L448.91,292.26L448.23,295.66L447.54,299.07L446.86,302.47z"/></svg></span>
+    <p class="eyebrow">SOLAR BELT · LOCAL JURISDICTION STATE</p>
+    <h1>Nevada Wind Load <span class="sweep">Requirements</span></h1>
+    <p class="lead">Local and county code adoption across the Silver State &mdash; from Clark County's ASCE 7-16 to Northern Nevada's ASCE 7-22 &mdash; with special wind regions in mountain passes and gorges.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">2018&ndash;2024</span><span class="lbl">IBC EDITIONS IN USE</span></div>
+      <div class="stat"><span class="num">7-16 / 7-22</span><span class="lbl">ASCE 7 BY JURISDICTION</span></div>
+      <div class="stat"><span class="num">C</span><span class="lbl">DEFAULT EXPOSURE</span></div>
+      <div class="stat"><span class="num">No Permit</span><span class="lbl">PE SEAL NOT MANDATED</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Nevada Wind Load Calculator</a>
+      <a class="btn-ghost" href="other-states-wind-load-requirements.html">40 No-Permit States</a>
+    </div>
+  </div></section>
 
-    <!-- Main Content -->
-    <main>
-        <section class="content-section">
-            <div class="container">
-                <div class="info-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left-color: #f59e0b; margin-bottom: 2rem;">
-                    <h4 style="color: #92400e;"><i class="fas fa-gavel"></i> <strong>No Mandatory Wind Load Permit Required</strong></h4>
-                    <p style="color: #78350f;"><strong>Nevada is one of 40 states where building departments do NOT require PE-sealed wind load calculations by law to obtain a building permit.</strong> However, you may still need wind load calculations for insurance requirements, manufacturer warranties, utility interconnection standards, or engineering best practices.</p>
-                    <p style="margin-top: 0.75rem;"><a href="other-states-wind-load-requirements.html" style="color: #92400e; font-weight: 600;">View all 40 states without mandatory wind load permits &rarr;</a></p>
-                </div>
+  <div class="divider"></div>
 
-                <h2><i class="fas fa-solar-panel" style="color: #f59e0b; margin-right: 0.5rem;"></i> Nevada: Utility-Scale Solar Leader</h2>
+  <!-- ============ PERMIT / NO-MANDATE CALLOUT ============ -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">PERMIT STATUS</p>
+    <h2>No Mandatory <span class="sweep">Wind Load Permit</span></h2>
+    <div class="info-box glass">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4v6c0 5-4 8-9 9-5-1-9-4-9-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+      <p>Nevada is one of <strong>40 states</strong> where building departments do <strong>not</strong> require PE-sealed wind load calculations by law to obtain a permit. You may still need them for insurance, manufacturer warranties, utility interconnection, or engineering best practice.</p>
+      <p><a class="badge badge--data" href="other-states-wind-load-requirements.html">VIEW ALL 40 STATES</a></p>
+    </div>
+  </div></section>
 
-                <p>Nevada ranks among the top states for solar energy production, with massive utility-scale solar farms in the Mojave Desert and growing residential solar adoption in Las Vegas and Reno. The state's abundant sunshine and available land make it a prime location for solar development, requiring careful attention to wind load engineering.</p>
+  <div class="divider"></div>
 
-                <div class="info-box solar">
-                    <h4><i class="fas fa-sun"></i> <strong>Why Solar Wind Loads Matter in Nevada</strong></h4>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li><strong>Utility-Scale Projects:</strong> Nevada hosts some of the largest solar farms in the US, requiring precise wind calculations for tracker systems</li>
-                        <li><strong>Desert Winds:</strong> Open desert terrain creates Exposure C conditions with higher wind loads</li>
-                        <li><strong>Special Wind Regions:</strong> Mountain terrain and gorges require site-specific wind speed determination</li>
-                        <li><strong>No Air Density Correction:</strong> Northern Nevada prohibits air density corrections despite elevation</li>
-                    </ul>
-                </div>
+  <!-- ============ CODE / LOCAL ADOPTION MODULE ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">CODE &amp; LOCAL ADOPTION</p>
+    <h2>Adopted at <span class="sweep">State &amp; Local Levels</span></h2>
+    <p class="lead">Nevada has no single statewide wind standard. The State Public Works Division adopted the 2024 IBC (ASCE 7-22) for state-owned land, while counties and cities maintain their own adoptions.</p>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="cities/las-vegas-wind-load-requirements.html">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="6" height="12"/><rect x="14" y="4" width="6" height="17"/><path d="M3 21h18"/><path d="M6 12h2M6 15h2M17 8h1M17 11h1M17 14h1"/></svg>
+        <h3>Las Vegas / Clark County</h3>
+        <p>2018 IBC &middot; ASCE 7-16 &middot; default Exposure C unless site-specific justification per R301.2.1.4.</p>
+        <span class="badge badge--data">ASCE 7-16</span>
+      </a>
+      <div class="card glass">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20l6-12 4 7 3-5 7 10z"/><path d="M2 20h20"/></svg>
+        <h3>Reno / Washoe County</h3>
+        <p>2024 IBC &middot; ASCE 7-22. Air density corrections to design wind pressure are prohibited.</p>
+        <span class="badge badge--data">ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/><path d="M3 21h18"/></svg>
+        <h3>City of Sparks</h3>
+        <p>2024 IBC &middot; ASCE 7-22, with the 2024 Northern Nevada (NNICC) code amendments applied.</p>
+        <span class="badge badge--data">ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4l9 2v15"/><path d="M5 4l-1-1M5 21H3M14 21h6"/><path d="M14 9l5-1v13"/></svg>
+        <h3>State-Owned Land</h3>
+        <p>2024 IBC &middot; ASCE 7-22 under the Nevada Public Works Division authority.</p>
+        <span class="badge badge--data">ASCE 7-22</span>
+      </div>
+    </div>
+  </div></section>
 
-                <h2><i class="fas fa-landmark" style="color: #d97706; margin-right: 0.5rem;"></i> Nevada Code Adoption</h2>
+  <div class="divider"></div>
 
-                <p>Nevada building codes are adopted at both state and local levels. The State of Nevada Public Works Division has adopted the <strong>2024 IBC</strong> for state-owned land, while local jurisdictions maintain their own code adoptions.</p>
+  <!-- ============ NNICC AMENDMENTS ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">2024 NNICC AMENDMENTS</p>
+    <h2>Northern Nevada <span class="sweep">Local Amendments</span></h2>
+    <div class="info-box glass">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17h.01"/></svg>
+      <p><strong>No air density corrections.</strong> Per the 2024 Northern Nevada code amendments, you cannot reduce design wind pressures for elevation &mdash; even at Reno's ~4,500 ft &mdash; unlike Colorado's Ke factor.</p>
+    </div>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Amendment</th><th>Requirement</th></tr></thead>
+      <tbody>
+        <tr><td>Section 1609.3</td><td>Ultimate design wind speed (V-ult) in mph per Wind Region Table 1609.3.2</td></tr>
+        <tr><td>Air Density Corrections</td><td>Prohibited &mdash; cannot reduce wind pressures for elevation</td></tr>
+        <tr><td>V-ult to V-asd Conversion</td><td>Per Table 1609.3.1</td></tr>
+        <tr><td>Special Wind Regions</td><td>Per local jurisdiction requirements and ASCE 7 Chapter 26</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
 
-                <h3>Key Jurisdiction Code Adoption</h3>
+  <div class="divider"></div>
 
-                <div class="jurisdiction-grid">
-                    <div class="jurisdiction-card">
-                        <h4><i class="fas fa-dice"></i> Las Vegas / Clark County</h4>
-                        <p><strong>Current Code:</strong> 2018 IBC</p>
-                        <p><strong>Wind Standard:</strong> ASCE 7-16</p>
-                        <p><strong>Default Exposure:</strong> Category C</p>
-                        <span class="code-badge">ASCE 7-16</span>
-                    </div>
-                    <div class="jurisdiction-card">
-                        <h4><i class="fas fa-mountain"></i> Reno / Washoe County</h4>
-                        <p><strong>Current Code:</strong> 2024 IBC</p>
-                        <p><strong>Wind Standard:</strong> ASCE 7-22</p>
-                        <p><strong>Special:</strong> No air density corrections</p>
-                        <span class="code-badge">ASCE 7-22</span>
-                        <span class="new-badge">2024 Code</span>
-                    </div>
-                    <div class="jurisdiction-card">
-                        <h4><i class="fas fa-building"></i> City of Sparks</h4>
-                        <p><strong>Current Code:</strong> 2024 IBC</p>
-                        <p><strong>Wind Standard:</strong> ASCE 7-22</p>
-                        <p><strong>Amendments:</strong> NNICC amendments</p>
-                        <span class="code-badge">ASCE 7-22</span>
-                    </div>
-                    <div class="jurisdiction-card">
-                        <h4><i class="fas fa-flag"></i> State-Owned Land</h4>
-                        <p><strong>Current Code:</strong> 2024 IBC</p>
-                        <p><strong>Wind Standard:</strong> ASCE 7-22</p>
-                        <p><strong>Authority:</strong> Public Works Division</p>
-                        <span class="code-badge">ASCE 7-22</span>
-                    </div>
-                </div>
+  <!-- ============ WIND CONTEXT / SPECIAL WIND REGIONS ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">WIND CONTEXT</p>
+    <h2>Low Basic Wind, <span class="sweep">Sharp Local Spikes</span></h2>
+    <p class="lead">Much of Nevada sits in a relatively low basic-wind region, but mountain passes, gorges, and ridgelines form special wind regions where speeds can run well above the standard maps.</p>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14c3 0 3-3 6-3s3 3 6 3 3-3 6-3"/><path d="M3 19c3 0 3-3 6-3s3 3 6 3 3-3 6-3"/><path d="M16 6a3 3 0 1 1 3 3H4"/></svg>
+        <h3>Relatively Low Basic Wind</h3>
+        <p>Across most of the state, basic wind speeds sit at the lower end of the ASCE 7 maps.</p>
+        <span class="badge">DESERT BASIN</span>
+      </div>
+      <div class="card glass">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 19l6-13 5 9 3-5 6 9z"/><path d="M2 19h20"/><path d="M11 19l-1-3 2 1z"/></svg>
+        <h3>Special Wind Regions</h3>
+        <p>Mountainous terrain and gorges are flagged on ASCE 7 maps; speeds set per local jurisdiction.</p>
+        <span class="badge badge--data">SITE-SPECIFIC</span>
+      </div>
+      <div class="card glass">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18c4-1 6-9 9-9s5 8 9 9"/><path d="M3 21h18"/><path d="M12 4v3"/></svg>
+        <h3>Open Desert = Exposure C</h3>
+        <p>Open terrain and grasslands push most projects to Exposure C, raising design pressures.</p>
+        <span class="badge badge--data">EXPOSURE C</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p>In special wind regions, basic wind speeds must follow local jurisdiction requirements and ASCE 7 Chapter 26; site-specific wind studies may be required, and higher speeds may apply than the standard maps indicate.</p>
+    </div>
+  </div></section>
 
-                <h3>Northern Nevada Code Amendments (2024 NNICC)</h3>
+  <div class="divider"></div>
 
-                <div class="info-box warning">
-                    <h4><i class="fas fa-exclamation-triangle"></i> <strong>Critical Amendment: No Air Density Corrections</strong></h4>
-                    <p>Per the 2024 Northern Nevada Code Amendments, <strong>air density corrections to design wind pressures are prohibited</strong>. This means you cannot reduce wind loads based on Reno's 4,500 ft elevation, unlike Colorado where the Ke factor is applied.</p>
-                </div>
+  <!-- ============ EXPOSURE CATEGORIES ============ -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">EXPOSURE</p>
+    <h2>Nevada <span class="sweep">Exposure Categories</span></h2>
+    <p class="lead">Desert terrain and open landscapes mean most projects default to Exposure C unless documentation justifies otherwise.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>Category</th><th>Description</th><th>Nevada Application</th></tr></thead>
+      <tbody>
+        <tr><td>Exposure B</td><td>Urban / suburban, wooded</td><td>Dense Las Vegas urban core (requires justification)</td></tr>
+        <tr><td>Exposure C</td><td>Open terrain, grasslands</td><td><strong>Default for most Nevada projects</strong></td></tr>
+        <tr><td>Exposure D</td><td>Flat, unobstructed coastal</td><td>Not applicable in Nevada</td></tr>
+      </tbody>
+    </table></div>
+  </div></section>
 
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Amendment</th>
-                            <th>Requirement</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Section 1609.3</strong></td>
-                            <td>Ultimate design wind speed (V-ult) in mph per Wind Region Table 1609.3.2</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Air Density Corrections</strong></td>
-                            <td>PROHIBITED - Cannot reduce wind pressures for elevation</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Vult to Vasd Conversion</strong></td>
-                            <td>Per Table 1609.3.1</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Special Wind Regions</strong></td>
-                            <td>Per local jurisdiction requirements and ASCE 7 Chapter 26</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+  <div class="divider"></div>
 
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-solar-panel" style="color: #f97316; margin-right: 0.5rem;"></i> Solar PV Wind Load Requirements</h2>
+  <!-- ============ SOLAR PV REQUIREMENTS ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">SOLAR PV PROVISIONS</p>
+    <h2>Rooftop to <span class="sweep">Utility-Scale Solar</span></h2>
+    <p class="lead">Nevada hosts some of the largest solar farms in the US. ASCE 7 provisions cover both rooftop and ground-mounted arrays; panel, racking, and ballast weight count as dead load in all load combinations.</p>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>System Type</th><th>ASCE 7 Section</th><th>Application</th></tr></thead>
+      <tbody>
+        <tr><td>Rooftop &mdash; Low Slope</td><td>29.4.3</td><td>Flat roofs &le; 7&deg;</td></tr>
+        <tr><td>Rooftop &mdash; Parallel Mount</td><td>29.4.4</td><td>Flush-mounted on any slope</td></tr>
+        <tr><td>Ground-Mount Fixed Tilt</td><td>29.4.5 (ASCE 7-22)</td><td>New comprehensive provisions</td></tr>
+        <tr><td>Ground-Mount (&le; 45&deg;)</td><td>Chapter 27</td><td>Open building, monoslope roof</td></tr>
+        <tr><td>Ground-Mount (&gt; 45&deg;)</td><td>Chapter 27</td><td>Solid sign provisions</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box glass">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      <p>For utility-scale fixed-tilt ground-mounts, ASCE 7-22 Section 29.4.5 gives wind-tunnel-derived provisions &mdash; use it on new projects where the jurisdiction has adopted ASCE 7-22.</p>
+    </div>
+  </div></section>
 
-                <p>Nevada's solar industry relies on ASCE 7 provisions for calculating wind loads on photovoltaic systems, whether rooftop residential or utility-scale ground-mounted arrays.</p>
+  <div class="divider"></div>
 
-                <h3>ASCE 7 Solar Panel Provisions</h3>
+  <!-- ============ RISK CATEGORIES ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">RISK CATEGORIES</p>
+    <h2>Risk Category Sets the <span class="sweep">Wind Speed Map</span></h2>
+    <p class="lead">In ASCE 7-16 and 7-22 there is no wind importance factor. Risk category instead selects which return-period speed map you read V from &mdash; higher category, longer return period, higher design wind.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21v-6h6v6"/></svg>
+        <h3>Risk Category I</h3>
+        <p>Low hazard &mdash; minor ag and storage. 300-year MRI map.</p>
+        <span class="badge">300-YR MRI</span>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18"/><path d="M9 21v-5h6v5M8 7h2M14 7h2M8 11h2M14 11h2"/></svg>
+        <h3>Risk Category II</h3>
+        <p>Standard occupancy &mdash; homes, offices, retail. 700-year MRI map.</p>
+        <span class="badge badge--data">700-YR MRI</span>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-4 7 4v13"/><path d="M9 21v-7h6v7"/></svg>
+        <h3>Risk Category III</h3>
+        <p>Substantial hazard &mdash; assembly, schools. 1,700-year MRI map.</p>
+        <span class="badge badge--data">1,700-YR MRI</span>
+      </div>
+      <div class="card glass">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 16l-4.9 2.6.9-5.5-4-3.9L9.5 8z"/></svg>
+        <h3>Risk Category IV</h3>
+        <p>Essential &mdash; hospitals, fire, EOC, shelters. 3,000-year MRI map.</p>
+        <span class="badge badge--data">3,000-YR MRI</span>
+      </div>
+    </div>
+  </div></section>
 
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>System Type</th>
-                            <th>ASCE 7 Section</th>
-                            <th>Application</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Rooftop - Low Slope</strong></td>
-                            <td>29.4.3</td>
-                            <td>Flat roofs &le; 7&deg;</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Rooftop - Parallel Mount</strong></td>
-                            <td>29.4.4</td>
-                            <td>Flush-mounted on any slope</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ground-Mount Fixed Tilt</strong></td>
-                            <td>29.4.5 (ASCE 7-22)</td>
-                            <td>New comprehensive provisions</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ground-Mount (&le; 45&deg;)</strong></td>
-                            <td>Chapter 27</td>
-                            <td>Open building, monoslope roof</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Ground-Mount (&gt; 45&deg;)</strong></td>
-                            <td>Chapter 27</td>
-                            <td>Solid sign provisions</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <div class="divider"></div>
 
-                <h3>Load Dead Load Requirements</h3>
+  <!-- ============ BLUE BOOK ============ -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">DESIGN REFERENCE</p>
+    <h2>The Blue Book &mdash; <span class="sweep">Nevada Design Guide</span></h2>
+    <div class="info-box glass">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h11a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M4 4v14"/><path d="M8 8h6M8 11h6"/></svg>
+      <p><strong>"The Blue Book: A Reference Guide for the Nevada Design and Construction Industry"</strong> (2020 update), published by the Nevada Construction Industry Relations Council (NCIRC), covers local code amendments, Northern Nevada design requirements, wind speed tables and special wind regions, seismic design, and licensing.</p>
+    </div>
+  </div></section>
 
-                <p>Per ASCE 7-16 and 7-22, the weight of solar panels, their support system, and ballast are classified as <strong>dead load</strong>. Load combinations must be used in all structural calculations.</p>
+  <div class="divider"></div>
 
-                <div class="formula-box">
-                    <h4><i class="fas fa-calculator"></i> ASCE 7 Solar Wind Pressure Formula</h4>
-                    <div class="formula">p = qh &times; GCp &times; &gamma;E &times; &gamma;A</div>
-                    <div class="formula-desc"><strong>p</strong> = Design wind pressure on solar panels (psf)</div>
-                    <div class="formula-desc"><strong>qh</strong> = Velocity pressure at mean roof height</div>
-                    <div class="formula-desc"><strong>GCp</strong> = External pressure coefficient</div>
-                    <div class="formula-desc"><strong>&gamma;E</strong> = Edge factor</div>
-                    <div class="formula-desc"><strong>&gamma;A</strong> = Array edge factor</div>
-                </div>
+  <!-- ============ CTA ============ -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">GET STARTED</p>
+    <h2>Need Nevada Solar <span class="sweep">Wind Load Calculations?</span></h2>
+    <p class="lead">Professional ASCE 7 calculators built for Nevada's Exposure C defaults, special wind regions, and utility-scale solar provisions.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Get Wind Load Calculator</a>
+      <a class="btn-ghost" href="solar-belt-wind-load-requirements.html">All Solar Belt States</a>
+    </div>
+  </div></section>
 
-                <div class="info-box">
-                    <h4><i class="fas fa-lightbulb"></i> <strong>Important Note for Ground-Mount Systems</strong></h4>
-                    <p>For utility-scale solar farms in Nevada, ASCE 7-22's new Section 29.4.5 provides specific provisions for fixed-tilt ground-mount systems based on extensive wind tunnel testing. This section should be used for new projects where jurisdictions have adopted ASCE 7-22.</p>
-                </div>
-            </div>
-        </section>
+  <div class="divider"></div>
 
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-layer-group" style="color: #d97706; margin-right: 0.5rem;"></i> Nevada Exposure Categories</h2>
+  <!-- ============ OFFICIAL RESOURCES ============ -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">OFFICIAL RESOURCES</p>
+    <h2>Nevada <span class="sweep">Code &amp; Tool Links</span></h2>
+    <div class="grid" data-n="5">
+      <a class="card glass" href="https://asce7hazardtool.online/" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+        <h3>ASCE 7 Hazard Tool</h3>
+        <p>Site-specific basic wind speeds.</p>
+        <span class="badge badge--data">TOOL</span>
+      </a>
+      <a class="card glass" href="https://www.washoecounty.gov/building/" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20l6-12 4 7 3-5 7 10z"/><path d="M2 20h20"/></svg>
+        <h3>Washoe County Building</h3>
+        <p>Reno / Northern Nevada permits.</p>
+        <span class="badge">GOV</span>
+      </a>
+      <a class="card glass" href="https://www.clarkcountynv.gov/government/departments/building___fire_prevention/index.php" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="6" height="12"/><rect x="14" y="4" width="6" height="17"/><path d="M3 21h18"/></svg>
+        <h3>Clark County Building</h3>
+        <p>Las Vegas building &amp; fire prevention.</p>
+        <span class="badge">GOV</span>
+      </a>
+      <a class="card glass" href="https://cms7files1.revize.com/sparksnv/2024-NNICC_Code_Amendments.pdf" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 13h6M9 16h6"/></svg>
+        <h3>2024 NNICC Amendments</h3>
+        <p>Northern Nevada code amendments PDF.</p>
+        <span class="badge badge--data">PDF</span>
+      </a>
+      <a class="card glass" href="https://up.codes/codes/nevada" target="_blank" rel="noopener">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6"/></svg>
+        <h3>UpCodes &mdash; Nevada</h3>
+        <p>Adopted Nevada code text.</p>
+        <span class="badge">CODE</span>
+      </a>
+    </div>
+  </div></section>
 
-                <p>Due to Nevada's desert terrain and open landscapes, most projects default to <strong>Exposure C</strong> unless detailed documentation justifies otherwise.</p>
+  <div class="divider"></div>
 
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Nevada Application</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Exposure B</strong></td>
-                            <td>Urban/suburban, wooded areas</td>
-                            <td>Dense Las Vegas urban core (requires justification)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Exposure C</strong></td>
-                            <td>Open terrain, grasslands</td>
-                            <td><strong>Default for most Nevada projects</strong></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Exposure D</strong></td>
-                            <td>Flat, unobstructed coastal areas</td>
-                            <td>Not applicable in Nevada</td>
-                        </tr>
-                    </tbody>
-                </table>
+  <!-- ============ RELATED LINKS ============ -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">KEEP EXPLORING</p>
+    <h2>Related <span class="sweep">Wind Load Guides</span></h2>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="state-requirements.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <h3>State Requirements</h3>
+        <p>Wind load rules by state.</p>
+        <span class="badge badge--data">ALL STATES</span>
+      </a>
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M5 7h14M6 7l1 9a5 5 0 0 0 10 0l1-9"/><path d="M9 21h6"/></svg>
+        <h3>10 Mandatory States</h3>
+        <p>Where PE-sealed calcs are required.</p>
+        <span class="badge badge--method">MANDATE</span>
+      </a>
+      <a class="card glass" href="solar-belt-wind-load-requirements.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        <h3>Solar Belt States</h3>
+        <p>Wind loads across the Sun Belt.</p>
+        <span class="badge badge--data">SOLAR</span>
+      </a>
+      <a class="card glass" href="other-states-wind-load-requirements.html">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg>
+        <h3>40 No-Permit States</h3>
+        <p>States without a mandatory wind permit.</p>
+        <span class="badge">NO MANDATE</span>
+      </a>
+    </div>
+  </div></section>
 
-                <div class="info-box warning">
-                    <h4><i class="fas fa-map-marked-alt"></i> <strong>Las Vegas Default Exposure</strong></h4>
-                    <p>Per Las Vegas/Clark County requirements, the wind exposure category shall be <strong>Category C</strong> unless the applicant provides a detailed justification on how the exposure category is determined on a site-specific basis in accordance with Section R301.2.1.4.</p>
-                </div>
+</main>
 
-                <h3>Special Wind Regions</h3>
-
-                <p>Nevada has designated special wind regions, particularly near mountainous terrain and gorges. For these areas:</p>
-
-                <ul>
-                    <li>Basic wind speeds must be determined per local jurisdiction requirements</li>
-                    <li>Wind speeds must comply with ASCE 7 Chapter 26</li>
-                    <li>Site-specific wind studies may be required</li>
-                    <li>Higher wind speeds may apply than indicated on standard maps</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="content-section" style="background: #f9fafb;">
-            <div class="container">
-                <h2><i class="fas fa-book" style="color: #d97706; margin-right: 0.5rem;"></i> The Blue Book: Nevada Design Reference</h2>
-
-                <p>"<strong>The Blue Book: A Reference Guide for the Nevada Design and Construction Industry</strong>" (2020 update) is the authoritative resource for understanding building design and construction requirements in Nevada. Published by the Nevada Construction Industry Relations Council (NCIRC), it provides guidance for building officials, engineers, and contractors.</p>
-
-                <div class="info-box">
-                    <h4><i class="fas fa-book-open"></i> <strong>Blue Book Coverage</strong></h4>
-                    <ul style="margin: 0.5rem 0 0 1.5rem; color: #1f2937;">
-                        <li>Local building code amendments and adoptions</li>
-                        <li>Design requirements for Northern Nevada jurisdictions</li>
-                        <li>Wind speed tables and special wind regions</li>
-                        <li>Seismic design requirements</li>
-                        <li>Professional licensing requirements</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <h2>Need Nevada Solar Wind Load Calculations?</h2>
-                <p>Our professional ASCE 7 wind load calculators are designed for Nevada's unique conditions including Exposure C defaults, special wind regions, and utility-scale solar provisions.</p>
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button" target="_blank" rel="noopener">Get Wind Load Calculator</a>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <div class="container">
-                <h2><i class="fas fa-link" style="color: #d97706; margin-right: 0.5rem;"></i> Official Resources</h2>
-
-                <div class="external-links-grid">
-                    <a href="https://www.washoecounty.gov/building/" class="external-link" target="_blank" rel="noopener">Washoe County Building</a>
-                    <a href="https://www.clarkcountynv.gov/government/departments/building___fire_prevention/index.php" class="external-link" target="_blank" rel="noopener">Clark County Building</a>
-                    <a href="https://cms7files1.revize.com/sparksnv/2024-NNICC_Code_Amendments.pdf" class="external-link" target="_blank" rel="noopener">2024 NNICC Amendments</a>
-                    <a href="https://up.codes/codes/nevada" class="external-link" target="_blank" rel="noopener">UpCodes - Nevada</a>
-                    <a href="https://asce7hazardtool.online/" class="external-link" target="_blank" rel="noopener">ASCE 7 Hazard Tool</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>ASCE 7 Standards</h4>
-                    <ul>
-                        <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                        <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                        <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                        <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Solar Belt States</h4>
-                    <ul>
-                        <li><a href="arizona-wind-load-requirements.html">Arizona Wind Loads</a></li>
-                        <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                        <li><a href="colorado-wind-load-requirements.html">Colorado Wind Loads</a></li>
-                        <li><a href="nevada-wind-load-requirements.html">Nevada Wind Loads</a></li>
-                        <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                        <li><a href="solar-belt-wind-load-requirements.html">All Solar Belt States</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="resources.html">Free Resources</a></li>
-                        <li><a href="articles.html">Articles & Guides</a></li>
-                        <li><a href="mandatory-wind-load-states.html">10 Mandatory States</a></li>
-                        <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                        <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                        <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-                <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.main-header');
@@ -1344,5 +635,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
