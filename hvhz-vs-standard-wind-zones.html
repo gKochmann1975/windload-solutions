@@ -25,712 +25,250 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #0018ff;
-            --dark-blue: #181E57;
-            --map-light: #93c5fd;
-            --map-dark: #60a5fa;
-            --map-deep: #3b82f6;
-            --cyan: #06b6d4;
-            --orange: #f97316;
-            --purple: #a855f7;
-            --green: #10b981;
-            --amber: #f59e0b;
-            --pink: #ec4899;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 1001;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Hero Section - Light Blue Gradient */
-        .hero {
-            background: linear-gradient(135deg, var(--map-light) 0%, var(--map-dark) 100%);
-            color: white;
-            padding: 180px 0 100px;
-            text-align: center;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .breadcrumb {
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .breadcrumb a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .breadcrumb a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        /* Content Sections */
-        .content-section {
-            padding: 5rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            color: #1f2937;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            color: #1f2937;
-            margin: 3rem 0 1.5rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0;
-            padding-left: 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #4b5563;
-            margin-bottom: 0.8rem;
-        }
-
-        /* Info Cards Grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .info-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--map-deep);
-            transition: all 0.3s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .info-card h4 {
-            font-size: 1.4rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .info-card i {
-            color: var(--map-deep);
-            font-size: 1.5rem;
-        }
-
-        .info-card p {
-            font-size: 1rem;
-            color: #6b7280;
-            line-height: 1.7;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            margin: 3rem 0;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, var(--map-deep), var(--map-dark));
-            color: white;
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-            color: #4b5563;
-        }
-
-        .comparison-table tr:hover {
-            background: #f9fafb;
-        }
-
-        /* Highlight Box */
-        .highlight-box {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-left: 5px solid var(--map-deep);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 3rem 0;
-        }
-
-        .highlight-box h3 {
-            color: #1e40af;
-            margin-top: 0;
-        }
-
-        .highlight-box p {
-            color: #1e3a8a;
-            margin-bottom: 0;
-        }
-
-        /* Related Links Section */
-        .related-links {
-            background: #f9fafb;
-            padding: 5rem 0;
-        }
-
-        .related-links h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-            color: #1f2937;
-        }
-
-        .link-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .link-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .link-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        }
-
-        .link-card-icon {
-            background: linear-gradient(135deg, var(--map-light), var(--map-dark));
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            font-size: 2.5rem;
-        }
-
-        .link-card-content {
-            padding: 1.5rem;
-            flex: 1;
-        }
-
-        .link-card-content h4 {
-            color: #1f2937;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .link-card-content p {
-            color: #6b7280;
-            font-size: 0.95rem;
-            margin: 0;
-        }
-
-        /* WindLoadCalc Promo */
-        .windloadcalc-promo {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 5rem 0;
-            text-align: center;
-        }
-
-        .windloadcalc-promo h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .windloadcalc-promo p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto 2rem auto;
-        }
-
-        .cta-button {
-            background: white;
-            color: #1e3a8a;
-            padding: 1.2rem 3rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .link-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -835,678 +373,299 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
+<main>
+<main>
 
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
+  <!-- ============ HERO ============ -->
+  <section class="sec sec-aurora sec-hazard">
+    <div class="wrap">
+      <p class="eyebrow">FLORIDA BUILDING CODE · ASCE 7-22 · HVHZ</p>
+      <h1>HVHZ vs Standard Wind Zones <span class="sweep">what actually changes</span></h1>
+      <p class="lead">Two counties play by a stricter rulebook. Here is the honest, side-by-side difference in wind basis, protection, approvals, testing, and inspection.</p>
+      <div class="stat-strip">
+        <div class="stat"><span class="num">2</span><span class="lbl">HVHZ COUNTIES: MIAMI-DADE + BROWARD</span></div>
+        <div class="stat"><span class="num">~170-180</span><span class="lbl">MPH HVHZ RANGE · RISK II · VARIES BY SITE</span></div>
+        <div class="stat"><span class="num">TAS</span><span class="lbl">201 / 202 / 203 TESTING REQUIRED</span></div>
+        <div class="stat"><span class="num">2002</span><span class="lbl">TRUSTED SOURCE SINCE</span></div>
+      </div>
+    </div>
+  </section>
 
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
+  <div class="divider"></div>
 
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
+  <!-- ============ CENTERPIECE: SIDE-BY-SIDE COMPARISON ============ -->
+  <section class="sec sec-well">
+    <div class="wrap">
+      <p class="eyebrow">THE CORE DIFFERENCE</p>
+      <h2>HVHZ vs Standard <span class="sweep">side by side</span></h2>
+      <p class="lead">Same hurricane physics, two different compliance paths. Wind speeds vary by site — never a single fabricated number.</p>
 
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
+      <div class="cmp-scroll">
+        <table class="cmp">
+          <thead>
+            <tr>
+              <th>Requirement</th>
+              <th>HVHZ (Miami-Dade + Broward)</th>
+              <th>Standard High-Wind Zones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Wind speed basis</strong></td>
+              <td>ASCE 7-22 maps, typically ~170-180 mph (Risk II); varies by site</td>
+              <td>ASCE 7-22 maps, lower and varying by location</td>
+            </tr>
+            <tr>
+              <td><strong>Impact protection</strong></td>
+              <td>Mandatory impact-resistant envelope; shutters generally not accepted in lieu of impact glazing</td>
+              <td>Impact protection in wind-borne debris regions; shutters allowed as an alternative</td>
+            </tr>
+            <tr>
+              <td><strong>Product approval</strong></td>
+              <td>Miami-Dade NOA or Florida Product Approval required</td>
+              <td>Florida Product Approval or standard manufacturer certifications</td>
+            </tr>
+            <tr>
+              <td><strong>Testing protocol</strong></td>
+              <td>TAS 201 / 202 / 203 (large &amp; small missile + cyclic pressure)</td>
+              <td>ASTM E1996 / E1886 static impact and pressure</td>
+            </tr>
+            <tr>
+              <td><strong>Inspection</strong></td>
+              <td>Enhanced third-party inspection of the building envelope</td>
+              <td>Standard inspection per local building department</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
+  <div class="divider"></div>
 
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
+  <!-- ============ CUSTOM SVG REGION MAP ============ -->
+  <section class="sec sec-grid sec-hazard">
+    <div class="wrap">
+      <p class="eyebrow">WHERE THE LINE IS DRAWN</p>
+      <h2>The HVHZ region is <span class="sweep">small and specific</span></h2>
+      <p class="lead">HVHZ is Miami-Dade and Broward only. The rest of coastal Florida and the U.S. uses standard high-wind rules.</p>
 
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
+      <div class="info-box glass" style="max-width:760px;margin:0 auto;">
+        <svg viewBox="0 0 480 420" width="100%" height="auto" role="img" aria-label="Map of Florida highlighting the HVHZ region of Miami-Dade and Broward counties in amber versus standard high-wind zones in cyan" style="display:block;max-width:560px;margin:0 auto;">
+          <defs>
+            <linearGradient id="hvhzFill" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#d97706"/>
+            </linearGradient>
+            <radialGradient id="hvhzGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
 
-.nav-subsection {
-    position: relative;
-}
+          <!-- Florida landmass silhouette (stylized) -->
+          <path d="M70 60 L300 60 L300 120 Q300 150 320 175 L345 240 Q360 300 350 360 L320 405 L300 360 Q290 300 270 250 L230 200 Q200 180 150 180 L90 178 Q72 172 70 150 Z"
+                fill="#0b1220" stroke="#3a4a63" stroke-width="2"/>
 
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
+          <!-- Standard high-wind coastal band (cyan) -->
+          <path d="M70 60 L300 60 L300 120 Q300 150 320 175 L345 240 Q360 300 350 360 L320 405 L300 360 Q290 300 270 250 L230 200 Q200 180 150 180 L90 178 Q72 172 70 150 Z"
+                fill="none" stroke="#06b6d4" stroke-width="3" stroke-dasharray="7 6" opacity="0.85">
+            <animate attributeName="stroke-dashoffset" from="0" to="-52" dur="3.2s" repeatCount="indefinite"/>
+          </path>
 
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
+          <!-- HVHZ glow -->
+          <circle cx="320" cy="345" r="58" fill="url(#hvhzGlow)">
+            <animate attributeName="r" values="50;64;50" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
 
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
+          <!-- HVHZ region: Miami-Dade + Broward (SE corner) -->
+          <path d="M315 295 Q345 305 348 345 L335 400 L315 405 L300 360 Q295 320 300 300 Z"
+                fill="url(#hvhzFill)" stroke="#fff5e0" stroke-width="2.5"/>
 
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
+          <!-- Region labels -->
+          <g font-family="-apple-system, Segoe UI, sans-serif">
+            <text x="150" y="120" fill="#67e8f9" font-size="15" font-weight="600" text-anchor="middle">STANDARD</text>
+            <text x="150" y="140" fill="#9fb3c8" font-size="11" text-anchor="middle">high-wind zones</text>
 
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
+            <text x="395" y="330" fill="#fcd34d" font-size="15" font-weight="700" text-anchor="middle">HVHZ</text>
+            <text x="402" y="349" fill="#fbbf24" font-size="10.5" text-anchor="middle">Miami-Dade</text>
+            <text x="402" y="364" fill="#fbbf24" font-size="10.5" text-anchor="middle">+ Broward</text>
+            <line x1="350" y1="345" x2="372" y2="338" stroke="#f59e0b" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <p style="text-align:center;color:#9fb3c8;font-size:0.92rem;margin-top:0.75rem;">Schematic only — exact county lines and site wind speeds are set by the Florida Building Code and ASCE 7-22 maps.</p>
+      </div>
+    </div>
+  </section>
 
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
+  <div class="divider"></div>
 
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
+  <!-- ============ WHEN HVHZ RULES APPLY (no-orphan grid) ============ -->
+  <section class="sec sec-hazard">
+    <div class="wrap">
+      <p class="eyebrow">TRIGGERS</p>
+      <h2>When HVHZ rules <span class="sweep">kick in</span></h2>
+      <p class="lead">If any of these is true, you build to the HVHZ rulebook — it is mandatory, not a preference.</p>
 
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="breadcrumb">
-                    <a href="index.html">Home</a> ›
-                    <a href="state-requirements.html">State Requirements</a> › <a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ</a> ›
-                    HVHZ Comparison
-                </div>
-                <div class="hero-icon">
-                    <i class="fas fa-code-compare"></i>
-                </div>
-                <h1>HVHZ Comparison</h1>
-                <p class="hero-subtitle">Comparing High Velocity Hurricane Zone and standard wind zone requirements</p>
-            </div>
+      <div class="grid" data-n="4">
+        <div class="card glass">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12l9-8 9 8"/><path d="M5 10v9h14v-9"/><path d="M9 19v-5h6v5"/>
+          </svg>
+          <h3>Project in Miami-Dade or Broward</h3>
+          <p>The two HVHZ counties. Location alone makes HVHZ mandatory.</p>
+          <span class="badge badge--hvhz">LOCATION</span>
         </div>
-    </section>
-
-    <!-- Main Content -->
-
-    <!-- HVHZ Quick Navigation -->
-    <section class="content-section" style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); padding: 2rem 0; border-top: 3px solid var(--map-deep); border-bottom: 3px solid var(--map-deep);">
-        <div class="container">
-            <h3 style="text-align: center; color: var(--map-deep); margin-bottom: 1.5rem;">
-                <i class="fas fa-hurricane" style="margin-right: 0.75rem;"></i>Quick Navigation: HVHZ Resources
-            </h3>
-            <!-- 2-row grid: Overview/Florida/Miami-Dade on top, Broward/Products/Comparison on bottom -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 900px; margin: 0 auto;">
-                <a href="hvhz-high-velocity-hurricane-zone-guide.html" class="hvhz-nav-button " style="">
-                    <i class="fas fa-book-open"></i><br>
-                    <strong>HVHZ Overview</strong><br>
-                    <span style="font-size: 0.85rem;">Complete Guide</span>
-                </a>
-                <a href="hvhz-florida-requirements.html" class="hvhz-nav-button " style="">
-                    <i class="fas fa-file-contract"></i><br>
-                    <strong>Florida FBC</strong><br>
-                    <span style="font-size: 0.85rem;">State Requirements</span>
-                </a>
-                <a href="miami-dade-hvhz-requirements.html" class="hvhz-nav-button " style="">
-                    <i class="fas fa-landmark"></i><br>
-                    <strong>Miami-Dade</strong><br>
-                    <span style="font-size: 0.85rem;">NOA Requirements</span>
-                </a>
-                <a href="broward-county-hvhz-requirements.html" class="hvhz-nav-button " style="">
-                    <i class="fas fa-building"></i><br>
-                    <strong>Broward County</strong><br>
-                    <span style="font-size: 0.85rem;">County Codes</span>
-                </a>
-                <a href="hvhz-product-approvals.html" class="hvhz-nav-button " style="">
-                    <i class="fas fa-certificate"></i><br>
-                    <strong>Approvals</strong><br>
-                    <span style="font-size: 0.85rem;">NOA & Testing</span>
-                </a>
-                <a href="hvhz-vs-standard-wind-zones.html" class="hvhz-nav-button hvhz-nav-button hvhz-nav-button-current" style="">
-                    <i class="fas fa-balance-scale"></i><br>
-                    <strong>HVHZ vs Standard</strong><br>
-                    <span style="font-size: 0.85rem;">Key Differences</span>
-                </a>
-            </div>
+        <div class="card glass">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+          <h3>Impact-resistant envelope</h3>
+          <p>Impact glazing required; shutters generally not accepted as a substitute.</p>
+          <span class="badge badge--hvhz">PROTECTION</span>
         </div>
-    </section>
-
-    <style>
-        .hvhz-nav-button {
-            display: block;
-            padding: 1.25rem 1rem;
-            background: white;
-            border: 2px solid var(--map-deep);
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--map-deep);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .hvhz-nav-button:hover {
-            background: var(--map-deep);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .hvhz-nav-button i {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .hvhz-nav-button-current {
-            background: var(--map-deep);
-            color: white;
-            font-weight: bold;
-            border: 3px solid #dc2626;
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-        }
-
-        .hvhz-nav-button-current:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-        }
-    </style>
-    <section class="content-section">
-        <div class="container">
-            <h2>HVHZ vs Standard Wind Zones: Complete Comparison</h2>
-
-<p>Understanding the differences between High Velocity Hurricane Zones (HVHZ) and standard wind zones is critical for architects, engineers, contractors, and building product manufacturers working in hurricane-prone regions. HVHZ designations trigger fundamentally different design requirements, product approval systems, testing protocols, and construction practices that go far beyond standard International Building Code (IBC) provisions.</p>
-
-<p>The distinction between HVHZ and standard wind zones is not merely academic—it directly impacts public safety, construction costs, insurance premiums, and long-term building performance under hurricane conditions. Projects built to standard wind zone requirements in HVHZ areas have historically suffered catastrophic failures, as demonstrated by Hurricane Andrew (1992) and subsequent major storms.</p>
-
-<div class="info-grid">
-    <div class="info-card">
-        <h4><i class="fas fa-wind"></i> Design Wind Speeds</h4>
-        <p><strong>HVHZ:</strong> 165-195 mph (ultimate, Risk Cat II). <strong>Standard:</strong> 90-160 mph. HVHZ wind speeds 15-50% higher than most US locations.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-certificate"></i> Product Approvals</h4>
-        <p><strong>HVHZ:</strong> Miami-Dade NOA or Broward BC required (TAS testing). <strong>Standard:</strong> Manufacturer certifications acceptable (AAMA, NFRC, etc.).</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-vial"></i> Testing Protocols</h4>
-        <p><strong>HVHZ:</strong> TAS 201/202/203 (9,000 cyclic pressure cycles). <strong>Standard:</strong> ASTM E1996/1886 static testing (or none in low-wind areas).</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-dollar-sign"></i> Construction Costs</h4>
-        <p><strong>HVHZ:</strong> 15-30% premium over standard construction. <strong>Standard:</strong> Baseline costs. HVHZ products, inspections, and labor add significant expense.</p>
-    </div>
-</div>
-
-<h3>Geographic Scope: Where HVHZ vs Standard Applies</h3>
-
-<p>Florida Building Code defines HVHZ boundaries based on ultimate design wind speeds from ASCE 7. As of 8th Edition FBC (2023) referencing ASCE 7-22:</p>
-
-<table class="comparison-table">
-    <thead>
-        <tr>
-            <th>Region</th>
-            <th>Classification</th>
-            <th>Design Wind Speed (V, Risk Cat II)</th>
-            <th>Product Approval Required</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Miami-Dade County (entire)</strong></td>
-            <td>HVHZ</td>
-            <td>170-195 mph</td>
-            <td>Miami-Dade NOA (TAS testing)</td>
-        </tr>
-        <tr>
-            <td><strong>Broward County (entire)</strong></td>
-            <td>HVHZ</td>
-            <td>165-180 mph</td>
-            <td>Broward BC or Miami-Dade NOA</td>
-        </tr>
-        <tr>
-            <td><strong>Palm Beach County (portions)</strong></td>
-            <td>HVHZ / Standard (mixed)</td>
-            <td>160-175 mph (HVHZ areas)</td>
-            <td>Varies by location within county</td>
-        </tr>
-        <tr>
-            <td><strong>Monroe County (Keys)</strong></td>
-            <td>HVHZ</td>
-            <td>180-195 mph</td>
-            <td>Miami-Dade NOA</td>
-        </tr>
-        <tr>
-            <td><strong>Florida Gulf Coast</strong></td>
-            <td>Standard (High Wind)</td>
-            <td>140-160 mph</td>
-            <td>Florida Product Approval (impact zones)</td>
-        </tr>
-        <tr>
-            <td><strong>Florida Atlantic Coast (North)</strong></td>
-            <td>Standard (High Wind)</td>
-            <td>140-160 mph</td>
-            <td>Florida Product Approval (impact zones)</td>
-        </tr>
-        <tr>
-            <td><strong>Central/North Florida</strong></td>
-            <td>Standard (Moderate Wind)</td>
-            <td>120-140 mph</td>
-            <td>Florida Product Approval (if impact zone)</td>
-        </tr>
-        <tr>
-            <td><strong>Most of Continental US</strong></td>
-            <td>Standard (Low-Moderate Wind)</td>
-            <td>90-130 mph</td>
-            <td>Standard certifications (AAMA, etc.)</td>
-        </tr>
-    </tbody>
-</table>
-
-<p>To run county-correct wind pressures (HVHZ amendments, coastal Exposure D, and product-approval logic baked in), use the dedicated calculators: <a href="https://windloadcalc.com/miami-dade-wind-load-calculator">Miami-Dade Wind Load Calculator</a>, <a href="https://windloadcalc.com/broward-wind-load-calculator">Broward Wind Load Calculator</a>, and <a href="https://windloadcalc.com/collier-county-wind-load-calculator">Collier County Wind Load Calculator</a>.</p>
-
-<h3>Design Requirements: Side-by-Side Comparison</h3>
-
-<table class="comparison-table">
-    <thead>
-        <tr>
-            <th>Requirement</th>
-            <th>HVHZ (Miami-Dade/Broward)</th>
-            <th>Standard Wind Zones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Basic Wind Speed</strong></td>
-            <td>165-195 mph (ASCE 7-22, Risk Cat II)</td>
-            <td>90-160 mph (varies by location)</td>
-        </tr>
-        <tr>
-            <td><strong>Product Testing</strong></td>
-            <td>TAS 201/202/203 mandatory (9,000 cycles)</td>
-            <td>ASTM E1996/1886 (impact zones) or none</td>
-        </tr>
-        <tr>
-            <td><strong>Product Approval</strong></td>
-            <td>Miami-Dade NOA or Broward BC required</td>
-            <td>Manufacturer certifications acceptable</td>
-        </tr>
-        <tr>
-            <td><strong>Impact Resistance</strong></td>
-            <td>Mandatory countywide (entire HVHZ)</td>
-            <td>Required within 1 mile of coast if V ≥ 130 mph, or V ≥ 140 mph anywhere</td>
-        </tr>
-        <tr>
-            <td><strong>Cyclic Pressure Testing</strong></td>
-            <td>9,000 cycles at ±1.5 × DP (TAS 203-94)</td>
-            <td>Not required (static pressure only)</td>
-        </tr>
-        <tr>
-            <td><strong>Wind-Driven Rain Test</strong></td>
-            <td>Simultaneous with cyclic pressure (TAS 203)</td>
-            <td>Separate static water spray (ASTM E331)</td>
-        </tr>
-        <tr>
-            <td><strong>Roof Covering</strong></td>
-            <td>TAS 100/105/108/125 testing, NOA required</td>
-            <td>FBC Section 1507 (less stringent)</td>
-        </tr>
-        <tr>
-            <td><strong>Roof Deck Fastening</strong></td>
-            <td>8d ring-shank @ 6" o.c. edges (minimum)</td>
-            <td>8d @ 6" o.c. edges (varies by code)</td>
-        </tr>
-        <tr>
-            <td><strong>Gable End Bracing</strong></td>
-            <td>Mandatory 2×4 @ 24" o.c. or engineered</td>
-            <td>Required per FBC 1609.7 (less stringent)</td>
-        </tr>
-        <tr>
-            <td><strong>Continuous Load Path</strong></td>
-            <td>Engineered roof-to-foundation required</td>
-            <td>Required but less rigorously enforced</td>
-        </tr>
-        <tr>
-            <td><strong>Special Inspections</strong></td>
-            <td>Mandatory third-party for all envelope</td>
-            <td>Required per FBC Ch. 17 (varies)</td>
-        </tr>
-        <tr>
-            <td><strong>Quality Assurance</strong></td>
-            <td>Annual factory inspections, market surveillance</td>
-            <td>Manufacturer self-certification typically</td>
-        </tr>
-        <tr>
-            <td><strong>Approval Renewal</strong></td>
-            <td>Annual (NOA/BC expires each year)</td>
-            <td>Not required (certifications ongoing)</td>
-        </tr>
-        <tr>
-            <td><strong>Secondary Water Barrier</strong></td>
-            <td>ASTM D1970 required under all roof coverings</td>
-            <td>Required in some jurisdictions (varies)</td>
-        </tr>
-    </tbody>
-</table>
-
-<h3>Product Testing: HVHZ vs Standard</h3>
-
-<div class="highlight-box">
-    <h3><i class="fas fa-vial"></i>Example: Impact Window Testing Comparison</h3>
-    <p><strong>HVHZ (Miami-Dade NOA) Testing Requirements:</strong></p>
-    <ul style="color: #1e3a8a; margin-left: 2rem;">
-        <li>TAS 201-94: Large missile impact (9 lb 2×4 @ 50 fps, multiple impact locations)</li>
-        <li>TAS 202-94: Small missile impact (2 lb ball @ 80 fps, 10 impacts)</li>
-        <li>TAS 203-94: Cyclic pressure testing (9,000 cycles at ±1.5 × DP rating)</li>
-        <li>TAS 203-94: Simultaneous wind-driven rain (80% of design pressure)</li>
-        <li>Total testing time: 40-80 hours over multiple days</li>
-        <li>Cost: $25,000-$50,000+ per product line</li>
-        <li>Acceptance criteria: Zero water infiltration, zero failures</li>
-    </ul>
-
-    <p style="margin-top: 1.5rem;"><strong>Standard (ASTM E1996/1886) Testing Requirements:</strong></p>
-    <ul style="color: #1e3a8a; margin-left: 2rem;">
-        <li>ASTM E1996: Large missile impact (9 lb 2×4 @ 50 fps, single impact per zone)</li>
-        <li>ASTM E1886: Static positive pressure (no cycling)</li>
-        <li>ASTM E1886: Static negative pressure (no cycling)</li>
-        <li>ASTM E331: Water spray test (separate from pressure, no simultaneous application)</li>
-        <li>Total testing time: 4-8 hours</li>
-        <li>Cost: $8,000-$20,000 per product line</li>
-        <li>Acceptance criteria: Limited water infiltration allowed (defined thresholds)</li>
-    </ul>
-
-    <p style="margin-top: 1.5rem;"><strong>Key Difference:</strong> TAS cyclic testing simulates a sustained Category 4-5 hurricane (9,000 wind gusts over 3-8 hours). ASTM static testing simulates a single maximum wind gust. Products passing ASTM may fail TAS due to fatigue, seal degradation, or fastener withdrawal under sustained cycling.</p>
-</div>
-
-<h3>Cost Implications: HVHZ vs Standard Construction</h3>
-
-<table class="comparison-table">
-    <thead>
-        <tr>
-            <th>Cost Category</th>
-            <th>HVHZ Premium</th>
-            <th>Standard Baseline</th>
-            <th>Typical Increase</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Impact Windows</strong></td>
-            <td>$45-$75/sq ft installed</td>
-            <td>$25-$40/sq ft (standard windows)</td>
-            <td>+50-100%</td>
-        </tr>
-        <tr>
-            <td><strong>Impact Doors</strong></td>
-            <td>$3,500-$8,000 each</td>
-            <td>$1,200-$3,000 (standard exterior doors)</td>
-            <td>+150-200%</td>
-        </tr>
-        <tr>
-            <td><strong>Hurricane Shutters</strong></td>
-            <td>$15-$35/sq ft (if used instead of impact glass)</td>
-            <td>Not required</td>
-            <td>N/A (additional cost)</td>
-        </tr>
-        <tr>
-            <td><strong>Roof Coverings</strong></td>
-            <td>$8-$15/sq ft (NOA-approved systems)</td>
-            <td>$5-$10/sq ft (standard systems)</td>
-            <td>+30-60%</td>
-        </tr>
-        <tr>
-            <td><strong>Structural Enhancements</strong></td>
-            <td>Hurricane straps, enhanced fastening, continuous load path</td>
-            <td>Standard framing connections</td>
-            <td>+$5,000-$20,000 per home</td>
-        </tr>
-        <tr>
-            <td><strong>Special Inspections</strong></td>
-            <td>$3,000-$15,000 per project</td>
-            <td>$500-$3,000 (varies by jurisdiction)</td>
-            <td>+200-400%</td>
-        </tr>
-        <tr>
-            <td><strong>Overall Construction</strong></td>
-            <td>Premium over standard</td>
-            <td>Baseline</td>
-            <td><strong>+15-30% total project cost</strong></td>
-        </tr>
-    </tbody>
-</table>
-
-<p style="margin-top: 2rem;"><strong>ROI Consideration:</strong> While HVHZ construction costs 15-30% more upfront, the investment significantly reduces hurricane damage risk, lowers insurance premiums (often 20-40% savings), and increases property values in HVHZ markets.</p>
-
-<h3>Insurance and Resale Value Impacts</h3>
-
-<div class="info-grid">
-    <div class="info-card">
-        <h4><i class="fas fa-shield-alt"></i> HVHZ Insurance Premiums</h4>
-        <p>NOA-approved impact windows/doors qualify for substantial insurance discounts (20-40% off windstorm premiums). Miami-Dade/Broward properties often recoup HVHZ costs via insurance savings within 7-12 years.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-home"></i> Property Values</h4>
-        <p>HVHZ-compliant properties command premium pricing in Miami-Dade/Broward markets. Buyers increasingly demand NOA approvals as condition of purchase. Standard windows in HVHZ areas reduce marketability.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-file-contract"></i> Financing Requirements</h4>
-        <p>Many lenders in HVHZ areas require impact protection as condition of mortgage approval. Non-compliant properties may face higher interest rates or denial.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-hammer"></i> Retrofit Mandates</h4>
-        <p>Some HVHZ municipalities require impact protection upgrades during substantial improvements (>50% property value). Standard products trigger costly retrofits.</p>
-    </div>
-</div>
-
-<h3>Performance During Major Hurricanes</h3>
-
-<p>Real-world hurricane performance demonstrates the critical importance of HVHZ standards:</p>
-
-<table class="comparison-table">
-    <thead>
-        <tr>
-            <th>Hurricane Event</th>
-            <th>HVHZ-Compliant Buildings</th>
-            <th>Standard Construction</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Hurricane Andrew (1992)</strong></td>
-            <td>Minimal HVHZ code at time; prompted NOA system creation</td>
-            <td>Widespread catastrophic failures, $27B damage (1992 dollars)</td>
-        </tr>
-        <tr>
-            <td><strong>Hurricane Irma (2017)</strong></td>
-            <td>Post-Andrew NOA buildings: minimal envelope failures</td>
-            <td>Pre-Andrew standard construction: extensive window/roof failures</td>
-        </tr>
-        <tr>
-            <td><strong>Hurricane Michael (2018)</strong></td>
-            <td>HVHZ-standard buildings (rare in Panhandle): survived 160 mph winds</td>
-            <td>Standard construction: near-total destruction in many areas</td>
-        </tr>
-        <tr>
-            <td><strong>Hurricane Ian (2022)</strong></td>
-            <td>Post-FBC buildings in Lee County: better performance</td>
-            <td>Older standard construction: catastrophic damage, $113B total loss</td>
-        </tr>
-    </tbody>
-</table>
-
-<p><strong>Key Finding:</strong> Post-Andrew HVHZ-compliant construction in Miami-Dade/Broward has demonstrated 80-95% reduction in envelope failures compared to pre-Andrew standard construction during equivalent wind events.</p>
-
-<h3>When to Exceed Minimum Requirements</h3>
-
-<p>Even in standard wind zones, consider voluntarily adopting HVHZ standards for:</p>
-
-<div class="info-grid">
-    <div class="info-card">
-        <h4><i class="fas fa-hospital"></i> Critical Facilities</h4>
-        <p>Hospitals, emergency operations centers, fire stations (Risk Category IV) should consider HVHZ standards even outside designated HVHZ areas for enhanced resilience.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-water"></i> Coastal Properties</h4>
-        <p>Properties within 1 mile of coast in high-wind zones (V ≥ 140 mph) benefit from HVHZ product performance, even if not legally required.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-dollar-sign"></i> Long-Term Investment</h4>
-        <p>High-value properties where owners plan 20+ year ownership justify HVHZ premiums through reduced lifetime risk and insurance savings.</p>
-    </div>
-
-    <div class="info-card">
-        <h4><i class="fas fa-chart-line"></i> Future Code Changes</h4>
-        <p>HVHZ boundaries may expand as climate patterns shift. Building to HVHZ standards today future-proofs against potential code upgrades.</p>
-    </div>
-</div>
-
-<h3>Summary: Key Differences</h3>
-
-<div class="highlight-box">
-    <h3><i class="fas fa-list-check"></i>Quick Reference: HVHZ vs Standard</h3>
-    <p><strong>Choose HVHZ Standards When:</strong></p>
-    <ul style="color: #1e3a8a; margin-left: 2rem;">
-        <li>Project located in Miami-Dade, Broward, or designated HVHZ counties (MANDATORY)</li>
-        <li>Design wind speeds exceed 165 mph (ASCE 7-22, Risk Category II)</li>
-        <li>Within wind-borne debris region AND seeking maximum protection</li>
-        <li>Client desires insurance discounts and maximum hurricane resilience</li>
-        <li>Long-term property value and marketability are priorities</li>
-    </ul>
-
-    <p style="margin-top: 1.5rem;"><strong>Standard Wind Zone Requirements Sufficient When:</strong></p>
-    <ul style="color: #1e3a8a; margin-left: 2rem;">
-        <li>Project outside designated HVHZ boundaries</li>
-        <li>Design wind speeds below 160 mph</li>
-        <li>Budget constraints prohibit HVHZ premium (15-30% higher costs)</li>
-        <li>Local building officials accept standard certifications (AAMA, NFRC, etc.)</li>
-        <li>Property not subject to wind-borne debris impact requirements</li>
-    </ul>
-
-    <p style="margin-top: 1.5rem;"><strong>Bottom Line:</strong> HVHZ standards provide demonstrably superior hurricane performance but at 15-30% construction cost premium. In designated HVHZ areas, compliance is mandatory—not optional. Outside HVHZ, weigh upfront costs against long-term risk reduction and insurance savings.</p>
-</div>
-
+        <div class="card glass">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="9" r="5"/><path d="M9 13l-2 8 5-3 5 3-2-8"/>
+          </svg>
+          <h3>NOA / Florida Product Approval</h3>
+          <p>Every envelope product needs a Miami-Dade NOA or Florida Product Approval.</p>
+          <span class="badge badge--hvhz">APPROVAL</span>
         </div>
-    </section>
-
-    <!-- Related HVHZ Resources -->
-    <section class="related-links">
-        <div class="container">
-            <h2>Related HVHZ Resources</h2>
-            <div class="link-cards">
-                <a href="hvhz-high-velocity-hurricane-zone-guide.html" class="link-card"><div class="link-card-icon"><i class="fas fa-book-open"></i></div><div class="link-card-content"><h4>HVHZ Overview</h4><p>Complete guide to HVHZ designation and requirements</p></div></a>
-
-                <a href="miami-dade-hvhz-requirements.html" class="link-card"><div class="link-card-icon"><i class="fas fa-landmark"></i></div><div class="link-card-content"><h4>Miami-Dade NOA</h4><p>Miami-Dade County product approval process</p></div></a>
-
-                <a href="broward-county-hvhz-requirements.html" class="link-card"><div class="link-card-icon"><i class="fas fa-building"></i></div><div class="link-card-content"><h4>Broward County</h4><p>Broward County HVHZ requirements</p></div></a>
-
-                <a href="hvhz-product-approvals.html" class="link-card"><div class="link-card-icon"><i class="fas fa-certificate"></i></div><div class="link-card-content"><h4>Product Approvals</h4><p>NOA and TAS testing protocols</p></div></a>
-
-                <a href="hvhz-florida-requirements.html" class="link-card"><div class="link-card-icon"><i class="fas fa-file-contract"></i></div><div class="link-card-content"><h4>Florida FBC HVHZ</h4><p>Statewide Florida Building Code requirements</p></div></a>
-
-                <a href="state-requirements.html" class="link-card"><div class="link-card-icon"><i class="fas fa-map-marked-alt"></i></div><div class="link-card-content"><h4>State Requirements</h4><p>Wind load requirements by state</p></div></a>
-            </div>
+        <div class="card glass">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 3h6v4l-2 2v6a3 3 0 0 1-2 0V9L9 7z"/><path d="M8 21h8"/>
+          </svg>
+          <h3>TAS testing + enhanced inspection</h3>
+          <p>TAS 201/202/203 testing plus added third-party envelope inspection.</p>
+          <span class="badge badge--hvhz">TESTING</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- WindLoadCalc Promotional Section -->
-    <section class="windloadcalc-promo">
-        <div class="container">
-            <h2>Need HVHZ Compliance Calculations?</h2>
-            <p>Visit <strong>WindLoadCalc.com</strong> for HVHZ vs Standard wind zone analysis, automated compliance determination, DP rating calculations, and professional wind load reports comparing HVHZ and standard requirements for your project location.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Visit WindLoadCalc.com →</a>
-        </div>
-    </section>
+  <div class="divider"></div>
 
-    <!-- Footer -->
-    
+  <!-- ============ CALCULATOR CALLOUT ============ -->
+  <section class="sec sec-glow">
+    <div class="wrap">
+      <p class="eyebrow">SITE-CORRECT NUMBERS</p>
+      <h2>Get the <span class="sweep">county-correct</span> wind pressures</h2>
+      <p class="lead">HVHZ amendments, coastal Exposure D, and product-approval logic baked in — by location.</p>
+      <div class="grid" data-n="3">
+        <a class="card glass" href="https://windloadcalc.com/miami-dade-wind-load-calculator" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/>
+          </svg>
+          <h3>Miami-Dade Calculator</h3>
+          <p>HVHZ wind pressures with NOA logic.</p>
+          <span class="badge badge--go">RUN IT</span>
+        </a>
+        <a class="card glass" href="https://windloadcalc.com/broward-wind-load-calculator" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>
+          </svg>
+          <h3>Broward Calculator</h3>
+          <p>County HVHZ pressures, site-correct.</p>
+          <span class="badge badge--go">RUN IT</span>
+        </a>
+        <a class="card glass" href="https://windloadcalc.com/collier-county-wind-load-calculator" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#10b981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5 8 12 8 12s8-7 8-12a8 8 0 0 0-8-8z"/>
+          </svg>
+          <h3>Collier County Calculator</h3>
+          <p>Standard high-wind coastal pressures.</p>
+          <span class="badge badge--go">RUN IT</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <script>
+  <div class="divider"></div>
+
+  <!-- ============ CTA ============ -->
+  <section class="sec sec-aurora sec-hazard">
+    <div class="wrap">
+      <p class="eyebrow">NEXT STEP</p>
+      <h2>Need HVHZ vs standard <span class="sweep">compliance figured out?</span></h2>
+      <p class="lead">Automated HVHZ-vs-standard analysis, DP ratings, and sealed wind-load reports for your exact project location.</p>
+      <div class="hero-cta">
+        <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Visit WindLoadCalc.com</a>
+        <a class="btn-ghost" href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Overview Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ RELATED LINKS (no-orphan grid) ============ -->
+  <section class="sec sec-well">
+    <div class="wrap">
+      <p class="eyebrow">RELATED HVHZ RESOURCES</p>
+      <h2>Keep <span class="sweep">going deeper</span></h2>
+      <div class="grid" data-n="6">
+        <a class="card glass" href="hvhz-high-velocity-hurricane-zone-guide.html">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h11a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 18V5"/>
+          </svg>
+          <h3>HVHZ Overview</h3>
+          <p>Complete guide to HVHZ designation and requirements.</p>
+          <span class="badge badge--data">GUIDE</span>
+        </a>
+        <a class="card glass" href="miami-dade-hvhz-requirements.html">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 21h18"/><path d="M5 21V9l7-4 7 4v12"/><path d="M9 21v-5h6v5"/>
+          </svg>
+          <h3>Miami-Dade NOA</h3>
+          <p>Miami-Dade County product approval process.</p>
+          <span class="badge badge--hvhz">COUNTY</span>
+        </a>
+        <a class="card glass" href="broward-county-hvhz-requirements.html">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 21v-5h6v5M8 7h2M14 7h2M8 11h2M14 11h2"/>
+          </svg>
+          <h3>Broward County</h3>
+          <p>Broward County HVHZ requirements.</p>
+          <span class="badge badge--hvhz">COUNTY</span>
+        </a>
+        <a class="card glass" href="hvhz-product-approvals.html">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/>
+          </svg>
+          <h3>Product Approvals</h3>
+          <p>NOA and TAS testing protocols.</p>
+          <span class="badge badge--hvhz">APPROVALS</span>
+        </a>
+        <a class="card glass" href="hvhz-florida-requirements.html">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2h9l3 3v17H6z"/><path d="M9 8h6M9 12h6M9 16h4"/>
+          </svg>
+          <h3>Florida FBC HVHZ</h3>
+          <p>Statewide Florida Building Code requirements.</p>
+          <span class="badge badge--hvhz">CODE</span>
+        </a>
+        <a class="card glass" href="state-requirements.html">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#06b6d4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>
+          </svg>
+          <h3>State Requirements</h3>
+          <p>Wind load requirements by state.</p>
+          <span class="badge badge--data">MAP</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.main-header');
@@ -1565,146 +724,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-        /* batch4: sub-nav wrap */
-        @media (max-width: 768px) {
-            *:has(> .design-nav-button), *:has(> .hvhz-nav-button), *:has(> .risk-nav-button) {
-                display: grid !important; grid-template-columns: 1fr !important; gap: 0.75rem !important;
-            }
-        }
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
