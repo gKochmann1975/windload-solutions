@@ -101,1103 +101,251 @@
     }
     </script>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #0018ff;
-            --dark-blue: #181E57;
-            --mandatory-teal: #0d9488;
-            --mandatory-emerald: #0f766e;
-            --mandatory-dark: #115e59;
-            --mandatory-light: #f0fdfa;
-            --warning-amber: #f59e0b;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0d9488;
-            padding-left: 1rem;
-        }
-
-        /* Hero - Mandatory Red Gradient */
-        .hero {
-            background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
-            color: white;
-            padding: 180px 0 100px;
-            text-align: center;
-            min-height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/></svg>') repeat;
-            background-size: 100px;
-            animation: drift 80s linear infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes drift {
-            from { transform: translateX(0) translateY(0); }
-            to { transform: translateX(-100px) translateY(-100px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1000px;
-            padding: 0 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero-subtitle {
-            font-size: 1.4rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-
-        .hero-icon {
-            width: 120px;
-            height: 120px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 3.5rem;
-            color: white;
-            backdrop-filter: blur(10px);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(255,255,255,0.2); }
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .hero-cta {
-            display: inline-block;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero-cta-primary {
-            background: white;
-            color: #0d9488;
-        }
-
-        .hero-cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-cta-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .hero-cta-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Key Facts Box - GEO Optimized */
-        .key-facts {
-            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
-            border-left: 5px solid #0d9488;
-            padding: 2rem;
-            margin: 3rem 0;
-            border-radius: 10px;
-        }
-
-        .key-facts h2 {
-            color: #0f766e;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.8rem;
-        }
-
-        .key-facts ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .key-facts li {
-            color: #115e59;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            padding: 0.75rem 0 0.75rem 2rem;
-            position: relative;
-            border-bottom: 1px solid rgba(13, 148, 136, 0.2);
-        }
-
-        .key-facts li:last-child {
-            border-bottom: none;
-        }
-
-        .key-facts li::before {
-            content: '\f071';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: #0d9488;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: white;
-            padding: 4rem 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border-left: 5px solid var(--mandatory-red);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--mandatory-crimson);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #0f766e;
-            font-weight: 600;
-        }
-
-        /* Section Styling */
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            color: #6b7280;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Mandatory States Section */
-        .mandatory-states-section {
-            padding: 4rem 2rem;
-            background: #f9fafb;
-        }
-
-        /* Quick State Navigation */
-        .state-quick-nav {
-            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
-            border: 2px solid #0d9488;
-            border-radius: 15px;
-            padding: 1.5rem 2rem;
-            margin: 2rem 0 3rem;
-            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.15);
-        }
-
-        .quick-nav-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #0f766e;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .quick-nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .quick-nav-btn {
-            background: white;
-            color: #0d9488;
-            padding: 0.6rem 1.2rem;
-            border-radius: 25px;
-            border: 2px solid #0d9488;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .quick-nav-btn:hover {
-            background: #0d9488;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
-        }
-
-        .quick-nav-btn i {
-            font-size: 0.9rem;
-        }
-
-        /* State Cards Grid */
-        .mandatory-states-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .mandatory-state-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.1);
-            transition: all 0.3s ease;
-            border-top: 4px solid var(--mandatory-red);
-            scroll-margin-top: 100px;
-        }
-
-        .mandatory-state-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(13, 148, 136, 0.2);
-        }
-
-        .state-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .state-name a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .state-name a:hover {
-            color: #0d9488;
-        }
-
-        .mandatory-icon {
-            color: var(--mandatory-red);
-        }
-
-        .requirement-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .badge-hvhz {
-            background: linear-gradient(135deg, #0d9488, #0f766e);
-            color: white;
-        }
-
-        .badge-coastal {
-            background: #f0fdfa;
-            color: #0d9488;
-            border: 2px solid #0d9488;
-        }
-
-        .badge-commercial {
-            background: #fef3c7;
-            color: #d97706;
-            border: 2px solid #f59e0b;
-        }
-
-        .state-details {
-            margin-top: 1rem;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin: 0.75rem 0;
-            font-size: 0.95rem;
-            color: #4b5563;
-        }
-
-        .detail-icon {
-            color: var(--mandatory-red);
-            font-size: 1rem;
-            margin-top: 0.2rem;
-            width: 1rem;
-            text-align: center;
-        }
-
-        .state-link-btn {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .state-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
-        }
-
-        /* Comparison Section */
-        .comparison-section {
-            background: white;
-            padding: 4rem 2rem;
-        }
-
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .comparison-card {
-            padding: 2rem;
-            border-radius: 15px;
-        }
-
-        .comparison-card.mandatory {
-            background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
-            border-left: 5px solid #0d9488;
-        }
-
-        .comparison-card.voluntary {
-            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            border-left: 5px solid #22c55e;
-        }
-
-        .comparison-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .comparison-card.mandatory h3 {
-            color: #0f766e;
-        }
-
-        .comparison-card.voluntary h3 {
-            color: #166534;
-        }
-
-        .comparison-card ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 1rem;
-        }
-
-        .comparison-card li {
-            padding: 0.5rem 0 0.5rem 1.5rem;
-            position: relative;
-        }
-
-        .comparison-card.mandatory li {
-            color: #115e59;
-        }
-
-        .comparison-card.mandatory li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: #0d9488;
-        }
-
-        .comparison-card.voluntary li {
-            color: #14532d;
-        }
-
-        .comparison-card.voluntary li::before {
-            content: '\f00d';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: #22c55e;
-        }
-
-        /* Why Section */
-        .why-section {
-            padding: 4rem 2rem;
-            background: #f9fafb;
-        }
-
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .why-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .why-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .why-card h3 {
-            color: #1f2937;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .why-card h3 i {
-            color: var(--mandatory-red);
-        }
-
-        .why-card p {
-            color: #6b7280;
-            line-height: 1.7;
-        }
-
-        /* Regional Links Section */
-        .regional-section {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            padding: 4rem 2rem;
-        }
-
-        .regional-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .regional-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .regional-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .regional-card.tornado {
-            border-top: 4px solid #6366f1;
-        }
-
-        .regional-card.solar {
-            border-top: 4px solid #f59e0b;
-        }
-
-        .regional-card.all-states {
-            border-top: 4px solid #0d9488;
-        }
-
-        .regional-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .regional-card.tornado .regional-icon { color: #6366f1; }
-        .regional-card.solar .regional-icon { color: #f59e0b; }
-        .regional-card.all-states .regional-icon { color: #0d9488; }
-
-        .regional-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #1f2937;
-        }
-
-        .regional-card p {
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button-primary {
-            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-            color: white;
-        }
-
-        .cta-button-secondary {
-            background: white;
-            color: var(--primary-blue);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        /* Footer */
-        .site-footer {
-            background: #1a202c;
-            color: #e5e7eb;
-            padding: 4rem 2rem 2rem;
-            margin-top: 0;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-column h4 {
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #0d9488;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-column a {
-            color: #e5e7eb;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .footer-column a:hover {
-            color: #5eead4;
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-bottom p {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            margin: 0.5rem 0;
-        }
-
-        .footer-tagline {
-            font-weight: 600;
-            color: #5eead4;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .hero-cta-group {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .mandatory-states-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .site-footer {
-                padding: 3rem 1.5rem 1.5rem;
-            }
-
-            .section-header h2 {
-                font-size: 1.8rem;
-            }
-
-            .quick-nav-links {
-                flex-direction: column;
-            }
-
-            .quick-nav-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">All 50 States</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="index.html"><i class="fas fa-home"></i> Home</a>
         <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> All 50 States</a>
@@ -1210,561 +358,237 @@
         <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge"><i class="fas fa-gavel"></i> Legal Requirement</div>
-            <div class="hero-icon">
-                <i class="fas fa-file-signature"></i>
-            </div>
-            <h1>10 Mandatory Wind Load States</h1>
-            <p class="hero-subtitle">The only 10 US states that legally require PE-sealed wind load calculations for building permits. Essential knowledge for contractors, engineers, and building professionals.</p>
-            <div class="hero-cta-group">
-                <a href="state-requirements.html" class="hero-cta hero-cta-primary"><i class="fas fa-map"></i> View All 50 States</a>
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="hero-cta hero-cta-secondary" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Get Wind Load Calculator</a>
-            </div>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">PE SEAL REQUIRED BY LAW · ASCE 7</p>
+    <h1>The 10 states that <span class="sweep">mandate wind load</span> compliance</h1>
+    <p class="lead">Ten US states legally require PE-sealed wind load calculations before a building permit is issued. Pick a state for its adopted code and requirements.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">10</span><span class="lbl">MANDATORY STATES</span></div>
+      <div class="stat"><span class="num">3</span><span class="lbl">HVHZ STATES · FL TX HI</span></div>
+      <div class="stat"><span class="num">195</span><span class="lbl">MAX DESIGN MPH · HVHZ</span></div>
+      <div class="stat"><span class="num">100%</span><span class="lbl">PE SEAL REQUIRED</span></div>
+    </div>
+  </div></section>
 
-    <main>
-        <div class="container">
-            <!-- Key Facts Box - GEO Optimized -->
-            <div class="key-facts">
-                <h2><i class="fas fa-exclamation-triangle"></i> Critical Facts About Mandatory Wind Load States</h2>
-                <ul>
-                    <li><strong>Only 10 states</strong> legally require PE-sealed wind load calculations for building permits</li>
-                    <li><strong>Florida has the strictest requirements</strong> with HVHZ zones in Miami-Dade and Broward counties requiring product approval (NOA/TAS)</li>
-                    <li><strong>Texas, Hawaii, and coastal Louisiana</strong> have HVHZ-equivalent requirements for hurricane-prone areas</li>
-                    <li><strong>40 states do NOT require</strong> wind load calculations by law - but insurance, lenders, and manufacturers often require them anyway</li>
-                    <li><strong>PE seal requirements vary</strong> - some states require PE seals only for commercial, others for all structures</li>
-                    <li><strong>ASCE 7-16</strong> is the most commonly adopted standard, with some jurisdictions moving to ASCE 7-22</li>
-                </ul>
-            </div>
-        </div>
+  <div class="divider"></div>
 
-        <!-- Stats Section -->
-        <section class="stats-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Mandatory Wind Load States Overview</h2>
-                    <p>Understanding the landscape of wind load requirements across the United States</p>
-                </div>
+  <!-- STATE GRID — HVHZ + GULF/ATLANTIC (5) -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">HIGH-WIND · HURRICANE EXPOSURE</p>
+    <h2>HVHZ &amp; <span class="sweep">Gulf Coast</span> states</h2>
+    <p class="lead">The most extreme exposure in the nation — entire-state and coastal hurricane zones.</p>
+    <div class="grid" data-n="5">
 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">10</div>
-                        <div class="stat-label">Mandatory States</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">40</div>
-                        <div class="stat-label">Voluntary States</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">HVHZ States (FL, TX, HI)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">195 mph</div>
-                        <div class="stat-label">Max Design Wind (HVHZ)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">PE Seal Required Rate</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <a class="card glass" href="florida-wind-load-requirements.html">
+        <span class="sil" data-state="fl"><svg viewBox="927.5 454.6 163.3 139.9" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1045.28,455.26l1.22,1.86l2.7,7.99l1.4,2.7l2.95,7.43l4.04,7.01l5.48,8.37l8.43,9.85l1.06,1.43l-0.63,1.47l-0.03,1.42l0.28,2.08l0.59,1.98l1.21,2.33l2.16,3.51l-0.97,-0.61l-3.11,-5.04l-0.8,-3.13l-0.46,-4.56l-0.49,0.2l-0.16,1.53l0.07,1.76l-0.44,0.76l-1.2,-2.5l-0.15,-1.19l0.56,-1.52l-0.32,-0.46l-1.41,-0.49l-0.46,-1.07l-0.01,-1.13l-0.84,-0.46l-0.57,0.13l0.84,2.65l0.89,1.56l1.43,3.87l1.64,2.21l1.06,1.91l12.16,20.24l2.49,2.41l1.09,1.86l1.51,4.02l1.12,5.31l0.33,10.02l0.86,6.73l-0.24,-0.17l-0.26,-0.68l-0.34,-0.04l-0.68,3.27l-1.18,3.05l0.2,4.39l-0.42,2.29l-2.01,2.69l-1.5,0.2l-3.37,2.33l-2.65,-0.01l-2.9,1.48l-2.04,0.23l-1.5,-1.84l0.03,-0.94l0.31,-0.99l0.75,-0.34l3.06,1.68l0.36,-0.98l-1,-0.93l-1.66,-0.33l-1.26,-0.46l-3.12,-4.48l-2.95,-2.94l-0.76,-2.16l-4.35,-0.69l-3.32,-1.58l-2.52,-3.35l-2.13,-6.31l-1.42,-0.52l-0.63,-0.42l0.9,-2.6l1.03,-2.22l-0.99,0.67l-0.67,0.87l-0.72,1.94l-0.69,0.39l-0.71,-0.17l-1.3,-3.29l-0.43,-4.23l0.83,-1.73l-1.66,0.21l-1.62,0.86l0.47,1.36l-0.12,0.81l-1.28,-0.01l-1.02,-0.35l-1.51,-1.26l-2.17,-2.51l-4.72,-7.11l-0.86,-0.98l-1.35,-0.95l0.51,-0.43l0.98,-0.36l1.78,-3.78l1.48,-2.35l0.38,-1.52l-0.2,-0.6l-0.93,-0.77l-0.92,0.94l-0.48,-0.16l-1.44,-1.63l-1.19,-0.34l-0.72,0.5l1.04,1.35l0.82,0.44l0.03,2.19l-0.2,0.74l-0.6,0.72l-1.13,-0.17l-0.47,0.61l-0.73,-0.47l-0.78,-0.85l-0.94,-1.45l0.6,-9.01l0.92,-5.81l-0.74,-6.36l-0.01,-0.96l-0.4,-1.66l-2.85,-3.32l-11.46,-7.45l-9.32,-9.47l-7.31,-3.05l-5.03,1.54l-0.79,0.91l-0.25,1.09l0.48,1.14l-0.41,0.55l-1.39,0.12l-1.83,0.51l-4.52,3.39l-1.73,0.11l-1.47,0.91l-1.11,0.68l-3.02,0.66l-2.52,0.93l-1.16,-0.2l-0.92,-1.53l-0.2,-1.67l0.74,1.21l1.03,0.89l0.37,-0.45l0.05,-0.91l-1.11,-1.63l-3.19,-1.89l-3.71,-2.88l1.03,-0.01l0.18,-0.73l-1.14,-0.8l0.31,-1.11l0.6,-1.2l-1.38,0.33l-1.17,0.92l0.07,0.97l-0.16,0.79l-0.69,-0.04l-1.36,-0.8l-6.48,-1.95l-5.56,-0.91l4.07,-1.11l2.3,0.28l-0.36,-0.77l-0.6,-0.45l-1.84,-0.45l-2.23,0.49l-1.46,-0.15l-1.39,0.79l-1.5,1.11l-1.37,0.63l-5.5,1.25l-4.45,1.19l0.65,-0.85l0.72,-0.58l2.59,-1.03l0.24,-1.63l-0.78,-1.46l-0.66,0.44l-0.62,1.27l-0.99,-0.77l-1,0.1l-0.09,1.93l-1.16,1.4l-0.46,1.34l-3.68,1.36l-0.52,-0.29l0.99,-1.32l-0.15,-0.67l-0.76,0.44l0.11,-0.78l0.62,-0.75l0.22,-0.82l-0.23,-1.51l0.29,-2.18l-0.32,-0.65l-3.05,-2.51l-0.81,-1.39l-0.27,-1.52l0.12,-1.62l6.21,-0.59l6.21,-0.61l6.21,-0.63l6.21,-0.66l6.21,-0.68l6.2,-0.7l6.2,-0.72l6.18,-0.75l1,1.66l1.97,3.45l0.16,0.84l1.82,-0.09l3.09,-0.17l3.09,-0.18l3.09,-0.19l3.09,-0.19l3.09,-0.2l3.09,-0.2l3.09,-0.21l3.09,-0.21l3.09,-0.22l3.09,-0.22l3.09,-0.23l3.09,-0.24l3.09,-0.24l3.09,-0.25l3.09,-0.25l3.09,-0.26l0.13,0.73l0.68,1.07l0.33,1.29l0.33,0.59l0.67,0.3l0.98,-0.05l0.86,-0.89l0.36,-1.72l-0.13,-1.84l-0.69,-2.01l-0.21,-1.75l0.32,-1.1l0.53,-0.34l0.41,-0.63l0.39,-0.18l1.1,0.13l4.19,0.84L1045.28,455.26zM982.99,488.77l-1.86,1.04l-2.19,-0.33l1.3,-0.27l0.98,0.12l2.27,-1.44l1.15,-1.02l1.42,-0.51L982.99,488.77zM1083.9,527.61l0.61,1.58l-2.5,-3.49l-3.3,-5.58l-2,-4.4l1.03,1.1l1.25,2.44L1083.9,527.61zM1048.56,550.12l0.17,1.32l-1.36,-2.05l-1.05,-2.33l1.09,0.64L1048.56,550.12zM1049.84,552.19l-0.63,0.7l-1.52,-0.21l-0.91,-0.65l-0.57,-1.45l1.51,1.4l0.51,0.29L1049.84,552.19zM1088.32,576.1l-3.34,4.93l0.27,-1.14l1.2,-2.54l0.33,-1.15l0.95,-0.86l0.79,-1.39l-0.17,-1.43l1.27,-1.25l0.45,-0.23L1088.32,576.1zM1083.99,582.38l-0.53,0.2l0.65,-1.1l0.24,0.03L1083.99,582.38zM1080.44,585.29l-0.39,0.06l0.14,-0.35l0.7,-0.78l0.33,0.2l0.02,0.33L1080.44,585.29zM1076.35,587.99l-0.85,0.69l-1.04,-0.23l0.98,-0.71l3.09,-1.1l-1.08,0.91L1076.35,587.99zM1070.61,590.46l-0.54,0.56l-0.32,-0.09l-0.11,-0.68l-1.12,-1.35l-0.03,-0.4l2.25,1.14l0.12,0.39L1070.61,590.46zM1066.01,592.38l-1.3,0.44l0.94,-1.06l0.13,-1.41l0.8,0.95l0.09,0.64L1066.01,592.38zM1061.73,594.34l-0.52,0.13l-0.1,-0.34l0.84,-0.57l0.6,-0.06l0.05,0.48L1061.73,594.34z"/></svg></span>
+        <h3>Florida</h3>
+        <p>Florida Building Code 8th Ed. (2023) / ASCE 7-22 — nation's strictest, NOA/TAS in Miami-Dade &amp; Broward.</p>
+        <span class="badge badge--hvhz">HVHZ · MOST STRINGENT</span>
+      </a>
 
-        <!-- Mandatory States Section -->
-        <section class="mandatory-states-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>The 10 Mandatory Wind Load States</h2>
-                    <p>Complete state-by-state guide to legally required wind load calculations</p>
-                </div>
+      <a class="card glass" href="texas-wind-load-requirements.html">
+        <span class="sil" data-state="tx"><svg viewBox="562.9 344.1 250.4 243.1" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M793.98,412.15l0.99,1.07l0.79,0.3l0.23,0.43l0.38,0.11l0.47,-0.1l0.7,-0.51l1.05,0.12l0.87,-0.19l1.73,0.22l0.97,0.49l0.09,3.02l0.09,3.03l0.09,3.03l0.09,3.03l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l0.06,2.83l2.7,2.67l1.18,1.85l0.38,0.95l0.19,3.27l0.28,0.78l1.36,1.2l0.05,0.81l1.45,2.33l-0.01,1.11l1.39,2.49l0.77,0.64l0.17,1.71l0.44,1.29l-0.59,0.94l0.29,1.27l-0.34,1.2l-0.16,1.59l-0.82,2.48l-0.75,1.22l-1.01,2.32l0.14,1.91l-0.56,2.1l-0.05,0.8l0.61,1.37l0.3,3.81l-0.3,0.81l-1.25,2.27l-0.93,-0.03l-1.96,3.75l1.22,2.05l-0.06,0.75l-4.1,0.52l-9.25,4.35l-3.61,2.31l0.18,-0.76l4.36,-2.99l-1.56,-0.42l-2.49,0.77l-0.9,-0.27l1.03,-2.43l-0.37,-2.13l-1.77,-0.03l-1.11,1.71l-0.79,-0.06l-1.04,-0.72l-0.79,0.24l0.63,3.85l1.14,1.57l0.96,2.01l-2.54,2.53l-2.36,2.09l-0.24,2l-2.38,2.62l-2.25,1.49l-5.3,3.49l-1.52,0.75l-2.4,1.62l-3.32,1.21l-3.19,1.91l-1.08,0.29l2.04,-1.62l2.41,-1.6l-2.07,0.22l-3.19,-0.75l-1.95,-0.05l-0.02,0.58l-1.49,0.82l-1.53,-1.22l-0.66,-0.82l-0.31,-0.71l-0.65,-0.17l-0.63,0.32l2.26,4.98l0.98,0.22l1.08,0.5l-1.36,1.15l-1.46,0.87l-2.29,0.57l-1.92,-1.83l-0.44,2.27l-0.27,2.27l-0.66,0.58l-1.05,0.82l-0.56,-0.63l-0.26,-0.88l-0.67,0.78l-0.98,0.58l-1.61,0.1l-1.21,0.3l0.02,0.94l0.27,0.95l2.15,-0.72l-0.8,2.42l-2,2.38l-1.62,0.54l-2.46,-0.39l-0.61,0.23l-0.55,0.49l2.81,3.81l-1.93,5.65l-1.22,2.04l-0.83,0.25l-0.89,0.04l-3.17,-1.89l-1.71,-1.45l1.46,3.88l4.17,1.2l0.19,1.46l-0.04,1.25l-0.85,1.45l-0.81,1.93l0.55,1.36l0.61,3.36l0.54,1.55l0.55,4.68l0.64,2.04l3.75,7.52l1.3,0.08l0.2,0.81l-0.14,1.55l-2.79,0.41l-1.18,0.67l-0.24,0.6l-0.18,0.32l-0.36,-0.04l-1.32,-0.45l-2.99,-2.17l-4.37,-1.4l-5.76,-0.63l-3.92,-1.16l-2.07,-1.67l-2.18,-1.02l-2.29,-0.37l-1.88,-0.93l-1.47,-1.5l-2.18,-1l-2.89,-0.5l-1.85,-1.15l-1.22,-2.7l0,-0.04l-1.02,-4.48l-1.37,-2.83l-2.73,-3.55l-0.25,-0.46v0l0,-0.57l0.43,-1.99l-0.25,-1.45l-0.86,-1.21l-0.16,-1.25l0.54,-1.29l0.09,-1.57l-0.35,-1.85l-1.74,-2.05l-3.11,-2.25l-2.59,-3.21l-2.06,-4.17l-2.08,-2.92l-2.11,-1.67l-1.4,-1.99l-0.69,-2.3l-0.17,-1.32l0.34,-0.35l-1.22,-2.58l-2.76,-4.81l-1.54,-3.49l-0.33,-2.17l-1.76,-2.66l-3.18,-3.15l-1.71,-2.03l-0.37,-1.36l-0.01,0l-4.97,-4.19l-1.36,-2.52l-1.13,-0.84l-1.35,0l-0.68,-0.28v-0.55l-0.44,-0.05l-0.87,0.45l-2.76,-0.07l-4.65,-0.6l-3.32,-0.89l-2,-1.17l-1.46,0.04l-0.92,1.25l-1.83,0.72l-2.74,0.18l-2.51,2.26l-2.29,4.34l-1.08,2.82l0.14,1.3l-0.59,0.89l-1.32,0.49l-1.4,1.21l-1.48,1.92l-1.62,0.86l-1.76,-0.21l-3.13,-1.83l-4.49,-3.45l-3.55,-2.21l-2.63,-0.95l-2.25,-1.62l-1.87,-2.29l-1.77,-1.57l-1.67,-0.86l-1.8,-2.51l-1.94,-4.17l-0.86,-3.16l0.31,-3.21l-2.32,-7.29l-1.29,-3.18l-1.04,-1.51l-2.14,-1.89l-3.23,-2.28l-4.18,-4.34l-5.11,-6.41l-3.66,-3.93l-2.23,-1.45l-1.82,-2.32l-1.4,-3.19l-1.47,-2.09l-0.17,-0.11l-2.16,-1.4h0l-1.46,-4.26l0.12,0.01l4.25,0.49l4.26,0.49l4.26,0.47l4.26,0.46l4.26,0.45l4.26,0.44l4.26,0.43l4.26,0.42l4.26,0.41l4.26,0.4l4.27,0.39l4.27,0.38l4.27,0.37l4.27,0.36l4.27,0.35l4.27,0.33l0.52,-6.26l0.51,-6.26l0.52,-6.26l0.51,-6.25l0.52,-6.25l0.51,-6.25l0.51,-6.25l0.51,-6.24l0.51,-6.24l0.51,-6.24l0.51,-6.24l0.51,-6.24l0.51,-6.23l0.51,-6.23l0.51,-6.23l0.51,-6.23l0.75,0.04l3.35,0.26l3.35,0.25l3.35,0.24l3.36,0.23l3.36,0.23l3.36,0.22l3.36,0.21l3.36,0.21l3.36,0.2l3.36,0.19l3.36,0.19l3.36,0.18l3.36,0.17l3.36,0.17l3.36,0.16l3.36,0.15l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.12,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l-0.11,2.66l1.07,0.28l1.32,0.79l3.23,2.98l0.96,0.65l1.78,-0.29l1.9,0.42l0.51,-0.04l0.42,-1.2l0.19,-0.24l0.27,0.05l1.62,1.15l0.31,0.44l0.92,1.59l0.18,1.85l0.53,0.29l1.01,0.25l2.47,0.19l3.11,1.3l1.27,0.22l2.26,-0.26l2.08,1.67l0.74,0.26l0.62,-0.21l1.23,-1.16l2.63,0.2l2.14,-0.16l0.14,1.36l0.35,0.98l1.75,1.08l0.41,0.51l0.05,1.65l0.45,0.43l0.72,0.18l0.75,-0.09l0.89,-0.5l1.95,-1.59l0.59,-0.39l0.36,-0.03l0.35,0.09l0.29,0.36l0.62,1.25l1.66,0.7l0.94,1.07l0.59,0.17l0.65,-0.19l1.04,-0.63l0.81,0.04l0.93,-0.64l0.37,0.15l0.15,0.46l-0.29,1.38l0.15,0.53l0.37,0.62l0.5,0.43l0.49,0.07l0.38,-0.34l0.72,-1.73l-0.04,-0.63l0.79,-0.21l0.36,-0.33l0.47,-1.25l0.81,-0.34l0.43,0.07l0.39,0.36l0.78,1.15l1.88,0.66l0.49,0.04l0.49,-0.24l0.85,-0.94l0.44,-0.11l0.35,0.13l0.2,0.14l0.06,1.12l1.93,1.28l1.42,0.39l1.38,1.29l0.4,0.15l0.68,-1.04l1.33,-0.36l1.27,-1.06l3.68,-1.36l1.46,0.43l1.47,-0.03l0.38,-0.6l2.61,-0.87l0.53,-0.33l0.72,0.42l0.26,0.62l0.34,0.26l1.79,0.3l0.99,-0.04l1.81,-0.82l0.7,-1.03l0.41,-0.06l1.3,0.49l3.44,2.04l1.75,1.66l1.94,0.79l1.06,0.71L793.98,412.15zM784.68,513.12l-0.99,0.23l4.27,-3.51l0.89,-1.16l1.15,0.04l-1.89,1.96L784.68,513.12zM750.41,535.55l-0.74,0.09l0.92,-1.21l1.48,-0.6l3.26,-2.32l1.32,-0.15l0.69,-0.8l0.3,-0.12l-0.2,0.99l-2.61,1.39L750.41,535.55zM745.35,541.16l-0.44,0.05l0.99,-1.84l0.19,-0.74l1.61,-2.32l0.84,-0.34l0.34,1l-1.65,1.63L745.35,541.16zM738.34,554.67l-0.65,1.29l0.2,-1.94l1.7,-4.38l3.4,-5.74l1.41,-0.95l-3.91,6.3L738.34,554.67zM741.7,580.59l-0.3,1.05l-1.63,-4.95l-2.58,-11.17l-0.01,-6.34l0.46,-2.17l0.57,8.96l2.88,11.42L741.7,580.59z"/></svg></span>
+        <h3>Texas</h3>
+        <p>2021 IBC / ASCE 7-16 — HVHZ within 1 mile of the Gulf Coast; TDI/TWIA coastal insurance.</p>
+        <span class="badge badge--hvhz">HVHZ · COASTAL</span>
+      </a>
 
-                <!-- Quick State Navigation -->
-                <div class="state-quick-nav">
-                    <div class="quick-nav-title"><i class="fas fa-link"></i> Jump to State:</div>
-                    <div class="quick-nav-links">
-                        <a href="#florida" class="quick-nav-btn"><i class="fas fa-hurricane"></i> Florida</a>
-                        <a href="#texas" class="quick-nav-btn"><i class="fas fa-hurricane"></i> Texas</a>
-                        <a href="#hawaii" class="quick-nav-btn"><i class="fas fa-umbrella-beach"></i> Hawaii</a>
-                        <a href="#louisiana" class="quick-nav-btn"><i class="fas fa-water"></i> Louisiana</a>
-                        <a href="#north-carolina" class="quick-nav-btn"><i class="fas fa-wind"></i> North Carolina</a>
-                        <a href="#south-carolina" class="quick-nav-btn"><i class="fas fa-wind"></i> South Carolina</a>
-                        <a href="#georgia" class="quick-nav-btn"><i class="fas fa-wind"></i> Georgia</a>
-                        <a href="#virginia" class="quick-nav-btn"><i class="fas fa-wind"></i> Virginia</a>
-                        <a href="#new-york" class="quick-nav-btn"><i class="fas fa-city"></i> New York</a>
-                        <a href="#california" class="quick-nav-btn"><i class="fas fa-sun"></i> California</a>
-                    </div>
-                </div>
+      <a class="card glass" href="hawaii-wind-load-requirements.html">
+        <span class="sil" data-state="hi"><svg viewBox="580.3 585.4 37.6 74.8" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M590.47,592.69l-1.45,-0.14l-0.31,-0.72l-0.93,-0.95l0.01,-0.8l-0.7,-1.32l0.06,-0.94l1.58,-0.55l2.31,0.37l2.33,2.02l-0.12,1.15l-0.41,0.58l-0.82,0.35l-0.86,0.75L590.47,592.69zM581.2,586.6l-0.63,0.31l-0.29,-0.38l0.28,-0.52l0.75,-0.4l1.04,-0.01l1.33,-0.23l0.44,0.58l-0.73,0.27l-0.51,0.53l-1.03,-0.33L581.2,586.6zM602.65,611.73l0.31,0.36l0.53,0.3l-0.57,1.04l0.14,0.95l-0.04,0.46l-0.85,-0.16l-1.26,-0.8l-0.33,-0.69l-0.1,-1.02l-0.73,-0.33l0.26,-0.54l0,-0.22l-0.51,-0.21l-0.09,0.9l-1.08,-0.81l-0.27,-0.34l0.25,-0.9l-0.04,-2.15l0.41,-0.49l0.12,-0.89l1.73,1.13l1.94,-0.15l0.7,0.39l-0.18,2.64l-0.41,0.45l-0.11,0.67L602.65,611.73zM606.71,619.52l2.02,2.13l0.64,0.29l0.17,0.56l1.76,1.65l0.25,0.35l-0.85,0.29l-1.64,-0.41l-1.36,-1.85l-2.77,-2.48l0.48,-0.36l0.53,-0.1l0.49,-0.53L606.71,619.52zM611.98,628.99l0.12,0.43l1.4,0.6l0.92,0.54l0.81,1.86l0.08,0.9l0.49,1.28l0,0.65l-0.64,0.29l-1.65,0.02l-1.54,-0.9l-1.09,-0.3l-1.02,-0.92l-0.21,-0.4l0.69,-1.11l0.52,-1.36l-0.79,-0.42l-0.49,-0.98l-0.08,-1.55l0.35,-0.62l1.13,-0.52l0.86,0.5l0.2,0.93L611.98,628.99zM606.59,627.73l-0.9,-0.18l-0.58,-0.71l0.46,-0.91l0.12,-1.53l1.34,0.73l0.43,0.81l0.1,0.59l0,0.87L606.59,627.73zM604.57,659.11l-0.93,0.18l-0.58,-0.52l-1.31,-2.94l0.23,-0.86l2.49,-2.88l1.06,-3.08l0.53,-2.57l1.41,-0.44l1.45,-0.05l2.06,-0.64l0.58,-2.4l1.04,-0.92l0.61,0.18l1.3,3.09l3.17,5.57l0.19,2.35l-0.91,1.67l0.71,0.84l-0.37,1.34l0.56,1.84l0.03,0.83l-1.14,0.44l-3.48,-0.13l-3.39,-1.49l-3.88,-0.16L604.57,659.11z"/></svg></span>
+        <h3>Hawaii</h3>
+        <p>Hawaii State Building Code / ASCE 7-16 — entire state HVHZ, 130–170 mph, salt-spray corrosion rules.</p>
+        <span class="badge badge--hvhz">ENTIRE STATE HVHZ</span>
+      </a>
 
-                <div class="mandatory-states-grid">
-                    <!-- Florida -->
-                    <div class="mandatory-state-card" id="florida">
-                        <div class="state-name"><a href="florida-wind-load-requirements.html"><i class="fas fa-hurricane mandatory-icon"></i> Florida</a></div>
-                        <span class="requirement-badge badge-hvhz">HVHZ - Most Stringent</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> Florida Building Code 8th Edition (2023) / ASCE 7-22</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 130-195 mph (HVHZ areas)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for ALL structures in HVHZ</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-stamp detail-icon"></i>
-                                <span><strong>Product Approval:</strong> NOA/TAS required in Miami-Dade/Broward</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Nation's strictest wind load requirements</span>
-                            </div>
-                        </div>
-                        <a href="florida-wind-load-requirements.html" class="state-link-btn">Florida Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+      <a class="card glass" href="louisiana-wind-load-requirements.html">
+        <span class="sil" data-state="la"><svg viewBox="802.5 424.1 103.7 88.1" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M891.95,485.19l-1.27,0.69l-7.27,-1.81l-1.89,-1.73l-1.59,-0.29l-1.94,-0.1l-1.93,2.41l-1.39,3.17l2.6,1.53l2.19,0.67l3.49,-0.91l1.85,-1.62l1.6,-0.06l0.74,-0.36l0.64,-0.83l1.4,0.52l0.09,0.61l-0.91,0.93l-1.17,0.81l-0.68,0.91l1.51,1.64l2.23,0.43l0.81,-0.31l0.37,-1.99l1.25,-1.35l1.84,0.14l-0.2,0.81l0.31,0.73l0.93,1.21l0.04,1.83l0.2,0.43l-1.91,0.95l-1.45,0.38l-1.1,1.14l0.66,0.57l-1.16,0.62l-0.83,-0.16l-0.39,0.23l-0.08,0.65l-0.58,0.64l1.03,1.75l1.94,1.05l1.41,1.39l5.41,1.56l1.27,-0.15l1.41,1.87l1.06,0.6l1,0.27l-0.01,1.36l-1.66,1.12l-0.38,1.21l-0.39,0.7l-0.85,-0.78l-0.85,-0.55l-1.73,1.99l-0.87,0.46l0.3,-2.03l-0.76,-0.73l-1.21,-1.92l-1.64,-1.13l-1.12,-0.33l-0.9,-0.72l-1.05,-0.24l-0.87,0.14l-1.51,-0.35l-0.17,-1.06l-0.47,-0.77l-1.22,-0.86l-5.65,-1.41l0.01,0.74l0.42,0.53l0.82,0.32l1,0.65l0.13,2.12l-0.35,0.93l-0.09,1.29l-0.28,1.33l-0.61,1.07l-1.47,0.8l-0.71,-0.54l-1.26,-2.74l-1.58,-0.79l-2.43,0.04l-1.61,0.73l-1.64,2.82l-1.42,0.53l-5.05,-1.13l-5.78,-1.84l0.11,-0.72l0.88,-0.28l1.72,0.2l-0.13,-0.73l-1.87,-2.3l-0.38,-1.06l0.16,-1.33l-0.57,0.06l-0.99,1.16l-3.65,-0.76l-1.05,-1.07l-2.26,-3.06l-2.98,0.04l-1.43,-1.85l-2.39,0.91l-1.19,0.94l-1.02,1.42l0.45,0.7l1.13,1.09l-0.47,0.57l-3.44,0.95l-8.1,-0.59l-2.39,-0.76l-3.22,-1.68l-4.42,-1.31l-2.11,-0.17l-2.05,0.35l-6,0.31l-1.38,0.42l-1.17,0.65l-0.79,-0.67l-0.38,-1.21l0.69,-0.21l0.76,-0.74l0.67,-1.44l0.06,-0.86l-0.5,-0.55l1.25,-2.27l0.3,-0.81l-0.3,-3.81l-0.61,-1.37l0.05,-0.8l0.56,-2.1l-0.14,-1.91l1.01,-2.32l0.75,-1.22l0.82,-2.48l0.16,-1.59l0.34,-1.2l-0.29,-1.27l0.59,-0.94l-0.44,-1.29l-0.17,-1.71l-0.77,-0.64l-1.39,-2.49l0.01,-1.11l-1.45,-2.33l-0.05,-0.81l-1.36,-1.2l-0.28,-0.78l-0.19,-3.27l-0.38,-0.95l-1.18,-1.85l-2.7,-2.67l-0.06,-2.83l-0.06,-2.83l-0.06,-2.83l-0.06,-2.83l-0.06,-2.83l-0.06,-2.83l-0.06,-2.83l-0.06,-2.83l3.38,-0.08l3.38,-0.09l3.38,-0.09l3.38,-0.1l3.38,-0.11l3.38,-0.11l3.38,-0.12l3.38,-0.13l3.38,-0.13l3.38,-0.14l3.38,-0.15l3.38,-0.15l3.38,-0.16l3.38,-0.17l3.37,-0.17l3.68,-0.21l0.17,1.09l0.94,0.6l0.11,1.17l-0.71,1.74l0.07,1.18l0.86,0.62l0,0.71l-0.87,0.79l-0.09,0.81l0.68,0.83l0.34,0.99l0,1.14l0.92,1.44l1.36,0.88l0.92,1.08l0.11,0.61l0.09,0.57l-0.15,0.84l-1.01,1.28l-0.78,0.93l-0.48,0.35l-0.24,0.62l0,1.31l-1.13,1.74l-2.37,2.07l-1.51,2.55l-0.66,3.03l-0.75,1.94l-0.85,0.86l-0.37,1.58l0.11,2.32l-0.51,1.31l-1.13,0.3l-0.18,1.34l0.78,2.38l-0.23,1.02l-0.76,0.83l-0.04,0.62l4.61,-0.21l4.63,-0.24l4.63,-0.25l4.63,-0.26l4.63,-0.28l4.63,-0.29l4.63,-0.3l4.63,-0.31l-0.39,2.61l-1.12,3.57l0.01,0.91l0.43,1.11l0.04,0.64l0.57,0.91l1.18,0.87l1.08,1.36l1.05,2.49l0.31,1.16l0.84,1.59l0.4,0.28l0.54,0.15L891.95,485.19zM897.91,487.2l0.15,1.04l-0.99,-0.45l-1.42,0.06l0.6,-0.4l0.41,-0.38l0.19,-0.39l1.69,-1.43l-0.43,0.99L897.91,487.2zM906.12,492.79l-0.49,0.76l0.27,-3.46l-0.98,-2.82l0.9,1.2l0.38,1.48L906.12,492.79zM905.08,495.02l-0.97,1.26l0.01,-0.45l0.69,-1.24l0.52,-0.5L905.08,495.02zM848.42,503.32l-0.71,0.36l-3.34,-1.8l-0.24,-0.83l1.57,-0.83l0.98,0.02l1.59,0.92l0.58,0.25l0.28,0.39l-0.12,0.63L848.42,503.32z"/></svg></span>
+        <h3>Louisiana</h3>
+        <p>Louisiana State Uniform Construction Code / ASCE 7-16 — post-Katrina enhanced wind + flood loads.</p>
+        <span class="badge badge--data">GULF COAST HURRICANE ZONE</span>
+      </a>
 
-                    <!-- Texas -->
-                    <div class="mandatory-state-card" id="texas">
-                        <div class="state-name"><a href="texas-wind-load-requirements.html"><i class="fas fa-hurricane mandatory-icon"></i> Texas</a></div>
-                        <span class="requirement-badge badge-hvhz">HVHZ Coastal</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> 2021 IBC / ASCE 7-16 (varies by jurisdiction)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 95 mph (inland) to 160 mph (Gulf Coast)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial & coastal residential</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-shield-alt detail-icon"></i>
-                                <span><strong>TDI/TWIA:</strong> Required for coastal county insurance</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>HVHZ within 1 mile of Gulf Coast</span>
-                            </div>
-                        </div>
-                        <a href="texas-wind-load-requirements.html" class="state-link-btn">Texas Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+      <a class="card glass" href="north-carolina-wind-load-requirements.html">
+        <span class="sil" data-state="nc"><svg viewBox="979.1 307.9 157.5 68.4" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1122.2,308.31l-0.08,1.79l0.47,0.91l1.16,0.79l1.59,2.27l1.58,3.18l-1.41,-1.11l-1.34,-0.46l-1.96,-0.14l-1.85,-0.61l0.43,1.37l0.18,1.54l-1.36,-0.18l-0.97,-0.31l1.11,1.44l-1.76,-0.12l-1.08,0.34l-0.41,1.58l-0.77,1.07l-1.36,0.59l-2.4,-0.85l-1.02,-1.43l-0.66,-1.7l0.33,2.11l0.84,2.09l0.22,1.68l2.1,-0.14l1.84,-0.68l2.58,-0.49l1.61,-0.68l0.89,-0.75l2.52,-0.08l0.62,1.95l0.16,2.04l0.33,2.14l0.67,-0.16l0.64,-0.85l-0.45,-3.86l1.89,-1.89l0.76,-0.07l0.98,1.05l0.52,1.18l0.63,1.63l0.07,2.69l-2.73,3.78l-1.82,3.33l-1.13,0.85l-1.88,0.08l-2.2,-0.25l-1.04,0.08l-0.71,0.4l-0.65,-0.76l-0.64,-1.5l-0.91,-0.35l-0.59,0.19l-0.05,1.75l-1.81,0.88l-2.74,-0.13l-3.02,-0.82l1.49,1.25l7.35,1.35l0.87,0.36l0.88,0.61l-0.68,1.41l-0.45,1.51l0.13,1.08l-0.12,0.73l-2.32,2.39l-1.54,0l-4.44,-2.46l2.3,2.46l1.62,0.91l2.89,0.05l4.94,-2.17l1.94,0.78l-0.94,2.34l-1.07,1.73l-1.78,0.55l-1.52,0.73l-0.26,1.08l-1.13,0.31l-1.77,0.44l-2.74,0.68l-1.57,0.09l-1.7,2.46l-0.74,0.44l-1.2,-0.14l-0.8,-1.52l-0.67,-0.69l0.61,3.03l0.37,0.77l0.53,0.53l-2.15,2.16l-1.97,2.54l-0.74,0.73l-0.76,1.23l-1.4,3.37l-0.06,2.26l-0.24,2.56l-0.31,-1.07l-0.24,-1.85l-0.92,-1.99l0.46,3.9l-0.42,1.94l-7.18,1.29l-2.71,1.46l-3.14,-2.14l-2.94,-2.03l-2.93,-2.03l-2.93,-2.04l-2.92,-2.04l-2.91,-2.05l-2.91,-2.05l-2.9,-2.06l-2.57,0.37l-2.57,0.37l-2.57,0.37l-2.57,0.36l-2.57,0.36l-2.57,0.36l-2.57,0.35l-2.57,0.35l-0.39,-1.71l-0.27,-1.21l-1.95,-1.82l-1.14,-1.07l-1.84,1.39l-0.19,-0.5l-0.08,-0.94l-0.23,-0.29l-0.59,-0.13l-2.88,0.35l-2.88,0.34l-2.88,0.33l-2.88,0.33l-2.88,0.32l-2.88,0.32l-2.88,0.32l-2.88,0.31l-0.69,-0.1l-1.18,0.92l-3.23,1.6l-1.53,1.22l-0.62,0.03l-2.75,1.36l-2.76,1.35l-0.33,0.05l-5.48,0.85l-5.48,0.83l-5.48,0.81l-5.49,0.79l0.08,-4.79l0.33,-1.14l0.49,-0.31l1.88,-0.26l1.13,-0.7l0.68,-2.97l2.09,-2.54l1,-0.71l1.55,-0.65l3.74,-1.06l3.78,-2.73l2.65,-2.46l2.25,-0.9l0.62,-0.86l0.38,-1.05l0.14,-1.38l0.21,-0.31l1.35,-0.1l0.85,-1.3l0.9,-0.81l0.93,-0.52l0.6,-0.1l0.28,0.31l0.31,0.96l0.26,0.29l0.42,-0.03l0.54,-0.31l0.67,-0.75l1.67,-2.27l1.19,-0.96l1.94,-0.74l1.62,0.81l0.82,-0.49l1.92,-4.43l0.9,-0.89l0.72,-0.41l1.31,-0.27l-0.16,-1.11l0.19,-1.74l-0.12,-1.15l0.54,-1.81l0.36,0.29l6.41,-0.97l6.41,-1l6.41,-1.02l6.4,-1.05l6.4,-1.07l6.4,-1.1l6.39,-1.13l6.39,-1.15l6.38,-1.18l6.38,-1.2l6.37,-1.23l6.37,-1.25l6.36,-1.28l6.36,-1.3l6.35,-1.33L1122.2,308.31zM1123.55,308.02l0.55,-0.13l3.32,6.58l5.23,6.79l0.73,1.21l-1.08,-0.96l-3.75,-4.43l-2.26,-3.3L1123.55,308.02zM1131.42,322.08l-0.17,0.5l-1.72,-2.13l1.38,0.5l0.36,0.59L1131.42,322.08zM1136.1,335.07l-2.25,1.14l-0.25,-0.14l2.45,-1.86l-0.14,-4.56l-0.34,-2.03l-1.22,-3.45l-0.16,-0.74l0.71,1.04l1.15,3.21l0.43,2.54l0.05,3.83L1136.1,335.07zM1132.11,337.11l-2.89,2.28l-0.39,-0.01l1.88,-1.59L1132.11,337.11zM1121.83,351.88l-0.39,0.35l1.05,-3.07l2.49,-4.16l0.76,-0.72l-2.04,3.54L1121.83,351.88zM1121,351.78l-0.39,0.14l-0.76,-0.09l-1.07,-0.25l-0.29,-0.29l0.96,-0.08L1121,351.78z"/></svg></span>
+        <h3>North Carolina</h3>
+        <p>NC Building Code (2018) / ASCE 7-10 — Outer Banks up to 160 mph, wind + flood combination loads.</p>
+        <span class="badge badge--data">ATLANTIC COAST HURRICANE ZONE</span>
+      </a>
 
-                    <!-- Hawaii -->
-                    <div class="mandatory-state-card" id="hawaii">
-                        <div class="state-name"><a href="hawaii-wind-load-requirements.html"><i class="fas fa-umbrella-beach mandatory-icon"></i> Hawaii</a></div>
-                        <span class="requirement-badge badge-hvhz">Entire State HVHZ</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> Hawaii State Building Code / ASCE 7-16</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 130-170 mph (island-dependent)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for ALL structures</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-water detail-icon"></i>
-                                <span><strong>Exposure:</strong> Extreme island/ocean exposure</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Salt spray corrosion requirements apply</span>
-                            </div>
-                        </div>
-                        <a href="hawaii-wind-load-requirements.html" class="state-link-btn">Hawaii Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+    </div>
+  </div></section>
 
-                    <!-- Louisiana -->
-                    <div class="mandatory-state-card" id="louisiana">
-                        <div class="state-name"><a href="louisiana-wind-load-requirements.html"><i class="fas fa-water mandatory-icon"></i> Louisiana</a></div>
-                        <span class="requirement-badge badge-coastal">Gulf Coast Hurricane Zone</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> Louisiana State Uniform Construction Code / ASCE 7-16</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 120-170 mph (coastal areas)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial structures</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-history detail-icon"></i>
-                                <span><strong>Post-Katrina:</strong> Enhanced requirements since 2005</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Combined wind + flood load considerations</span>
-                            </div>
-                        </div>
-                        <a href="louisiana-wind-load-requirements.html" class="state-link-btn">Louisiana Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+  <div class="divider"></div>
 
-                    <!-- North Carolina -->
-                    <div class="mandatory-state-card" id="north-carolina">
-                        <div class="state-name"><a href="north-carolina-wind-load-requirements.html"><i class="fas fa-wind mandatory-icon"></i> North Carolina</a></div>
-                        <span class="requirement-badge badge-coastal">Atlantic Coast Hurricane Zone</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> NC Building Code (2018) / ASCE 7-10</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 110-160 mph (Outer Banks highest)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial buildings</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-house-flood-water detail-icon"></i>
-                                <span><strong>Special:</strong> Wind + flood combination loads</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Enhanced coastal county requirements</span>
-                            </div>
-                        </div>
-                        <a href="north-carolina-wind-load-requirements.html" class="state-link-btn">North Carolina Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+  <!-- STATE GRID — COASTAL & COMMERCIAL (5) -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">COASTAL &amp; COMMERCIAL MANDATES</p>
+    <h2>Coastal &amp; <span class="sweep">commercial-required</span> states</h2>
+    <p class="lead">PE-sealed calculations required for commercial and coastal construction.</p>
+    <div class="grid" data-n="5">
 
-                    <!-- South Carolina -->
-                    <div class="mandatory-state-card" id="south-carolina">
-                        <div class="state-name"><a href="south-carolina-wind-load-requirements.html"><i class="fas fa-wind mandatory-icon"></i> South Carolina</a></div>
-                        <span class="requirement-badge badge-coastal">Coastal High-Wind Zone</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> SC Building Codes Council / ASCE 7-16</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 110-150 mph (coastal)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial projects</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>Special:</strong> Barrier island restrictions</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Enhanced tie-down requirements</span>
-                            </div>
-                        </div>
-                        <a href="south-carolina-wind-load-requirements.html" class="state-link-btn">South Carolina Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+      <a class="card glass" href="south-carolina-wind-load-requirements.html">
+        <span class="sil" data-state="sc"><svg viewBox="997.5 356.5 90.4 68.1" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1087.93,376.29L1087.7,376.42L1083.51,380.61L1082.34,382.32L1079.39,388.61L1079.03,392.35L1077.93,391.01L1077.92,389.86L1077.77,388.94L1077.13,391.09L1078.62,393.77L1077.96,395.02L1075.68,397.55L1074.28,398.15L1072.75,399.03L1072.6,401.14L1070.71,403.4L1069.57,404.46L1067.1,404.38L1068.15,406.04L1067.52,407.55L1066.2,408.86L1064.44,409.87L1063.35,409.97L1062.49,410.5L1061.92,411.48L1060.3,412.6L1058.39,412.46L1056.27,412.55L1055.2,413.23L1057.28,413.69L1058.52,414.67L1058.57,416.27L1058.16,416.97L1057.07,417.99L1056.5,417.97L1056.05,417.29L1055.39,415.82L1054.87,416.24L1054.89,416.97L1054.45,417.31L1052.29,415.16L1052.69,417.01L1053.54,418.34L1054.26,418.97L1054.92,419.3L1055.19,419.94L1054.26,421.76L1053.71,422.23L1052.66,422.67L1052.21,423.78L1052.54,424.61L1048.44,423.47L1047.05,422.07L1046.75,420.02L1045.64,417.81L1042.78,414.27L1040.98,413.42L1039.49,410.94L1037.71,406.53L1035.6,403.86L1033.15,402.94L1031.41,401.67L1030.38,400.05L1029.41,399.04L1028.5,398.65L1027.91,397.82L1027.65,396.57L1026.11,395.1L1021.89,392.57L1020.71,390.82L1018.67,389.14L1013.71,385.83L1013.71,385.83L1008.38,378.76L1008.38,378.76L1007.62,377.28L1006.63,376.77L1005.15,376.75L1003.64,376.19L1001.3,374.55L1001.28,374.53L997.5,372.62L997.9,370.37L1000.17,367.19L1000.84,365.57L1000.96,365.54L1001.29,365.48L1004.05,364.13L1006.8,362.78L1007.42,362.74L1008.95,361.53L1012.17,359.92L1013.35,359L1014.04,359.11L1016.93,358.8L1019.81,358.48L1022.69,358.16L1025.58,357.84L1028.46,357.51L1031.34,357.17L1034.23,356.83L1037.11,356.49L1037.7,356.62L1037.93,356.91L1038,357.85L1038.19,358.34L1040.03,356.95L1041.17,358.02L1043.13,359.84L1043.4,361.05L1043.79,362.76L1046.36,362.41L1048.93,362.06L1051.5,361.7L1054.08,361.34L1056.65,360.98L1059.22,360.61L1061.79,360.24L1064.36,359.87L1067.26,361.92L1070.16,363.97L1073.08,366.02L1076,368.06L1078.92,370.09L1081.85,372.12L1084.79,374.15z"/></svg></span>
+        <h3>South Carolina</h3>
+        <p>SC Building Codes Council / ASCE 7-16 — coastal to 150 mph, barrier-island &amp; tie-down rules.</p>
+        <span class="badge badge--data">COASTAL HIGH-WIND ZONE</span>
+      </a>
 
-                    <!-- Georgia -->
-                    <div class="mandatory-state-card" id="georgia">
-                        <div class="state-name"><a href="georgia-wind-load-requirements.html"><i class="fas fa-wind mandatory-icon"></i> Georgia</a></div>
-                        <span class="requirement-badge badge-coastal">Coastal Hurricane Risk</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> Georgia State Minimum Standard Codes / ASCE 7-16</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 110-140 mph (coastal)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial projects</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-landmark detail-icon"></i>
-                                <span><strong>Special:</strong> Historic district considerations (Savannah)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Enhanced coastal county codes</span>
-                            </div>
-                        </div>
-                        <a href="georgia-wind-load-requirements.html" class="state-link-btn">Georgia Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+      <a class="card glass" href="georgia-wind-load-requirements.html">
+        <span class="sil" data-state="ga"><svg viewBox="955.4 365.6 97.1 99.5" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1052.54,424.61l-0.65,2.03l-2.1,1.55l-0.71,0.07l-0.52,0.44l0.47,0.78l0.67,0.51l0.07,0.57l-0.48,0.86l-1.17,0.41l-0.53,0.98l0.35,0.79l0.47,0.39l0.05,0.81l-1.24,1.02l-0.19,0.83l0.72,0.12l0.49,-0.32l0.41,0.1l-0.61,1.44l-0.61,0.92l-0.47,1.55l-1.56,0.66l0.14,0.45l0.99,0.26l0.95,0.98l-1.12,2.27l-0.93,-0.02l-0.63,-0.36l-0.09,1.66l0.28,0.84l-0.06,1.81l-0.22,2.2l-0.24,0.93l0.34,1.6l0.49,1.52l-3.27,0.32l-4.19,-0.84l-1.1,-0.13l-0.39,0.18l-0.41,0.63l-0.53,0.34l-0.32,1.1l0.21,1.75l0.69,2.01l0.13,1.84l-0.36,1.72l-0.86,0.89l-0.98,0.05l-0.67,-0.3l-0.33,-0.59l-0.33,-1.29l-0.68,-1.07l-0.13,-0.73l-3.09,0.26l-3.09,0.25l-3.09,0.25l-3.09,0.24l-3.09,0.24l-3.09,0.23l-3.09,0.22l-3.09,0.22l-3.09,0.21l-3.09,0.21l-3.09,0.2l-3.09,0.2l-3.09,0.19l-3.09,0.19l-3.09,0.18l-3.09,0.17l-1.82,0.09l-0.16,-0.84l-1.97,-3.45l-1,-1.66l-1.46,-2.44l-0.96,-3.9l-0.02,-6.24l-0.4,-1.36l0,0l-1.47,-3.01l-0.26,-2.31l0.68,-3.91l0,-0.01l0.31,-2.21l0.64,-1.31l1.07,-1.14l0.05,-0.89l-0.98,-0.64l-0.44,-0.87l0.1,-1.1l-1.09,-2.5l-3.4,-5.85l-0.62,-2.04l-0.62,-1.23l-0.83,-2.77l-0.83,-2.77l-0.83,-2.77l-0.83,-2.77l-0.83,-2.77l-0.82,-2.77l-0.82,-2.77l-0.82,-2.77l-0.82,-2.77l-0.82,-2.77l-0.81,-2.77l-0.81,-2.77l-0.81,-2.77l-0.81,-2.77l-0.81,-2.77l-0.81,-2.77l5.92,-0.62l5.92,-0.64l5.91,-0.66l5.91,-0.68l5.49,-0.79l5.48,-0.81l5.48,-0.83l5.48,-0.85l-0.11,0.04l-0.68,1.62l-2.26,3.18l-0.41,2.25l3.78,1.91l0.01,0.02l2.34,1.64l1.52,0.56l1.47,0.02l0.99,0.51l0.76,1.48l0,0l5.33,7.07l0,0l4.96,3.31l2.05,1.68l1.18,1.75l4.22,2.52l1.54,1.47l0.26,1.25l0.59,0.83l0.91,0.4l0.97,1.01l1.03,1.62l1.74,1.27l2.45,0.92l2.11,2.67l1.78,4.41l1.49,2.49l1.8,0.84l2.86,3.54l1.11,2.21l0.3,2.05l1.39,1.41L1052.54,424.61zM1046.05,449.68l0.02,5.53l-0.68,-1.85l-0.33,-1.85l0.47,-1.2L1046.05,449.68z"/></svg></span>
+        <h3>Georgia</h3>
+        <p>Georgia State Minimum Standard Codes / ASCE 7-16 — coastal to 140 mph, Savannah historic districts.</p>
+        <span class="badge badge--data">COASTAL HURRICANE RISK</span>
+      </a>
 
-                    <!-- Virginia -->
-                    <div class="mandatory-state-card" id="virginia">
-                        <div class="state-name"><a href="virginia-wind-load-requirements.html"><i class="fas fa-wind mandatory-icon"></i> Virginia</a></div>
-                        <span class="requirement-badge badge-coastal">Atlantic/Chesapeake Exposure</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> Virginia Uniform Statewide Building Code / ASCE 7-16</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 110-145 mph (coastal)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial structures</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-anchor detail-icon"></i>
-                                <span><strong>Special:</strong> Hampton Roads area requirements</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Combined wind + flood considerations</span>
-                            </div>
-                        </div>
-                        <a href="virginia-wind-load-requirements.html" class="state-link-btn">Virginia Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+      <a class="card glass" href="virginia-wind-load-requirements.html">
+        <span class="sil" data-state="va"><svg viewBox="986.1 253.8 141.6 77.8" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1078.91,254.04l1.14,0.6l2.47,0.49l1.14,0.78l-0.2,1.08l0.09,0.72l0.57,0.56l3.32,0.66l2.27,1.44l1.27,0.31l0.38,0.09l0.92,0.27l0.5,0.49l0.26,2.52l-0.53,1.39l-1.04,1.2l-1.28,2.01l-0.08,1.62l0.09,2.99l0.9,0.83l0.76,0.11l1.95,-1.09l1.14,0.06l3.14,2.96l4.78,0.41l1.82,0.5l1.73,1.52l2.24,0.6l1.89,1.17l0.26,0.98l-0.28,1.29l0.13,1.63l-0.45,1.14l-1.57,0.46l-1.02,-0.05l-6.38,-4.44l-0.73,-0.38l-2.54,-2.5l-2.57,-1.08l-0.69,0.18l3.81,2.21l1.74,1.74l2.91,2.33l1.91,0.84l1.62,1.6l1.32,0.63l3.36,0.57l-0.88,1.13l1.88,0.38l0.55,1.35l0.2,1.63l-2.52,-0.11l0.18,1.19l0.36,0.65l-0.93,0.8l-1.63,-0.46l-4.72,-3.44l0.15,0.56l0.45,0.59l2.8,2.27l2.33,1.22l1.83,0.38l1.59,1.09l0.64,0.73l0.58,1.2l-0.77,1.07l-0.99,0.71l-1.25,-0.62l-0.98,-0.73l-1.99,-1.17l-0.87,-1.61l-1.24,0.36l-5.74,-1.05l-4.29,0.64l0.5,0.35l0.6,0.18l3.49,-0.18l1.55,0.72l2.97,0.29l1.68,-0.11l1.25,2.58l2.66,1.39l0.59,1.33l1.57,-0.18l2.41,-1.96l1.85,0.09l2.61,-0.17l0.82,0.97l0.9,1.99l1.42,2.15l1.1,2.18l-0.55,0.13l-1.36,0.29l-4.36,0.94l-6.35,1.33l-6.36,1.3l-6.36,1.28l-6.37,1.25l-6.37,1.23l-6.38,1.2l-6.38,1.18l-6.39,1.15l-6.39,1.13l-6.4,1.1l-6.4,1.07l-6.4,1.05l-6.41,1.02l-6.41,1l-6.41,0.97l-0.36,-0.29l-2.53,0.3l-1.87,0.22l-0.76,0.58l-3.72,0.56l-2.97,0.44l-5.01,0.73l-6.11,0.86l-8.61,1.18l-4.03,0.53l1.66,-1.29l2.56,-0.99l4.47,-2.46l1.62,-2.1l2.45,-1.72l0.87,-1.76l1.54,-1.77l0.4,-1.81l0.2,-0.3l2.67,-1.99l2.75,-2.39l5.8,-6.35l0.24,0.68l-0.12,0.8l0.7,0.8l0.68,1.33l0.79,0.76l0.92,0.55l1.45,0.4l1.78,0.82l1.31,0.1l0.42,-0.1l1.23,-1.26l1.07,-0.74l1.03,-1.32l2.41,1.19l0.86,-0.14l2.01,-1.02l1.96,-0.51l0.46,-0.29l0.63,-0.76l-0.2,-1.29l0.11,-0.36l0.3,-0.21l0.39,-0.1l0.97,0.32l0.88,-0.14l3.46,-2.12l0.3,0.06l0.59,0.6l1.48,-1.16l0.82,-0.98l0.21,-1.3l0.59,-1.34l-0.26,-0.51l-0.64,-0.6l0.4,-1.74l0.72,-1.78l2.89,-5.52l0.67,-3.16l1.21,-2.17l0.24,-1.6l0.91,-1.7l0.25,-3.21l0.39,-0.71l0.7,-0.23l0.8,0.25l0.63,0.47l0.51,0.86l2.02,0.46l1.59,-0.19l0.99,-0.79l0.44,-1.2l0.48,-2.18l0.6,-1.35l0.25,-1.61l0.35,-1.15l0.72,-0.82l2.11,-0.36l0.9,-1.13l0.63,-1.21l0.44,-0.44l0.6,-0.06l1.57,-2.05l1.8,-4.01l0.1,-2.33l0.33,-1.72l-0.07,-1.69l0.31,-0.99l2.54,1.34l1.47,0.78l3.34,1.75l2.22,1.16l0.39,-1.93L1078.91,254.04zM1127.21,273.28l0.44,-0.17l0,0l-1.07,3.72l-0.7,0.53L1127.21,273.28zM1120.65,276.69l0.45,-1.13l2.5,-0.93l1.55,-0.59l-1.83,9.4l0.52,1.53l-0.65,0.68l-1.07,0.68l-0.96,1.21l-0.55,1.21l-0.1,2.95l-0.69,3.45l-1.16,-1.11l-0.47,-1.07l-0.27,-3.01l0.43,-5.12l0.98,-3.35l0.94,-1.69L1120.65,276.69z"/></svg></span>
+        <h3>Virginia</h3>
+        <p>Virginia Uniform Statewide Building Code / ASCE 7-16 — Hampton Roads, Atlantic/Chesapeake exposure.</p>
+        <span class="badge badge--data">ATLANTIC / CHESAPEAKE EXPOSURE</span>
+      </a>
 
-                    <!-- New York -->
-                    <div class="mandatory-state-card" id="new-york">
-                        <div class="state-name"><a href="new-york-wind-load-requirements.html"><i class="fas fa-city mandatory-icon"></i> New York</a></div>
-                        <span class="requirement-badge badge-commercial">Commercial & High-Rise Required</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> NYC Building Code / NYS Uniform Code / ASCE 7-16</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 105-130 mph (Long Island coast)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for all commercial buildings</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-building detail-icon"></i>
-                                <span><strong>Special:</strong> NYC high-rise wind tunnel studies</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Long Island coastal exposure requirements</span>
-                            </div>
-                        </div>
-                        <a href="new-york-wind-load-requirements.html" class="state-link-btn">New York Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
+      <a class="card glass" href="new-york-wind-load-requirements.html">
+        <span class="sil" data-state="ny"><svg viewBox="1032.8 104.4 133.8 111.1" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1049.12,104.45l-0.02,-0.01L1049.12,104.45L1049.12,104.45zM1135.37,163.36l-0.04,1.94l-0.04,1.94l-0.04,1.94l-0.05,1.94l-0.05,1.94l-0.05,1.94l-0.05,1.94l-0.05,1.94l0.56,0.42l0.39,2.08l0.39,2.08l0.39,2.08l0.39,2.08l0.39,2.08l0.39,2.08l0.39,2.08l0.39,2.08l0.7,0.71l0.7,0.71l-0.51,0.54l-0.8,0.84l-0.85,0.9l-1.11,1.17l0.94,0.91l1.18,1.15l-0.53,0.73l-1.29,2.33l-0.93,1.31l-0.89,0.57l-0.39,0.99l-0.52,0.71l0.17,-2.04l0.29,-1.76l-0.2,-3.22l-0.79,-2.45l-0.96,-0.85l-0.9,-0.5l1.46,2.25l0.88,2.98l0.01,0.09l-1.81,-0.59l-1.86,-0.59l-1.86,-0.59l-1.86,-0.59l-1.86,-0.6l-1.85,-0.6l-1.85,-0.6l-1.85,-0.6l-0.54,-0.73l-0.74,-0.49l-3.17,-0.4l-0.92,-0.55l-0.9,-0.82l-0.75,-1.09l-0.54,-1.21l-0.25,-1.01l-0.05,-1.17l-0.84,-0.59l-0.18,-0.7l-0.54,-0.37l-2.09,-0.4l-0.84,-1.05l-1.51,-0.83l-2.23,0.51l-2.23,0.51l-2.23,0.5l-2.23,0.5l-2.23,0.5l-2.24,0.5l-2.24,0.49l-2.24,0.49l-2.24,0.48l-2.24,0.48l-2.24,0.48l-2.24,0.48l-2.24,0.47l-2.24,0.47l-2.24,0.46l-2.24,0.46l-2.24,0.46l-2.24,0.45l-2.25,0.45l-2.24,0.45l-2.25,0.44l-2.25,0.44l-2.25,0.44l-2.25,0.43l-2.25,0.43l-2.25,0.43l-2.25,0.42l-2.25,0.42l-2.25,0.42l-2.25,0.41l-2.25,0.41l-2.25,0.41l-0.53,-2.95l-0.53,-2.95l-0.02,-0.12l0.86,-0.71l2.75,-2.56l1.29,-1.73l1.42,-1.5l1.54,-1.28l1.13,-1.48l0.73,-1.69l0.9,-1.32l1.08,-0.96l0.5,-0.89l-0.06,-0.82l-0.43,-1.05l-0.8,-1.27l-0.28,-1.07l0.24,-0.86l-0.01,-0.55l-0.27,-0.23l-2.68,-0.3l-0.6,-3.79l-0.05,-0.1l0.12,-0.07l5.5,-2.78l3.59,-1.29l4.48,-1.04l5.54,-0.26l2.24,0.32l1.52,0.69l1.58,-0.06l1.64,-0.8l2.36,-0.65l3.09,-0.49l1.68,-0.12l0.27,0.25l0.19,-0.13l0.11,-0.52l0.71,-0.7l2.12,-1.28l0.34,0.1l0.38,-0.5l0.42,-1.1l0.94,-1.32l1.44,-1.53l1.4,-0.94l1.36,-0.35l0.85,-0.49l0.35,-0.63l0.04,-0.5l-0.27,-0.36l-0.02,-0.46l0.03,-0.24l-0.11,-0.17l-0.25,-0.34l-0.55,-1.88l-0.46,-0.83l-0.51,-0.58l-0.57,-0.32l-0.04,-0.46l0.7,-0.73l0.05,0.53l0.25,0.11l0.33,-0.32l0.62,-1.34l0,-0.45l0.5,-0.58l0.29,-0.78l-0.51,0.01l-1.11,0.46l-0.31,-0.15l0.4,-1.05l-0.23,-0.5l-0.24,-0.18l-0.4,0l-1.13,1.1l-0.38,0.16l-0.15,-0.41l-0.88,-0.8l1.43,-2.08l5.31,-6.09l0.48,-0.86l0.09,-0.69l-0.29,-0.52l-0.21,-0.1l0.06,-0.16l4.71,-7.39l2.8,-3.57l2.47,-2.2l1.98,-1.24l1.48,-0.24l0.8,-0.3l0.71,-0.17l3.59,-0.87l6.41,-1.58l6.41,-1.61l3.78,-0.96l0.48,1.41l0.11,1.78l0.74,1.78l0.62,3.95l1.73,2.74l0.28,2.05l0.6,2.13l-0.04,0.57l-0.45,1.43l-0.14,1.33l0.05,1.29l0.22,0.79l1.55,3.35l0.52,1.52l0.22,0.91l0.15,3.05l0.17,0.84l0.23,0.19l0.21,-0.05l0.43,-1.07l0.26,-0.21l0.44,0.13l1.28,1.13l0.58,2.46l0.42,1.79l0.47,1.99l0.7,2.99l0.51,2.19l0.47,1.99l0.36,1.53l0.07,1.17L1135.37,163.36zM1082.33,141.06l-0.45,0.29l-0.18,-0.23l0.03,-0.26l0.34,-0.39l0.68,-0.15l-0.03,0.26L1082.33,141.06zM1081.36,147.84l-0.22,0.12l-0.08,-0.47l0.17,-0.36l0.43,-0.23l0.04,0.24L1081.36,147.84zM1043.26,177.7l-0.35,0.84l-0.49,0.02l-0.4,-0.18l-0.21,-0.45l-0.03,-0.61l0.37,-0.34l1.19,0.01l0.08,0.23L1043.26,177.7zM1157.24,198.3l-0.79,1.7l1.09,-0.14l0.79,-0.65l0.63,-1.05l1.68,-1.64l1.56,-0.94l0.5,-0.24l1.01,0.57l1.42,-1.06l1.54,-0.8l-6.13,5.48l-1.35,0.79l-1.8,1.62l-1.77,1.27l-1.35,0.65l-6.38,4.49l-0.55,0.2l-0.67,-0.1l-5.49,2.85l-2.36,0.76l-2.07,1.02l1.34,-1.51l-0.07,-0.42l-0.47,-0.23l-0.84,0.31l-0.6,1.36l-1.32,0.73l-0.59,-1.17l0.24,-1.08l0.41,-1.07l1.04,-1.78l1.78,-1.4l0.82,-1.04l0.88,0.51l-0.08,-0.97l0.4,-0.67l0.52,-0.44l1.41,-0.36l0.72,-0.34l0.47,-0.45l0.55,-0.2l1.65,0.03l1.48,-0.51l1.07,-0.89l1.21,-0.52l3.31,-1l3.21,-1.29l1.13,-1.11l2.22,-2.86l1.44,-1.02l-1.84,3.12L1157.24,198.3zM1132.27,215.28l-0.76,0.28l0.28,-2.26l1.21,-1.3l0.57,0.07l0.2,0.72l-0.05,0.68l-0.73,1.2L1132.27,215.28z"/></svg></span>
+        <h3>New York</h3>
+        <p>NYC Building Code / NYS Uniform Code / ASCE 7-16 — NYC high-rise wind-tunnel studies, Long Island coast.</p>
+        <span class="badge badge--data">COMMERCIAL &amp; HIGH-RISE</span>
+      </a>
 
-                    <!-- California -->
-                    <div class="mandatory-state-card" id="california">
-                        <div class="state-name"><a href="california-wind-load-requirements.html"><i class="fas fa-sun mandatory-icon"></i> California</a></div>
-                        <span class="requirement-badge badge-commercial">Seismic + Wind Combined</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-book detail-icon"></i>
-                                <span><strong>Code:</strong> California Building Code (CBC) 2025 / ASCE 7-22</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Wind Speed:</strong> 85-130 mph (coastal higher)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-certificate detail-icon"></i>
-                                <span><strong>PE Seal:</strong> Required for commercial installations</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-mountain detail-icon"></i>
-                                <span><strong>Special:</strong> Seismic + wind load combinations</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-info-circle detail-icon"></i>
-                                <span>Title 24 solar mandates affect wind requirements</span>
-                            </div>
-                        </div>
-                        <a href="california-wind-load-requirements.html" class="state-link-btn">California Requirements <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <a class="card glass" href="california-wind-load-requirements.html">
+        <span class="sil" data-state="ca"><svg viewBox="291 154.4 141.8 242.7" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M371.75,174.28l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.03l-1.09,4.02l-1.09,4.03l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l-1.09,4.02l2.98,4.56l3,4.56l3.02,4.56l3.05,4.55l3.07,4.54l3.09,4.54l3.11,4.53l3.13,4.53l2.41,3.75l2.42,3.75l2.44,3.75l2.45,3.74l2.46,3.74l2.48,3.74l2.49,3.73l2.5,3.73l3.46,5.32l3.48,5.31l3.51,5.3l3.53,5.3l3.56,5.29l3.59,5.28l3.62,5.28l3.9,5.63l-0.39,1.82l0.45,2.66l1.95,5.06l0.13,1.14l0.03,0.03l-0.12,1.14l0.89,1.45l2.36,2.25l0.44,0.95l-0.01,0.07l-0.13,0.6l-0.83,0.59l-3.5,1.82l-2.02,1.65l-2.31,2.87l-0.28,2.66l-0.52,2.14l-0.76,1.62l-0.95,1.44l-1.15,1.26l-1.07,0.67l-0.98,0.09l-0.72,1.83l-0.46,3.58l0.59,2.36l1.64,1.14l0.86,1.39l0.08,1.64l-0.47,1.5l-1.03,1.37l-1.39,0.58l-2.61,-0.31l0,0l-0.11,0.19l-2.16,-0.21l-5.38,-0.65l-5.39,-0.67l-5.38,-0.69l-5.38,-0.7l-5.38,-0.72l-5.38,-0.74l-5.38,-0.76l-5.38,-0.77l-0.01,-0.15l0.44,-2.41l-0.65,-1.04l-1.22,0.26l0.24,-3.21l0.62,-1.39l0.21,-1.45l-0.19,-3.74l-1.69,-4.89l-4.56,-6.68l-2.53,-2.49l-1.78,-2.8l-1.32,-0.98l-1.81,-0.63l-0.79,0.87l-1.93,-1.21l0.94,-2.39l-1.17,-3.95l-1.57,-0.8l-4.25,-0.84l-5.11,-3.34l-1.36,-1.55l-0.04,-2.16l-2.15,-2.43l-2.98,-2.62l-2.02,-0.11l-2.43,-0.93l-3.22,-2.19l-2.03,-0.72l-4.14,-0.74l-1.44,-0.67l-0.97,-1.94l-1.29,-1.19l0.85,-1.82l0.29,-1.78l0.6,-1.28l0.15,-3.13l1.28,-2.58l-0.18,-1.11l-0.63,-0.99l-2.33,-1.86l-0.09,-1.53l0.98,-1.82l-0.33,-1.47l-1.82,-1.8l-1.25,-3.28l-2.13,-2.21l-0.34,-2.78l-1.13,-1.98l-0.15,-1.51l-2.06,-5.84l-2.58,-4.85l0.07,-2.34l0.73,-3.02l1.97,-1.4l1.24,-1.37l0.35,-1.49l0.09,-1.14l-0.71,-2.24l-4.53,-2.54L303,265.5l0.82,-3.6l-0.46,-4.07l0.68,-2.35l0.53,-2.61l1.33,-0.21l0.98,0.51l-0.41,0.98l-0.19,1.92l0.81,1.73l0.99,0.94l0.67,1.64l0.68,0.64l0.8,0.34l-0.19,-0.98l-0.31,-0.68l-0.05,-1.93l-0.42,-2.57l-0.88,-1.61l0.04,-2.45l-0.38,-0.69l-0.09,-0.94l1.5,-0.64l1.85,-0.22l2.25,0.46l6.14,2.16l1.5,-0.19l1.04,0.51l0.83,0.16l-1.52,-1.09l-1.01,-0.08l-1.08,-0.45l-2.26,-0.53l-0.83,-0.52l-0.78,-1l-0.63,-0.26l-2.42,0.63l-0.87,-0.42l-1.77,-1.99l-0.89,-0.47l-1.75,0.31l-1.18,3.25l-0.27,2.6l-0.99,-0.02l-0.76,-1.33l-1.45,-1.09l-1.06,-1.33l-1.37,-2.29l-0.8,-0.93l-1.56,1.08l0.16,-0.66l1.06,-1.48l0.69,-2.82l1.02,2.73l-0.05,-1.72l-0.79,-2.11l-0.82,-0.9l-0.31,-3.45l-2.24,-2.71l-1.33,-3.67l-3.05,-6.35l1.05,-4.41l0.06,-5.98l1.68,-2.88l0.6,-2.23l0.24,-3.58l-0.27,-2.07l-2.08,-6.11l-2.43,-4.46l0.29,-2.69l0.58,-2.62l1.49,-2.02l1.42,-2.17l0.68,-0.48l0.1,0.32l-0.3,0.47l0.44,0.31l0.52,-0.99l0.47,-0.45l-0.5,-0.24l0.16,-0.32l0.52,-0.56l2.08,-2.78l1.15,-3.98l2.69,-4.47l0.46,-1.61l0.37,-3.67l-0.06,-2.29l-0.82,-1.88l1.25,-1.95l0.61,-2.05l-0.15,-0.43l4.31,1.38l4.17,1.32l4.18,1.31l4.18,1.3l4.19,1.28l4.19,1.27l4.19,1.26l4.2,1.25l4.2,1.23l4.2,1.22l4.21,1.21l4.21,1.2l4.21,1.19l4.22,1.17l4.22,1.16L371.75,174.28zM327.88,344.91l3.35,2.08l2.11,0l0.21,0.63l-0.36,0.4l-4.66,-0.35l-1.21,-0.95l0.09,-0.83l-0.25,-0.89L327.88,344.91zM319.97,344.03l-0.97,-0.2l-1.4,-0.63l0.65,-0.36l0.91,-0.14l0.18,0.34L319.97,344.03zM324.06,347.59l-1.34,-0.04l-0.88,-0.55l-0.96,-2.47l3.3,0.61l1.15,1.27l0.12,0.3L324.06,347.59zM351.66,367.08l0.52,1.82l-1.27,-0.53l-1.4,-0.26l-0.2,-0.97l-0.11,-1.31l-0.2,-0.38l-0.92,-0.35l-0.04,-0.13l0.04,-0.61l0.34,-0.21l2.62,2.09L351.66,367.08zM330.94,365.63l-0.82,-0.17l-1.06,-0.49l-0.26,-1.31l0.93,0.16l0.8,0.38l0.43,1.09L330.94,365.63zM348.58,379.15l-1.11,-0.07l-1.07,-0.74l-0.49,-2.35l-0.7,-1.92l0.72,-0.31l0.51,1.8l1.67,2.96L348.58,379.15z"/></svg></span>
+        <h3>California</h3>
+        <p>California Building Code (CBC) 2025 / ASCE 7-22 — seismic + wind combinations, Title 24 solar mandates.</p>
+        <span class="badge badge--data">SEISMIC + WIND COMBINED</span>
+      </a>
 
-        <!-- Comparison Section -->
-        <section class="comparison-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Mandatory vs. Voluntary States</h2>
-                    <p>Understanding the difference between legal requirements and best practices</p>
-                </div>
+    </div>
+  </div></section>
 
-                <div class="comparison-grid">
-                    <div class="comparison-card mandatory">
-                        <h3><i class="fas fa-gavel"></i> 10 Mandatory States</h3>
-                        <p>Wind load calculations are <strong>legally required</strong> for building permits:</p>
-                        <ul>
-                            <li>PE-sealed calculations required by law</li>
-                            <li>Building permits denied without proper documentation</li>
-                            <li>Inspections verify compliance with calculated loads</li>
-                            <li>Product approvals required in HVHZ zones</li>
-                            <li>Insurance claims may be denied without compliance</li>
-                            <li>Contractor licenses at risk for non-compliance</li>
-                        </ul>
-                    </div>
+  <div class="divider"></div>
 
-                    <div class="comparison-card voluntary">
-                        <h3><i class="fas fa-hand-paper"></i> 40 Voluntary States</h3>
-                        <p>Wind load calculations are <strong>not legally required</strong> but often needed:</p>
-                        <ul>
-                            <li>No legal requirement for PE-sealed calculations</li>
-                            <li>Building permits issued without wind load documentation</li>
-                            <li>Insurance companies may still require calculations</li>
-                            <li>Manufacturers may void warranties without calculations</li>
-                            <li>Lenders may require for commercial financing</li>
-                            <li>Professional liability still applies to engineers</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- MANDATORY vs VOLUNTARY -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">THE LANDSCAPE</p>
+    <h2>Mandatory vs <span class="sweep">voluntary</span> states</h2>
+    <div class="cmp-scroll"><table class="cmp">
+      <thead><tr><th>&nbsp;</th><th>10 Mandatory States</th><th>40 Voluntary States</th></tr></thead>
+      <tbody>
+        <tr><td>PE-sealed calcs</td><td>Required by law</td><td>Not legally required</td></tr>
+        <tr><td>Building permit</td><td>Denied without documentation</td><td>Issued without wind-load docs</td></tr>
+        <tr><td>Product approval</td><td>Required in HVHZ zones</td><td>Not applicable</td></tr>
+        <tr><td>Insurance &amp; lenders</td><td>Claims denied without compliance</td><td>May still require calculations</td></tr>
+        <tr><td>Risk</td><td>Contractor licenses at stake</td><td>Engineer liability still applies</td></tr>
+      </tbody>
+    </table></div>
+    <div class="info-box glass">In the 40 voluntary states, wind load calculations are not required by law — but insurers, manufacturers, and lenders often require them regardless.</div>
+  </div></section>
 
-        <!-- Why Section -->
-        <section class="why-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Why These 10 States Require Wind Load Calculations</h2>
-                    <p>Understanding the factors that led to mandatory requirements</p>
-                </div>
+  <div class="divider"></div>
 
-                <div class="why-grid">
-                    <div class="why-card">
-                        <h3><i class="fas fa-hurricane"></i> Hurricane Exposure</h3>
-                        <p>All 10 mandatory states have significant hurricane or tropical storm exposure. Florida alone has experienced $328 billion in hurricane damage since 1900, driving the strictest codes in the nation.</p>
-                    </div>
-                    <div class="why-card">
-                        <h3><i class="fas fa-dollar-sign"></i> Insurance Industry Pressure</h3>
-                        <p>Massive insurance payouts after hurricanes Andrew, Katrina, and Sandy led insurance companies to demand stricter building codes and documentation requirements.</p>
-                    </div>
-                    <div class="why-card">
-                        <h3><i class="fas fa-shield-alt"></i> Life Safety Protection</h3>
-                        <p>Building failures during high-wind events have resulted in loss of life. Mandatory calculations ensure structures can withstand design-level wind events.</p>
-                    </div>
-                    <div class="why-card">
-                        <h3><i class="fas fa-home"></i> Property Protection</h3>
-                        <p>Proper wind load design protects property values and reduces repair costs. Studies show code-compliant buildings suffer 40-60% less damage in hurricanes.</p>
-                    </div>
-                    <div class="why-card">
-                        <h3><i class="fas fa-landmark"></i> Federal Incentives</h3>
-                        <p>FEMA's Community Rating System (CRS) and Building Resilient Infrastructure and Communities (BRIC) grants incentivize states to adopt stricter codes.</p>
-                    </div>
-                    <div class="why-card">
-                        <h3><i class="fas fa-chart-line"></i> Economic Recovery</h3>
-                        <p>States with stronger building codes recover faster economically after disasters. Reduced damage means faster return to normal business operations.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- WHY -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">WHY THESE STATES</p>
+    <h2>What drove the <span class="sweep">mandate</span></h2>
+    <div class="grid" data-n="6">
 
-        <!-- Regional Links Section -->
-        <section class="regional-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Explore Regional Wind Load Guides</h2>
-                    <p>Additional resources for specific geographic regions</p>
-                </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c5-3 13-3 18 0"/><path d="M3 14c5-3 13-3 18 0"/><circle cx="12" cy="11.5" r="2.4"/></svg>
+        <h3>Hurricane Exposure</h3>
+        <p>All 10 states face major hurricane or tropical-storm exposure; Florida has seen $328B in hurricane damage since 1900.</p>
+      </div>
 
-                <div class="regional-grid">
-                    <a href="tornado-alley-wind-loads-safety.html" class="regional-card tornado">
-                        <div class="regional-icon"><i class="fas fa-tornado"></i></div>
-                        <h3>Tornado Alley</h3>
-                        <p>Wind load requirements for the central US tornado-prone region. Learn about future requirements and safety recommendations.</p>
-                    </a>
-                    <a href="solar-belt-wind-load-requirements.html" class="regional-card solar">
-                        <div class="regional-icon"><i class="fas fa-solar-panel"></i></div>
-                        <h3>Solar Belt</h3>
-                        <p>Wind load requirements for America's top solar-producing states. ASCE 7 provisions for ground-mount and rooftop PV systems.</p>
-                    </a>
-                    <a href="state-requirements.html" class="regional-card all-states">
-                        <div class="regional-icon"><i class="fas fa-map-marked-alt"></i></div>
-                        <h3>All 50 States</h3>
-                        <p>Complete state-by-state guide to wind load requirements, PE seal regulations, and ASCE 7 adoption across the US.</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.2 0 0 1 5 .3c0 1.8-2.5 1.8-2.5 3.5"/><path d="M12 16.6v.1"/></svg>
+        <h3>Insurance Pressure</h3>
+        <p>Massive payouts after Andrew, Katrina, and Sandy pushed insurers to demand stricter codes and documentation.</p>
+      </div>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container">
-                <h2>Need Wind Load Calculations for Your Project?</h2>
-                <p>Whether you're in a mandatory or voluntary state, proper wind load calculations protect your project, your client, and your reputation.</p>
-                <div class="cta-buttons">
-                    <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button cta-button-primary" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                    <a href="state-requirements.html" class="cta-button cta-button-secondary"><i class="fas fa-map"></i> View All 50 States</a>
-                </div>
-            </div>
-        </section>
-    </main>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Life Safety</h3>
+        <p>Building failures in high-wind events have cost lives; mandatory calcs ensure structures survive design-level wind.</p>
+      </div>
 
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>Mandatory Wind Load States</h4>
-                    <ul>
-                        <li><a href="florida-wind-load-requirements.html">Florida</a></li>
-                        <li><a href="texas-wind-load-requirements.html">Texas</a></li>
-                        <li><a href="hawaii-wind-load-requirements.html">Hawaii</a></li>
-                        <li><a href="louisiana-wind-load-requirements.html">Louisiana</a></li>
-                        <li><a href="north-carolina-wind-load-requirements.html">North Carolina</a></li>
-                        <li><a href="south-carolina-wind-load-requirements.html">South Carolina</a></li>
-                        <li><a href="georgia-wind-load-requirements.html">Georgia</a></li>
-                        <li><a href="virginia-wind-load-requirements.html">Virginia</a></li>
-                        <li><a href="new-york-wind-load-requirements.html">New York</a></li>
-                        <li><a href="california-wind-load-requirements.html">California</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Regional Guides</h4>
-                    <ul>
-                        <li><a href="mandatory-wind-load-states.html">10 Mandatory States</a></li>
-                        <li><a href="solar-belt-wind-load-requirements.html">Solar Belt States</a></li>
-                        <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                        <li><a href="state-requirements.html">All 50 States</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>ASCE 7 Resources</h4>
-                    <ul>
-                        <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                        <li><a href="asce-7-16-wind-speed-maps.html">ASCE 7-16 Maps</a></li>
-                        <li><a href="asce-7-22-wind-speed-maps.html">ASCE 7-22 Maps</a></li>
-                        <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">Components & Cladding</a></li>
-                        <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                        <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                        <li><a href="resources.html">Free Resources</a></li>
-                        <li><a href="articles.html">Articles & Guides</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p class="footer-tagline">Wind Load Solutions - Simplifying ASCE 7 Compliance</p>
-                <p>&copy; 2025 Wind Load Solutions. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6 8 6"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg>
+        <h3>Property Protection</h3>
+        <p>Code-compliant buildings suffer 40–60% less damage in hurricanes, protecting value and cutting repair costs.</p>
+      </div>
 
-    <script>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l6-4 6 4v11"/><path d="M9.5 20v-4h5v4"/></svg>
+        <h3>Federal Incentives</h3>
+        <p>FEMA's Community Rating System and BRIC grants incentivize states to adopt stricter building codes.</p>
+      </div>
+
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 3 3 7-8"/><path d="M19 4v4h-4"/></svg>
+        <h3>Economic Recovery</h3>
+        <p>States with stronger codes recover faster after disasters — less damage means a quicker return to business.</p>
+      </div>
+
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- REGIONAL GUIDES -->
+  <section class="sec"><div class="wrap">
+    <p class="eyebrow">KEEP EXPLORING</p>
+    <h2>Regional <span class="sweep">wind load</span> guides</h2>
+    <div class="grid" data-n="3">
+
+      <a class="card glass" href="tornado-alley-wind-loads-safety.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18"/><path d="M5 9h12"/><path d="M8 13h7"/><path d="M11 17h2"/></svg>
+        <h3>Tornado Alley</h3>
+        <p>Wind load guidance for the central US tornado-prone region and future requirements.</p>
+        <span class="badge badge--data">REGION</span>
+      </a>
+
+      <a class="card glass" href="solar-belt-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        <h3>Solar Belt</h3>
+        <p>ASCE 7 provisions for ground-mount and rooftop PV across top solar-producing states.</p>
+        <span class="badge badge--data">REGION</span>
+      </a>
+
+      <a class="card glass" href="state-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+        <h3>All 50 States</h3>
+        <p>Complete state-by-state guide to PE seal rules and ASCE 7 adoption across the US.</p>
+        <span class="badge badge--data">MAP</span>
+      </a>
+
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="sec sec-glow"><div class="wrap">
+    <p class="eyebrow">START YOUR CALCULATION</p>
+    <h2>Need wind load calculations for <span class="sweep">your project?</span></h2>
+    <p class="lead">Mandatory state or not, PE-sealed calculations protect your project, your client, and your reputation.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculators</a>
+      <a class="btn-ghost" href="state-requirements.html">View All 50 States</a>
+    </div>
+  </div></section>
+
+</main>
+
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         const header = document.querySelector('.main-header');
         window.addEventListener('scroll', () => {
@@ -1819,5 +643,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>

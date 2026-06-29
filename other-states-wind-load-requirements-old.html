@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBFRKVFWGC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MBFRKVFWGC');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Load Requirements - 40 States Without Mandatory Wind Load Permits | ASCE 7 Standards</title>
+    <meta name="description" content="40 US states do NOT require wind load calculations by law to obtain a building permit. Learn which states have no mandatory wind load certification, why you may still need calculations, and state building code references.">
+    <link rel="canonical" href="https://windload.solutions/other-states-wind-load-requirements">
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0018ff;
+            --dark-blue: #181E57;
+            --emerald: #10b981;
+            --jade: #059669;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            padding: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .logo-hamburger-row {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 1rem;
+        }
+
+        .logo {
+            z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .logo.menu-active {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .logo-image {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled .logo-image {
+            height: 70px;
+            filter: none;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1001;
+        }
+
+        @media (max-width: 1024px) {
+            .header-right a {
+                display: none;
+            }
+        }
+
+        .header-cta {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-cta:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .main-header.scrolled .header-cta {
+            color: #0018ff;
+            background: rgba(0, 24, 255, 0.1);
+            border-color: rgba(0, 24, 255, 0.3);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .main-header.scrolled .hamburger span {
+            background: #1f2937;
+            box-shadow: none;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .nav-links {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 400px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
+            padding: 4rem 2rem 2rem 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .nav-links.active {
+            display: flex;
+            transform: translateX(0);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #0018ff;
+            padding-left: 1rem;
+        }
+
+        /* Hero - Vibrant Emerald/Jade Green */
+        .hero {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3.5rem;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 3rem 2rem 2rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .search-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.5rem 4rem 1.5rem 4rem;
+            font-size: 1.2rem;
+            border: 3px solid #e5e7eb;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--emerald);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--emerald);
+        }
+
+        .search-count {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.95rem;
+            color: var(--emerald);
+            font-weight: 700;
+        }
+
+        /* Why It Matters Section */
+        .why-matters {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 3rem 2rem;
+            border-left: 5px solid #f59e0b;
+            margin: 3rem 0;
+        }
+
+        .why-matters h2 {
+            color: #92400e;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .why-matters p {
+            color: #78350f;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .why-matters ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+        }
+
+        .why-matters li {
+            color: #78350f;
+            padding: 0.75rem 0 0.75rem 2rem;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .why-matters li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #f59e0b;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        /* States Grid */
+        .states-grid-section {
+            padding: 4rem 2rem;
+            background: #f9fafb;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .state-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--emerald);
+        }
+
+        .state-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .state-card.hidden {
+            display: none;
+        }
+
+        .state-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .state-code {
+            font-size: 0.95rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .state-details {
+            margin-top: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #4b5563;
+        }
+
+        .detail-icon {
+            color: var(--emerald);
+            font-size: 1.1rem;
+            margin-top: 0.2rem;
+        }
+
+        .tornado-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .state-link-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0018ff, #181E57);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        a.state-card-link {
+            text-decoration: none;
+            display: block;
+            border-left: 5px solid #0018ff;
+        }
+
+        a.state-card-link:hover {
+            box-shadow: 0 8px 30px rgba(0, 24, 255, 0.2);
+        }
+
+        /* Regional Tabs */
+        .regional-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .region-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .region-btn:hover {
+            border-color: var(--emerald);
+            color: var(--emerald);
+        }
+
+        .region-btn.active {
+            background: var(--emerald);
+            color: white;
+            border-color: var(--emerald);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--emerald);
+        }
+
+        .gov-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .gov-link:hover {
+            border-color: #0018ff;
+            color: #0018ff;
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,24,255,0.1);
+        }
+
+        .gov-link i {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .gov-link:hover i {
+            color: #0018ff;
+        }
+
+        .windloadcalc-promo {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .windloadcalc-promo h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .windloadcalc-promo p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary-blue);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile Header - Centered Logo with Hamburger Below */
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .logo-hamburger-row {
+                flex-direction: row;
+                align-items: center;
+                width: auto;
+            }
+
+            .logo {
+                display: flex;
+                justify-content: center;
+                width: auto;
+            }
+
+            .logo-image {
+                height: 70px;
+            }
+
+            .main-header.scrolled .logo-image {
+                height: 50px;
+            }
+
+            .header-right {
+                width: auto;
+                justify-content: flex-end;
+            }
+
+            .hamburger {
+                margin-top: 0.25rem;
+            }
+
+            .main-header {
+                padding: 1rem 0;
+            }
+
+            .main-header.scrolled {
+                padding: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .states-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Wind Load Calculators CTA Button */
+        .calculator-cta {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white !important;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .calculator-cta:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .calculator-cta i {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-cta {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.5rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+
+        /* City Links Section */
+        .city-links-section {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .region-section {
+            margin-bottom: 4rem;
+        }
+
+        .region-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .region-header h3 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .region-header p {
+            font-size: 1.05rem;
+            color: #6b7280;
+        }
+
+        .external-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .city-link-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid var(--emerald);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .city-link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15);
+            border-left-color: var(--jade);
+        }
+
+        .city-link-card h4 {
+            font-size: 1.25rem;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .city-wind-speed {
+            color: #6b7280;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .city-wind-speed i {
+            color: var(--emerald);
+        }
+
+        @media (max-width: 768px) {
+            .external-links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://windload.solutions/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "State Requirements",
+                "item": "https://windload.solutions/state-requirements.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Other States Wind Loads",
+                "item": "https://windload.solutions/other-states-wind-load-requirements.html"
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-hamburger-row">
+                <a href="index.html" class="logo">
+                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
+                </a>
+            </div>
+            <div class="header-right">
+                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+                <a href="state-requirements.html" class="header-cta">State Requirements</a>
+                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
+                <a href="resources.html" class="header-cta">Resources</a>
+                <button class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-overlay"></div>
+
+    <!-- Mobile Navigation with Hierarchical Structure -->
+<nav class="nav-links">
+    <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
+
+    <!-- ASCE 7 Standards with click submenu -->
+    <div class="nav-section">
+        <a href="#" class="nav-section-header" onclick="event.preventDefault(); toggleNavSection(this);">
+            <i class="fas fa-book"></i> ASCE 7 Standards
+            <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+
+        <div class="nav-section-content">
+            <!-- Wind Speed & Maps submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-wind"></i> Wind Speed & Maps
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="3-second-gust-wind-speed.html" class="nav-subitem"><i class="fas fa-gauge-high"></i> 3-Second Gust</a>
+                    <a href="basic-wind-speed-explained.html" class="nav-subitem"><i class="fas fa-circle-info"></i> Basic Wind Speed</a>
+                    <a href="asce-7-16-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map"></i> ASCE 7-16 Maps</a>
+                    <a href="asce-7-22-wind-speed-maps.html" class="nav-subitem"><i class="fas fa-map-location-dot"></i> ASCE 7-22 Maps</a>
+                    <a href="wind-speed-by-location.html" class="nav-subitem"><i class="fas fa-location-dot"></i> Wind Speed by Location</a>
+                </div>
+            </div>
+
+            <!-- Exposure Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-layer-group"></i> Exposure Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="exposure-category-selection-guide.html" class="nav-subitem"><i class="fas fa-compass"></i> Selection Guide</a>
+                    <a href="exposure-b-suburban-residential-wind-loads.html" class="nav-subitem"><i class="fas fa-city"></i> Exposure B</a>
+                    <a href="exposure-c-open-terrain-wind-loads.html" class="nav-subitem"><i class="fas fa-seedling"></i> Exposure C</a>
+                    <a href="exposure-d-coastal-ocean-wind-loads.html" class="nav-subitem"><i class="fas fa-water"></i> Exposure D</a>
+                    <a href="exposure-transition-zones.html" class="nav-subitem"><i class="fas fa-arrows-left-right"></i> Transition Zones</a>
+                </div>
+            </div>
+
+            <!-- Risk Categories submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-shield-alt"></i> Risk Categories
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="risk-category-selection-guide.html" class="nav-subitem"><i class="fas fa-list-check"></i> Selection Guide</a>
+                    <a href="risk-category-1-agricultural-buildings.html" class="nav-subitem"><i class="fas fa-warehouse"></i> Category I</a>
+                    <a href="risk-category-2-standard-occupancy.html" class="nav-subitem"><i class="fas fa-building"></i> Category II</a>
+                    <a href="risk-category-3-assembly-buildings.html" class="nav-subitem"><i class="fas fa-users"></i> Category III</a>
+                    <a href="risk-category-4-essential-facilities.html" class="nav-subitem"><i class="fas fa-hospital"></i> Category IV</a>
+                </div>
+            </div>
+
+            <!-- Design Methods submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-drafting-compass"></i> Design Methods
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="asd-allowable-stress-design-wind-loads.html" class="nav-subitem"><i class="fas fa-ruler-combined"></i> ASD Method</a>
+                    <a href="lrfd-load-resistance-factor-design-wind-loads.html" class="nav-subitem"><i class="fas fa-weight-hanging"></i> LRFD Method</a>
+                    <a href="asd-lrfd-conversion-guide.html" class="nav-subitem"><i class="fas fa-arrows-rotate"></i> ASD ↔ LRFD</a>
+                    <a href="nominal-vs-ultimate-wind-loads.html" class="nav-subitem"><i class="fas fa-code-compare"></i> Nominal vs Ultimate</a>
+                    <a href="nominal-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-n"></i> Nominal Loads</a>
+                    <a href="ultimate-wind-loads-explained.html" class="nav-subitem"><i class="fas fa-u"></i> Ultimate Loads</a>
+                    <a href="directional-vs-non-directional-wind-loads.html" class="nav-subitem"><i class="fas fa-compass-drafting"></i> Directional Method</a>
+                    <a href="wind-directionality-factor-guide.html" class="nav-subitem"><i class="fas fa-k"></i> Kd Factor</a>
+                </div>
+            </div>
+
+            <!-- HVHZ / Florida submenu -->
+            <div class="nav-subsection">
+                <a href="#" class="nav-subsection-header" onclick="event.preventDefault(); toggleNavSubsection(this);">
+                    <i class="fas fa-hurricane"></i> HVHZ / Florida
+                    <i class="fas fa-chevron-right nav-subarrow"></i>
+                </a>
+                <div class="nav-subsection-content">
+                    <a href="hvhz-florida-requirements.html" class="nav-subitem"><i class="fas fa-file-contract"></i> Florida FBC</a>
+                    <a href="miami-dade-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-certificate"></i> Miami-Dade NOA</a>
+                    <a href="broward-county-hvhz-requirements.html" class="nav-subitem"><i class="fas fa-stamp"></i> Broward County</a>
+                    <a href="hvhz-product-approvals.html" class="nav-subitem"><i class="fas fa-check-circle"></i> Product Approvals</a>
+                    <a href="hvhz-vs-standard-wind-zones.html" class="nav-subitem"><i class="fas fa-balance-scale"></i> HVHZ vs Standard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="mandatory-wind-load-states.html"><i class="fas fa-gavel"></i> 10 Mandatory States</a>
+    <a href="tornado-alley-wind-loads-safety.html"><i class="fas fa-tornado"></i> Tornado Alley</a>
+    <a href="solar-belt-wind-load-requirements.html"><i class="fas fa-solar-panel"></i> Solar Belt</a>
+    <a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html"><i class="fas fa-th"></i> Components & Cladding</a>
+    <a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html"><i class="fas fa-building"></i> MWFRS Guide</a>
+    <a href="topographic-effects-wind-loads.html"><i class="fas fa-mountain"></i> Topographic Effects</a>
+    <a href="resources.html"><i class="fas fa-book-open"></i> Free Resources</a>
+    <a href="articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
+    <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<style>
+/* Navigation styles with CLICK dropdowns */
+.nav-section {
+    position: relative;
+}
+
+.nav-section-header {
+    display: block !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    color: #0018ff !important;
+    background: rgba(0, 24, 255, 0.05) !important;
+    padding: 1rem !important;
+    border-left: 4px solid #0018ff !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-section-header i:first-child {
+    margin-right: 0.75rem;
+}
+
+.nav-arrow {
+    font-size: 0.75rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-section.active .nav-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.nav-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-section.active .nav-section-content {
+    max-height: 2000px;
+}
+
+.nav-subsection {
+    position: relative;
+}
+
+.nav-subsection-header {
+    display: block !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    color: #1f2937 !important;
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
+    border-left: 3px solid #d1d5db !important;
+    background: transparent !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-subsection-header:hover {
+    background: rgba(0, 24, 255, 0.08) !important;
+    border-left-color: #0018ff !important;
+}
+
+.nav-subsection-header i:first-child {
+    margin-right: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.nav-subarrow {
+    font-size: 0.7rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.nav-subsection.active .nav-subarrow {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.nav-subsection-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.nav-subsection.active .nav-subsection-content {
+    max-height: 1000px;
+}
+
+.nav-subitem {
+    font-size: 0.95rem !important;
+    color: #6b7280 !important;
+    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.nav-subitem i {
+    margin-right: 0.75rem;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.nav-subitem:hover {
+    background: rgba(0, 24, 255, 0.05) !important;
+    color: #0018ff !important;
+    padding-left: 3rem !important;
+}
+
+.nav-subitem::before {
+    display: none !important;
+}
+
+/* Override default nav-links a styles */
+.nav-links a {
+    text-decoration: none;
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links > a > i {
+    margin-right: 0.75rem;
+    color: #0018ff;
+    width: 1.25rem;
+    text-align: center;
+}
+</style>
+
+
+
+
+
+
+
+
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h1>40 States Without Mandatory Wind Load Permits</h1>
+                <p class="hero-subtitle">These states do NOT require wind load calculations by law to obtain a building permit - but you may still need them</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text"
+                   id="stateSearch"
+                   class="search-input"
+                   placeholder="Search for your state..."
+                   onkeyup="filterStates()">
+            <span id="searchCount" class="search-count"></span>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <div class="why-matters">
+                <h2><i class="fas fa-gavel"></i> What "No Mandatory Wind Load Permit" Means</h2>
+
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #f59e0b; margin-bottom: 2rem;">
+                    <h3 style="color: #92400e; margin-bottom: 1rem;"><i class="fas fa-exclamation-triangle"></i> Important Legal Distinction</h3>
+                    <p style="font-size: 1.15rem; color: #78350f; margin-bottom: 1rem;"><strong>In these 40 states, building departments do NOT require you to submit wind load calculations or C&C (Components & Cladding) certifications to obtain a building permit.</strong></p>
+                    <p style="color: #78350f;">This is different from the 10 states (Florida, Texas, California, North Carolina, South Carolina, Louisiana, Hawaii, Georgia, Virginia, New York) where wind load documentation is <strong>legally required</strong> before a permit is issued.</p>
+                </div>
+
+                <h3 style="margin-bottom: 1rem;"><i class="fas fa-question-circle" style="color: #10b981;"></i> When You May Still Need Wind Load Calculations</h3>
+                <p>Even though the building department won't demand them, there are many situations where wind load calculations are necessary or strongly recommended:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 12px; border: 2px solid #86efac;">
+                        <h4 style="color: #166534; margin-bottom: 0.75rem;"><i class="fas fa-solar-panel"></i> Solar Installations</h4>
+                        <p style="color: #14532d; font-size: 0.95rem;">Solar companies installing PV panel arrays need wind load calculations to ensure panels won't be destroyed by wind events. The state building code references (ASCE 7-16 or 7-22) provide the methodology - it's about protecting your investment and ensuring system integrity, not permit requirements.</p>
+                    </div>
+                    <div style="background: #eff6ff; padding: 1.5rem; border-radius: 12px; border: 2px solid #93c5fd;">
+                        <h4 style="color: #1e40af; margin-bottom: 0.75rem;"><i class="fas fa-file-contract"></i> Insurance Requirements</h4>
+                        <p style="color: #1e3a8a; font-size: 0.95rem;">Many commercial insurance policies require certified wind load calculations for coverage - especially for new construction, renovations, or high-value assets. Your insurer may require documentation even if the building department doesn't.</p>
+                    </div>
+                    <div style="background: #fdf4ff; padding: 1.5rem; border-radius: 12px; border: 2px solid #e879f9;">
+                        <h4 style="color: #86198f; margin-bottom: 0.75rem;"><i class="fas fa-home"></i> Roofing Companies</h4>
+                        <p style="color: #701a75; font-size: 0.95rem;">Roofing contractors may need wind load data for proper shingle/membrane selection, uplift ratings, and fastening patterns - protecting themselves from liability if a roof fails in a wind event.</p>
+                    </div>
+                    <div style="background: #fefce8; padding: 1.5rem; border-radius: 12px; border: 2px solid #fde047;">
+                        <h4 style="color: #854d0e; margin-bottom: 0.75rem;"><i class="fas fa-certificate"></i> Manufacturer Warranties</h4>
+                        <p style="color: #713f12; font-size: 0.95rem;">Window, door, and roofing manufacturers often require proof of proper wind load selection to honor their warranties. Using products rated below actual site conditions voids coverage.</p>
+                    </div>
+                    <div style="background: #fef2f2; padding: 1.5rem; border-radius: 12px; border: 2px solid #fca5a5;">
+                        <h4 style="color: #991b1b; margin-bottom: 0.75rem;"><i class="fas fa-balance-scale"></i> Liability Protection</h4>
+                        <p style="color: #7f1d1d; font-size: 0.95rem;">If a component fails and causes injury or property damage, documented calculations provide critical legal protection. "The state didn't require it" is not a valid defense in a negligence lawsuit.</p>
+                    </div>
+                    <div style="background: #f0fdfa; padding: 1.5rem; border-radius: 12px; border: 2px solid #5eead4;">
+                        <h4 style="color: #115e59; margin-bottom: 0.75rem;"><i class="fas fa-building"></i> Commercial Leases</h4>
+                        <p style="color: #134e4a; font-size: 0.95rem;">Commercial landlords and tenants often require engineering documentation for tenant improvements, signage, awnings, and facade modifications - regardless of permit requirements.</p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); padding: 2rem; border-radius: 12px; margin: 2rem 0; text-align: center;">
+                    <h3 style="color: white; margin-bottom: 1rem;"><i class="fas fa-calculator"></i> Need Wind Load Calculations?</h3>
+                    <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Even in states without mandatory requirements, proper ASCE 7 wind load analysis protects your project, your clients, and your professional reputation.</p>
+                    <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener" style="display: inline-block; background: white; color: #0018ff; padding: 1rem 2rem; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.3s ease;">Get Professional Wind Load Calculator →</a>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem;"><i class="fas fa-book" style="color: #0018ff;"></i> State Building Code References</h3>
+                <p>While these 40 states don't require wind load permits, they DO have adopted building codes that reference ASCE 7 for wind load methodology. When you need wind load calculations (for any of the reasons above), use the ASCE 7 version your state references - typically ASCE 7-16 or ASCE 7-22.</p>
+            </div>
+        </div>
+
+        <!-- City-Specific Wind Load Requirements -->
+        <section class="city-links-section">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 4rem;">
+                    <h2>Major City Wind Load Requirements</h2>
+                    <p>Detailed wind load information for cities in states without dedicated state pages</p>
+                </div>
+
+                <!-- NORTHEAST REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-building"></i> Northeast</h3>
+                        <p>Coastal exposure, hurricane remnants, nor'easters</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/boston-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-city"></i> Boston, MA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 110-120 mph</div>
+                        </a>
+                        <a href="cities/cape-cod-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-umbrella-beach"></i> Cape Cod, MA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 120-140 mph</div>
+                        </a>
+                        <a href="cities/providence-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-water"></i> Providence, RI</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 110-120 mph</div>
+                        </a>
+                        <a href="cities/hartford-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-landmark"></i> Hartford, CT</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-115 mph</div>
+                        </a>
+                        <a href="cities/newark-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-building"></i> Newark, NJ</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-115 mph</div>
+                        </a>
+                        <a href="cities/jersey-city-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-city"></i> Jersey City, NJ</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 110-120 mph</div>
+                        </a>
+                        <a href="cities/atlantic-city-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-umbrella-beach"></i> Atlantic City, NJ</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 120-130 mph</div>
+                        </a>
+                        <a href="cities/philadelphia-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-landmark"></i> Philadelphia, PA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-115 mph</div>
+                        </a>
+                        <a href="cities/pittsburgh-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-city"></i> Pittsburgh, PA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/baltimore-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-anchor"></i> Baltimore, MD</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-120 mph</div>
+                        </a>
+                        <a href="cities/washington-dc-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-monument"></i> Washington, DC</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-115 mph</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- MIDWEST REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-industry"></i> Midwest</h3>
+                        <p>Great Lakes winds, severe thunderstorms</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/chicago-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-building"></i> Chicago, IL</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/detroit-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-car"></i> Detroit, MI</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/minneapolis-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-snowflake"></i> Minneapolis, MN</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/milwaukee-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-water"></i> Milwaukee, WI</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/indianapolis-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-flag-checkered"></i> Indianapolis, IN</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/columbus-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-building"></i> Columbus, OH</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/cleveland-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-water"></i> Cleveland, OH</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/cincinnati-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-baseball-ball"></i> Cincinnati, OH</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TORNADO ALLEY REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-tornado"></i> Tornado Alley</h3>
+                        <p>Extreme tornado risk, severe thunderstorm winds</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/oklahoma-city-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-tornado"></i> Oklahoma City, OK</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-120 mph</div>
+                        </a>
+                        <a href="cities/tulsa-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-oil-well"></i> Tulsa, OK</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/kansas-city-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-building"></i> Kansas City, MO</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/st-louis-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-archway"></i> St. Louis, MO</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/wichita-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-wheat-awn"></i> Wichita, KS</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 105-120 mph</div>
+                        </a>
+                        <a href="cities/omaha-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-building"></i> Omaha, NE</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/des-moines-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-tractor"></i> Des Moines, IA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/little-rock-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-mountain"></i> Little Rock, AR</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SOUTH REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-guitar"></i> South</h3>
+                        <p>Severe thunderstorms, occasional tropical systems</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/nashville-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-music"></i> Nashville, TN</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/memphis-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-guitar"></i> Memphis, TN</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/louisville-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-horse-head"></i> Louisville, KY</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-110 mph</div>
+                        </a>
+                        <a href="cities/birmingham-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-industry"></i> Birmingham, AL</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/mobile-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-anchor"></i> Mobile, AL</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 140-150 mph</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- MOUNTAIN/WEST REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-mountain"></i> Mountain & West</h3>
+                        <p>Mountain gap winds, desert conditions</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/denver-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-mountain"></i> Denver, CO</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 100-115 mph</div>
+                        </a>
+                        <a href="cities/phoenix-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-sun"></i> Phoenix, AZ</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 90-100 mph</div>
+                        </a>
+                        <a href="cities/tucson-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-cactus"></i> Tucson, AZ</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 90-100 mph</div>
+                        </a>
+                        <a href="cities/albuquerque-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-hot-air-balloon"></i> Albuquerque, NM</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 90-100 mph</div>
+                        </a>
+                        <a href="cities/las-vegas-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-dice"></i> Las Vegas, NV</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 95-105 mph</div>
+                        </a>
+                        <a href="cities/salt-lake-city-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-mountain"></i> Salt Lake City, UT</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 90-105 mph</div>
+                        </a>
+                        <a href="cities/boise-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-tree"></i> Boise, ID</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 90-100 mph</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PACIFIC NORTHWEST REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-cloud-rain"></i> Pacific Northwest</h3>
+                        <p>Coastal exposure, gap winds, winter storms</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/seattle-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-mountain"></i> Seattle, WA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 95-110 mph</div>
+                        </a>
+                        <a href="cities/tacoma-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-water"></i> Tacoma, WA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 95-110 mph</div>
+                        </a>
+                        <a href="cities/spokane-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-tree"></i> Spokane, WA</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 90-100 mph</div>
+                        </a>
+                        <a href="cities/portland-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-bridge"></i> Portland, OR</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 95-105 mph</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- ALASKA & TERRITORIES REGION -->
+                <div class="region-section">
+                    <div class="region-header">
+                        <h3><i class="fas fa-snowflake"></i> Alaska & Territories</h3>
+                        <p>Extreme conditions, hurricane exposure (Puerto Rico)</p>
+                    </div>
+                    <div class="external-links-grid">
+                        <a href="cities/anchorage-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-igloo"></i> Anchorage, AK</h4>
+                            <div class="city-wind-speed"><i class="fas fa-wind"></i> 110-130 mph</div>
+                        </a>
+                        <a href="cities/san-juan-wind-load-requirements.html" class="city-link-card">
+                            <h4><i class="fas fa-umbrella-beach"></i> San Juan, PR</h4>
+                            <div class="city-wind-speed"><i class="fas fa-hurricane"></i> 165-180 mph</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured State Guides - States with Dedicated Pages -->
+        <section class="featured-states-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 4rem 0;">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <h2><i class="fas fa-star" style="color: #f59e0b;"></i> Featured State Guides</h2>
+                    <p>Comprehensive wind load guides with detailed research, local requirements, and city-specific information</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <!-- Tornado Alley States -->
+                    <a href="oklahoma-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(132, 22, 23, 0.15), rgba(255, 199, 44, 0.1)); border: 2px solid rgba(132, 22, 23, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-tornado" style="color: #841617; font-size: 1.5rem;"></i>
+                            <h3 style="color: #841617; margin: 0; font-size: 1.2rem;">Oklahoma</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Tornado Capital - Moore, OKC, Tulsa wind requirements</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #841617; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="kansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(0, 81, 186, 0.15), rgba(232, 0, 13, 0.1)); border: 2px solid rgba(0, 81, 186, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-tornado" style="color: #0051BA; font-size: 1.5rem;"></i>
+                            <h3 style="color: #0051BA; margin: 0; font-size: 1.2rem;">Kansas</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Heart of Tornado Alley - Wichita, Topeka, Kansas City</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #0051BA; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="nebraska-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(228, 28, 56, 0.15), rgba(245, 212, 66, 0.1)); border: 2px solid rgba(228, 28, 56, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-tornado" style="color: #E41C38; font-size: 1.5rem;"></i>
+                            <h3 style="color: #E41C38; margin: 0; font-size: 1.2rem;">Nebraska</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Northern Tornado Alley - Omaha, Lincoln wind codes</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #E41C38; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="iowa-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(255, 205, 0, 0.15), rgba(31, 41, 55, 0.1)); border: 2px solid rgba(255, 205, 0, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-wind" style="color: #d97706; font-size: 1.5rem;"></i>
+                            <h3 style="color: #92400e; margin: 0; font-size: 1.2rem;">Iowa</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">2020 Derecho - Des Moines, Cedar Rapids requirements</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #92400e; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="missouri-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(241, 184, 45, 0.15), rgba(31, 41, 55, 0.1)); border: 2px solid rgba(241, 184, 45, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-tornado" style="color: #F1B82D; font-size: 1.5rem;"></i>
+                            <h3 style="color: #92400e; margin: 0; font-size: 1.2rem;">Missouri</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Joplin tornado legacy - St. Louis, Kansas City codes</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #92400e; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="arkansas-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(157, 34, 53, 0.15), rgba(245, 245, 245, 0.1)); border: 2px solid rgba(157, 34, 53, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-tornado" style="color: #9D2235; font-size: 1.5rem;"></i>
+                            <h3 style="color: #9D2235; margin: 0; font-size: 1.2rem;">Arkansas</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Southern Tornado Alley - Little Rock, NW Arkansas</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #9D2235; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <!-- Solar Belt / Other Featured States -->
+                    <a href="arizona-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(194, 65, 12, 0.15), rgba(251, 191, 36, 0.1)); border: 2px solid rgba(194, 65, 12, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-sun" style="color: #c2410c; font-size: 1.5rem;"></i>
+                            <h3 style="color: #c2410c; margin: 0; font-size: 1.2rem;">Arizona</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Solar Capital - Phoenix, Tucson monsoon winds</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #c2410c; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="nevada-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(107, 114, 128, 0.15), rgba(212, 175, 55, 0.1)); border: 2px solid rgba(107, 114, 128, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-mountain" style="color: #6b7280; font-size: 1.5rem;"></i>
+                            <h3 style="color: #4b5563; margin: 0; font-size: 1.2rem;">Nevada</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Desert winds - Las Vegas, Reno mountain exposure</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #4b5563; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="colorado-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(30, 58, 95, 0.15), rgba(245, 158, 11, 0.1)); border: 2px solid rgba(30, 58, 95, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-mountain" style="color: #1e3a5f; font-size: 1.5rem;"></i>
+                            <h3 style="color: #1e3a5f; margin: 0; font-size: 1.2rem;">Colorado</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Mountain & plains - Denver, Colorado Springs codes</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #1e3a5f; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="massachusetts-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(30, 58, 95, 0.15), rgba(178, 34, 34, 0.1)); border: 2px solid rgba(30, 58, 95, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-water" style="color: #1e3a5f; font-size: 1.5rem;"></i>
+                            <h3 style="color: #1e3a5f; margin: 0; font-size: 1.2rem;">Massachusetts</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Coastal exposure - Boston, Cape Cod hurricanes</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #1e3a5f; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+
+                    <a href="new-jersey-wind-load-requirements.html" style="display: block; background: linear-gradient(135deg, rgba(255, 198, 39, 0.15), rgba(0, 0, 0, 0.05)); border: 2px solid rgba(255, 198, 39, 0.3); border-radius: 12px; padding: 1.5rem; text-decoration: none; transition: all 0.3s ease;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <i class="fas fa-umbrella-beach" style="color: #b45309; font-size: 1.5rem;"></i>
+                            <h3 style="color: #92400e; margin: 0; font-size: 1.2rem;">New Jersey</h3>
+                        </div>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0;">Shore exposure - Atlantic City, Newark coastal codes</p>
+                        <span style="display: inline-block; margin-top: 0.75rem; color: #92400e; font-weight: 600; font-size: 0.85rem;">View Full Guide <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p style="color: #64748b; font-size: 0.95rem;"><i class="fas fa-info-circle"></i> More state guides coming soon! Below you'll find all 40 states with basic wind data.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="states-grid-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>All 40 States - Wind Load Quick Reference</h2>
+                    <p>Filter by region or search to find your state. States with <i class="fas fa-file-alt"></i> have detailed guides above.</p>
+                </div>
+
+                <div class="regional-tabs">
+                    <button class="region-btn active" onclick="filterByRegion('all')">All States (40)</button>
+                    <button class="region-btn" onclick="filterByRegion('northeast')">Northeast</button>
+                    <button class="region-btn" onclick="filterByRegion('midwest')">Midwest</button>
+                    <button class="region-btn" onclick="filterByRegion('south')">South</button>
+                    <button class="region-btn" onclick="filterByRegion('west')">West</button>
+                    <button class="region-btn" onclick="filterByRegion('tornado')"><i class="fas fa-tornado"></i> Tornado Alley</button>
+                </div>
+
+                <div class="states-grid" id="statesGrid">
+                    <!-- States will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Official State Building Code Resources -->
+        <section class="state-resources-section" style="background: #f9fafb; padding: 4rem 0;">
+            <div class="container">
+                <div class="section-header" style="margin-bottom: 2rem;">
+                    <h2><i class="fas fa-landmark" style="color: #0018ff;"></i> Official State Building Code Resources</h2>
+                    <p>Links to official .gov websites for building code information. All links open in new tabs.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                    <a href="https://adeca.alabama.gov/codes/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Alabama Building Codes</a>
+                    <a href="https://www.commerce.alaska.gov/web/cbpl/ProfessionalLicensing/BuildingCodes.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Alaska Building Codes</a>
+                    <a href="https://btr.az.gov/contractor-licensing/licensing/building-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Arizona Building Codes</a>
+                    <a href="https://www.healthy.arkansas.gov/programs-services/topics/construction-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Arkansas Building Codes</a>
+                    <a href="https://dfpc.colorado.gov/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Colorado Fire Prevention & Control</a>
+                    <a href="https://portal.ct.gov/DAS/Office-of-State-Building-Inspector/Building-Codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Connecticut Building Codes</a>
+                    <a href="https://delcode.delaware.gov/title16/c074/index.html" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Delaware Building Codes</a>
+                    <a href="https://dbs.idaho.gov/building-codes/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Idaho Building Codes</a>
+                    <a href="https://www.iccsafe.org/advocacy/illinois-codes/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Illinois Building Codes</a>
+                    <a href="https://www.in.gov/dhs/fire-and-building-safety/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Indiana Fire & Building Safety</a>
+                    <a href="https://www.legis.iowa.gov/publications/search?document=code" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Iowa Building Codes</a>
+                    <a href="https://firemarshal.ks.gov/codes-standards" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Kansas Fire Marshal</a>
+                    <a href="https://dhbc.ky.gov/Pages/index.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Kentucky Housing Codes</a>
+                    <a href="https://www.maine.gov/dps/fmo/building-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Maine Building Codes</a>
+                    <a href="https://dhcd.maryland.gov/Codes/Pages/default.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Maryland Building Codes</a>
+                    <a href="https://www.mass.gov/topics/building-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Massachusetts Building Codes</a>
+                    <a href="https://www.michigan.gov/lara/bureau-list/bcc/code-rules-and-references" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Michigan Building Codes</a>
+                    <a href="https://www.dli.mn.gov/business/codes-and-laws/building-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Minnesota Building Codes</a>
+                    <a href="https://www.msboc.ms.gov/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Mississippi Building Codes</a>
+                    <a href="https://pr.mo.gov/boards/architects/Missouri-Codes.pdf" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Missouri Building Codes</a>
+                    <a href="https://commerce.mt.gov/Labor-and-Industry/Building-Codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Montana Building Codes</a>
+                    <a href="https://sfm.nebraska.gov/building-construction" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Nebraska Building Codes</a>
+                    <a href="https://www.nevadahousing.state.nv.us/publications-and-reports" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Nevada Building Codes</a>
+                    <a href="https://www.nh.gov/safety/boardsandcommissions/bldgcode/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> New Hampshire Building Codes</a>
+                    <a href="https://www.nj.gov/dca/divisions/codes/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> New Jersey Building Codes</a>
+                    <a href="https://www.rld.nm.gov/construction-industries-division/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> New Mexico Construction Industries</a>
+                    <a href="https://www.nd.gov/dcs/fire-marshal/building-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> North Dakota Building Codes</a>
+                    <a href="https://com.ohio.gov/divisions-and-programs/industrial-compliance/building-code-and-inspections" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Ohio Building Codes</a>
+                    <a href="https://www.ok.gov/oubcc/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Oklahoma Building Codes</a>
+                    <a href="https://www.oregon.gov/bcd/codes-stand/Pages/index.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Oregon Building Codes</a>
+                    <a href="https://www.dli.pa.gov/ucc/Pages/default.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Pennsylvania Building Codes</a>
+                    <a href="https://www.ri.gov/topics/?search=building+codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Rhode Island Building Codes</a>
+                    <a href="https://dlr.sd.gov/electrical_commission/building_codes.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> South Dakota Building Codes</a>
+                    <a href="https://www.tn.gov/commerce/fire/codes-and-standards.html" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Tennessee Building Codes</a>
+                    <a href="https://le.utah.gov/xcode/Title15A/15A.html" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Utah Building Codes</a>
+                    <a href="https://firesafety.vermont.gov/buildingcode" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Vermont Building Codes</a>
+                    <a href="https://www.lni.wa.gov/licensing-permits/building-codes/" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Washington Building Codes</a>
+                    <a href="https://firemarshal.wv.gov/codes/Pages/default.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> West Virginia Building Codes</a>
+                    <a href="https://dsps.wi.gov/Pages/Programs/BuildingCodes.aspx" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Wisconsin Building Codes</a>
+                    <a href="https://wsfm.wyo.gov/building-codes" target="_blank" rel="noopener" class="gov-link"><i class="fas fa-external-link-alt"></i> Wyoming Building Codes</a>
+                </div>
+
+                <div style="margin-top: 2rem; text-align: center; padding: 1.5rem; background: #fff; border-radius: 12px; border: 2px solid #e5e7eb;">
+                    <p style="color: #6b7280; font-size: 0.95rem;"><i class="fas fa-info-circle"></i> Links verified as of December 2025. State websites may change - if you find a broken link, please <a href="https://windloadcalc.com/contact.html" style="color: #0018ff;">contact us</a>.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="windloadcalc-promo">
+        <div class="container">
+            <h2>Need Professional Wind Load Calculators?</h2>
+            <p>Visit our sister site <strong>WindLoadCalc.com</strong> for professional ASCE 7 wind load calculator software and the Building Intelligence Platform (BIP).</p>
+            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Visit WindLoadCalc.com →</a>
+        </div>
+    </section>
+
+    
+
+    <script>
+        const states = [
+            { name: "Alabama", code: "ASCE 7-16", region: "south", tornado: false, windSpeed: "110-130 mph", details: "PE seal required for all structural calculations" },
+            { name: "Alaska", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-110 mph", details: "Extreme snow loads often govern, but wind critical for coastal areas" },
+            { name: "Arizona", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "90-105 mph", details: "Monsoon season brings severe thunderstorm winds", link: "arizona-wind-load-requirements.html" },
+            { name: "Arkansas", code: "ASCE 7-16", region: "south", tornado: true, windSpeed: "105-120 mph", details: "High tornado risk - proper wind analysis critical", link: "arkansas-wind-load-requirements.html" },
+            { name: "Colorado", code: "ASCE 7-16", region: "west", tornado: true, windSpeed: "90-115 mph", details: "Eastern plains in Tornado Alley, mountain winds can be severe", link: "colorado-wind-load-requirements.html" },
+            { name: "Connecticut", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Coastal exposure, hurricane remnants" },
+            { name: "Delaware", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-125 mph", details: "Coastal state with hurricane exposure" },
+            { name: "Idaho", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-100 mph", details: "Mountain gap winds can exceed 100 mph" },
+            { name: "Illinois", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado Alley - high severe weather risk" },
+            { name: "Indiana", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado risk and severe thunderstorms common" },
+            { name: "Iowa", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Core Tornado Alley state - derecho risk", link: "iowa-wind-load-requirements.html" },
+            { name: "Kansas", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-120 mph", details: "Heart of Tornado Alley - highest tornado frequency", link: "kansas-wind-load-requirements.html" },
+            { name: "Kentucky", code: "ASCE 7-16", region: "south", tornado: true, windSpeed: "90-110 mph", details: "Significant tornado risk, especially western regions" },
+            { name: "Maine", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "100-130 mph", details: "Coastal winds and nor'easters" },
+            { name: "Maryland", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "105-120 mph", details: "Coastal exposure, Chesapeake Bay wind channeling" },
+            { name: "Massachusetts", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Hurricane exposure, coastal high winds", link: "massachusetts-wind-load-requirements.html" },
+            { name: "Michigan", code: "ASCE 7-16", region: "midwest", tornado: false, windSpeed: "90-110 mph", details: "Great Lakes wind effects, severe thunderstorms" },
+            { name: "Minnesota", code: "ASCE 7-16", region: "midwest", tornado: false, windSpeed: "90-110 mph", details: "Severe thunderstorms, occasional tornadoes" },
+            { name: "Mississippi", code: "ASCE 7-16", region: "south", tornado: false, windSpeed: "110-140 mph", details: "Gulf Coast hurricane exposure" },
+            { name: "Missouri", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado Alley - Joplin 2011 tornado devastating", link: "missouri-wind-load-requirements.html" },
+            { name: "Montana", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-110 mph", details: "High plains winds, mountain gap winds" },
+            { name: "Nebraska", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-120 mph", details: "Core Tornado Alley - severe weather frequent", link: "nebraska-wind-load-requirements.html" },
+            { name: "Nevada", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-100 mph", details: "Desert winds, mountain exposure", link: "nevada-wind-load-requirements.html" },
+            { name: "New Hampshire", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "100-125 mph", details: "Coastal and mountain winds, winter storms" },
+            { name: "New Jersey", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Coastal exposure, hurricane risk", link: "new-jersey-wind-load-requirements.html" },
+            { name: "New Mexico", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "90-105 mph", details: "High plains winds, severe thunderstorms" },
+            { name: "North Dakota", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-110 mph", details: "Tornado risk, severe thunderstorm winds" },
+            { name: "Ohio", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-110 mph", details: "Tornado risk, especially southwest regions" },
+            { name: "Oklahoma", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-120 mph", details: "Heart of Tornado Alley - extreme tornado risk", link: "oklahoma-wind-load-requirements.html" },
+            { name: "Oregon", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-120 mph", details: "Coastal exposure, Columbia Gorge winds" },
+            { name: "Pennsylvania", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "90-110 mph", details: "Severe thunderstorms, occasional tornadoes" },
+            { name: "Rhode Island", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "110-130 mph", details: "Full coastal exposure, hurricane risk" },
+            { name: "South Dakota", code: "ASCE 7-16", region: "midwest", tornado: true, windSpeed: "90-115 mph", details: "Tornado Alley, severe weather common" },
+            { name: "Tennessee", code: "ASCE 7-16", region: "south", tornado: true, windSpeed: "90-110 mph", details: "Significant tornado risk, especially Middle TN" },
+            { name: "Utah", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-105 mph", details: "Mountain canyon winds, severe thunderstorms" },
+            { name: "Vermont", code: "ASCE 7-16", region: "northeast", tornado: false, windSpeed: "90-110 mph", details: "Mountain winds, winter storms" },
+            { name: "Washington", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "85-110 mph", details: "Coastal exposure, Columbia Gorge extreme winds" },
+            { name: "West Virginia", code: "ASCE 7-16", region: "south", tornado: false, windSpeed: "90-105 mph", details: "Mountain ridge winds can be severe" },
+            { name: "Wisconsin", code: "ASCE 7-16", region: "midwest", tornado: false, windSpeed: "90-110 mph", details: "Severe thunderstorms, occasional tornadoes" },
+            { name: "Wyoming", code: "ASCE 7-16", region: "west", tornado: false, windSpeed: "90-120 mph", details: "High plains, mountain winds extremely severe" }
+        ];
+
+        // Populate states grid
+        function populateStates() {
+            const grid = document.getElementById('statesGrid');
+            grid.innerHTML = states.map(state => {
+                const hasLink = state.link ? true : false;
+                const cardContent = `
+                    <div class="state-name">${state.name}${hasLink ? ' <i class="fas fa-external-link-alt" style="font-size: 0.7rem; opacity: 0.6;"></i>' : ''}</div>
+                    <div class="state-code">${state.code}</div>
+                    <div class="state-details">
+                        <div class="detail-item">
+                            <i class="fas fa-wind detail-icon"></i>
+                            <span><strong>Wind Speed:</strong> ${state.windSpeed}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-info-circle detail-icon"></i>
+                            <span>${state.details}</span>
+                        </div>
+                    </div>
+                    ${state.tornado ? '<span class="tornado-badge"><i class="fas fa-tornado"></i> Tornado Alley</span>' : ''}
+                    ${hasLink ? '<span class="state-link-badge"><i class="fas fa-file-alt"></i> View State Guide</span>' : ''}
+                `;
+
+                if (hasLink) {
+                    return `<a href="${state.link}" class="state-card state-card-link" data-name="${state.name.toLowerCase()}" data-region="${state.region}" data-tornado="${state.tornado}">${cardContent}</a>`;
+                } else {
+                    return `<div class="state-card" data-name="${state.name.toLowerCase()}" data-region="${state.region}" data-tornado="${state.tornado}">${cardContent}</div>`;
+                }
+            }).join('');
+            updateCount();
+        }
+
+        // Filter states by search
+        function filterStates() {
+            const searchValue = document.getElementById('stateSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.state-card');
+
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                if (name.includes(searchValue)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            updateCount();
+        }
+
+        // Filter by region
+        function filterByRegion(region) {
+            const cards = document.querySelectorAll('.state-card');
+            const buttons = document.querySelectorAll('.region-btn');
+
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (region === 'all') {
+                    card.classList.remove('hidden');
+                } else if (region === 'tornado') {
+                    if (card.dataset.tornado === 'true') {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                } else {
+                    if (card.dataset.region === region) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+
+            updateCount();
+        }
+
+        // Update count
+        function updateCount() {
+            const visible = document.querySelectorAll('.state-card:not(.hidden)').length;
+            const total = states.length;
+            document.getElementById('searchCount').textContent = `${visible} of ${total}`;
+        }
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+        const logo = document.querySelector('.logo');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            logo.classList.toggle('menu-active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', toggleMenu);
+
+        const navLinkItems = document.querySelectorAll('.nav-links a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // Initialize
+        populateStates();
+    </script>
+<script>
+// Navigation toggle functions for click-to-expand
+function toggleNavSection(element) {
+    const section = element.parentElement;
+    const wasActive = section.classList.contains('active');
+
+    // Close all other sections
+    document.querySelectorAll('.nav-section').forEach(s => {
+        if (s !== section) {
+            s.classList.remove('active');
+        }
+    });
+
+    // Toggle this section
+    section.classList.toggle('active');
+}
+
+function toggleNavSubsection(element) {
+    const subsection = element.parentElement;
+    subsection.classList.toggle('active');
+}
+</script>
+<!-- SEO-Enhanced Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>ASCE 7 Standards</h4>
+                <ul>
+                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
+                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
+                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
+                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
+                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
+                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Top States</h4>
+                <ul>
+                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
+                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
+                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
+                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
+                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
+                    <li><a href="state-requirements.html">All 50 States</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Resources & Tools</h4>
+                <ul>
+                    <li><a href="resources.html">Free Resources</a></li>
+                    <li><a href="articles.html">Articles & Guides</a></li>
+                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
+                    <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
+                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
+                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
+                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
+                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
+                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
+                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
+            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+.site-footer {
+    background: #1a202c;
+    color: #e5e7eb;
+    padding: 4rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-column h4 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #0018ff;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-column a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-column a:hover {
+    color: #60a5fa;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.footer-tagline {
+    font-weight: 600;
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .site-footer {
+        padding: 3rem 1.5rem 1.5rem;
+    }
+}
+</style>
+
+</body>
+</html>
