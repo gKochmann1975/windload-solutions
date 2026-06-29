@@ -29,782 +29,263 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #1f2937;
-            background: #ffffff;
-            overflow-x: hidden;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-        }
-
-        nav a:hover {
-            opacity: 0.8;
-        }
-
-        /* Hero Section - Huskers/CWS colors (Red/White) */
-        .hero {
-            background: linear-gradient(135deg, #991b1b 0%, #dc2626 25%, #ef4444 50%, #fafaf9 75%, #f5f5f4 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '⚾🌽';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #b91c1c;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Content Section */
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2.5rem 0 1rem 0;
-        }
-
-        .content-section p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .content-section ul {
-            margin: 1.5rem 0 1.5rem 2rem;
-        }
-
-        .content-section li {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .content-section a {
-            color: #dc2626;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .content-section a:hover {
-            color: #ef4444;
-        }
-
-        /* Info Box */
-        .info-box {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 4px solid #dc2626;
-            margin: 2rem 0;
-        }
-
-        .info-box h4 {
-            color: #1f2937;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .info-box h4 strong {
-            color: #dc2626;
-        }
-
-        .info-box p {
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Stats Box */
-        .key-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-            color: white;
-            padding: 2rem 0.5rem;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
-        }
-
-        .stat-box .stat-value {
-            font-size: 3rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-box .stat-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            opacity: 0.95;
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .comparison-table thead {
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-            color: white;
-        }
-
-        .comparison-table th {
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .comparison-table td {
-            padding: 1.2rem;
-            border-bottom: 1px solid #e5e7eb;
-            color: #1f2937;
-        }
-
-        .comparison-table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        .comparison-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Omaha Card */
-        .kc-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid rgba(220, 38, 38, 0.2);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .kc-card h4 {
-            color: #dc2626;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .kc-card p {
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Risk Category Badge */
-        .risk-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0.25rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        /* External Link Styles */
-        .external-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            color: #0018ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-            border: 2px solid #e5e7eb;
-        }
-
-        .external-link:hover {
-            background: white;
-            border-color: #0018ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,24,255,0.15);
-        }
-
-        .external-link::after {
-            content: '↗';
-            font-size: 1.2rem;
-        }
-
-        .external-links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content-section h2 {
-                font-size: 2rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem;
-            }
-
-            nav {
-                display: none;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-            /* batch3: mobile table scroll */
-        @media (max-width: 768px) {
-            .comparison-table, .data-table, .edition-table, .tornado-table, table {
-                display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            }
-        }
-</style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Nebraska",
-                "item": "https://windload.solutions/nebraska-wind-load-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Omaha",
-                "item": "https://windload.solutions/cities/omaha-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-    <!-- FAQ Schema for Featured Snippets -->
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What is the design wind speed for Omaha, Nebraska?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Omaha design wind speeds range from 115-120 mph (3-second gust) for Risk Category II structures per ASCE 7-22. Higher Risk Categories (III and IV) require elevated wind speeds. Always verify with Douglas County building department for locally adopted values."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What building code governs wind loads in Omaha?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Omaha follows the Nebraska state building code which references ASCE 7 for wind load calculations. Douglas County may have local amendments that affect design requirements. Check with the local building department for the currently adopted code edition."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What exposure category applies to most Omaha buildings?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Most Omaha buildings fall under Exposure Category C depending on surrounding terrain and surface roughness. Urban and suburban areas typically qualify for Exposure B, while open terrain or Tornado Alley core location may require Exposure C. Site-specific analysis per ASCE 7 Section 26.7 determines the actual exposure."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Are there special wind load considerations for Omaha?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, Omaha has Tornado Alley core location that may affect wind load design. Additionally, local terrain, building height, and occupancy type influence required wind pressures. Projects should consider these factors along with Douglas County specific requirements for permit approval."
-            }
-        }
-    ]
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
 }
-    </script>
-</head>
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+
+/*CENTERFIX-v1*/
+h1{text-align:center}
+.sec h1,.sec h2{text-align:center}
+.eyebrow{display:block;text-align:center;margin:0 auto 12px}
+.lead,.sub,.section-subtitle{text-align:center;margin-left:auto;margin-right:auto}
+.hero-cta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin:30px auto 0}
+.grid{gap:1.6rem}
+.stat-strip{margin-left:auto;margin-right:auto}
+.divider{margin-left:auto;margin-right:auto}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="../index.html" class="logo">
-                    <img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="../state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="../asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="../resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation Overlay -->
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation -->
-    <nav class="nav-links">
+<header class="main-header"><div class="header-container">
+  <a href="../index.html" class="logo"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="../state-requirements.html">State Requirements</a><a class="lnk" href="../asce-7-standards.html">ASCE 7</a><a class="lnk" href="../resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
+<nav class="nav-links">
         <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="../state-requirements.html"><i class="fas fa-map-marker-alt"></i> State Requirements</a>
@@ -817,327 +298,297 @@
         <a href="../articles.html"><i class="fas fa-newspaper"></i> Articles & Guides</a>
         <a href="../contact.html"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
+<main>
+<main>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Omaha Wind Load Requirements</h1>
-            <p>Douglas County, NE | 105-115 mph Design Wind Speed | IBC Nebraska Adoption | Tornado Alley | Exposure B/C</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Omaha Wind Loads Now →</a>
-        </div>
-    </section>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">NEBRASKA · DOUGLAS COUNTY</p>
+    <h1>Where the Missouri River Meets <span class="sweep">the Open Plains Wind</span></h1>
+    <p class="lead">Omaha sits on Nebraska's eastern bluffs above the Missouri River, the first dense city in the path of Great Plains thunderstorm and derecho winds. Here is how Douglas County builds for them under ASCE 7-22.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">105&ndash;115</span><span class="lbl">MPH RISK CAT II (3-SEC GUST)</span></div>
+      <div class="stat"><span class="num">B / C</span><span class="lbl">EXPOSURE — RIVER CITY TO PRAIRIE</span></div>
+      <div class="stat"><span class="num">IBC</span><span class="lbl">NEBRASKA CODE · ASCE 7-22</span></div>
+      <div class="stat"><span class="num">DOUGLAS</span><span class="lbl">COUNTY (METRO INTO SARPY)</span></div>
+    </div>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculate Omaha Wind Loads</a>
+      <a class="btn-ghost" href="../nebraska-wind-load-requirements.html">Nebraska Statewide Guide</a>
+    </div>
+  </div></section>
 
-    <section class="content-section">
-        <div class="container">
+  <div class="divider"></div>
 
-            <!-- Key Stats -->
-            <div class="key-stats">
-                <div class="stat-box">
-                    <span class="stat-value">105-115</span>
-                    <span class="stat-label">mph Design Wind Speed<br>(Risk Cat II)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">B/C</span>
-                    <span class="stat-label">Exposure Category<br>(Urban/Plains)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">IBC</span>
-                    <span class="stat-label">Nebraska Building Code<br>(ASCE 7-22)</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-value">HIGH</span>
-                    <span class="stat-label">Tornado Risk<br>(Tornado Alley)</span>
-                </div>
-            </div>
+  <!-- CUSTOM SVG: PLAINS / RIVER / STORM MOTIF (no state silhouette) -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">EASTERN NEBRASKA · ON THE MISSOURI</p>
+    <h2>A City on the Bluffs, <span class="sweep">Open to the Storm Track</span></h2>
+    <p class="lead">The Missouri River cuts the eastern edge of the metro; west of it the land flattens into prairie that gives storm winds an unbroken run-up into Omaha.</p>
+    <div class="info-box glass" style="max-width:760px;margin:2rem auto 0;">
+      <svg viewBox="0 0 640 240" width="100%" height="auto" role="img" aria-label="Omaha plains, Missouri River and storm wind diagram" style="display:block">
+        <defs>
+          <linearGradient id="omSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1a2436"/><stop offset="1" stop-color="#0e1622"/>
+          </linearGradient>
+          <linearGradient id="omRiver" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#38bdf8"/>
+          </linearGradient>
+          <linearGradient id="omGust" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#f59e0b" stop-opacity="0"/><stop offset="1" stop-color="#fbbf24"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="640" height="240" fill="url(#omSky)"/>
+        <!-- storm cell -->
+        <g opacity="0.85">
+          <ellipse cx="120" cy="58" rx="78" ry="30" fill="#334155"/>
+          <ellipse cx="80" cy="66" rx="44" ry="22" fill="#475569"/>
+          <ellipse cx="170" cy="64" rx="40" ry="20" fill="#3f4d63"/>
+          <line x1="96" y1="86" x2="84" y2="116" stroke="#fbbf24" stroke-width="3" stroke-linecap="round">
+            <animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/>
+          </line>
+        </g>
+        <!-- prairie plain (flat, open run-up from west/left) -->
+        <path d="M0 170 Q160 162 330 168 T640 166 L640 240 L0 240 Z" fill="#13202e"/>
+        <path d="M0 170 Q160 162 330 168 T640 166" fill="none" stroke="#1f3346" stroke-width="2"/>
+        <!-- straight-line / derecho gust arrows sweeping in from the open plains -->
+        <g stroke="url(#omGust)" stroke-width="4" stroke-linecap="round" fill="none">
+          <path d="M30 120 H250"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.4s" repeatCount="indefinite"/></path>
+          <path d="M30 138 H210"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.4s" begin="0.4s" repeatCount="indefinite"/></path>
+          <path d="M30 156 H230"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.4s" begin="0.8s" repeatCount="indefinite"/></path>
+        </g>
+        <polygon points="250,114 264,120 250,126" fill="#fbbf24"/>
+        <polygon points="210,132 224,138 210,144" fill="#fbbf24"/>
+        <polygon points="230,150 244,156 230,162" fill="#fbbf24"/>
+        <!-- river bluff city skyline (right / east) -->
+        <g fill="#1e3a52">
+          <rect x="360" y="118" width="22" height="52"/>
+          <rect x="388" y="96" width="26" height="74"/>
+          <rect x="420" y="108" width="20" height="62"/>
+          <rect x="446" y="84" width="30" height="86"/>
+          <rect x="482" y="120" width="22" height="50"/>
+        </g>
+        <rect x="455" y="64" width="12" height="22" fill="#2a4a66"/>
+        <!-- Missouri River along the eastern edge -->
+        <path d="M520 60 Q548 110 540 160 Q534 200 560 240" fill="none" stroke="url(#omRiver)" stroke-width="14" stroke-linecap="round" opacity="0.9">
+          <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3.2s" repeatCount="indefinite"/>
+        </path>
+        <text x="566" y="150" fill="#7dd3fc" font-size="13" font-family="Inter,sans-serif" font-weight="700" transform="rotate(90 566 150)">MISSOURI R.</text>
+      </svg>
+      <p style="text-align:center;margin-top:1rem;opacity:.85">Open prairie to the west, dense river-bluff core to the east — exposure shifts across the metro, and so do design pressures.</p>
+    </div>
+  </div></section>
 
-            <h2>Omaha, Nebraska: Tornado Alley Wind Load Requirements</h2>
-            <p>Omaha, located in <strong>Douglas County, Nebraska</strong>, has moderate to high wind load requirements that account for its location in Tornado Alley and exposure to severe Great Plains weather systems. Nebraska has adopted the <strong>International Building Code (IBC)</strong> statewide, which Omaha implements with local amendments. Design wind speeds for Risk Category II structures typically range from <strong>105-115 mph</strong> (3-second gust) based on ASCE 7-22 wind speed maps.</p>
+  <div class="divider"></div>
 
-            <p>These requirements exist because Omaha experiences frequent severe weather including tornadoes, severe thunderstorms with straight-line winds, derechos, and hail events. Located at the eastern edge of the Great Plains where warm, moist air from the Gulf of Mexico collides with cold, dry air from Canada, Omaha sits in the heart of Tornado Alley creating ideal conditions for severe thunderstorms and tornadoes throughout spring and summer months.</p>
+  <!-- WHY THE WIND / SEVERE WEATHER DRIVERS -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">THE STORM TRACK · GREAT PLAINS</p>
+    <h2>What Drives Omaha's <span class="sweep">105&ndash;115 mph Design Speed</span></h2>
+    <p class="lead">Eastern Nebraska sits where Gulf moisture and dry Canadian air collide over the plains — a recipe for tornadoes, derechos and straight-line winds.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 6h18M5 10h12M8 14h7M11 18h2"/><path d="M15 14c3 1 4 5 1 6"/></svg>
+        <h3>Tornado Alley Edge</h3>
+        <p>Douglas County averages several tornadoes a year, with violent EF3+ events on record like the 1975 Omaha tornado.</p>
+        <span class="badge badge--hvhz">SPRING–SUMMER PEAK</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2 9h14a3 3 0 1 0-3-3"/><path d="M2 13h18a3 3 0 1 1-3 3"/><path d="M2 17h9"/></svg>
+        <h3>Derecho Run-Up</h3>
+        <p>Organized squall lines sweep off the open plains into the metro, driving widespread gusts of 90&ndash;100 mph.</p>
+        <span class="badge badge--hvhz">STRAIGHT-LINE WIND</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v6M12 21v-3M4 8l3 2M20 8l-3 2M5 16l3-1M19 16l-3-1"/><circle cx="12" cy="13" r="3"/></svg>
+        <h3>Hail-Prone Skies</h3>
+        <p>Among the nation's most hail-struck cities — roof systems must resist wind uplift and large-hail impact together.</p>
+        <span class="badge badge--hvhz">ENVELOPE DESIGN</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 18h18M5 18V9l7-5 7 5v9"/><path d="M9 18v-5h6v5"/></svg>
+        <h3>Open Prairie Fetch</h3>
+        <p>West of the river, flat terrain gives wind a long unbroken run-up — pushing many sites toward Exposure C.</p>
+        <span class="badge badge--hvhz">MINIMAL OBSTRUCTION</span>
+      </div>
+    </div>
+  </div></section>
 
-            <div class="info-box">
-                <h4><strong>🌪️</strong> Omaha Wind Load Quick Facts</h4>
-                <p><strong>Design Wind Speed (Risk Category II):</strong> 105-115 mph (3-second gust, varies by location)</p>
-                <p><strong>Design Wind Speed (Risk Category III):</strong> ~120-130 mph</p>
-                <p><strong>Design Wind Speed (Risk Category IV):</strong> ~130-140 mph</p>
-                <p><strong>Exposure Category:</strong> B (urban areas), C (plains/developing areas)</p>
-                <p><strong>Building Code:</strong> International Building Code (IBC) - Nebraska statewide adoption</p>
-                <p><strong>Wind Load Standard:</strong> ASCE 7-22 (current edition)</p>
-                <p><strong>County:</strong> Douglas County (Omaha metro extends into Sarpy County)</p>
-                <p><strong>Weather Risks:</strong> Tornadoes (Tornado Alley), severe thunderstorms, derechos, hail, straight-line winds</p>
-            </div>
+  <div class="divider"></div>
 
-            <h3>Why Omaha Has 105-115 mph Wind Speed Requirements</h3>
-            <p>Omaha's design wind speed of 105-115 mph for Risk Category II structures reflects the city's location in Tornado Alley and exposure to severe Great Plains weather systems. Omaha wind speed requirements account for:</p>
+  <!-- WIND / EXPOSURE MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">EXPOSURE · ASCE 7 §26.7</p>
+    <h2>River-Bluff City, <span class="sweep">Prairie-Edge Suburbs</span></h2>
+    <p class="lead">Omaha's terrain splits the metro: a built-up eastern core versus open, fast-growing western edges. The right exposure category can swing your pressures sharply.</p>
+    <div class="grid" data-n="2">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="9" width="4" height="12"/><rect x="10" y="4" width="4" height="17"/><rect x="17" y="11" width="4" height="10"/></svg>
+        <h3>Exposure B — Built-Up Core</h3>
+        <p>Downtown, the Old Market, Dundee, Midtown Crossing and Aksarben Village sit in dense development that shelters lower buildings.</p>
+        <span class="badge badge--data">URBAN / SUBURBAN</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 20h18"/><path d="M6 20v-5M12 20v-8M18 20v-4"/><path d="M3 8q9-5 18 0"/></svg>
+        <h3>Exposure C — Prairie Edge</h3>
+        <p>Elkhorn, western developments and sites near open prairie face scattered low obstructions and noticeably higher pressures.</p>
+        <span class="badge badge--data">OPEN TERRAIN</span>
+      </div>
+    </div>
+    <div class="info-box glass" style="max-width:780px;margin:2rem auto 0;text-align:center">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="display:block;margin:0 auto .6rem"><path d="M12 3v18M5 8l7-5 7 5"/><path d="M5 8v9a7 7 0 0 0 14 0V8"/></svg>
+      <p><strong>Engineering judgment governs the transition.</strong> In Omaha's rapidly expanding western suburbs the B-to-C line moves with new construction. At 30 ft, switching from Exposure B (Kz&nbsp;=&nbsp;0.70) to Exposure C (Kz&nbsp;=&nbsp;0.98) raises velocity pressure by roughly 40% — when in doubt near open prairie, take the conservative C.</p>
+    </div>
+  </div></section>
 
-            <ul>
-                <li><strong>Tornado Alley Location:</strong> Omaha is situated in the heart of Tornado Alley, experiencing multiple tornadoes annually including violent EF3-EF4 events</li>
-                <li><strong>Great Plains Exposure:</strong> Omaha's position at the eastern edge of the Great Plains creates exposure to severe weather systems with minimal terrain obstruction</li>
-                <li><strong>Severe Thunderstorm Frequency:</strong> The Omaha metro experiences some of the nation's highest severe thunderstorm frequency, producing damaging straight-line winds exceeding 80-100 mph</li>
-                <li><strong>Derecho Events:</strong> Omaha is frequently impacted by organized derecho systems producing widespread wind damage across the metro area</li>
-                <li><strong>Hail Damage Risk:</strong> Omaha ranks among the top hail-prone cities in the United States, requiring robust roof and building envelope systems</li>
-            </ul>
+  <div class="divider"></div>
 
-            <p>Recent severe weather events include the 2011 Joplin tornado (EF5) demonstrating the catastrophic potential of Great Plains tornadoes. Omaha experiences regular severe thunderstorm derechos producing wind gusts exceeding 90-100 mph across the metro area. The city has been struck by numerous significant tornadoes including the 1975 Omaha tornado that caused extensive downtown damage.</p>
+  <!-- RISK CATEGORY TABLE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">RISK CATEGORY · ASCE 7-22 TABLE 1.5-1</p>
+    <h2>Higher Stakes Read a <span class="sweep">Higher Wind Map</span></h2>
+    <p class="lead">Risk category does not multiply a single speed — it selects a different map with a longer return period. Higher category, longer MRI, higher Omaha design wind.</p>
+    <div class="cmp-scroll">
+      <table class="cmp">
+        <thead><tr><th>Risk Category</th><th>Return Period (MRI)</th><th>Omaha Design Speed</th><th>Typical Buildings</th></tr></thead>
+        <tbody>
+          <tr><td><strong>I</strong></td><td>300-year map</td><td>~100&ndash;105 mph</td><td>Agricultural, minor storage, low-occupancy</td></tr>
+          <tr><td><strong>II</strong></td><td>700-year map</td><td>105&ndash;115 mph</td><td>Homes, offices, retail, most standard occupancy</td></tr>
+          <tr><td><strong>III</strong></td><td>1,700-year map</td><td>~120&ndash;130 mph</td><td>Schools, assembly &gt;300, hazardous materials</td></tr>
+          <tr><td><strong>IV</strong></td><td>3,000-year map</td><td>~130&ndash;140 mph</td><td>Hospitals, fire/police, EOCs, shelters</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lead" style="margin-top:1.4rem">Assembly venues such as the College World Series ballpark fall to Risk Category III or IV — designed off the longer-return maps above.</p>
+  </div></section>
 
-            <h3>Omaha Wind Load Calculations: Step by Step</h3>
-            <p>Calculating wind loads for Omaha projects requires following ASCE 7-22 methodology as adopted by Nebraska's IBC implementation. The fundamental velocity pressure equation is:</p>
+  <div class="divider"></div>
 
-            <p style="text-align: center; font-family: 'Courier New', monospace; font-size: 1.3rem; font-weight: 700; color: #dc2626; margin: 2rem 0;"><strong>qz = 0.00256 Kz Kzt Kd Ke V²</strong></p>
+  <!-- VELOCITY PRESSURE WORKED MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">VELOCITY PRESSURE · ASCE 7-22 EQ 26.10-1</p>
+    <h2>Running the Numbers for a <span class="sweep">Typical Omaha Site</span></h2>
+    <p class="lead">The velocity pressure equation drives every Omaha calculation: q<sub>z</sub> = 0.00256 K<sub>z</sub> K<sub>zt</sub> K<sub>d</sub> K<sub>e</sub> V&sup2;.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass"><h3>V = 110 mph</h3><p>Mid-range Risk Cat II design speed for the metro.</p><span class="badge badge--data">3-SEC GUST</span></div>
+      <div class="card glass"><h3>K<sub>z</sub> = 0.70</h3><p>15 ft height, Exposure B in the built-up core.</p><span class="badge badge--data">EXPOSURE B</span></div>
+      <div class="card glass"><h3>K<sub>zt</sub> = 1.0</h3><p>Flat river-valley and prairie terrain — no topographic speed-up.</p><span class="badge badge--data">FLAT GROUND</span></div>
+      <div class="card glass"><h3>K<sub>d</sub> = 0.85</h3><p>Directionality factor for buildings (MWFRS &amp; C&amp;C).</p><span class="badge badge--data">BUILDINGS</span></div>
+    </div>
+    <div class="info-box glass" style="max-width:680px;margin:2rem auto 0;text-align:center">
+      <p style="font-size:1.15rem"><strong>q<sub>z</sub> &asymp; 18&ndash;19 psf</strong> at 15 ft in Exposure B. Step the same site to Exposure C (K<sub>z</sub>&nbsp;=&nbsp;0.98) near the open prairie and that pressure climbs about 40% — the single biggest variable on most Omaha projects.</p>
+    </div>
+  </div></section>
 
-            <p>For Omaha with V = 110 mph (typical Omaha) and standard conditions, the resulting pressures are moderate to high. An Omaha project with:</p>
-            <ul>
-                <li><strong>V = 110 mph</strong> (Omaha typical velocity)</li>
-                <li><strong>Kz = 0.70</strong> (15 ft height, Exposure B urban)</li>
-                <li><strong>Kzt = 1.0</strong> (flat terrain)</li>
-                <li><strong>Kd = 0.85</strong> (buildings)</li>
-                <li><strong>Ke = 1.0</strong> (~1000-1100 ft elevation)</li>
-            </ul>
-            <p>Results in a velocity pressure of approximately <strong>qz = 22.4 psf</strong>—moderate to high compared to most inland regions, reflecting Omaha's significant severe weather exposure.</p>
+  <div class="divider"></div>
 
-            <p>For open areas using Exposure C (western Omaha suburbs and new developments near the plains), the pressures increase due to the higher velocity pressure coefficient for open terrain exposure typical of the Great Plains.</p>
+  <!-- COMPLY GRID (no-orphan: 6 cards) -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">PERMIT PATH · DOUGLAS &amp; SARPY</p>
+    <h2>Getting an Omaha Project <span class="sweep">Through Plan Review</span></h2>
+    <p class="lead">Nebraska adopts the IBC statewide; Omaha applies it with local amendments across a two-county metro. Line these up before you submit.</p>
+    <div class="grid" data-n="6">
+      <a class="card glass" href="https://www.cityofomaha.org/government/departments/planning" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 21h18M5 21V8l7-4 7 4v13"/><path d="M9 21v-6h6v6"/></svg>
+        <h3>City of Omaha Planning</h3><p>Building permits within city limits.</p><span class="badge badge--go">PERMIT AUTHORITY</span>
+      </a>
+      <a class="card glass" href="https://www.douglascounty-ne.gov/building-and-planning" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 9h16v11H4z"/><path d="M9 20v-6h6v6"/><path d="M2 9l10-6 10 6"/></svg>
+        <h3>Douglas County Building</h3><p>Unincorporated and county jurisdiction.</p><span class="badge badge--go">COUNTY</span>
+      </a>
+      <a class="card glass" href="https://engineer.nebraska.gov/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg>
+        <h3>Nebraska PE Board</h3><p>Engineer &amp; architect licensing.</p><span class="badge badge--go">PE SEAL</span>
+      </a>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        <h3>ASCE 7-22 Standard</h3><p>Wind provisions referenced by the IBC.</p><span class="badge badge--method">CURRENT EDITION</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 12h18"/><path d="M12 3v18"/><circle cx="12" cy="12" r="9"/></svg>
+        <h3>Two-County Metro</h3><p>Metro spans Douglas into Sarpy — confirm jurisdiction per site.</p><span class="badge badge--method">DOUGLAS / SARPY</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 3h11l3 3v15H5z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+        <h3>PE-Ready Reports</h3><p>Sealed MWFRS &amp; C&amp;C output for submission.</p><span class="badge badge--method">SUBMITTAL</span>
+      </div>
+    </div>
+  </div></section>
 
-            <h3>Omaha Building Code and Permitting</h3>
-            <p>Nebraska has adopted the <strong>International Building Code (IBC)</strong> statewide, which Omaha implements with local amendments. The Omaha metropolitan area spans Douglas and Sarpy counties with varying permit requirements.</p>
+  <div class="divider"></div>
 
-            <p>Key Omaha building code considerations:</p>
+  <!-- COMMON MISTAKES -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">AVOID · OMAHA-SPECIFIC PITFALLS</p>
+    <h2>Where Plains-City Designs <span class="sweep">Go Wrong</span></h2>
+    <div class="grid" data-n="3">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3v18"/><path d="M5 8q7-5 14 0"/><circle cx="12" cy="13" r="2"/></svg>
+        <h3>Defaulting to Exposure B</h3><p>Western suburbs near open prairie often need Exposure C — assuming B everywhere under-designs the envelope.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg>
+        <h3>Outdated Wind Maps</h3><p>Use the current ASCE 7-22 maps as adopted by Nebraska's IBC, not legacy editions.</p>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17h.01"/></svg>
+        <h3>Ignoring Hail + Uplift</h3><p>Omaha roofs must resist large-hail impact and wind uplift together — a coordinated, not separate, design.</p>
+      </div>
+    </div>
+  </div></section>
 
-            <ul>
-                <li><strong>Building Code Adoption:</strong> Omaha uses IBC (current edition) per Nebraska statewide adoption with local amendments</li>
-                <li><strong>Nebraska State Code:</strong> Nebraska State Building Code is based on IBC with state-specific modifications</li>
-                <li><strong>Local Amendments:</strong> Omaha adds specific requirements for foundation design, soil conditions, and wind resistance</li>
-                <li><strong>ASCE 7 Standard:</strong> Wind load calculations follow ASCE 7-22 as referenced by IBC</li>
-                <li><strong>Permit Authority:</strong> City of Omaha Planning Department handles building permits within city limits</li>
-                <li><strong>Multi-County Metro:</strong> Omaha metro spans Douglas and Sarpy counties—verify jurisdiction for each project location</li>
-            </ul>
+  <div class="divider"></div>
 
-            <p>You can access Omaha building permits and requirements through the <a href="https://www.cityofomaha.org/government/departments/planning" target="_blank" rel="noopener">City of Omaha Planning Department</a>.</p>
+  <!-- CTA -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">AUTOMATE · ASCE 7-22</p>
+    <h2>Calculate Omaha Wind Loads <span class="sweep">in Minutes</span></h2>
+    <p class="lead">Enter any Omaha address or zip code — the calculator applies the 105&ndash;115 mph range, sorts Exposure B vs C near the prairie edge, handles risk-category maps, and returns PE-ready MWFRS and C&amp;C reports for permit submission.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Try the Omaha Calculator</a>
+      <a class="btn-ghost" href="../tornado-alley-wind-loads-safety.html">Tornado Alley Wind Safety</a>
+    </div>
+  </div></section>
 
-            <h3>Risk Categories and Wind Speed Adjustments</h3>
-            <p>Omaha projects must be classified into Risk Categories per ASCE 7-22 Table 1.5-1. Higher risk categories require increased design wind speeds:</p>
+  <div class="divider"></div>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Risk Category</th>
-                        <th>Omaha Design Wind Speed</th>
-                        <th>Building Types</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Risk Category I</strong></td>
-                        <td>~100-105 mph</td>
-                        <td>Agricultural facilities, temporary structures, minor storage</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category II</strong></td>
-                        <td>105-115 mph</td>
-                        <td>Residential, commercial, most standard occupancies</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category III</strong></td>
-                        <td>~120-130 mph</td>
-                        <td>Schools, assembly >300, substantial hazardous materials</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Risk Category IV</strong></td>
-                        <td>~130-140 mph</td>
-                        <td>Hospitals, fire stations, emergency shelters, EOCs</td>
-                    </tr>
-                </tbody>
-            </table>
+  <!-- NEARBY / STATEWIDE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">KEEP EXPLORING · NEBRASKA &amp; THE PLAINS</p>
+    <h2>Nearby Cities &amp; <span class="sweep">Statewide Requirements</span></h2>
+    <div class="grid" data-n="4">
+      <a class="card glass" href="../nebraska-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 5h16v14H4z"/><path d="M4 5l8 7 8-7"/></svg>
+        <h3>Nebraska Statewide</h3><p>Full state IBC &amp; ASCE 7 wind guide.</p><span class="badge badge--data">STATE GUIDE</span>
+      </a>
+      <a class="card glass" href="lincoln-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/></svg>
+        <h3>Lincoln, NE</h3><p>Capital-city plains wind requirements.</p><span class="badge badge--data">SISTER CITY</span>
+      </a>
+      <a class="card glass" href="../tornado-alley-wind-loads-safety.html">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 6h18M6 10h12M9 14h6M11 18h2"/></svg>
+        <h3>Tornado Alley Safety</h3><p>Designing across the plains storm belt.</p><span class="badge badge--hvhz">HAZARD</span>
+      </a>
+      <a class="card glass" href="../wind-speed-by-location.html">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <h3>Wind Speed by Location</h3><p>Look up design speeds anywhere.</p><span class="badge badge--data">LOOKUP</span>
+      </a>
+    </div>
+    <div class="hero-cta" style="margin-top:2rem">
+      <a class="btn-ghost" href="../state-requirements.html">All State Requirements</a>
+    </div>
+  </div></section>
 
-            <h3>Exposure Category: B (Urban) vs C (Plains)</h3>
-            <p>Omaha projects require careful Exposure Category determination based on surrounding terrain and development density:</p>
+</main>
 
-            <div class="kc-card">
-                <h4>Exposure Category Selection for Omaha</h4>
-                <p><strong>Exposure Category B (Urban):</strong> Most established Omaha areas qualify as Exposure B due to dense urban development with numerous buildings, trees, and other obstructions. Exposure B assumes urban and suburban areas with buildings having heights generally less than 30 feet extending more than 800 feet upwind. This applies to downtown Omaha, established neighborhoods, Aksarben Village, Midtown Crossing, and mature suburbs.</p>
-                <p><strong>Exposure Category C (Plains/Developing Areas):</strong> Western Omaha suburbs, newer developments near the plains, and areas transitioning to open prairie may qualify as Exposure C. Open terrain with scattered obstructions having heights generally less than 30 feet. Exposure C produces significantly higher wind pressures than Exposure B and is common for Omaha projects near the Great Plains.</p>
-                <p><strong>Engineering Judgment Required:</strong> The transition between Exposure B and C in Omaha's rapidly developing western suburbs requires professional engineering judgment. When in doubt, the more conservative Exposure C should be used, especially for projects near open prairie terrain.</p>
-            </div>
-
-            <h3>Omaha Tornado Alley and Severe Weather Considerations</h3>
-            <p>Omaha's wind load requirements are significantly influenced by the city's location in Tornado Alley and exposure to severe Great Plains weather:</p>
-
-            <p><strong>Tornado Alley Core Location:</strong> Omaha is situated in the heart of Tornado Alley, where warm, moist Gulf air collides with cold, dry Canadian air masses over the Great Plains. Douglas County averages 3-5 tornadoes annually, with violent EF3+ tornadoes occurring regularly. The 1975 Omaha tornado struck downtown causing extensive damage. While ASCE 7 wind loads are based on synoptic (large-scale) wind events rather than tornadoes, the elevated base wind speed accounts for Omaha's severe weather exposure.</p>
-
-            <p><strong>Severe Thunderstorm and Derecho Events:</strong> Omaha experiences some of the nation's highest severe thunderstorm frequency. Derecho events (organized lines of severe thunderstorms) regularly produce wind gusts exceeding 90-100 mph across the metro area. These widespread high-wind events cause extensive roof damage, structural failures, broken windows, and widespread power outages.</p>
-
-            <p><strong>Hail Damage Considerations:</strong> Omaha ranks among the top hail-prone cities in the United States. While hail is not a direct wind load consideration, roof systems must be designed to resist both wind uplift and hail impact, requiring coordinated design approaches for Omaha projects. The region frequently experiences baseball-sized hail and larger.</p>
-
-            <h3>Omaha Zip Codes and Wind Speed Reference</h3>
-            <p>Omaha zip codes span a large geographic area across Douglas and Sarpy counties with relatively consistent wind speed requirements. Common Omaha zip codes include:</p>
-
-            <ul>
-                <li><strong>68102-68110:</strong> Downtown Omaha, Old Market, Midtown</li>
-                <li><strong>68114-68116:</strong> North Omaha, Eppley Airfield area</li>
-                <li><strong>68124-68130:</strong> West Omaha, Aksarben Village, Dundee</li>
-                <li><strong>68131-68137:</strong> South Omaha, Ralston</li>
-                <li><strong>68138-68144:</strong> Western suburbs (Elkhorn area), new developments</li>
-                <li><strong>68046-68157:</strong> Sarpy County suburbs (Bellevue, Papillion, La Vista)</li>
-            </ul>
-
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">WindLoadCalc.com wind load calculator</a> automatically applies the appropriate Omaha wind speed based on your specific zip code or street address, accounting for local terrain conditions and exposure.</p>
-
-            <h3>Professional Engineer (PE) Requirements in Omaha</h3>
-            <p>Wind load calculations for Omaha building permits have varying PE requirements depending on building type and complexity:</p>
-
-            <ul>
-                <li><strong>Commercial Buildings:</strong> Generally require PE-sealed calculations from a Nebraska-licensed Professional Engineer</li>
-                <li><strong>Residential Structures:</strong> Single-family and small multi-family may not require PE seal for standard designs</li>
-                <li><strong>Complex Structures:</strong> Any building with unusual geometry, height, or occupancy requires PE involvement</li>
-                <li><strong>Douglas County Requirements:</strong> Verify PE requirements with specific jurisdiction (Omaha vs. unincorporated areas)</li>
-                <li><strong>Best Practice:</strong> Even when not required, PE-sealed calculations provide liability protection and ensure code compliance</li>
-            </ul>
-
-            <p>Nebraska Professional Engineers must be licensed through the <a href="https://engineer.nebraska.gov/" target="_blank" rel="noopener">Nebraska Board of Engineers and Architects</a>.</p>
-
-            <h3>Official Omaha Building Department Resources</h3>
-            <p>Engineers, architects, and contractors should reference these official resources for Omaha wind load compliance:</p>
-
-            <div class="external-links-grid">
-                <a href="https://www.cityofomaha.org/government/departments/planning" target="_blank" rel="noopener" class="external-link">
-                    City of Omaha Planning Department
-                </a>
-                <a href="https://www.douglascounty-ne.gov/building-and-planning" target="_blank" rel="noopener" class="external-link">
-                    Douglas County Building & Planning
-                </a>
-                <a href="https://engineer.nebraska.gov/" target="_blank" rel="noopener" class="external-link">
-                    Nebraska PE Licensing Board
-                </a>
-            </div>
-
-            <h3>Common Omaha Wind Load Mistakes to Avoid</h3>
-            <ul>
-                <li><strong>Using outdated wind speed maps:</strong> Omaha wind speeds have been updated in recent ASCE 7 editions to reflect Tornado Alley exposure</li>
-                <li><strong>Incorrect Exposure Category:</strong> Assuming all of Omaha is Exposure B—western suburbs and new development areas near the plains may require Exposure C</li>
-                <li><strong>Ignoring tornado risk:</strong> While ASCE 7 doesn't specifically design for tornadoes, Omaha's elevated base wind speed accounts for severe weather exposure</li>
-                <li><strong>Incorrect Risk Category:</strong> Schools, hospitals, and assembly buildings require higher wind speeds</li>
-                <li><strong>Outdated ASCE 7 version:</strong> Must use ASCE 7-22 per current IBC adoption</li>
-                <li><strong>Neglecting hail resistance:</strong> Roof systems must resist both wind uplift AND hail impact in Omaha's severe weather environment</li>
-                <li><strong>Great Plains Terrain:</strong> Failing to account for increased exposure near open prairie west of Omaha</li>
-            </ul>
-
-            <h3>How WindLoadCalc.com Handles Omaha Requirements</h3>
-            <p>The <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">wind load calculator at WindLoadCalc.com</a> automatically applies all Omaha-specific requirements:</p>
-
-            <ul>
-                <li><strong>Automatic Velocity Determination:</strong> Enter any Omaha zip code or address and the system automatically applies 105-115 mph based on location</li>
-                <li><strong>Exposure Category Assignment:</strong> Automatically determines Exposure B or C based on urban density and proximity to Great Plains terrain</li>
-                <li><strong>Risk Category Adjustment:</strong> Applies appropriate velocity increases for Risk Categories I, III, and IV</li>
-                <li><strong>Full ASCE 7-22 Compliance:</strong> All calculations follow current IBC-adopted ASCE 7-22 requirements</li>
-                <li><strong>C&C Pressure Coefficients:</strong> Generates pressures for windows, doors, roof panels, wall cladding</li>
-                <li><strong>MWFRS Pressures:</strong> Provides main wind force resisting system loads for structural design</li>
-                <li><strong>PE-Ready Reports:</strong> Comprehensive calculation reports suitable for permit submission</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Automate Your Omaha Wind Load Calculations</h2>
-            <p>WindLoadCalc.com automatically handles all Omaha-specific requirements including the 105-115 mph design velocity, appropriate Exposure Category selection, Risk Category adjustments, and component pressure coefficients. Simply enter your Omaha project address or zip code for instant, accurate calculations.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Calculate Omaha Wind Loads Now →</a>
-        </div>
-    </section>
-
-    <section class="content-section">
-        <div class="container">
-            <h3>Omaha vs Other Midwest Cities Wind Load Requirements</h3>
-            <p>Omaha's wind load requirements reflect its Tornado Alley location compared to other major Midwest cities:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>City</th>
-                        <th>Design Wind Speed (Risk Cat II)</th>
-                        <th>Primary Weather Risk</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Omaha, NE</strong></td>
-                        <td>105-115 mph</td>
-                        <td>Tornadoes (Tornado Alley), severe thunderstorms, derechos</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kansas City, MO</strong></td>
-                        <td>105-115 mph</td>
-                        <td>Tornadoes (Tornado Alley core), severe weather</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Oklahoma City, OK</strong></td>
-                        <td>110-120 mph</td>
-                        <td>Tornadoes (Tornado Alley core), severe weather</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Des Moines, IA</strong></td>
-                        <td>105-115 mph</td>
-                        <td>Tornadoes, derechos</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Lincoln, NE</strong></td>
-                        <td>105-115 mph</td>
-                        <td>Tornadoes, severe thunderstorms</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Chicago, IL</strong></td>
-                        <td>100-110 mph</td>
-                        <td>Severe thunderstorms, lake-effect winds</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>Omaha's wind load requirements are among the highest in the Midwest, reflecting its Tornado Alley location and Great Plains severe weather exposure.</p>
-
-            <h3>Omaha Metro and College World Series Considerations</h3>
-            <p>Omaha's status as home to the College World Series and Berkshire Hathaway headquarters has implications for wind load design:</p>
-
-            <ul>
-                <li><strong>Historic Urban Core:</strong> Downtown Omaha and established neighborhoods (Old Market, Dundee, Aksarben Village) typically qualify as Exposure B</li>
-                <li><strong>Rapid Suburban Growth:</strong> Western suburbs near the Great Plains and new developments may require Exposure C during construction phases</li>
-                <li><strong>Infrastructure Resilience:</strong> Omaha's severe weather exposure requires robust building standards for commercial and residential development</li>
-                <li><strong>Emergency Management:</strong> Omaha has extensive tornado warning systems and emergency protocols given Tornado Alley location</li>
-                <li><strong>High-Profile Facilities:</strong> TD Ameritrade Park (College World Series) and other assembly buildings require Risk Category III or IV design with elevated wind speeds</li>
-            </ul>
-
-            <p>Designers should account for Omaha's urban development patterns and transition to Great Plains terrain when determining exposure categories and wind load requirements.</p>
-
-            <h3>Berkshire Hathaway and Omaha Economic Growth</h3>
-            <p>As the headquarters of Berkshire Hathaway and a major economic hub of the Great Plains, Omaha continues to experience significant commercial and residential growth requiring wind-resistant design:</p>
-
-            <ul>
-                <li><strong>Commercial Development:</strong> New office buildings, data centers, and industrial facilities require PE-sealed wind load calculations</li>
-                <li><strong>Residential Expansion:</strong> Western Omaha suburbs continue to expand into historically open prairie, requiring careful exposure determination</li>
-                <li><strong>Infrastructure Projects:</strong> Major infrastructure including Eppley Airfield expansions and transportation facilities require enhanced wind design</li>
-                <li><strong>Agricultural Facilities:</strong> Omaha's proximity to agricultural regions means many projects involve grain elevators, warehouses, and agricultural structures with unique wind load considerations</li>
-            </ul>
-
-            <p>Engineers working on Omaha projects should verify specific wind speeds, exposure categories, and permit requirements based on the governing jurisdiction and project location relative to the urban core and Great Plains transition zone.</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="container">
-            <h2>Get Omaha-Compliant Wind Load Calculations Today</h2>
-            <p>WindLoadCalc.com provides instant, accurate wind load calculations for Omaha projects. Our software automatically handles the 105-115 mph velocity range, Exposure B/C determination, and generates PE-ready reports for building permit submission.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Try Omaha Wind Load Calculator →</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 WindLoad.Solutions. All rights reserved.</p>
-            <p style="margin-top: 1rem;">Professional ASCE 7 Wind Load Resources and Education</p>
-            <p style="margin-top: 0.5rem;"><a href="../nebraska-wind-load-requirements.html" style="color: #60a5fa;">Nebraska Wind Load Requirements</a> | <a href="../state-requirements.html" style="color: #60a5fa;">All State Requirements</a></p>
-        </div>
-    </footer>
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="../images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="../asce-7-standards.html">ASCE 7 Standards</a><a href="../wind-exposure-categories-guide.html">Exposure Categories</a><a href="../risk-categories-wind-loads-guide.html">Risk Categories</a><a href="../topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="../state-requirements.html">State Requirements</a><a href="../hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="../mandatory-wind-load-states.html">Mandatory States</a><a href="../resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="../about.html">About</a><a href="../articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1175,5 +626,8 @@
             });
         });
     </script>
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
