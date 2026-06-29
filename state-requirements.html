@@ -114,6 +114,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root{
   /* ---- brand chrome (verbatim base, extended) ---- */
@@ -218,6 +222,9 @@ h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
 .cmp .no{color:var(--ink-mute)}
 /* horizontal scroll on mobile so table never breaks layout */
 .cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+
 /* Alternate these down every page so no two adjacent sections share a treatment.
    Each sets its own text color in the same rule (contrast-safe). */
 
@@ -693,6 +700,27 @@ function toggleNavSubsection(element) {
     const subsection = element.parentElement;
     subsection.classList.toggle('active');
 }
+</script>
+<script>
+(function(){
+  // sticky nav shadow
+  var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+  // set exact draw lengths
+  document.querySelectorAll('.usmap .st, .sil path').forEach(function(p){try{var L=p.getTotalLength();p.style.setProperty('--len',L);p.style.strokeDasharray=L;p.style.strokeDashoffset=L;}catch(e){}});
+  // IntersectionObserver draw-on + count-up
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');if(e.target.hasAttribute('data-stats'))countUp(e.target);io.unobserve(e.target);}})},{threshold:.2});
+  document.querySelectorAll('[data-io],.usmap,.mcard').forEach(function(el){io.observe(el)});
+  var strip=document.querySelector('.stat-strip');if(strip){strip.setAttribute('data-stats','');io.observe(strip);}
+  function countUp(el){el.querySelectorAll('.num').forEach(function(n){var to=+n.getAttribute('data-to'),suf=n.getAttribute('data-suffix')||'',t0=null;function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1100,1);n.textContent=Math.round(p*to)+suf;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
+  // map tooltip
+  var tip=document.createElement('div');tip.className='maptip';document.body.appendChild(tip);
+  document.querySelectorAll('.usmap .st').forEach(function(p){
+    p.addEventListener('mousemove',function(e){tip.innerHTML='<b>'+p.dataset.name+'</b><span class="tg">'+p.dataset.tag+'</span>';tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';tip.style.opacity=1;});
+    p.addEventListener('mouseleave',function(){tip.style.opacity=0;});
+  });
+  // magnetic CTA
+  document.querySelectorAll('.btn').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/6)+'px,'+((e.clientY-r.top-r.height/2)/6-2)+'px)';});b.addEventListener('mouseleave',function(){b.style.transform='';});});
+})();
 </script>
 <script>
 (function(){
