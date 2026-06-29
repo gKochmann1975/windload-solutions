@@ -26,759 +26,251 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.7;
-            color: #1a202c;
-            background: #ffffff;
-        }
-
-
-        /* Header Styles from index.html */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        /* Navigation Overlay */
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Navigation Menu */
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Hero Section - Palmetto Blue/Indigo Gradient */
-        .hero {
-            background: linear-gradient(135deg, #002868 0%, #1e40af 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%);
-            color: white;
-            padding: 10rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-                .hero::before {
-            content: '🌴🏖️';
-            position: absolute;
-            font-size: 18rem;
-            opacity: 0.28;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            line-height: 1;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Content Section */
-        .content {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .content h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 3rem 0 1.5rem;
-            color: #1e40af;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .content h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #002868, #3b82f6);
-            border-radius: 2px;
-        }
-
-        .content h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin: 2rem 0 1rem;
-            color: #3b82f6;
-        }
-
-        .content p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #4a5568;
-            line-height: 1.8;
-        }
-
-        .content ul, .content ol {
-            margin: 1.5rem 0 1.5rem 2rem;
-            color: #4a5568;
-        }
-
-        .content li {
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        .content strong {
-            color: #2d3748;
-            font-weight: 600;
-        }
-
-        /* Info Cards */
-        .info-card {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border-left: 5px solid #3b82f6;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
-        }
-
-        .info-card h3 {
-            color: #1e40af;
-            margin-top: 0;
-        }
-
-        .info-card ul {
-            margin-bottom: 0;
-        }
-
-        /* Highlight Box */
-        .highlight {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left: 5px solid #f59e0b;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .highlight p {
-            margin-bottom: 0;
-            color: #78350f;
-            font-weight: 500;
-        }
-
-        /* County Cards */
-        .county-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .county-card {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border: 2px solid #3b82f6;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .county-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-        }
-
-        .county-card h3 {
-            color: #1e40af;
-            margin-top: 0;
-            font-size: 1.5rem;
-        }
-
-        .county-card p {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* CTA Section */
-        .windloadcalc-promo {
-            background: linear-gradient(135deg, #0018ff 0%, #181E57 100%);
-            color: white;
-            padding: 4rem 0;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .windloadcalc-promo .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .windloadcalc-promo h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .windloadcalc-promo h2::after {
-            display: none;
-        }
-
-        .windloadcalc-promo p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #0018ff;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-            background: #f0f9ff;
-        }
-
-        /* Footer */
-        footer {
-            background: #1a202c;
-            color: white;
-            padding: 3rem 2rem 2rem;
-            margin-top: 0;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-content p {
-            margin-bottom: 1rem;
-            opacity: 0.8;
-            color: white;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-        }
-
-        /* Sub-menu styles */
-        .nav-item-with-submenu {
-            position: relative;
-        }
-
-        .nav-item-with-submenu > a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-item-with-submenu .submenu-toggle {
-            margin-left: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-item-with-submenu.open .submenu-toggle {
-            transform: rotate(180deg);
-        }
-
-        .sub-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            padding-left: 1rem;
-        }
-
-        .nav-item-with-submenu.open .sub-menu {
-            max-height: 500px;
-        }
-
-        .sub-menu a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-            padding: 0.75rem 0 0.75rem 0.5rem;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            color: #4b5563;
-        }
-
-        .sub-menu a i {
-            font-size: 1.2rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .sub-menu a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-            background: rgba(0, 24, 255, 0.03);
-        }
-
-        /* Color-code submenu items */
-        .sub-menu a:nth-child(1) i { color: #06b6d4; }
-        .sub-menu a:nth-child(2) i { color: #f97316; }
-        .sub-menu a:nth-child(3) i { color: #a855f7; }
-        .sub-menu a:nth-child(4) i { color: #10b981; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .content h2 {
-                font-size: 2rem;
-            }
-
-            .content h3 {
-                font-size: 1.5rem;
-            }
-
-            .county-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-    </style>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://windload.solutions/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "State Requirements",
-                "item": "https://windload.solutions/state-requirements.html"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "South Carolina Wind Loads",
-                "item": "https://windload.solutions/south-carolina-wind-load-requirements.html"
-            }
-        ]
-    }
-    </script>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-        <!-- Header -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- WLC Calculator CTA - Above the Fold -->
-    <style>
-        .wlc-cta-banner { background: linear-gradient(135deg, #0018ff 0%, #181E57 100%); color: white; padding: 7rem 0 2.5rem; text-align: center; }
-        .wlc-cta-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-        .wlc-cta-banner h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 0.5rem; color: white; line-height: 1.2; }
-        .wlc-cta-banner .wlc-sub { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1.4rem; }
-        .wlc-cta-form { display: inline-flex; gap: 0.5rem; background: white; padding: 0.5rem; border-radius: 50px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); max-width: 480px; width: 100%; }
-        .wlc-cta-form input[type="text"] { flex: 1; border: none; outline: none; font-size: 1.05rem; padding: 0.85rem 1.4rem; border-radius: 50px; color: #1f2937; min-width: 0; background: transparent; }
-        .wlc-cta-form button { background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; border: none; padding: 0.85rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .wlc-cta-form button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(249,115,22,0.4); }
-        .wlc-cta-banner .wlc-tagline { font-size: 0.88rem; opacity: 0.78; margin-top: 0.9rem; }
-        .wlc-inline-cta { background: #f0f4ff; border-left: 4px solid #0018ff; border-radius: 8px; padding: 2rem 2rem; margin: 2.5rem auto; max-width: 900px; text-align: center; }
-        .wlc-inline-cta h3 { color: #181E57; font-size: 1.5rem; margin: 0 0 0.6rem 0; font-weight: 800; }
-        .wlc-inline-cta p { color: #4b5563; font-size: 1.05rem; margin: 0 0 1.2rem 0; }
-        .wlc-inline-cta a.wlc-btn { display: inline-block; background: #0018ff; color: white; padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .wlc-inline-cta a.wlc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,24,255,0.35); }
-        .wlc-final-cta { background: linear-gradient(135deg, #181E57 0%, #0018ff 100%); color: white; padding: 4.5rem 2rem; text-align: center; }
-        .wlc-final-cta-inner { max-width: 800px; margin: 0 auto; }
-        .wlc-final-cta h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; color: white; }
-        .wlc-final-cta ul { list-style: none; padding: 0; margin: 1.5rem auto 2rem; max-width: 560px; text-align: left; }
-        .wlc-final-cta ul li { padding: 0.5rem 0 0.5rem 2rem; position: relative; font-size: 1.05rem; opacity: 0.95; }
-        .wlc-final-cta ul li::before { content: "\2713"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; font-size: 1.1rem; }
-        .wlc-final-cta a.wlc-btn-large { display: inline-block; background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%); color: white; padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 800; font-size: 1.15rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
-        .wlc-final-cta a.wlc-btn-large:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
-        @media (max-width: 600px) {
-            .wlc-cta-banner h2 { font-size: 1.45rem; }
-            .wlc-cta-form { flex-direction: column; border-radius: 16px; }
-            .wlc-cta-form input[type="text"] { text-align: center; }
-            .wlc-final-cta h2 { font-size: 1.65rem; }
-        }
-    </style>
-    <section class="wlc-cta-banner" aria-label="Try the South Carolina Wind Load Calculator">
-        <div class="wlc-cta-banner-inner">
-            <h2>Calculate South Carolina Wind Loads Instantly &rarr;</h2>
-            <p class="wlc-sub">Skip the manual math &mdash; get instant latest ASCE 7 (ASCE 7-22) results for any South Carolina ZIP code, with Charleston and Hilton Head 150-mph coastal exposure pre-applied.</p>
-            <form class="wlc-cta-form" action="https://calc.windloadcalc.com/" method="get" role="search">
-                <input type="text" name="zip" inputmode="numeric" pattern="^\d{5}$" maxlength="5" placeholder="Enter SC ZIP (e.g. 29401)" aria-label="South Carolina ZIP code" required>
-                <button type="submit">Start Calculation</button>
-            </form>
-            <p class="wlc-tagline">Free to try &middot; No signup needed for ZIP lookup</p>
-        </div>
-    </section>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -883,416 +375,265 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
-
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
-
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
-
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
-
-.nav-subsection {
-    position: relative;
-}
-
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
-
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
-
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
-
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
-
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>South Carolina Wind Load Requirements</h1>
-            <p>Comprehensive guide to SC building codes, ASCE 7-10/16 standards, PE certification requirements, and county-specific wind maps for coastal regions</p>
-        </div>
-    </section>
-
-    <main class="content">
-        <h2>South Carolina Building Code Overview</h2>
-        <p>South Carolina has adopted the <strong>2021 South Carolina Building Code</strong>, which is based on the <strong>2015 International Building Code (IBC)</strong> with state-specific amendments. The code establishes comprehensive wind load requirements for all structures throughout the state, with particular emphasis on coastal counties exposed to hurricane-force winds from the Atlantic Ocean.</p>
-
-        <p>The South Carolina coast stretches approximately 187 miles along the Atlantic, from the North Carolina border to Georgia, encompassing numerous barrier islands, coastal communities, and major metropolitan areas including Charleston, Myrtle Beach, and Hilton Head. This extensive coastal exposure necessitates rigorous wind design standards to protect lives and property during hurricane events.</p>
-
-        <div class="info-card">
-            <h3><i class="fas fa-book"></i> Key Building Code Information</h3>
-            <ul>
-                <li><strong>Building Code:</strong> 2021 South Carolina Building Code (based on 2015 IBC)</li>
-                <li><strong>ASCE 7 Versions:</strong> ASCE 7-10 / ASCE 7-16 (jurisdiction-specific)</li>
-                <li><strong>Authority Having Jurisdiction:</strong> Local building departments and counties</li>
-                <li><strong>Professional Certification:</strong> PE certification required for coastal high-wind areas</li>
-                <li><strong>Wind Maps:</strong> County-specific wind speed maps supplement ASCE 7 provisions</li>
-            </ul>
-        </div>
-
-        <h2>ASCE 7 Wind Load Standards</h2>
-        <p>South Carolina jurisdictions reference either <strong>ASCE 7-10</strong> or <strong>ASCE 7-16</strong> depending on local adoption timelines and building department policies. Both standards provide methodologies for calculating wind loads on the <strong>Main Wind Force Resisting System (MWFRS)</strong> and <strong>Components and Cladding (C&C)</strong>, though ASCE 7-16 incorporates updated wind speed maps and refined calculation procedures.</p>
-
-        <h3>Wind Speed Determination</h3>
-        <p>Design wind speeds in South Carolina vary significantly based on geographic location and proximity to the coast. The state's wind environment is influenced by:</p>
-
-        <ul>
-            <li><strong>Hurricane exposure:</strong> Atlantic hurricanes directly impact coastal counties</li>
-            <li><strong>Coastal geography:</strong> Barrier islands and low-lying coastal areas experience higher wind speeds</li>
-            <li><strong>Inland distance:</strong> Wind speeds decrease as distance from coast increases</li>
-            <li><strong>Terrain features:</strong> Exposure categories (B, C, D) affect localized wind pressures</li>
-        </ul>
-
-        <p>Typical design wind speeds by region:</p>
-        <ul>
-            <li><strong>Immediate Coastal Zone (0-5 miles):</strong> 130-150 mph</li>
-            <li><strong>Coastal Counties (5-20 miles):</strong> 110-130 mph</li>
-            <li><strong>Midlands Region:</strong> 90-110 mph</li>
-            <li><strong>Upstate Region:</strong> 85-100 mph</li>
-        </ul>
-
-        <div class="highlight">
-            <p><i class="fas fa-exclamation-triangle"></i> <strong>Important:</strong> Many South Carolina coastal counties have adopted county-specific wind maps that may prescribe higher design wind speeds than ASCE 7 minimum values. Always verify local jurisdiction requirements before beginning design.</p>
-        </div>
-
-        <h3>Components and Cladding (C&C) Requirements</h3>
-        <p>Components and Cladding design is particularly critical in South Carolina's coastal counties, where hurricane winds can generate extreme pressures on building envelopes. C&C elements include:</p>
-
-        <ul>
-            <li><strong>Windows and glazing:</strong> Must resist positive and negative wind pressures, with impact resistance required in high-wind zones</li>
-            <li><strong>Doors:</strong> Entry doors, garage doors, and sliding glass doors require pressure ratings</li>
-            <li><strong>Roofing systems:</strong> Shingles, metal panels, tiles, and membranes with enhanced attachment</li>
-            <li><strong>Siding and cladding:</strong> Vinyl siding, fiber cement, brick veneer, and stucco systems</li>
-            <li><strong>Soffits and fascia:</strong> Critical locations for wind-driven rain infiltration</li>
-        </ul>
-
-        <p>ASCE 7 provides pressure coefficients (GCp) for C&C zones based on effective wind area, location (corner, edge, field), and building height. Corner and edge zones experience significantly higher pressures than field zones, requiring enhanced fastening and structural support.</p>
-
-        <h2>County-Specific Wind Maps</h2>
-        <p>One of South Carolina's unique features is the adoption of <strong>county-specific wind maps</strong> by many coastal jurisdictions. These maps were developed through detailed hurricane risk modeling and often prescribe higher design wind speeds than ASCE 7 minimum values.</p>
-
-        <h3>Why County-Specific Maps Matter</h3>
-        <p>County wind maps account for:</p>
-        <ul>
-            <li><strong>Local hurricane history:</strong> Historical storm tracks and intensities</li>
-            <li><strong>Storm surge vulnerability:</strong> Low-lying areas subject to combined wind and water forces</li>
-            <li><strong>Barrier island exposure:</strong> First line of defense against Atlantic hurricanes</li>
-            <li><strong>Insurance requirements:</strong> Correlation with wind insurance district boundaries</li>
-        </ul>
-
-        <div class="county-cards">
-            <div class="county-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Charleston County</h3>
-                <p><strong>Design Wind Speed:</strong> 130-150 mph (coastal)</p>
-                <p><strong>Key Communities:</strong> Charleston, Mount Pleasant, Isle of Palms, Folly Beach, Sullivan's Island</p>
-                <p><strong>Special Provisions:</strong> County-specific wind maps, historic district requirements</p>
-            </div>
-
-            <div class="county-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Horry County</h3>
-                <p><strong>Design Wind Speed:</strong> 130-150 mph (coastal)</p>
-                <p><strong>Key Communities:</strong> Myrtle Beach, North Myrtle Beach, Surfside Beach, Garden City</p>
-                <p><strong>Special Provisions:</strong> High tourism density, multi-story condominiums</p>
-            </div>
-
-            <div class="county-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Beaufort County</h3>
-                <p><strong>Design Wind Speed:</strong> 130-150 mph (coastal)</p>
-                <p><strong>Key Communities:</strong> Hilton Head Island, Beaufort, Bluffton, Fripp Island</p>
-                <p><strong>Special Provisions:</strong> Sea island geography, resort and residential development</p>
-            </div>
-
-            <div class="county-card">
-                <h3><i class="fas fa-map-marker-alt"></i> Georgetown County</h3>
-                <p><strong>Design Wind Speed:</strong> 130-150 mph (coastal)</p>
-                <p><strong>Key Communities:</strong> Georgetown, Pawleys Island, Litchfield Beach, Murrells Inlet</p>
-                <p><strong>Special Provisions:</strong> Historic waterfront, marsh exposure</p>
-            </div>
-        </div>
-
-        <h2>South Carolina City Wind Load Guides</h2>
-        <p>For detailed city-specific wind load requirements, building codes, and local enforcement information, explore our South Carolina city guides:</p>
-
-        <div class="external-links-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 2rem 0;">
-            <a href="cities/charleston-wind-load-requirements.html" class="external-link" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, rgba(0, 40, 104, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); padding: 0.75rem 1.25rem; border-radius: 10px; color: #1e40af; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid #3b82f6;">
-                🌴 Charleston (130-145 mph)
-            </a>
-            <a href="cities/myrtle-beach-wind-load-requirements.html" class="external-link" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, rgba(0, 40, 104, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%); padding: 0.75rem 1.25rem; border-radius: 10px; color: #1e40af; text-decoration: none; font-weight: 600; transition: all 0.3s ease; border: 2px solid #3b82f6;">
-                🏖️ Myrtle Beach (140-150 mph)
-            </a>
-        </div>
-
-        <h2>Professional Engineer (PE) Certification</h2>
-        <p>South Carolina requires <strong>Professional Engineer (PE) certification</strong> for structures in coastal high-wind areas. A South Carolina-licensed PE must review, seal, and stamp all structural plans, calculations, and specifications to verify compliance with the state building code and ASCE 7 standards.</p>
-
-        <h3>When PE Certification is Required</h3>
-        <ul>
-            <li><strong>Coastal High-Wind Counties:</strong> Structures in counties with design wind speeds of 120+ mph</li>
-            <li><strong>Commercial Buildings:</strong> All non-residential structures regardless of location</li>
-            <li><strong>Multi-Family Structures:</strong> Apartments, condominiums, townhomes</li>
-            <li><strong>Complex Residential:</strong> Custom homes with irregular geometry or large spans</li>
-            <li><strong>Essential Facilities:</strong> Risk Category III and IV structures (hospitals, fire stations, emergency operations centers)</li>
-        </ul>
-
-        <p>PE certification ensures that wind load calculations account for all relevant factors including building height, exposure category, topographic effects, internal pressure coefficients, and component effective wind areas. The PE's seal represents professional responsibility for design adequacy and code compliance. Engineers and contractors typically prep the numbers in the <a href="https://windloadcalc.com/south-carolina-wind-load-calculator">South Carolina Wind Load Calculator</a> before handing the package off for seal.</p>
-
-        <!-- WLC Inline CTA -->
-        <aside class="wlc-inline-cta" aria-label="Open the South Carolina Wind Load Calculator">
-            <h3>Charleston to the Upstate, in one workflow</h3>
-            <p>WindLoadCalc pre-loads 2021 SC Building Code + the latest ASCE 7 (ASCE 7-22), coastal 150-mph wind speeds for Charleston / Beaufort / Horry, and wind-borne debris flags for hurricane-corridor projects. One ZIP, full pressure schedule.</p>
-            <a class="wlc-btn" href="https://windloadcalc.com/south-carolina-wind-load-calculator">Open the South Carolina Wind Load Calculator &rarr;</a>
-        </aside>
-
-        <h2>Wind-Borne Debris Protection</h2>
-        <p>South Carolina coastal counties with design wind speeds of <strong>130+ mph</strong> are typically designated as <strong>wind-borne debris regions</strong>. In these areas, all openings (windows, doors, skylights) must be protected with one of the following:</p>
-
-        <ul>
-            <li><strong>Impact-resistant glazing:</strong> Laminated glass rated for large missile impact (ASTM E1996)</li>
-            <li><strong>Impact-resistant window/door assemblies:</strong> Complete units tested to withstand debris impact</li>
-            <li><strong>Approved shutter systems:</strong> Roll-down, accordion, or panel shutters rated for design pressures</li>
-            <li><strong>Engineered protection systems:</strong> Custom-designed systems sealed by a PE</li>
-        </ul>
-
-        <div class="highlight">
-            <p><i class="fas fa-shield-alt"></i> <strong>Critical:</strong> Protecting openings prevents catastrophic internal pressurization. A single broken window can increase roof uplift forces by 50% or more, potentially causing complete structural failure.</p>
-        </div>
-
-        <h2>Design Best Practices for South Carolina</h2>
-        <p>Successful wind load design in South Carolina requires attention to structural detailing, continuous load paths, and building envelope integrity. The following best practices are recommended:</p>
-
-        <h3>Continuous Load Path Design</h3>
-        <p>A continuous load path transfers wind forces from the roof through the walls to the foundation without interruption. Critical connection points include:</p>
-        <ul>
-            <li><strong>Roof-to-wall connections:</strong> Hurricane straps, clips, or structural screws with specified uplift capacity</li>
-            <li><strong>Wall-to-foundation connections:</strong> Anchor bolts with adequate embedment and edge distance</li>
-            <li><strong>Sheathing attachment:</strong> Proper nail/screw spacing at panel edges and field</li>
-            <li><strong>Structural sheathing:</strong> Plywood or OSB providing shear wall and diaphragm action</li>
-        </ul>
-
-        <h3>Roofing System Enhancement</h3>
-        <p>Roofs experience the highest wind uplift pressures and require robust attachment systems:</p>
-        <ul>
-            <li><strong>Enhanced shingle attachment:</strong> 6-nail pattern (instead of standard 4-nail)</li>
-            <li><strong>Starter strip adhesive:</strong> Prevents edge blow-off at rakes and eaves</li>
-            <li><strong>Self-sealing shingles:</strong> Asphalt shingles with factory-applied adhesive strips</li>
-            <li><strong>Roof deck attachment:</strong> 8d nails at 6" o.c. at panel edges (high-wind zones)</li>
-            <li><strong>Secondary water barrier:</strong> Self-adhering underlayment at eaves and rakes</li>
-            <li><strong>Metal roofing:</strong> Concealed fastener systems with high uplift ratings</li>
-        </ul>
-
-        <h3>Building Envelope Integrity</h3>
-        <p>Maintaining envelope integrity prevents internal pressurization and water infiltration:</p>
-        <ul>
-            <li>Impact-resistant windows and doors in debris regions</li>
-            <li>Wind-rated garage doors (tested to ANSI/DASMA 108)</li>
-            <li>Sealed roof and wall penetrations (vents, pipes, electrical)</li>
-            <li>Properly flashed windows and doors</li>
-            <li>Soffit venting designed for positive and negative pressures</li>
-        </ul>
-
-        <div class="info-card">
-            <h3><i class="fas fa-tools"></i> Contractor's Checklist for SC High-Wind Construction</h3>
-            <ul>
-                <li>Obtain PE-stamped structural plans for coastal projects</li>
-                <li>Verify design wind speed using county-specific wind maps (if adopted)</li>
-                <li>Use continuous load path connectors with manufacturer-rated uplift capacities</li>
-                <li>Install impact-resistant glazing or shutters in wind-borne debris regions (130+ mph)</li>
-                <li>Follow enhanced roofing attachment schedules (6-nail shingles, 6" deck nailing at edges)</li>
-                <li>Install wind-rated garage doors (minimum 130 mph rating for coastal zones)</li>
-                <li>Ensure all roof and wall penetrations are properly sealed and flashed</li>
-                <li>Schedule structural inspections for critical connections (roof-to-wall, wall-to-foundation)</li>
-                <li>Document all structural connector installations with photos</li>
-                <li>Verify final inspection approval before certificate of occupancy</li>
-            </ul>
-        </div>
-
-        <h2>Insurance and Wind Mitigation</h2>
-        <p>South Carolina homeowners in coastal counties often benefit from wind mitigation discounts on insurance premiums. Features that qualify for discounts include:</p>
-        <ul>
-            <li><strong>Roof-to-wall connectors:</strong> Hurricane straps or clips installed at code-required spacing</li>
-            <li><strong>Roof covering:</strong> Impact-resistant shingles, metal roofing, or tile systems</li>
-            <li><strong>Roof deck attachment:</strong> Enhanced nail spacing (6" o.c. instead of 12" o.c.)</li>
-            <li><strong>Opening protection:</strong> Impact-resistant windows or approved shutters</li>
-            <li><strong>Roof geometry:</strong> Hip roofs perform better than gable roofs under wind loads</li>
-        </ul>
-
-        <p>A certified wind mitigation inspection documents these features and can result in premium savings of 20-45% for qualified homes.</p>
-
-        <h2>Resources and Professional Assistance</h2>
-        <p>For projects in South Carolina's coastal high-wind zones, consulting with a licensed Professional Engineer is strongly recommended. A PE can provide:</p>
-        <ul>
-            <li>Accurate wind load calculations using county-specific wind maps</li>
-            <li>Structural design for MWFRS and C&C elements</li>
-            <li>Stamped plans that meet local building department requirements</li>
-            <li>Shop drawing review for critical connections</li>
-            <li>Construction observation services</li>
-        </ul>
-
-        <p>Additional resources include:</p>
-        <ul>
-            <li><strong>South Carolina Building Codes Council:</strong> State code adoption and interpretations</li>
-            <li><strong>ASCE 7-10 / ASCE 7-16:</strong> Available from the American Society of Civil Engineers</li>
-            <li><strong>County Building Departments:</strong> Local wind maps, permit requirements, and inspection schedules</li>
-            <li><strong>SC Wind and Hail Underwriting Association:</strong> Insurance information for coastal properties</li>
-        </ul>
-
-        <p>South Carolina's coastal building environment demands rigorous adherence to wind load requirements. By following the 2021 SC Building Code, consulting county-specific wind maps, engaging qualified engineering professionals, and verifying numbers in the <a href="https://windloadcalc.com/south-carolina-wind-load-calculator">South Carolina Wind Load Calculator</a>, builders and designers can create structures that safely withstand the state's hurricane-prone climate.</p>
-    </main>
-
-    <!-- WLC Final Conversion CTA -->
-    <section class="wlc-final-cta" aria-label="Start using WindLoadCalc for South Carolina">
-        <div class="wlc-final-cta-inner">
-            <h2>Stop calculating South Carolina wind loads by hand</h2>
-            <p style="font-size:1.15rem; opacity:0.92; margin-bottom:0.5rem;">Built by hurricane-coast engineers since 2002 &mdash; Charleston, Hilton Head, Myrtle Beach, and every inland county handled in one calculator.</p>
-            <ul>
-                <li>Instant ZIP &rarr; latest ASCE 7 (ASCE 7-22) wind speed for all 4 risk categories</li>
-                <li>Coastal-county 150-mph values for Charleston, Beaufort, Horry pre-applied</li>
-                <li>Wind-borne debris flags + 2021 SC Building Code references in every report</li>
-            </ul>
-            <a class="wlc-btn-large" href="https://calc.windloadcalc.com/">Start Free &rarr;</a>
-        </div>
-    </section>
-
-    <!-- WindLoadCalc.com Promotional Section -->
-    <section class="windloadcalc-promo">
-        <div class="container">
-            <h2>Need Wind Load Calculators?</h2>
-            <p>Visit our sister site <strong>WindLoadCalc.com</strong> for professional ASCE 7 wind load calculator software and the Building Intelligence Platform (BIP).</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Visit WindLoadCalc.com →</a>
-        </div>
-    </section>
-
-    
-
-    <script>
+<main>
+<main>
+  <!-- HERO -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <span class="sil" data-state="sc"><svg viewBox="997.5 356.5 90.4 68.1" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M1087.93,376.29L1087.7,376.42L1083.51,380.61L1082.34,382.32L1079.39,388.61L1079.03,392.35L1077.93,391.01L1077.92,389.86L1077.77,388.94L1077.13,391.09L1078.62,393.77L1077.96,395.02L1075.68,397.55L1074.28,398.15L1072.75,399.03L1072.6,401.14L1070.71,403.4L1069.57,404.46L1067.1,404.38L1068.15,406.04L1067.52,407.55L1066.2,408.86L1064.44,409.87L1063.35,409.97L1062.49,410.5L1061.92,411.48L1060.3,412.6L1058.39,412.46L1056.27,412.55L1055.2,413.23L1057.28,413.69L1058.52,414.67L1058.57,416.27L1058.16,416.97L1057.07,417.99L1056.5,417.97L1056.05,417.29L1055.39,415.82L1054.87,416.24L1054.89,416.97L1054.45,417.31L1052.29,415.16L1052.69,417.01L1053.54,418.34L1054.26,418.97L1054.92,419.3L1055.19,419.94L1054.26,421.76L1053.71,422.23L1052.66,422.67L1052.21,423.78L1052.54,424.61L1048.44,423.47L1047.05,422.07L1046.75,420.02L1045.64,417.81L1042.78,414.27L1040.98,413.42L1039.49,410.94L1037.71,406.53L1035.6,403.86L1033.15,402.94L1031.41,401.67L1030.38,400.05L1029.41,399.04L1028.5,398.65L1027.91,397.82L1027.65,396.57L1026.11,395.1L1021.89,392.57L1020.71,390.82L1018.67,389.14L1013.71,385.83L1013.71,385.83L1008.38,378.76L1008.38,378.76L1007.62,377.28L1006.63,376.77L1005.15,376.75L1003.64,376.19L1001.3,374.55L1001.28,374.53L997.5,372.62L997.9,370.37L1000.17,367.19L1000.84,365.57L1000.96,365.54L1001.29,365.48L1004.05,364.13L1006.8,362.78L1007.42,362.74L1008.95,361.53L1012.17,359.92L1013.35,359L1014.04,359.11L1016.93,358.8L1019.81,358.48L1022.69,358.16L1025.58,357.84L1028.46,357.51L1031.34,357.17L1034.23,356.83L1037.11,356.49L1037.7,356.62L1037.93,356.91L1038,357.85L1038.19,358.34L1040.03,356.95L1041.17,358.02L1043.13,359.84L1043.4,361.05L1043.79,362.76L1046.36,362.41L1048.93,362.06L1051.5,361.7L1054.08,361.34L1056.65,360.98L1059.22,360.61L1061.79,360.24L1064.36,359.87L1067.26,361.92L1070.16,363.97L1073.08,366.02L1076,368.06L1078.92,370.09L1081.85,372.12L1084.79,374.15z"/></svg></span>
+    <p class="eyebrow">2021 SC BUILDING CODE &middot; ASCE 7-10 / 7-16</p>
+    <h1>South Carolina <span class="sweep">Wind Load Requirements</span></h1>
+    <p class="lead">From the 187-mile Atlantic coast to the Upstate &mdash; design wind speeds, adopted codes, and county wind maps in one centered reference.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">130&ndash;150</span><span class="lbl">MPH COASTAL ZONE</span></div>
+      <div class="stat"><span class="num">85&ndash;100</span><span class="lbl">MPH UPSTATE REGION</span></div>
+      <div class="stat"><span class="num">187</span><span class="lbl">MILES OF ATLANTIC COAST</span></div>
+      <div class="stat"><span class="num">2002</span><span class="lbl">SERVING ENGINEERS SINCE</span></div>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- CODE / ASCE EDITION MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">ADOPTED CODE &middot; STANDARD</p>
+    <h2>The Code <span class="sweep">South Carolina Enforces</span></h2>
+    <p class="lead">The 2021 SC Building Code (based on the 2015 IBC) governs every structure; jurisdictions reference ASCE 7-10 or ASCE 7-16 by local adoption.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v6h6"/><path d="M8 14h7M8 17h5"/></svg>
+        <h3>2021 SC Building Code</h3>
+        <p>Based on the 2015 International Building Code with state amendments.</p>
+        <span class="badge badge--data">2015 IBC BASE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v6c0 4.5-3.4 7-8 8-4.6-1-8-3.5-8-8V7z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>ASCE 7-10 / 7-16</h3>
+        <p>Referenced jurisdiction by jurisdiction depending on local adoption timelines.</p>
+        <span class="badge badge--method">JURISDICTION-SPECIFIC</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3>Authority Having Jurisdiction</h3>
+        <p>Local building departments and counties enforce and interpret the code.</p>
+        <span class="badge">LOCAL AHJ</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 3-3 3-3-3z"/><path d="M12 8v8"/><path d="M7 21l5-5 5 5"/></svg>
+        <h3>PE Certification</h3>
+        <p>An SC-licensed Professional Engineer seals plans in coastal high-wind areas.</p>
+        <span class="badge badge--go">COASTAL SEAL</span>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- COAST vs INLAND WIND ZONE MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">WIND ZONES &middot; COAST TO UPSTATE</p>
+    <h2>Design Wind Speed <span class="sweep">by Region</span></h2>
+    <p class="lead">Atlantic hurricane exposure drives coastal speeds high; values step down with distance inland to the Upstate.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 11c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M12 3v4"/></svg>
+        <h3>Immediate Coastal (0&ndash;5 mi)</h3>
+        <p>Barrier islands and low-lying shoreline take the full Atlantic exposure.</p>
+        <span class="badge badge--data">130&ndash;150 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h16"/><path d="M6 18V9l4-3 4 3v9"/><path d="M14 18v-5h4v5"/></svg>
+        <h3>Coastal Counties (5&ndash;20 mi)</h3>
+        <p>Inland of the immediate shore but still hurricane-influenced.</p>
+        <span class="badge badge--data">110&ndash;130 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20l3-7 3 4 3-8 5 11"/></svg>
+        <h3>Midlands Region</h3>
+        <p>Central counties where wind speeds moderate well below the coast.</p>
+        <span class="badge badge--data">90&ndash;110 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20l5-9 4 5 3-6 6 10z"/><path d="M8 11l1.5 2.5"/></svg>
+        <h3>Upstate Region</h3>
+        <p>The lowest design speeds in the state, far from Atlantic exposure.</p>
+        <span class="badge badge--data">85&ndash;100 MPH</span>
+      </div>
+    </div>
+    <div class="info-box glass">
+      <p>Many coastal counties adopt <strong>county-specific wind maps</strong> that may prescribe higher design speeds than ASCE 7 minimums. Always verify the local jurisdiction before designing.</p>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- COUNTY WIND MAPS MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">COUNTY WIND MAPS</p>
+    <h2>Coastal Counties &amp; <span class="sweep">Their Wind Speeds</span></h2>
+    <p class="lead">Four coastal counties carry the state's highest design speeds, each with county-specific provisions.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <h3>Charleston County</h3>
+        <p>Charleston, Mount Pleasant, Isle of Palms, Folly Beach, Sullivan's Island.</p>
+        <span class="badge badge--data">130&ndash;150 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <h3>Horry County</h3>
+        <p>Myrtle Beach, North Myrtle Beach, Surfside Beach, Garden City.</p>
+        <span class="badge badge--data">130&ndash;150 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <h3>Beaufort County</h3>
+        <p>Hilton Head Island, Beaufort, Bluffton, Fripp Island sea-island geography.</p>
+        <span class="badge badge--data">130&ndash;150 MPH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <h3>Georgetown County</h3>
+        <p>Georgetown, Pawleys Island, Litchfield Beach, Murrells Inlet marsh exposure.</p>
+        <span class="badge badge--data">130&ndash;150 MPH</span>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- MAJOR CITIES CARD GRID (real cities/ links) -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">CITY GUIDES</p>
+    <h2>South Carolina <span class="sweep">City Wind Load Guides</span></h2>
+    <p class="lead">Drill into city-specific codes and design speeds for the state's busiest coastal markets.</p>
+    <div class="grid" data-n="2">
+      <a class="card glass" href="cities/charleston-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M6 20V10l3-2 3 2v10"/><path d="M14 20v-6h4v6"/><path d="M9 13h.01M9 16h.01"/></svg>
+        <h3>Charleston</h3>
+        <p>Historic-district coastal design on the Charleston peninsula.</p>
+        <span class="badge badge--data">130&ndash;145 MPH</span>
+      </a>
+      <a class="card glass" href="cities/myrtle-beach-wind-load-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M12 14V5"/><path d="M12 5l4 3M12 5L8 8"/></svg>
+        <h3>Myrtle Beach</h3>
+        <p>High-density beachfront condominiums on the Grand Strand.</p>
+        <span class="badge badge--data">140&ndash;150 MPH</span>
+      </a>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- REQUIREMENTS MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">DESIGN REQUIREMENTS</p>
+    <h2>What Coastal Projects <span class="sweep">Must Address</span></h2>
+    <p class="lead">Hurricane winds drive envelope, debris, and load-path requirements across the coastal counties.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M12 9v12"/></svg>
+        <h3>Components &amp; Cladding</h3>
+        <p>Windows, doors, roofing, and siding rated for positive and negative pressures; corners and edges see the highest GCp.</p>
+        <span class="badge badge--method">GCp ZONES</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v6c0 4.5-3.4 7-8 8-4.6-1-8-3.5-8-8V7z"/><path d="M12 8v4M12 15h.01"/></svg>
+        <h3>Wind-Borne Debris</h3>
+        <p>Counties at 130+ mph require impact glazing, rated assemblies, or approved shutters on all openings.</p>
+        <span class="badge badge--data">130+ MPH ZONES</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M7 7l5-4 5 4"/><path d="M6 21h12"/></svg>
+        <h3>Continuous Load Path</h3>
+        <p>Roof-to-wall straps, anchored sills, and proper sheathing carry uplift from roof to foundation.</p>
+        <span class="badge">UPLIFT PATH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.5 4 4.5.7-3.2 3.2.8 4.6L12 16.4 7.4 14.5l.8-4.6L5 6.7 9.5 6z"/></svg>
+        <h3>Wind Mitigation</h3>
+        <p>Straps, enhanced deck attachment, opening protection, and hip roofs can earn coastal insurance discounts.</p>
+        <span class="badge badge--go">INSURANCE CREDIT</span>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- RISK CATEGORIES MODULE -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">RISK CATEGORIES &middot; ASCE 7</p>
+    <h2>Risk Category <span class="sweep">Sets the Speed Map</span></h2>
+    <p class="lead">A higher risk category points to a longer return-period wind map &mdash; higher design speed, higher loads. PE seal is required for coastal high-wind structures.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M9 21v-5h6v5"/></svg>
+        <h3>Category I</h3>
+        <p>Low-hazard: minor agricultural and storage structures (300-year map).</p>
+        <span class="badge">300-YR MRI</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></svg>
+        <h3>Category II</h3>
+        <p>Standard occupancy: homes, offices, and most buildings (700-year map).</p>
+        <span class="badge badge--data">700-YR MRI</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9" r="2.5"/><circle cx="16" cy="9" r="2.5"/><path d="M4 19c0-2.5 2-4 4-4s4 1.5 4 4M12 19c0-2.5 2-4 4-4s4 1.5 4 4"/></svg>
+        <h3>Category III</h3>
+        <p>Substantial hazard: large assembly and schools (1,700-year map).</p>
+        <span class="badge badge--method">1,700-YR MRI</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v6c0 4.5-3.4 7-8 8-4.6-1-8-3.5-8-8V7z"/><path d="M12 8v6M9 11h6"/></svg>
+        <h3>Category IV</h3>
+        <p>Essential facilities: hospitals, fire, police, and EOCs (3,000-year map).</p>
+        <span class="badge badge--hvhz">3,000-YR MRI</span>
+      </div>
+    </div>
+  </div></section>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <section class="sec sec-glow"><div class="wrap">
+    <p class="eyebrow">RUN THE NUMBERS</p>
+    <h2>Calculate South Carolina <span class="sweep">Wind Loads Instantly</span></h2>
+    <p class="lead">Coastal 150-mph speeds for Charleston, Beaufort, and Horry pre-applied &mdash; with 2021 SC Building Code references and wind-borne debris flags in every report.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/south-carolina-wind-load-calculator">Open the SC Wind Load Calculator</a>
+      <a class="btn-ghost" href="state-requirements.html">Browse All State Requirements</a>
+    </div>
+  </div></section>
+
+  <!-- RELATED LINKS -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">RELATED GUIDES</p>
+    <h2>Keep <span class="sweep">Exploring</span></h2>
+    <div class="grid" data-n="2">
+      <a class="card glass" href="mandatory-wind-load-states.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 7h14M5 7l-2 5h6zM19 7l2 5h-6z"/><path d="M7 21h10"/></svg>
+        <h3>10 Mandatory Wind-Load States</h3>
+        <p>States that legally require ASCE 7 wind-load design.</p>
+        <span class="badge badge--method">MANDATORY STATES</span>
+      </a>
+      <a class="card glass" href="state-requirements.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>
+        <h3>All 50 State Requirements</h3>
+        <p>Adopted codes and ASCE 7 editions for every state.</p>
+        <span class="badge badge--data">50 STATES</span>
+      </a>
+    </div>
+  </div></section>
+</main>
+
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1369,141 +710,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
