@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>windload.co logo — cyclone animation preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap"></noscript>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#eef1f6;color:#111;text-align:center}
+.wrap{max-width:760px;margin:0 auto;padding:40px 22px 90px}h1{font-size:21px;margin:0 0 6px}.sub{color:#666;font-size:14px;margin:0 0 30px}
+.bar{background:#fff;border-radius:16px;padding:30px;box-shadow:0 6px 24px rgba(20,30,60,.08);margin:0 0 18px}
+.logo{display:inline-flex;align-items:center;gap:13px;text-decoration:none}
+.knot{width:64px;height:64px;display:block;transform-origin:50% 50%;will-change:transform;animation:cyc 1.3s cubic-bezier(.16,.7,.13,1) both}
+.logo:hover .knot{animation:spin .9s cubic-bezier(.33,.62,.2,1)}
+@keyframes cyc{0%{transform:rotate(-620deg) scale(.5);opacity:0}55%{opacity:1}100%{transform:rotate(0) scale(1);opacity:1}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.wm{font-size:34px;font-weight:800;letter-spacing:-1.4px;color:#0018ff;line-height:1}.wm .l{color:#10162a}
+.big .knot{width:130px;height:130px;animation:cyc 1.3s cubic-bezier(.16,.7,.13,1) both}
+.big:hover .knot{animation:spin 1s linear infinite}
+.btn{margin-top:14px;font:inherit;font-weight:700;font-size:13px;color:#0018ff;background:#eaf0ff;border:1px solid #cfdcff;padding:9px 18px;border-radius:20px;cursor:pointer}
+.note{font-size:13px;color:#888;margin-top:10px}
+</style></head><body><div class="wrap">
+<h1>windload.co logo — cyclone animation</h1>
+<p class="sub">Your exact current knot. It spins up on load, and spins again on hover. (Reload to replay the open animation.)</p>
+
+<div class="bar"><a class="logo" href="#" onclick="return false"><img class="knot" src="wco-knot.svg" alt=""><span class="wm">Wind<span class="l">Load</span>.co</span></a>
+<div><button class="btn" onclick="var k=this.closest('.bar').querySelector('.knot');k.style.animation='none';k.offsetHeight;k.style.animation='';">▶ Replay open animation</button></div>
+<div class="note">↑ hover the logo to re-spin</div></div>
+
+<div class="bar big"><div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#0018ff;font-weight:800;margin-bottom:18px">Hover the icon below → continuous cyclone</div>
+<a class="logo" href="#" onclick="return false"><img class="knot" src="wco-knot.svg" alt=""></a></div>
+</div></body></html>
