@@ -23,767 +23,251 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #0018ff;
-            --dark-blue: #181E57;
-            --tornado-purple: #6366f1;
-            --tornado-indigo: #4f46e5;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        .main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: transparent;
-            padding: 2rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            box-shadow: 0 1px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
-        }
-
-        .logo-hamburger-row {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            gap: 1rem;
-        }
-
-        .logo {
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .logo.menu-active {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .logo-image {
-            height: 100px;
-            width: auto;
-            filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3));
-            transition: all 0.3s ease;
-        }
-
-        .main-header.scrolled .logo-image {
-            height: 70px;
-            filter: none;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 1001;
-        }
-
-        @media (max-width: 1024px) {
-            .header-right a {
-                display: none;
-            }
-        }
-
-        .header-cta {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .header-cta:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        .main-header.scrolled .header-cta {
-            color: #0018ff;
-            background: rgba(0, 24, 255, 0.1);
-            border-color: rgba(0, 24, 255, 0.3);
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1002;
-        }
-
-        .hamburger span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .main-header.scrolled .hamburger span {
-            background: #1f2937;
-            box-shadow: none;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(8px, -8px);
-        }
-
-        .nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .nav-links {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100vh;
-            width: 400px;
-            max-width: 85vw;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -10px 0 50px rgba(0,0,0,0.2);
-            padding: 4rem 2rem 2rem 2rem;
-            flex-direction: column;
-            gap: 1.5rem;
-            z-index: 10000;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .nav-links.active {
-            display: flex;
-            transform: translateX(0);
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #1f2937;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(135deg, #0018ff 0%, #00d4ff 100%);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: #0018ff;
-            padding-left: 1rem;
-        }
-
-        /* Hero - Purple/Indigo for Tornado/Severe Storm Radar */
-        .hero {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            color: white;
-            padding: 180px 0 100px;
-            text-align: center;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L55 40 L85 40 L60 60 L70 90 L50 70 L30 90 L40 60 L15 40 L45 40 Z" fill="rgba(255,255,255,0.05)"/></svg>') repeat;
-            background-size: 150px;
-            animation: drift 60s linear infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes drift {
-            from { transform: translateX(0) translateY(0); }
-            to { transform: translateX(-150px) translateY(-150px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-
-        .hero-icon {
-            width: 120px;
-            height: 120px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 3.5rem;
-            color: white;
-            backdrop-filter: blur(10px);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Warning Alert */
-        .warning-alert {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-left: 5px solid #f59e0b;
-            padding: 2rem;
-            margin: 3rem 0;
-            border-radius: 10px;
-        }
-
-        .warning-alert h2 {
-            color: #92400e;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.8rem;
-        }
-
-        .warning-alert p {
-            color: #78350f;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: white;
-            padding: 4rem 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border-left: 5px solid var(--tornado-purple);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--tornado-purple);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            color: #7f1d1d;
-            font-weight: 600;
-        }
-
-        /* States Grid */
-        .tornado-states-section {
-            padding: 4rem 2rem;
-            background: #f9fafb;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #1f2937;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            color: #6b7280;
-        }
-
-        .tornado-states-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        /* Quick State Navigation */
-        .state-quick-nav {
-            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
-            border: 2px solid #6366f1;
-            border-radius: 15px;
-            padding: 1.5rem 2rem;
-            margin: 2rem 0 3rem;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
-        }
-
-        .quick-nav-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #4f46e5;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .quick-nav-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .quick-nav-btn {
-            background: white;
-            color: #6366f1;
-            padding: 0.6rem 1.2rem;
-            border-radius: 25px;
-            border: 2px solid #6366f1;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .quick-nav-btn:hover {
-            background: #6366f1;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-        }
-
-        .quick-nav-btn i {
-            font-size: 0.9rem;
-        }
-
-        .tornado-state-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.15);
-            transition: all 0.3s ease;
-            border-top: 4px solid var(--tornado-purple);
-            scroll-margin-top: 100px;
-        }
-
-        .tornado-state-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.25);
-        }
-
-        .state-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tornado-icon {
-            color: var(--tornado-purple);
-        }
-
-        .risk-level {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .risk-extreme {
-            background: #eef2ff;
-            color: #6366f1;
-            border: 2px solid #6366f1;
-        }
-
-        .risk-high {
-            background: #fff7ed;
-            color: #ea580c;
-            border: 2px solid #ea580c;
-        }
-
-        .risk-moderate {
-            background: #fffbeb;
-            color: #d97706;
-            border: 2px solid #d97706;
-        }
-
-        .state-details {
-            margin-top: 1rem;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin: 0.75rem 0;
-            font-size: 0.95rem;
-            color: #4b5563;
-        }
-
-        .detail-icon {
-            color: var(--tornado-purple);
-            font-size: 1rem;
-            margin-top: 0.2rem;
-        }
-
-        /* Safety Recommendations */
-        .safety-section {
-            background: white;
-            padding: 4rem 2rem;
-        }
-
-        .safety-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .safety-card {
-            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 5px solid #10b981;
-        }
-
-        .safety-card h3 {
-            color: #065f46;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .safety-card ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .safety-card li {
-            color: #064e3b;
-            padding: 0.5rem 0 0.5rem 1.5rem;
-            position: relative;
-        }
-
-        .safety-card li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #10b981;
-            font-weight: 800;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-blue);
-            color: white;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--tornado-purple);
-        }
-
-        .windloadcalc-promo {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .windloadcalc-promo h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-
-        .windloadcalc-promo p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: var(--primary-blue);
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            /* Mobile Header - Centered Logo with Hamburger Below */
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 1rem;
-                gap: 0.5rem;
-            }
-
-            .logo-hamburger-row {
-                flex-direction: row;
-                align-items: center;
-                width: auto;
-            }
-
-            .logo {
-                display: flex;
-                justify-content: center;
-                width: auto;
-            }
-
-            .logo-image {
-                height: 70px;
-            }
-
-            .main-header.scrolled .logo-image {
-                height: 50px;
-            }
-
-            .header-right {
-                width: auto;
-                justify-content: flex-end;
-            }
-
-            .hamburger {
-                margin-top: 0.25rem;
-            }
-
-            .main-header {
-                padding: 1rem 0;
-            }
-
-            .main-header.scrolled {
-                padding: 0.5rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Wind Load Calculators CTA Button */
-        .calculator-cta {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: white !important;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-cta:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-        }
-
-        .calculator-cta i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .calculator-cta {
-                width: 100%;
-                justify-content: center;
-                margin-bottom: 0.5rem;
-                padding: 0.8rem 1.2rem;
-            }
-        }
-    </style>
-</head>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>:root{
+  /* ---- brand chrome (verbatim base, extended) ---- */
+  --blue:#0018FF; --blue-deep:#181E57; --blue-bright:#3a5bff;
+  --bg:#070a18; --bg-2:#0a0f24; --bg-well:#05081a;
+  --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.06);
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  /* ---- ink (contrast-safe; always paired with bg in same rule) ---- */
+  --ink:#eef1ff; --ink-soft:#aeb6d6; --ink-mute:#7e87ad;
+  /* ---- role-scoped energy accents ---- */
+  --go:#10B981; --go-bright:#34D399;       /* action / "100% permit approval" / success */
+  --amber:#f59e0b; --amber-br:#fb923c;     /* HVHZ / hazard / wind-speed */
+  --violet:#8b5cf6; --violet-br:#a855f7;   /* design methods / theory / guides */
+  --cyan:#22d3ee; --cyan-br:#7dd3fc;       /* data / tables / maps / stats */
+  --emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%); /* keep existing */
+  /* ---- per-card category hook (set inline: style="--cat:var(--amber)") ---- */
+  --cat:var(--blue-bright);
+  /* ---- type scale ---- */
+  --h1:clamp(2.6rem,6vw,5rem); --h2:clamp(1.8rem,3.4vw,2.6rem);
+  --h3:1.2rem; --body:1.02rem; --small:.9rem;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* ---- motion ---- */
+  --luxe:cubic-bezier(.22,.61,.36,1); --pop:cubic-bezier(.2,.8,.2,1);
+  --r:18px; --rlg:24px;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Inter",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px} /* gutters live here, never on body */
+@media(max-width:560px){.wrap{padding:0 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;
+  scroll-behavior:auto}}
+/* ===== GLASS PANEL ===== */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(16px) saturate(1.2);position:relative;overflow:hidden;color:var(--ink)}
+
+/* ===== CARD (whole card is one <a>) ===== */
+.card{display:block;text-decoration:none;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--cat);border-radius:var(--r);padding:1.5rem;
+  position:relative;overflow:hidden;
+  transition:transform .35s var(--pop),border-color .3s,box-shadow .3s}
+.card .t,.card h3{font-size:var(--h3);font-weight:700;color:var(--ink);margin:.6rem 0 .3rem}
+.card p{font-size:.97rem;color:var(--ink-soft);margin:0}
+/* top ignition line that fires on hover */
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;transform:scaleX(0);
+  transform-origin:left;transition:transform .4s var(--luxe);
+  background:linear-gradient(90deg,var(--cat),var(--go-bright))}
+/* category glow wash from top */
+.card::after{content:"";position:absolute;inset:0;opacity:0;transition:.35s;pointer-events:none;
+  background:radial-gradient(60% 50% at 50% 0,
+    color-mix(in oklab,var(--cat) 20%,transparent),transparent 70%)}
+.card:hover{transform:translateY(-6px);border-color:var(--line-2);
+  box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat) 55%,#000)}
+.card:hover::before{transform:scaleX(1)}
+.card:hover::after{opacity:1}
+.card:focus-visible{outline:2px solid var(--blue-bright);outline-offset:3px}
+
+/* ===== PILL BUTTON (blue -> emerald on hover) ===== */
+.btn{display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:999px;font-weight:700;font-size:1rem;
+  color:#fff;text-decoration:none;border:0;cursor:pointer;
+  background:linear-gradient(100deg,var(--blue),var(--blue-bright));
+  box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.btn:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px);
+  box-shadow:0 0 0 4px rgba(16,185,129,.18),0 16px 36px -10px rgba(16,185,129,.6)}
+.btn:focus-visible{outline:2px solid var(--cyan-br);outline-offset:3px}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink);box-shadow:none}
+.btn-ghost:hover{background:rgba(58,91,255,.12);border-color:var(--blue-bright);color:#fff}
+
+/* ===== BADGES (text color set WITH bg — contrast-safe) ===== */
+.badge{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.3rem .7rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.badge--go{background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.34);color:#c7f9e6}
+.badge--hvhz{background:rgba(251,146,60,.12);border:1px solid rgba(251,146,60,.34);color:#ffe2c4}
+.badge--data{background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.32);color:#cdf4fb}
+.badge--method{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.32);color:#e9d8ff}
+
+/* ===== STAT CHIP (authority facts) ===== */
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1rem 1.1rem;text-align:center;color:var(--ink)}
+.stat .num{font-family:var(--mono);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  background:linear-gradient(120deg,var(--cyan-br),var(--go-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .lbl{font-size:.82rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== SECTION BASE ===== */
+.sec{padding:clamp(64px,9vw,128px) 0;position:relative}
+.eyebrow{font-size:.85rem;text-transform:uppercase;letter-spacing:.14em;color:var(--cyan-br);font-weight:700}
+h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.03;color:var(--ink)}
+h2{font-size:var(--h2);font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+
+/* ===== COMPARISON TABLE (authority, stated as fact) ===== */
+.cmp{width:100%;border-collapse:collapse;color:var(--ink)}
+.cmp thead th{position:sticky;top:0;background:var(--bg-well);color:var(--cyan-br);
+  font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding:.9rem 1rem;text-align:left}
+.cmp td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+.cmp tr:hover td{background:rgba(34,211,238,.06)}
+.cmp .ours{border-left:2px solid var(--blue-bright);color:var(--ink)}
+.cmp .yes{color:var(--go-bright);font-weight:700}
+.cmp .no{color:var(--ink-mute)}
+/* horizontal scroll on mobile so table never breaks layout */
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r)}
+h1,h2,h3,.hero h1,.hero-title,.section-title{text-wrap:balance;overflow-wrap:break-word}
+.hero h1,.hero-title{max-width:18ch;margin-left:auto;margin-right:auto}
+.sil{display:block;width:74px;height:56px;margin:0 auto 12px}
+.sil svg{width:100%;height:100%;display:block;overflow:visible}
+.sil path{fill:rgba(125,211,252,.16);stroke:#7dd3fc;stroke-width:6;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .25s,stroke .25s}
+.card:hover .sil path{fill:rgba(125,211,252,.34);stroke:#a5f3fc}
+.sil[data-state="fl"] path,.sil[data-state="tx"] path,.sil[data-state="hi"] path{stroke:#fbbf24;fill:rgba(251,191,36,.16)}
+.card:hover .sil[data-state="fl"] path,.card:hover .sil[data-state="tx"] path,.card:hover .sil[data-state="hi"] path{stroke:#fcd34d;fill:rgba(251,191,36,.32)}
+@media(max-width:480px){.stat-strip.stat-strip{grid-template-columns:1fr;max-width:420px}.stat-strip .stat{text-align:center}.stat-strip .num{display:block}.stat-strip .lbl{display:block;margin-top:4px}}
+
+/* Alternate these down every page so no two adjacent sections share a treatment.
+   Each sets its own text color in the same rule (contrast-safe). */
+
+/* 1) AURORA — hero + headline bands (blue+violet drift) */
+.sec-aurora{position:relative;color:var(--ink);overflow:hidden;
+  background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.26),transparent 60%),
+            radial-gradient(50% 60% at 88% 12%,rgba(139,92,246,.18),transparent 60%),var(--bg)}
+.sec-aurora::before{content:"";position:absolute;inset:-20%;z-index:0;filter:blur(46px);
+  background:radial-gradient(38% 48% at 22% 18%,rgba(58,91,255,.30),transparent 60%),
+            radial-gradient(38% 48% at 82% 78%,rgba(16,185,129,.18),transparent 60%);
+  animation:drift 22s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3%,-2%,0) scale(1.06)}}
+
+/* 2) BLUEPRINT GRID — hubs, 50-state grid, data sections */
+.sec-grid{color:var(--ink);background-color:var(--bg-2);
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px}
+
+/* 3) DEEP WELL — stat/authority band, count-up facts */
+.sec-well{color:var(--ink);background:linear-gradient(180deg,var(--bg-well),#0a1030);
+  box-shadow:inset 0 40px 80px -40px #000}
+
+/* 4) HAZARD — HVHZ / topographic / hurricane (amber edge, NOT flat) */
+.sec-hazard{color:#ffe9d3;
+  background:linear-gradient(180deg,#0a0f24,#160c04);
+  box-shadow:inset 0 1px 0 rgba(245,158,11,.30),inset 0 60px 120px -60px rgba(245,158,11,.10)}
+
+/* 5) GLOW BAND — feature spotlight (cyan halo from top) */
+.sec-glow{position:relative;color:var(--ink);background:var(--bg)}
+.sec-glow::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(46% 100% at 50% 0,rgba(34,211,238,.12),transparent 60%)}
+
+/* gradient hairline divider between sections */
+.divider{height:1px;border:0;
+  background:linear-gradient(90deg,transparent,var(--blue-bright),transparent)}
+/* Deterministic columns by count — author sets data-n = number of cards.
+   NEVER auto-fit (which strands a lone card). ALWAYS 1 column on mobile. */
+.grid{display:grid;gap:1.2rem;grid-template-columns:1fr} /* mobile = 1 col */
+
+@media(min-width:760px){
+  .grid[data-n="2"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="3"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="4"]{grid-template-columns:repeat(2,1fr)}      /* 2x2, NEVER 3+1 */
+  .grid[data-n="6"]{grid-template-columns:repeat(3,1fr)}      /* 3+3 */
+  .grid[data-n="9"]{grid-template-columns:repeat(3,1fr)}      /* 3+3+3 */
+  /* odd counts that don't divide by 3: promote first card to full width
+     so the remaining cards pair/triple cleanly — no orphan row */
+  .grid[data-n="5"]{grid-template-columns:repeat(2,1fr)}
+  .grid[data-n="5"]>:first-child{grid-column:1/-1}            /* 1 hero + 2x2 */
+  .grid[data-n="7"]{grid-template-columns:repeat(3,1fr)}
+  .grid[data-n="7"]>:first-child{grid-column:1/-1}            /* 1 hero + 3+3 */
+}
+/* tablet midpoint: cap at 2 cols so 3/6/9 don't cram, still no orphan */
+@media(min-width:560px) and (max-width:759px){
+  .grid[data-n="2"],.grid[data-n="4"],.grid[data-n="6"]{grid-template-columns:repeat(2,1fr)}
+}
+/* 50-state grid: fixed 5-up desktop -> 2-up phone, evenly fills 50 (10 rows of 5) */
+.state-grid{display:grid;gap:.9rem;grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.state-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:900px){.state-grid{grid-template-columns:repeat(5,1fr)}}
+
+.e-ico{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block}
+.sweep{background:linear-gradient(100deg,var(--ink) 25%,var(--cyan-br),var(--go-bright));background-size:200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sweep 8s linear infinite}@keyframes sweep{to{background-position:200%}}
+.hero{text-align:center}.hero .sub{color:var(--ink-soft);font-size:1.12rem;max-width:62ch;margin:18px auto 0}
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:780px;margin:32px auto 0}@media(max-width:680px){.stat-strip{grid-template-columns:repeat(2,1fr)}}
+.divider{border:0;height:1px;background:var(--line);max-width:1180px;margin:0 auto}
+.card .badge{margin-top:0}
+/* header strip */
+.main-header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e6e9f2;box-shadow:0 2px 18px rgba(0,0,0,.18);transition:.3s}.main-header.scrolled{box-shadow:0 6px 26px rgba(0,0,0,.28)}
+.header-container{display:flex;align-items:center;justify-content:space-between;max-width:1180px;margin:0 auto;padding:9px 28px}
+.logo{display:flex;align-items:center;text-decoration:none}.logo-image{height:46px;width:auto}
+.header-right{display:flex;align-items:center;gap:22px}.header-right a.lnk{color:#1f2740;text-decoration:none;font-size:15px;font-weight:600}.header-right a.lnk:hover{color:#0018FF}
+.nav-cta{background:linear-gradient(135deg,#0018FF,#2540ff);color:#fff!important;padding:9px 18px;border-radius:50px;font-weight:700;font-size:14px;text-decoration:none}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;background:none;border:0;cursor:pointer;padding:0}.hamburger span{height:3px;width:100%;background:#0d1233;border-radius:2px;transition:.3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(6px,6px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:.3s}.nav-overlay.active{display:block;opacity:1}
+.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}.nav-links.active{right:0}
+.nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}.nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}.nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
+.nav-section-header,.nav-subsection-header{display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:600!important;color:#eaf0ff!important}.nav-arrow,.nav-subarrow{margin-left:auto;transition:.3s;font-size:12px}.nav-section.active .nav-arrow{transform:rotate(180deg)}
+.nav-section-content,.nav-subsection-content{display:none;background:rgba(255,255,255,.02)}.nav-section.active>.nav-section-content,.nav-subsection.active>.nav-subsection-content{display:block}.nav-subitem{font-size:14px!important;padding-left:40px!important}
+/* section rhythm: alternate so it's NOT a flat slab */
+main>section{padding:clamp(48px,7vw,96px) 0;position:relative}
+main>section:nth-of-type(odd){background:var(--bg)}
+main>section:nth-of-type(even){background:linear-gradient(180deg,var(--bg),var(--bg-well),var(--bg))}
+main>section:first-of-type{background:radial-gradient(60% 80% at 18% -8%,rgba(58,91,255,.22),transparent 60%),radial-gradient(50% 60% at 88% 10%,rgba(139,92,246,.16),transparent 60%),var(--bg)}
+/* hero (preserved markup) */
+.hero{text-align:center}.hero-content{max-width:900px;margin:0 auto;text-align:center}
+.hero h1,.hero-title{font-size:var(--h1);font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.hero p,.hero-subtitle{font-size:1.12rem;color:var(--ink-soft);max-width:62ch;margin:18px auto 0}
+.section-title{font-size:var(--h2);font-weight:800;color:var(--ink);text-align:center;letter-spacing:-.02em}
+.section-subtitle,.lead{color:var(--ink-soft);text-align:center;max-width:64ch;margin:12px auto 0}
+.section-header{text-align:center;margin-bottom:30px}
+.content p,.content li{color:var(--ink-soft);font-size:1.02rem}.content h2,.content h3{color:#fff}
+/* content cards -> no-orphan grids + premium */
+.info-grid,.cards-grid,.feature-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:780px){.info-grid,.cards-grid,.feature-grid{grid-template-columns:repeat(3,1fr)}}
+.info-card,.feature-card,.feat{position:relative;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--cat,var(--blue-bright));border-radius:var(--r);padding:28px 24px;transition:.35s var(--pop);text-decoration:none;color:var(--ink);overflow:hidden}
+.info-card:hover,.feature-card:hover,.feat:hover{transform:translateY(-6px);border-color:var(--line-2);box-shadow:0 22px 50px -22px color-mix(in oklab,var(--cat,var(--blue-bright)) 55%,#000)}
+.info-card h3,.feature-card h3,.feat h3{color:#fff;font-size:var(--h3);font-weight:700;margin:.4rem 0 .4rem}
+.info-card p,.feature-card p,.feat p{color:var(--ink-soft);font-size:.97rem}
+/* tables (edition-table/comparison-table/data-table) -> .cmp look + mobile scroll */
+.edition-table,.comparison-table,.data-table,table{width:100%;border-collapse:collapse;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0}
+.edition-table th,.comparison-table th,.data-table th,th{background:var(--bg-well);color:var(--cyan-br);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;padding:.9rem 1rem;text-align:left}
+.edition-table td,.comparison-table td,.data-table td,td{padding:.85rem 1rem;border-top:1px solid var(--line);font-size:.97rem;color:var(--ink-soft)}
+tr:hover td{background:rgba(34,211,238,.05)}
+@media(max-width:768px){.edition-table,.comparison-table,.data-table,table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* CTAs + boxes */
+.cta-button,.btn-primary{display:inline-block;background:linear-gradient(100deg,var(--blue),var(--blue-bright));color:#fff!important;padding:.9rem 1.7rem;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 8px 30px -8px rgba(58,91,255,.6);transition:.3s var(--luxe)}
+.cta-button:hover,.btn-primary:hover{background:linear-gradient(100deg,var(--go),var(--go-bright));transform:translateY(-2px)}
+.info-box,.callout,.note,.windloadcalc-promo{background:linear-gradient(160deg,rgba(58,91,255,.1),rgba(255,255,255,.02));border:1px solid var(--line);border-left:3px solid var(--blue-bright);border-radius:var(--r);padding:1.4rem 1.5rem;color:var(--ink-soft);margin:18px 0}
+.info-box *,.callout *,.note *,.windloadcalc-promo *{color:var(--ink-soft)!important}.info-box strong,.callout strong{color:#fff!important}
+/* override stray dark inline text colors */
+[style*="color: #1f2937"],[style*="color:#1f2937"],[style*="color: #333"],[style*="color:#333"],[style*="color: #0d1233"],[style*="color: #374151"]{color:var(--ink-soft)!important}
+/* footer */
+.site-footer{background:var(--bg-well);border-top:1px solid var(--line);padding:54px 0 30px;margin-top:10px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}.foot-brand p{color:var(--ink-mute);font-size:14px;margin-top:14px;max-width:32ch}
+.foot-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}.foot-col a{display:block;color:var(--ink-soft);text-decoration:none;font-size:14px;padding:6px 0}.foot-col a:hover{color:var(--cyan-br)}
+.foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--ink-mute);font-size:13px}
+@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.info-grid,.cards-grid,.feature-grid{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.header-container{padding:9px 20px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+</style></head>
 <body>
-    <header class="main-header">
-        <div class="header-container">
-            <div class="logo-hamburger-row">
-                <a href="index.html" class="logo">
-                    <img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="calculator-cta" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
-                <a href="state-requirements.html" class="header-cta">State Requirements</a>
-                <a href="asce-7-standards.html" class="header-cta">ASCE 7</a>
-                <a href="resources.html" class="header-cta">Resources</a>
-                <button class="hamburger" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <div class="nav-overlay"></div>
-
-    <!-- Mobile Navigation with Hierarchical Structure -->
+<header class="main-header"><div class="header-container">
+  <a href="index.html" class="logo"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" class="logo-image"></a>
+  <nav class="header-right"><a class="lnk" href="state-requirements.html">State Requirements</a><a class="lnk" href="asce-7-standards.html">ASCE 7</a><a class="lnk" href="resources.html">Resources</a><a class="nav-cta" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button></nav>
+</div></header>
+<div class="nav-overlay"></div>
 <nav class="nav-links">
     <a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener"><i class="fas fa-calculator"></i> Wind Load Calculators</a>
     <a href="index.html"><i class="fas fa-home"></i> Home</a>
@@ -888,647 +372,225 @@
     <a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html"><i class="fas fa-info-circle"></i> About Us</a>
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
+<main>
+<main>
 
-<style>
-/* Navigation styles with CLICK dropdowns */
-.nav-section {
-    position: relative;
-}
+  <!-- HERO + STAT STRIP -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">ASCE 7-22 · CHAPTER 32 · TORNADO LOADS</p>
+    <h1>Tornado Alley wind loads &amp; <span class="sweep">tornado-load safety</span></h1>
+    <p class="lead">ASCE 7-22 codified tornado loads for the first time. Across the central and eastern U.S. tornado-prone region, essential and high-occupancy buildings now face a dedicated, separate design check.</p>
+    <div class="stat-strip">
+      <div class="stat"><span class="num">Ch 32</span><span class="lbl">NEW IN ASCE 7-22</span></div>
+      <div class="stat"><span class="num">RC III &amp; IV</span><span class="lbl">BUILDINGS IN SCOPE</span></div>
+      <div class="stat"><span class="num">Central + E. US</span><span class="lbl">TORNADO-PRONE REGION</span></div>
+      <div class="stat"><span class="num">EF0&ndash;EF5</span><span class="lbl">INTENSITY SCALE</span></div>
+    </div>
+  </div></section>
 
-.nav-section-header {
-    display: block !important;
-    font-weight: 700 !important;
-    font-size: 1.15rem !important;
-    color: #0018ff !important;
-    background: rgba(0, 24, 255, 0.05) !important;
-    padding: 1rem !important;
-    border-left: 4px solid #0018ff !important;
-    margin-bottom: 0 !important;
-    position: relative;
-    cursor: pointer;
-}
+  <div class="divider"></div>
 
-.nav-section-header i:first-child {
-    margin-right: 0.75rem;
-}
+  <!-- CUSTOM SVG: TORNADO NEAR A BUILDING OVER THE TORNADO-PRONE REGION -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">THE HAZARD</p>
+    <h2>A tornado bearing down on the <span class="sweep">central U.S. corridor</span></h2>
+    <p class="lead">The tornado-prone region is a broad band of the central and eastern United States &mdash; not a single state &mdash; where Chapter 32 tornado loads must be evaluated for the buildings in scope.</p>
+    <div class="info-box glass" style="max-width:640px;margin:2rem auto 0;">
+      <svg viewBox="0 0 480 300" width="100%" height="auto" role="img" aria-label="A tornado funnel beside a building over an outline of the central and eastern United States tornado-prone region" style="display:block">
+        <defs>
+          <linearGradient id="taSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1c1733"/>
+            <stop offset="1" stop-color="#0c0a18"/>
+          </linearGradient>
+          <linearGradient id="taFunnel" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f59e0b"/>
+            <stop offset="0.55" stop-color="#d97706"/>
+            <stop offset="1" stop-color="#7c2d12"/>
+          </linearGradient>
+          <radialGradient id="taRegion" cx="0.5" cy="0.5" r="0.7">
+            <stop offset="0" stop-color="#f59e0b" stop-opacity="0.28"/>
+            <stop offset="1" stop-color="#f59e0b" stop-opacity="0.04"/>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="480" height="300" rx="14" fill="url(#taSky)"/>
+        <!-- tornado-prone region blob -->
+        <path d="M150 120 Q120 95 150 78 Q200 60 250 72 Q300 60 340 84 Q372 104 350 138 Q360 170 322 188 Q270 210 218 196 Q168 206 146 176 Q126 150 150 120 Z"
+              fill="url(#taRegion)" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="250" y="138" text-anchor="middle" fill="#fbbf24" font-size="12" font-family="sans-serif" letter-spacing="1.5" opacity="0.85">TORNADO-PRONE</text>
+        <text x="250" y="156" text-anchor="middle" fill="#fbbf24" font-size="12" font-family="sans-serif" letter-spacing="1.5" opacity="0.7">REGION</text>
+        <!-- ground -->
+        <rect x="0" y="252" width="480" height="48" fill="#13101f"/>
+        <line x1="0" y1="252" x2="480" y2="252" stroke="#3b3357" stroke-width="1.5"/>
+        <!-- building in scope -->
+        <g>
+          <rect x="330" y="200" width="72" height="52" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+          <rect x="340" y="210" width="12" height="12" fill="#fbbf24" opacity="0.55"/>
+          <rect x="360" y="210" width="12" height="12" fill="#fbbf24" opacity="0.35"/>
+          <rect x="380" y="210" width="12" height="12" fill="#fbbf24" opacity="0.55"/>
+          <rect x="340" y="230" width="12" height="12" fill="#fbbf24" opacity="0.35"/>
+          <rect x="380" y="230" width="12" height="12" fill="#fbbf24" opacity="0.55"/>
+        </g>
+        <!-- tornado funnel -->
+        <g>
+          <path d="M150 60 Q210 70 250 64 Q210 96 196 116 Q176 150 162 190 Q150 220 138 252 L118 252 Q120 214 132 184 Q150 142 156 116 Q140 92 120 78 Q132 64 150 60 Z"
+                fill="url(#taFunnel)" opacity="0.92">
+            <animateTransform attributeName="transform" type="rotate" from="-2 138 150" to="2 138 150" dur="2.4s" repeatCount="indefinite" additive="sum"/>
+          </path>
+          <!-- debris swirl -->
+          <circle cx="150" cy="240" r="3" fill="#fbbf24"><animate attributeName="cx" values="150;172;150" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle cx="128" cy="234" r="2" fill="#f59e0b"><animate attributeName="cx" values="128;108;128" dur="2.1s" repeatCount="indefinite"/></circle>
+          <circle cx="160" cy="248" r="2.4" fill="#fcd34d"><animate attributeName="cy" values="248;238;248" dur="1.5s" repeatCount="indefinite"/></circle>
+        </g>
+      </svg>
+    </div>
+  </div></section>
 
-.nav-arrow {
-    font-size: 0.75rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
+  <div class="divider"></div>
 
-.nav-section.active .nav-arrow {
-    transform: translateY(-50%) rotate(180deg);
-}
+  <!-- WHAT ASCE 7-22 CH 32 CHANGED -->
+  <section class="sec sec-hazard"><div class="wrap">
+    <p class="eyebrow">WHAT CHANGED</p>
+    <h2>What ASCE 7-22 Chapter 32 <span class="sweep">introduced</span></h2>
+    <p class="lead">For the first time, tornado loads sit inside the standard &mdash; evaluated on their own terms and weighed against ordinary wind.</p>
+    <div class="grid" data-n="4">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h11l3 3v13"/><path d="M8 7h6M8 11h8M8 15h5"/></svg>
+        <h3>First tornado provisions</h3>
+        <p>The first dedicated tornado-load chapter in ASCE 7 history.</p>
+        <span class="badge badge--hvhz">NEW IN 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.4-3.1 7.8-8 9-4.9-1.2-8-4.6-8-9V7l8-4z"/></svg>
+        <h3>Applies to RC III &amp; IV</h3>
+        <p>Scoped to Risk Category III and IV buildings in the tornado-prone region.</p>
+        <span class="badge badge--hvhz">RC III / IV</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4v16M16 4v16"/><path d="M4 8h8M12 16h8"/></svg>
+        <h3>A separate check</h3>
+        <p>Tornado loads are evaluated separately from the regular ASCE 7 wind-load analysis.</p>
+        <span class="badge badge--hvhz">PARALLEL PATH</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><circle cx="6" cy="14" r="3"/><circle cx="18" cy="14" r="3"/></svg>
+        <h3>Governing case controls</h3>
+        <p>You compare tornado vs. standard wind &mdash; the larger demand governs the design.</p>
+        <span class="badge badge--hvhz">WORST CASE WINS</span>
+      </div>
+    </div>
+  </div></section>
 
-.nav-section-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background: rgba(0, 0, 0, 0.02);
-}
+  <div class="divider"></div>
 
-.nav-section.active .nav-section-content {
-    max-height: 2000px;
-}
+  <!-- EF SCALE QUALITATIVE MODULE -->
+  <section class="sec sec-well"><div class="wrap">
+    <p class="eyebrow">INTENSITY</p>
+    <h2>The Enhanced Fujita <span class="sweep">(EF) scale</span></h2>
+    <p class="lead">Tornado intensity is rated EF0 through EF5 from observed damage. Higher EF ratings mean progressively more destructive winds &mdash; described qualitatively, not as a design wind speed.</p>
+    <div class="grid" data-n="6" style="margin-top:2rem">
+      <div class="card glass"><h3>EF0</h3><p>Minor damage. Lightest end of the scale.</p><span class="badge">WEAK</span></div>
+      <div class="card glass"><h3>EF1</h3><p>Moderate damage to roofs and exteriors.</p><span class="badge">WEAK</span></div>
+      <div class="card glass"><h3>EF2</h3><p>Considerable damage; major roof loss.</p><span class="badge badge--hvhz">STRONG</span></div>
+      <div class="card glass"><h3>EF3</h3><p>Severe damage to well-built structures.</p><span class="badge badge--hvhz">STRONG</span></div>
+      <div class="card glass"><h3>EF4</h3><p>Devastating; well-built homes leveled.</p><span class="badge badge--hvhz">VIOLENT</span></div>
+      <div class="card glass"><h3>EF5</h3><p>Incredible damage at the top of the scale.</p><span class="badge badge--hvhz">VIOLENT</span></div>
+    </div>
+    <div class="info-box glass" style="max-width:760px;margin:2rem auto 0">
+      <p>The EF scale rates what a tornado <strong>did</strong>, after the fact. ASCE 7-22 Chapter 32 instead defines the <strong>tornado design loads</strong> a building must resist &mdash; a distinct, code-based framework rather than a post-event rating.</p>
+    </div>
+  </div></section>
 
-.nav-subsection {
-    position: relative;
-}
+  <div class="divider"></div>
 
-.nav-subsection-header {
-    display: block !important;
-    font-weight: 600 !important;
-    font-size: 1.05rem !important;
-    color: #1f2937 !important;
-    padding: 0.75rem 0.75rem 0.75rem 1.5rem !important;
-    border-left: 3px solid #d1d5db !important;
-    background: transparent !important;
-    position: relative;
-    cursor: pointer;
-}
+  <!-- DESIGN & SAFETY STRATEGIES -->
+  <section class="sec sec-grid"><div class="wrap">
+    <p class="eyebrow">DESIGN &amp; SAFETY STRATEGIES</p>
+    <h2>Building to survive the <span class="sweep">tornado-prone region</span></h2>
+    <p class="lead">Beyond running the Chapter 32 check, resilient detailing protects occupants and property when the worst case arrives.</p>
+    <div class="grid" data-n="6">
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><rect x="9" y="13" width="6" height="8"/></svg>
+        <h3>Safe rooms &amp; shelters</h3>
+        <p>Hardened spaces give occupants a survivable refuge during a strike.</p>
+        <span class="badge badge--hvhz">LIFE SAFETY</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M6 6h12M6 12h12M6 18h12"/></svg>
+        <h3>Continuous load path</h3>
+        <p>Tie roof to walls to foundation so uplift transfers fully to the ground.</p>
+        <span class="badge badge--hvhz">ROOF-TO-FOUNDATION</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/><path d="M9.5 9.5l5 5"/></svg>
+        <h3>Robust connections</h3>
+        <p>Hurricane ties, anchors and fasteners hold the envelope together under load.</p>
+        <span class="badge badge--hvhz">ANCHORAGE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>
+        <h3>Use the latest ASCE 7</h3>
+        <p>Design to ASCE 7-22 so the Chapter 32 tornado provisions are in play.</p>
+        <span class="badge badge--hvhz">ASCE 7-22</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 7 4-14 3 7h4"/></svg>
+        <h3>Check both governing cases</h3>
+        <p>Evaluate tornado and standard wind, then design for whichever governs.</p>
+        <span class="badge badge--hvhz">WORST CASE</span>
+      </div>
+      <div class="card glass">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18"/><path d="M8 14h8"/></svg>
+        <h3>Protect the envelope</h3>
+        <p>Impact-resistant glazing and rated openings limit pressurization and debris entry.</p>
+        <span class="badge badge--hvhz">OPENINGS</span>
+      </div>
+    </div>
+  </div></section>
 
-.nav-subsection-header:hover {
-    background: rgba(0, 24, 255, 0.08) !important;
-    border-left-color: #0018ff !important;
-}
+  <div class="divider"></div>
 
-.nav-subsection-header i:first-child {
-    margin-right: 0.75rem;
-    font-size: 0.9rem;
-}
+  <!-- CTA + RELATED LINKS -->
+  <section class="sec sec-aurora"><div class="wrap">
+    <p class="eyebrow">GO DEEPER</p>
+    <h2>Run the numbers for <span class="sweep">tornado-prone projects</span></h2>
+    <p class="lead">Professional ASCE 7-22 wind load calculator software built for high-risk regions &mdash; from our sister site, WindLoadCalc.com.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Visit WindLoadCalc.com</a>
+      <a class="btn-ghost" href="asce-7-22-tornado-loads-chapter-32-guide.html">Read the Chapter 32 Guide</a>
+    </div>
 
-.nav-subarrow {
-    font-size: 0.7rem;
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
+    <div class="grid" data-n="3" style="margin-top:2.5rem">
+      <a class="card glass" href="asce-7-22-tornado-loads-chapter-32-guide.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5a2 2 0 0 1 2-2h11l3 3v13"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        <h3>ASCE 7-22 Chapter 32</h3>
+        <p>The complete tornado-loads provisions guide.</p>
+        <span class="badge badge--go">GUIDE</span>
+      </a>
+      <a class="card glass" href="risk-category-3-assembly-buildings.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.2 1.3-4.1 3.2-5"/></svg>
+        <h3>Risk Category III</h3>
+        <p>Assembly buildings &mdash; in scope for tornado loads.</p>
+        <span class="badge badge--go">RC III</span>
+      </a>
+      <a class="card glass" href="risk-category-4-essential-facilities.html">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#f59e0b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 4.4-3.1 7.8-8 9-4.9-1.2-8-4.6-8-9V7l8-4z"/><path d="M12 9v6M9 12h6"/></svg>
+        <h3>Risk Category IV</h3>
+        <p>Essential facilities &mdash; highest-priority tornado design.</p>
+        <span class="badge badge--go">RC IV</span>
+      </a>
+    </div>
+  </div></section>
 
-.nav-subsection.active .nav-subarrow {
-    transform: translateY(-50%) rotate(90deg);
-}
+</main>
 
-.nav-subsection-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
-.nav-subsection.active .nav-subsection-content {
-    max-height: 1000px;
-}
-
-.nav-subitem {
-    font-size: 0.95rem !important;
-    color: #6b7280 !important;
-    padding: 0.6rem 0.75rem 0.6rem 2.5rem !important;
-    border-bottom: none !important;
-    display: flex !important;
-    align-items: center;
-}
-
-.nav-subitem i {
-    margin-right: 0.75rem;
-    font-size: 0.85rem;
-    width: 1rem;
-    text-align: center;
-}
-
-.nav-subitem:hover {
-    background: rgba(0, 24, 255, 0.05) !important;
-    color: #0018ff !important;
-    padding-left: 3rem !important;
-}
-
-.nav-subitem::before {
-    display: none !important;
-}
-
-/* Override default nav-links a styles */
-.nav-links a {
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links > a > i {
-    margin-right: 0.75rem;
-    color: #0018ff;
-    width: 1.25rem;
-    text-align: center;
-}
-</style>
-
-
-
-
-
-
-
-
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-icon">
-                    <i class="fas fa-tornado"></i>
-                </div>
-                <h1>Tornado Alley Wind Load Safety</h1>
-                <p class="hero-subtitle">Future certification requirements and critical safety guidance for tornado-prone states</p>
-            </div>
-        </div>
-    </section>
-
-    <main>
-        <div class="container">
-            <div class="warning-alert">
-                <h2><i class="fas fa-exclamation-triangle"></i> Why Tornado Alley States Will Likely Require Wind Load Certification</h2>
-                <p style="margin-bottom: 1rem;"><strong>The landscape is changing.</strong> As extreme weather events intensify and tornado damage costs escalate, many Tornado Alley states are considering stricter wind load requirements similar to coastal HVHZ zones.</p>
-                <p style="margin-bottom: 1rem;">Tornadoes produce the most extreme wind speeds on Earth - far exceeding hurricane winds. EF4 and EF5 tornadoes generate winds of 166-200+ mph, yet many buildings in these regions are only designed for 90-115 mph. The gap is staggering and deadly.</p>
-                <p><strong>Be proactive.</strong> Even if your state doesn't currently require C&C certification, proper wind load analysis protects lives, reduces liability, and prepares you for inevitable future requirements. Don't wait for regulations - do what's right for your clients and their safety.</p>
-            </div>
-        </div>
-
-        <section class="stats-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Tornado Alley by the Numbers</h2>
-                    <p>Understanding the scale of tornado risk in the United States</p>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">1,200+</div>
-                        <div class="stat-label">Tornadoes Annually in US</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-number">200+ mph</div>
-                        <div class="stat-label">EF5 Tornado Wind Speeds</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-number">$25B+</div>
-                        <div class="stat-label">Annual Tornado Damage (2021)</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-number">70+</div>
-                        <div class="stat-label">Average Annual Fatalities</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="tornado-states-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Tornado Alley States - Wind Load Requirements</h2>
-                    <p>These states experience the highest tornado frequency and should prioritize wind load analysis</p>
-                </div>
-
-                <!-- Quick State Navigation -->
-                <div class="state-quick-nav">
-                    <div class="quick-nav-title"><i class="fas fa-link"></i> Jump to State:</div>
-                    <div class="quick-nav-links">
-                        <a href="#oklahoma" class="quick-nav-btn"><i class="fas fa-tornado"></i> Oklahoma</a>
-                        <a href="#kansas" class="quick-nav-btn"><i class="fas fa-tornado"></i> Kansas</a>
-                        <a href="#nebraska" class="quick-nav-btn"><i class="fas fa-tornado"></i> Nebraska</a>
-                        <a href="#iowa" class="quick-nav-btn"><i class="fas fa-tornado"></i> Iowa</a>
-                        <a href="#missouri" class="quick-nav-btn"><i class="fas fa-tornado"></i> Missouri</a>
-                        <a href="#arkansas" class="quick-nav-btn"><i class="fas fa-tornado"></i> Arkansas</a>
-                    </div>
-                </div>
-
-                <div class="tornado-states-grid">
-                    <div class="tornado-state-card" id="oklahoma">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Oklahoma</div>
-                        <span class="risk-level risk-extreme">EXTREME RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 50-75 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-120 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Heart of Tornado Alley - Moore 2013 EF5 (210 mph winds)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/oklahoma-city-wind-load-requirements.html" style="color: #6366f1;">Oklahoma City</a> · <a href="cities/tulsa-wind-load-requirements.html" style="color: #6366f1;">Tulsa</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card" id="kansas">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Kansas</div>
-                        <span class="risk-level risk-extreme">EXTREME RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 80-100 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-120 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Highest tornado frequency per square mile in US</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/wichita-wind-load-requirements.html" style="color: #6366f1;">Wichita</a> · <a href="cities/kansas-city-wind-load-requirements.html" style="color: #6366f1;">Kansas City</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card" id="nebraska">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Nebraska</div>
-                        <span class="risk-level risk-extreme">EXTREME RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 45-60 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-120 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Pilger 2014 - twin EF4 tornadoes (200 mph)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/omaha-wind-load-requirements.html" style="color: #6366f1;">Omaha</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card" id="iowa">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Iowa</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 35-55 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-115 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Derecho risk - 2020 event caused $11B in damage</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/des-moines-wind-load-requirements.html" style="color: #6366f1;">Des Moines</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card" id="missouri">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Missouri</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 30-50 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-115 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Joplin 2011 EF5 - 161 fatalities, $2.8B damage</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/st-louis-wind-load-requirements.html" style="color: #6366f1;">St. Louis</a> · <a href="cities/kansas-city-wind-load-requirements.html" style="color: #6366f1;">Kansas City</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> South Dakota</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 25-40 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-115 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Eastern half especially prone to violent tornadoes</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> North Dakota</div>
-                        <span class="risk-level risk-moderate">MODERATE RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 20-30 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-110 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Increasing frequency due to climate shifts</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Illinois</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 40-60 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-115 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>2021 Amazon warehouse collapse - 6 fatalities</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/chicago-wind-load-requirements.html" style="color: #6366f1;">Chicago</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Indiana</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 20-35 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-115 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Violent tornadoes historically underestimated</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/indianapolis-wind-load-requirements.html" style="color: #6366f1;">Indianapolis</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Ohio</div>
-                        <span class="risk-level risk-moderate">MODERATE RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 15-25 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-110 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>2019 Dayton EF4 outbreak - 15 tornadoes in one day</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/columbus-wind-load-requirements.html" style="color: #6366f1;">Columbus</a> · <a href="cities/cleveland-wind-load-requirements.html" style="color: #6366f1;">Cleveland</a> · <a href="cities/cincinnati-wind-load-requirements.html" style="color: #6366f1;">Cincinnati</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card" id="arkansas">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Arkansas</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 25-40 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 105-120 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>2023 Little Rock EF3 - major urban damage</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/little-rock-wind-load-requirements.html" style="color: #6366f1;">Little Rock</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Kentucky</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 15-30 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-110 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>2021 December outbreak - 77 fatalities (Mayfield EF4)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/louisville-wind-load-requirements.html" style="color: #6366f1;">Louisville</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><i class="fas fa-tornado tornado-icon"></i> Tennessee</div>
-                        <span class="risk-level risk-high">HIGH RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 20-35 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-110 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>2020 Nashville EF3 - 25 fatalities</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>City Guides:</strong> <a href="cities/nashville-wind-load-requirements.html" style="color: #6366f1;">Nashville</a> · <a href="cities/memphis-wind-load-requirements.html" style="color: #6366f1;">Memphis</a></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tornado-state-card">
-                        <div class="state-name"><a href="colorado-wind-load-requirements.html" style="color: inherit; text-decoration: none;"><i class="fas fa-tornado tornado-icon"></i> Colorado</a></div>
-                        <span class="risk-level risk-moderate">MODERATE RISK</span>
-                        <div class="state-details">
-                            <div class="detail-item">
-                                <i class="fas fa-chart-line detail-icon"></i>
-                                <span><strong>Frequency:</strong> 40-60 tornadoes per year</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-wind detail-icon"></i>
-                                <span><strong>Design Wind:</strong> 90-115 mph (ASCE 7-16)</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-exclamation-circle detail-icon"></i>
-                                <span>Eastern plains high risk - Front Range less so</span>
-                            </div>
-                            <div class="detail-item">
-                                <i class="fas fa-map-marker-alt detail-icon"></i>
-                                <span><strong>Guides:</strong> <a href="colorado-wind-load-requirements.html" style="color: #6366f1;">Colorado</a> · <a href="cities/denver-wind-load-requirements.html" style="color: #6366f1;">Denver</a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="safety-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Wind Load Safety Recommendations for Tornado-Prone Regions</h2>
-                    <p>Protect lives, reduce liability, and prepare for future requirements</p>
-                </div>
-
-                <div class="safety-grid">
-                    <div class="safety-card">
-                        <h3><i class="fas fa-calculator"></i> Perform Proper Calculations</h3>
-                        <ul>
-                            <li>Always use the latest ASCE 7 (ASCE 7-22) standard</li>
-                            <li>Calculate both C&C and MWFRS pressures</li>
-                            <li>Consider higher wind speed categories</li>
-                            <li>Document all assumptions and methodology</li>
-                            <li>Provide sealed calculations even if not required</li>
-                        </ul>
-                    </div>
-
-                    <div class="safety-card">
-                        <h3><i class="fas fa-shield-alt"></i> Exceed Minimum Requirements</h3>
-                        <ul>
-                            <li>Design for one wind speed category higher</li>
-                            <li>Use conservative exposure categories</li>
-                            <li>Consider future climate scenarios</li>
-                            <li>Implement redundant attachment methods</li>
-                            <li>Specify impact-resistant glazing</li>
-                        </ul>
-                    </div>
-
-                    <div class="safety-card">
-                        <h3><i class="fas fa-file-contract"></i> Legal & Professional Protection</h3>
-                        <ul>
-                            <li>Maintain detailed calculation records</li>
-                            <li>Seal and sign all structural documents</li>
-                            <li>Educate clients on tornado wind risks</li>
-                            <li>Document client decisions in writing</li>
-                            <li>Carry adequate E&O insurance</li>
-                        </ul>
-                    </div>
-
-                    <div class="safety-card">
-                        <h3><i class="fas fa-users"></i> Client & Public Safety</h3>
-                        <ul>
-                            <li>Inform owners of tornado risk levels</li>
-                            <li>Recommend safe rooms or shelters</li>
-                            <li>Specify proper window/door attachments</li>
-                            <li>Design for progressive collapse prevention</li>
-                            <li>Prioritize life safety over cost savings</li>
-                        </ul>
-                    </div>
-
-                    <div class="safety-card">
-                        <h3><i class="fas fa-chart-line"></i> Prepare for Future Requirements</h3>
-                        <ul>
-                            <li>Expect certification mandates in 5-10 years</li>
-                            <li>Build calculation templates now</li>
-                            <li>Train staff on wind load analysis</li>
-                            <li>Establish relationships with testing agencies</li>
-                            <li>Stay ahead of regulatory changes</li>
-                        </ul>
-                    </div>
-
-                    <div class="safety-card">
-                        <h3><i class="fas fa-building"></i> Special Considerations</h3>
-                        <ul>
-                            <li>Schools: Design for Risk Category III/IV</li>
-                            <li>Hospitals: Must remain operational post-event</li>
-                            <li>Warehouses: Large roof areas especially vulnerable</li>
-                            <li>Mobile homes: Anchoring systems critical</li>
-                            <li>Agricultural buildings: Don't assume low importance</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- NEW: ASCE 7-22 Chapter 32 Feature Box -->
-    <section style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); padding: 3rem 0; text-align: center;">
-        <div class="container">
-            <span style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem;">NEW IN ASCE 7-22</span>
-            <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">Chapter 32 Tornado Loads - First in ASCE 7 History</h2>
-            <p style="color: rgba(255,255,255,0.95); font-size: 1.15rem; max-width: 800px; margin: 0 auto 1.5rem;">ASCE 7-22 introduced the first-ever dedicated chapter for tornado loads. Learn about tornado design wind speeds, Risk Category III/IV requirements, and tornado shelter design.</p>
-            <a href="asce-7-22-tornado-loads-chapter-32-guide.html" style="display: inline-block; background: white; color: #7c3aed; padding: 1rem 2rem; border-radius: 50px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: all 0.3s ease;">Read Complete Chapter 32 Guide →</a>
-        </div>
-    </section>
-
-    <section class="windloadcalc-promo">
-        <div class="container">
-            <h2>Calculate Wind Loads for Tornado-Prone Regions</h2>
-            <p>Visit our sister site <strong>WindLoadCalc.com</strong> for professional ASCE 7 wind load calculator software optimized for high-risk tornado zones.</p>
-            <a href="https://windloadcalc.com/wind-load-calculator-shop.html" class="cta-button">Visit WindLoadCalc.com →</a>
-        </div>
-    </section>
-
-    
-
-    <script>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-grid">
+  <div class="foot-brand"><img src="images/windloadsolutions-logo.svg" alt="Wind Load Solutions" style="height:40px;background:#fff;padding:6px 10px;border-radius:10px"><p>Wind-engineering authority since 2002. ASCE 7-22 guidance and state-by-state wind load requirements, Naples, Florida.</p></div>
+  <div class="foot-col"><h4>Learn</h4><a href="asce-7-standards.html">ASCE 7 Standards</a><a href="wind-exposure-categories-guide.html">Exposure Categories</a><a href="risk-categories-wind-loads-guide.html">Risk Categories</a><a href="topographic-effects-wind-loads.html">Topographic Effects</a></div>
+  <div class="foot-col"><h4>Requirements</h4><a href="state-requirements.html">State Requirements</a><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a><a href="mandatory-wind-load-states.html">Mandatory States</a><a href="resources.html">Free Resources</a></div>
+  <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="articles.html">Articles &amp; Guides</a><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Calculators</a><a href="https://windloadcalc.com/contact.html" target="_blank" rel="noopener">Contact</a></div>
+</div><div class="foot-bottom">&copy; 2026 Wind Load Solutions &middot; Naples, FL &middot; Wind load calculations per the latest ASCE 7 (ASCE 7-22) since 2002.</div></div></footer>
+<script>
         // Header scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('.main-header');
@@ -1587,141 +649,8 @@ function toggleNavSubsection(element) {
     subsection.classList.toggle('active');
 }
 </script>
-<!-- SEO-Enhanced Footer -->
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>ASCE 7 Standards</h4>
-                <ul>
-                    <li><a href="asce-7-standards.html">ASCE 7 Overview</a></li>
-                    <li><a href="wind-speed-zones-asce-7-guide.html">Wind Speed & Maps</a></li>
-                    <li><a href="wind-exposure-categories-guide.html">Exposure Categories</a></li>
-                    <li><a href="risk-categories-wind-loads-guide.html">Risk Categories</a></li>
-                    <li><a href="design-methods-asce-7-guide.html">Design Methods</a></li>
-                    <li><a href="hvhz-high-velocity-hurricane-zone-guide.html">HVHZ Guide</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Top States</h4>
-                <ul>
-                    <li><a href="florida-wind-load-requirements.html">Florida Wind Loads</a></li>
-                    <li><a href="texas-wind-load-requirements.html">Texas Wind Loads</a></li>
-                    <li><a href="california-wind-load-requirements.html">California Wind Loads</a></li>
-                    <li><a href="new-york-wind-load-requirements.html">New York Wind Loads</a></li>
-                    <li><a href="louisiana-wind-load-requirements.html">Louisiana Wind Loads</a></li>
-                    <li><a href="state-requirements.html">All 50 States</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources & Tools</h4>
-                <ul>
-                    <li><a href="resources.html">Free Resources</a></li>
-                    <li><a href="articles.html">Articles & Guides</a></li>
-                    <li><a href="tornado-alley-wind-loads-safety.html">Tornado Alley</a></li>
-                    <li><a href="solar-belt-wind-load-requirements.html">Solar Belt</a></li>
-                    <li><a href="components-cladding-wind-load-calculation-asce-7-pressure-analysis-building-design.html">C&C Guide</a></li>
-                    <li><a href="mwfrs-wind-load-calculator-asce-wind-pressure-analysis-building-design.html">MWFRS Guide</a></li>
-                    <li><a href="topographic-effects-wind-loads.html">Topographic Effects</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="wind-load-calculator-software-for-how-to-calculate-wind-load-on-windows-doors-shutters-and-roofs-about-us-why-choose-us.html">About Us</a></li>
-                    <li><a href="https://windloadcalc.com/contact.html">Contact</a></li>
-                    <li><a href="https://windloadcalc.com/wind-load-calculator-shop.html" target="_blank" rel="noopener">Wind Load Calculator</a></li>
-                    <li><a href="professional-engineer-sign-seal-wind-load-pressures.html">PE Seal Services</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2002-2025 Wind Load Solutions. All rights reserved.</p>
-            <p class="footer-tagline">Your Trusted Source for Wind Load Information Since 2002</p>
-        </div>
-    </div>
-</footer>
-
-<style>
-.site-footer {
-    background: #1a202c;
-    color: #e5e7eb;
-    padding: 4rem 2rem 2rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    margin-bottom: 3rem;
-}
-
-.footer-column h4 {
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #0018ff;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-column li {
-    margin-bottom: 0.75rem;
-}
-
-.footer-column a {
-    color: #e5e7eb;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-}
-
-.footer-column a:hover {
-    color: #60a5fa;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom p {
-    color: #9ca3af;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-}
-
-.footer-tagline {
-    font-weight: 600;
-    color: #60a5fa;
-}
-
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .site-footer {
-        padding: 3rem 1.5rem 1.5rem;
-    }
-}
-</style>
-
-</body>
-</html>
+<script>(function(){var hd=document.querySelector('.main-header');addEventListener('scroll',function(){hd.classList.toggle('scrolled',scrollY>40)});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.info-card,.feature-card,.feat,main>section').forEach(function(el){io.observe(el)});
+document.querySelectorAll('.btn,.btn-primary,.cta-button').forEach(function(b){b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)/7)+'px,'+((e.clientY-r.top-r.height/2)/7-2)+'px)'});b.addEventListener('mouseleave',function(){b.style.transform=''})});})();</script>
+</body></html>
