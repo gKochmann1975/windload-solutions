@@ -181,7 +181,7 @@
 <style>
 :root{--blue:#0018FF;--blue-deep:#181E57;--blue-bright:#3a5bff;--ink:#0f172a;--muted:#94a3b8;--line:rgba(255,255,255,.08);--bg:#070a18;--surface:rgba(255,255,255,.04);--emerald:linear-gradient(145deg,#34D399 0%,#10B981 40%,#059669 100%);--luxe:cubic-bezier(.22,.61,.36,1)}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:#e8edf7;overflow-x:hidden;line-height:1.6}
 .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 a{color:inherit}
@@ -212,8 +212,8 @@ a{color:inherit}
 /* nav overlay (slide-in, dark glass) */
 .nav-overlay{display:none;position:fixed;inset:0;background:rgba(3,6,16,.6);backdrop-filter:blur(4px);z-index:1100;opacity:0;transition:opacity .3s}
 .nav-overlay.active{display:block;opacity:1}
-.nav-links{position:fixed;top:0;right:-400px;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transition:right .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}
-.nav-links.active{right:0}
+.nav-links{position:fixed;top:0;right:0;width:360px;max-width:88vw;height:100vh;background:linear-gradient(160deg,#0c1124,#070a18);border-left:1px solid var(--line);z-index:1200;padding:84px 0 40px;overflow-y:auto;transform:translateX(100%);transition:transform .35s var(--luxe);box-shadow:-30px 0 90px rgba(0,0,0,.7)}
+.nav-links.active{transform:translateX(0)}
 .nav-links a{display:block;padding:13px 26px;color:#cbd5e1;text-decoration:none;font-weight:500;font-size:15px;border-left:3px solid transparent}
 .nav-links a:hover{background:rgba(58,91,255,.1);color:#fff;border-left-color:var(--blue-bright)}
 .nav-links a i{width:20px;margin-right:10px;text-align:center;color:#7dd3fc}
@@ -274,7 +274,7 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#7dd3fc,#a5b4fc);-webki
 /* breakpoints */
 /* MOBILE TYPE SCALE — applies across the WHOLE hamburger range (<=880px), fluid so there is no dead zone */
 @media(max-width:880px){
-  .header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex;width:34px;height:26px}
+  .header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex;width:28px;height:22px}
   .feat-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.foot-grid{grid-template-columns:1fr 1fr}
   .logo-icon{height:clamp(44px,7vw,54px)}.logo-wm .lw{font-size:clamp(22px,3.6vw,27px)}.logo-wm .ls{font-size:clamp(8px,1.25vw,10px)}
   .eyebrow{font-size:clamp(13px,1.9vw,15px);margin-bottom:16px}
