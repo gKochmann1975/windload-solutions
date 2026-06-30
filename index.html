@@ -272,8 +272,32 @@ h1 em{font-style:normal;background:linear-gradient(90deg,#7dd3fc,#a5b4fc);-webki
 .foot-col a:hover{color:#7dd3fc}
 .foot-bottom{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;text-align:center;color:var(--muted);font-size:13px}
 /* breakpoints */
-@media(max-width:880px){.header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex}.feat-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.foot-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.wrap{padding:0 18px}.header-container{padding-left:18px;padding-right:18px}.logo-icon{height:44px}.logo-wm .lw{font-size:23px}.hero{padding:26px 0 4px}.hero .glass{padding:38px 22px}.eyebrow{font-size:13px;margin-bottom:16px}h1{font-size:42px;line-height:1.06}.sub{font-size:18px;line-height:1.55;margin-top:18px}.cta{flex-direction:column;gap:12px;margin-top:28px}.cta .btn-primary,.cta .btn-ghost{width:100%;padding:17px 24px;font-size:17px}.stats{gap:12px;margin-top:20px}.stat{padding:26px 14px}.stat b{font-size:36px}.stat span{font-size:13.5px}.section{padding:42px 0}.section h2{font-size:30px}.section .lead{font-size:16px}.feat{padding:30px 22px}.feat .ic{width:56px;height:56px;font-size:24px}.feat h3{font-size:20px}.feat p{font-size:15.5px}.faq summary{font-size:17.5px}.faq p{font-size:15.5px}.foot-grid{grid-template-columns:1fr;gap:24px}}
+/* MOBILE TYPE SCALE — applies across the WHOLE hamburger range (<=880px), fluid so there is no dead zone */
+@media(max-width:880px){
+  .header-right .lnk,.header-right .nav-cta{display:none}.hamburger{display:flex;width:34px;height:26px}
+  .feat-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.foot-grid{grid-template-columns:1fr 1fr}
+  .logo-icon{height:clamp(44px,7vw,54px)}.logo-wm .lw{font-size:clamp(22px,3.6vw,27px)}.logo-wm .ls{font-size:clamp(8px,1.25vw,10px)}
+  .eyebrow{font-size:clamp(13px,1.9vw,15px);margin-bottom:16px}
+  h1{font-size:clamp(42px,7.8vw,58px);line-height:1.07}
+  .sub{font-size:clamp(18px,3vw,23px);line-height:1.55;margin-top:18px}
+  .btn-primary,.btn-ghost{font-size:clamp(16px,2.5vw,18.5px)}
+  .section h2{font-size:clamp(30px,5.2vw,42px)}
+  .section .lead,.lead{font-size:clamp(16.5px,2.6vw,20px)}
+  .feat{padding:clamp(28px,4vw,34px) clamp(22px,3vw,28px)}
+  .feat .ic{width:clamp(56px,8vw,64px);height:clamp(56px,8vw,64px);font-size:clamp(24px,3.4vw,28px)}
+  .feat h3{font-size:clamp(21px,3.2vw,25px)}
+  .feat p{font-size:clamp(16.5px,2.5vw,19px)}
+  .stat{padding:clamp(24px,3.4vw,28px) 16px}
+  .stat b{font-size:clamp(34px,6.2vw,46px)}
+  .stat span{font-size:clamp(14px,2.1vw,16.5px)}
+  .faq summary{font-size:clamp(17.5px,2.8vw,21px)}
+  .faq p{font-size:clamp(16px,2.4vw,18.5px)}
+  .nav-links a{font-size:clamp(17px,2.6vw,20px);padding:15px 28px}
+  .nav-links a i{font-size:1.05em;width:24px}
+  .nav-subitem{font-size:clamp(15px,2.4vw,18px) !important;padding-left:46px !important}
+}
+/* small-phone refinements: stacked full-width CTAs, tighter gutters */
+@media(max-width:560px){.wrap{padding:0 18px}.header-container{padding-left:18px;padding-right:18px}.hero{padding:24px 0 4px}.hero .glass{padding:34px 20px}.cta{flex-direction:column;gap:12px;margin-top:26px}.cta .btn-primary,.cta .btn-ghost{width:100%;padding:17px 24px}.stats{gap:12px;margin-top:18px}.section{padding:40px 0}.foot-grid{grid-template-columns:1fr;gap:24px}}
 h1,.hero-title,.electric-text{text-wrap:balance;overflow-wrap:break-word}
 
 /*CENTERFIX-v1*/
