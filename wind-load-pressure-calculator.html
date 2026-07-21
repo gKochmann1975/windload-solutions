@@ -427,64 +427,57 @@ h1{text-align:center}
     <a href="https://windloadcalc.com/contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
 <style>
-  /* hub hero video — scoped, self-contained (no dependency on other pages' classes) */
-  .pv-media{position:relative;max-width:1000px;margin:2rem auto 0;border-radius:18px;overflow:hidden;
-    border:1px solid var(--line);box-shadow:0 30px 70px rgba(0,0,0,.5)}
-  .pv-media video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#05081a}
-  .pv-media .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:16px 18px;font-size:.86rem;color:#dbe4ff;
-    background:linear-gradient(0deg,rgba(5,8,26,.82),rgba(5,8,26,0));text-align:left}
-  .pv-media .pv-cap b{color:#fff}
-  .pv-cta-note{font-size:.82rem;color:var(--ink-mute);margin-top:.6rem}
-  @media(prefers-reduced-motion:reduce){.pv-media video{display:none}}
-  /* ==== MOBILE OVERFLOW FIX (bulletproof): nothing may be wider than the screen ==== */
-  html,body{overflow-x:hidden !important;max-width:100vw}
-  /* grid/flex children default to min-width:auto and refuse to shrink below their content,
-     which is what let the long ASCE formulas push the whole layout off-screen. Force shrink. */
+  /* full-bleed hero VIDEO BACKGROUND (matches the site's video-hero pattern) */
+  .hero-vid{position:relative;overflow:hidden;isolation:isolate;min-height:clamp(520px,72vh,760px);
+    display:flex;align-items:center}
+  .hero-vid .hero-bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero-vid .hero-veil{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(6,9,20,.62) 0%,rgba(6,9,20,.74) 55%,rgba(6,9,20,.90) 100%)}
+  .hero-vid>.wrap{position:relative;z-index:2;width:100%}
+  .hero-vid::before{display:none} /* hide the aurora blur behind the video */
+  .pv-cta-note{font-size:.82rem;color:var(--ink-soft);margin-top:.6rem}
+  @media(prefers-reduced-motion:reduce){.hero-vid .hero-bgvid{display:none}}
+  /* ==== overflow safety + mobile responsiveness (do NOT word-break normal text) ==== */
+  html,body{overflow-x:hidden;max-width:100vw}
   .wrap,main,section,.stat-strip,.stat,.grid,.grid>*,.info-box,.card{min-width:0;max-width:100%}
-  .stat .num,.stat .lbl,.info-box p,.card p,.card h3,h1,h2,h3{overflow-wrap:anywhere;word-break:break-word}
   @media (max-width:760px){
-    /* every multi-column grid collapses to ONE column on phones */
     .grid,.grid[data-n="2"],.grid[data-n="3"],.grid[data-n="5"],.grid[data-n="6"]{grid-template-columns:1fr !important}
-    .stat-strip{grid-template-columns:1fr !important;max-width:100%}
-    .stat .num{font-size:.9rem;line-height:1.35;white-space:normal}
+    .stat-strip{grid-template-columns:1fr 1fr !important}
     section.sec h1{font-size:clamp(1.7rem,7.5vw,2.2rem)}
-    /* the big centered equation lines shrink + wrap instead of overflowing */
-    .info-box p[style*="1.8rem"]{font-size:1.05rem !important;line-height:1.45}
-    .info-box p[style*="1.5rem"]{font-size:1rem !important;line-height:1.45}
-    .info-box p[style*="1.4rem"]{font-size:.98rem !important;line-height:1.45}
+    /* the big centered equation lines (STEP 1/2) shrink so they wrap, not overflow */
+    .info-box p[style*="1.8rem"]{font-size:1.1rem !important;line-height:1.45}
+    .info-box p[style*="1.5rem"]{font-size:1.05rem !important;line-height:1.45}
+    .info-box p[style*="1.4rem"]{font-size:1rem !important;line-height:1.45}
     .hero-cta .btn,.hero-cta .btn-ghost{white-space:normal;text-align:center}
   }
+  @media (max-width:440px){ .stat-strip{grid-template-columns:1fr !important} }
 </style>
 <main>
 
-  <!-- HERO -->
-  <section class="sec sec-aurora"><div class="wrap">
-    <p class="eyebrow">ASCE 7-22 · VELOCITY PRESSURE + DESIGN PRESSURE</p>
-    <h1>Wind Load <span class="sweep">Pressure Calculator</span></h1>
-    <p class="lead">Wind load pressure is how hard the wind pushes and pulls on a building surface, in pounds per square foot. Under ASCE 7-22 it is a two-step calculation &mdash; a <strong>velocity pressure</strong> from the site&rsquo;s wind speed, then a <strong>design pressure</strong> that applies the shape and internal-pressure coefficients. This page shows exactly how it works, and our free calculator runs it from a ZIP code, including the Florida High-Velocity Hurricane Zone.</p>
-    <div class="hero-cta">
-      <a class="btn" href="https://windloadcalc.com/free-wind-load-calculator.html">Calculate my wind load pressure &mdash; free</a>
-      <a class="btn-ghost" href="https://windloadcalc.com/wind-load-calculator-shop.html">See all calculators &amp; pricing</a>
+  <!-- HERO — full-bleed hurricane video background, text on top -->
+  <section class="sec sec-aurora hero-vid">
+    <video class="hero-bgvid" autoplay muted loop playsinline preload="auto"
+           poster="/images/video-posters/hurricane-02.jpg">
+      <source src="https://pub-855aeb0543b6449aa495e1f99ac2d507.r2.dev/hurricane-02.mp4" type="video/mp4">
+    </video>
+    <div class="hero-veil"></div>
+    <div class="wrap">
+      <p class="eyebrow">ASCE 7-22 · VELOCITY PRESSURE + DESIGN PRESSURE</p>
+      <h1>Wind Load <span class="sweep">Pressure Calculator</span></h1>
+      <p class="lead">Wind load pressure is how hard the wind pushes and pulls on a building surface, in pounds per square foot. Under ASCE 7-22 it is a two-step calculation &mdash; a <strong>velocity pressure</strong> from the site&rsquo;s wind speed, then a <strong>design pressure</strong> that applies the shape and internal-pressure coefficients. Our free calculator runs it from a ZIP code, including the Florida High-Velocity Hurricane Zone.</p>
+      <div class="hero-cta">
+        <a class="btn" href="https://windloadcalc.com/free-wind-load-calculator.html">Calculate my wind load pressure &mdash; free</a>
+        <a class="btn-ghost" href="https://windloadcalc.com/wind-load-calculator-shop.html">See all calculators &amp; pricing</a>
+      </div>
+      <p class="pv-cta-note">No signup. Enter a ZIP &rarr; get the ASCE 7-22 design wind speed &rarr; get component &amp; cladding design pressure. A free MWFRS calculator is available too.</p>
+      <div class="stat-strip">
+        <div class="stat"><span class="num">2-step</span><span class="lbl">ASCE 7-22 method</span></div>
+        <div class="stat"><span class="num">psf</span><span class="lbl">design pressure unit</span></div>
+        <div class="stat"><span class="num">170&ndash;175</span><span class="lbl">mph · FL HVHZ</span></div>
+        <div class="stat"><span class="num">2002</span><span class="lbl">engineers served since</span></div>
+      </div>
     </div>
-    <p class="pv-cta-note">No signup. Enter a ZIP &rarr; get the ASCE 7-22 design wind speed &rarr; get component &amp; cladding design pressure. A free MWFRS calculator is available too.</p>
-    <div class="stat-strip">
-      <div class="stat"><span class="num">q<sub>z</sub> = 0.00256 K<sub>z</sub>K<sub>zt</sub>K<sub>d</sub>K<sub>e</sub>V&sup2;</span><span class="lbl">VELOCITY PRESSURE (PSF)</span></div>
-      <div class="stat"><span class="num">p = q(GC<sub>p</sub>&minus;GC<sub>pi</sub>)</span><span class="lbl">C&amp;C DESIGN PRESSURE</span></div>
-      <div class="stat"><span class="num">170&ndash;175</span><span class="lbl">MPH · FL HVHZ DESIGN WIND</span></div>
-      <div class="stat"><span class="num">2002</span><span class="lbl">SERVING ENGINEERS SINCE</span></div>
-    </div>
-  </div></section>
-
-  <!-- HERO VIDEO -->
-  <section class="sec sec-grid" style="padding-top:0;"><div class="wrap">
-    <div class="pv-media">
-      <video autoplay muted loop playsinline preload="none"
-             poster="/images/video-posters/hurricane-02.jpg">
-        <source src="https://pub-855aeb0543b6449aa495e1f99ac2d507.r2.dev/hurricane-02.mp4" type="video/mp4">
-      </video>
-      <div class="pv-cap"><b>The pressure the code designs for.</b> Hurricane-force wind produces suction on corners and edges several times higher than the field of a wall &mdash; which is exactly what the ASCE 7-22 pressure equations capture.</div>
-    </div>
-  </div></section>
+  </section>
 
   <div class="divider"></div>
 
