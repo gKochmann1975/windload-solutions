@@ -436,6 +436,24 @@ h1{text-align:center}
   .pv-media .pv-cap b{color:#fff}
   .pv-cta-note{font-size:.82rem;color:var(--ink-mute);margin-top:.6rem}
   @media(prefers-reduced-motion:reduce){.pv-media video{display:none}}
+  /* ==== MOBILE OVERFLOW FIX (bulletproof): nothing may be wider than the screen ==== */
+  html,body{overflow-x:hidden !important;max-width:100vw}
+  /* grid/flex children default to min-width:auto and refuse to shrink below their content,
+     which is what let the long ASCE formulas push the whole layout off-screen. Force shrink. */
+  .wrap,main,section,.stat-strip,.stat,.grid,.grid>*,.info-box,.card{min-width:0;max-width:100%}
+  .stat .num,.stat .lbl,.info-box p,.card p,.card h3,h1,h2,h3{overflow-wrap:anywhere;word-break:break-word}
+  @media (max-width:760px){
+    /* every multi-column grid collapses to ONE column on phones */
+    .grid,.grid[data-n="2"],.grid[data-n="3"],.grid[data-n="5"],.grid[data-n="6"]{grid-template-columns:1fr !important}
+    .stat-strip{grid-template-columns:1fr !important;max-width:100%}
+    .stat .num{font-size:.9rem;line-height:1.35;white-space:normal}
+    section.sec h1{font-size:clamp(1.7rem,7.5vw,2.2rem)}
+    /* the big centered equation lines shrink + wrap instead of overflowing */
+    .info-box p[style*="1.8rem"]{font-size:1.05rem !important;line-height:1.45}
+    .info-box p[style*="1.5rem"]{font-size:1rem !important;line-height:1.45}
+    .info-box p[style*="1.4rem"]{font-size:.98rem !important;line-height:1.45}
+    .hero-cta .btn,.hero-cta .btn-ghost{white-space:normal;text-align:center}
+  }
 </style>
 <main>
 
